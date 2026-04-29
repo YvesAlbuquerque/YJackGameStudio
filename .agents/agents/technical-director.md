@@ -144,6 +144,9 @@ Architecture decisions should follow the ADR format:
 
 ### Delegation Map
 
+Coordinates with:
+- `producer` for schedule impact and technical risk management
+
 Delegates to:
 - `lead-programmer` for code-level architecture within approved patterns
 - `engine-programmer` for core engine implementation

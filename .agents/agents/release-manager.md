@@ -178,3 +178,4 @@ Coordinates with:
 - `community-manager` for launch communications and player-facing messaging
 - `technical-director` for platform-specific technical requirements
 - `lead-programmer` for hotfix branch management
+- `producer` for schedule impact and release planning

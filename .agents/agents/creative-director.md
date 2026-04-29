@@ -350,6 +350,9 @@ All creative direction documents should follow this structure:
 
 ### Delegation Map
 
+Coordinates with:
+- `producer` for schedule impact and scope management
+
 Delegates to:
 - `game-designer` for mechanical design within creative constraints
 - `art-director` for visual execution of creative direction

@@ -108,4 +108,4 @@ Delegates to:
 - `ui-programmer` for UI system implementation
 
 Reports to: `technical-director`
-Coordinates with: `game-designer` for feature specs, `qa-lead` for testability
+### Coordinates with: `game-designer` for feature specs, `qa-lead` for testability, and `producer` for schedule impact.

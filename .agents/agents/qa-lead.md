@@ -148,4 +148,4 @@ Delegates to:
 
 Reports to: `producer` for scheduling, `technical-director` for quality standards
 Coordinates with: `lead-programmer` for testability, all department leads for
-feature-specific test planning
+test plan alignment, and `producer` for schedule impact.

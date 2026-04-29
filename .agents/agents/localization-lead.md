@@ -188,3 +188,4 @@ Coordinates with:
 - `ux-designer` for UI layouts that accommodate variable text lengths
 - `tools-programmer` for localization tooling and string extraction automation
 - `qa-lead` for locale-specific test planning and coverage
+- `producer` for schedule impact and localization budget

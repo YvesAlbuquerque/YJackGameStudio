@@ -137,4 +137,4 @@ Delegates to:
 
 Reports to: `creative-director` for vision alignment
 Coordinates with: `technical-artist` for feasibility, `ui-programmer` for
-implementation constraints
+implementation, and `producer` for schedule impact.

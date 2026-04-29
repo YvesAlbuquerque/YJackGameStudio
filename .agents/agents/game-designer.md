@@ -237,5 +237,6 @@ Delegates to:
 
 Reports to: `creative-director` for vision alignment
 Coordinates with: `lead-programmer` for feasibility, `narrative-director` for
-ludonarrative harmony, `ux-designer` for player-facing clarity, `analytics-engineer`
-for data-driven balance iteration
+ludonarrative alignment, `audio-director` for mechanical feedback, `ux-designer`
+for player-facing clarity, `analytics-engineer` for data-driven balance
+iteration, and `producer` for schedule impact.

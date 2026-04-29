@@ -122,4 +122,4 @@ Delegates to:
 
 Reports to: `creative-director` for vision alignment
 Coordinates with: `game-designer` for ludonarrative design, `art-director` for
-visual storytelling, `audio-director` for emotional tone
+visual storytelling, `audio-director` for emotional tone, and `producer` for schedule impact.
