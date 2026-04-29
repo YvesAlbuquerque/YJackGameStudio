@@ -25,7 +25,9 @@ ownership, architecture decisions, content validation, QA, sprint planning, and
 release discipline. This repository packages those responsibilities as a studio
 model that agentic tools can follow.
 
-The original project was Claude Code-centric. It now has a provider-neutral
+This fork is based on
+[Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios).
+The original project was Claude Code-centric; this fork adds a provider-neutral
 shared layer under `.agents/` plus native adapters for the major agentic coding
 systems.
 
