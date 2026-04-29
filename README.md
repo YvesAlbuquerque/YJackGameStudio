@@ -39,6 +39,111 @@ systems.
 | Google Antigravity | `AGENTS.md`, `GEMINI.md`, `.agents/rules/` | Uses the shared rules/docs layout; `.agent/rules/game-studio.md` is a compatibility pointer. |
 | Claude Code | `CLAUDE.md` and `.claude/` | Preserved as a compatibility layer. |
 
+## How To Use It With Each Agent System
+
+The shared workflow is the same for every tool:
+
+1. Make sure the tool has loaded the correct instruction entrypoint.
+2. Start with `/start` if the tool supports slash commands or project skills.
+3. If it does not, ask the tool to read `.agents/skills/start/SKILL.md` and follow it.
+4. For any later workflow, treat `/skill-name` as shorthand for reading `.agents/skills/skill-name/SKILL.md`.
+5. Use `.agents/docs/tool-compatibility.md` to translate capability names such as `Task`, `AskUserQuestion`, `WebSearch`, `Read`, `Glob`, and `Bash`.
+
+### Codex
+
+Codex should read `AGENTS.md` automatically in this repository.
+
+Use it like this:
+
+1. Open the repository in Codex.
+2. Confirm Codex has read `AGENTS.md`.
+3. Ask: `Run /start for this project` or `Follow .agents/skills/start/SKILL.md`.
+4. For implementation work, ask Codex to use the relevant skill, for example:
+   `Follow .agents/skills/dev-story/SKILL.md for production/stories/<story>.md`.
+5. When Codex delegates work, keep delegation scoped to independent tasks and disjoint file sets.
+
+Codex-specific source of truth:
+
+- `AGENTS.md`
+- `.agents/skills/`
+- `.agents/docs/tool-compatibility.md`
+
+### GitHub Copilot
+
+Copilot uses repository instructions and optional path-specific instructions.
+
+Use it like this:
+
+1. Open the repository in VS Code or GitHub with Copilot enabled.
+2. Copilot should load `.github/copilot-instructions.md`.
+3. When editing `design/`, `docs/`, `src/`, or agent config files, Copilot also has matching `.github/instructions/*.instructions.md` files.
+4. Ask Copilot to follow the specific workflow file, for example:
+   `Use .agents/skills/design-system/SKILL.md to draft a GDD for movement`.
+5. If Copilot cannot execute a slash command, keep the skill file open or referenced in the prompt.
+
+Copilot-specific source of truth:
+
+- `.github/copilot-instructions.md`
+- `.github/instructions/*.instructions.md`
+- `AGENTS.md`
+
+### Gemini CLI
+
+Gemini CLI is configured through `.gemini/settings.json` to load both `AGENTS.md`
+and `GEMINI.md`.
+
+Use it like this:
+
+1. Open Gemini CLI from the repository root.
+2. Run `/memory show` to confirm `AGENTS.md` and `GEMINI.md` are loaded.
+3. If you edit instructions, run `/memory refresh`.
+4. Ask Gemini to follow a skill file directly, for example:
+   `Read .agents/skills/project-stage-detect/SKILL.md and apply it to this repo`.
+5. For subagent/team instructions, either perform the role locally or split the work into separate approved sessions.
+
+Gemini-specific source of truth:
+
+- `GEMINI.md`
+- `.gemini/settings.json`
+- `AGENTS.md`
+
+### Google Antigravity
+
+Antigravity should use the shared `AGENTS.md` / `GEMINI.md` instructions and the
+workspace rule files.
+
+Use it like this:
+
+1. Open the repository in Antigravity.
+2. Confirm the workspace instructions include `AGENTS.md` and `GEMINI.md`.
+3. Confirm rules are visible from `.agents/rules/`; `.agent/rules/game-studio.md` points back to the canonical shared rules for clients that inspect the older singular path.
+4. Use Agent Manager or the equivalent task workflow for skills that request `Task` or subagent delegation.
+5. If delegation is not available, read the referenced role file in `.agents/agents/<role>.md` and perform that role in the current thread.
+
+Antigravity-specific source of truth:
+
+- `AGENTS.md`
+- `GEMINI.md`
+- `.agents/rules/`
+- `.agent/rules/game-studio.md`
+
+### Claude Code
+
+Claude Code remains supported through the legacy-native compatibility layer.
+
+Use it like this:
+
+1. Open Claude Code from the repository root.
+2. Claude Code reads `CLAUDE.md`, which points back to `AGENTS.md`.
+3. Native Claude slash commands and hooks continue to use `.claude/skills/` and `.claude/hooks/`.
+4. For shared workflow changes, update `.agents/` first, then mirror to `.claude/` only when Claude compatibility requires it.
+
+Claude-specific source of truth:
+
+- `CLAUDE.md`
+- `.claude/`
+- `AGENTS.md`
+
 ## What's Included
 
 | Category | Count | Shared Location | Purpose |
