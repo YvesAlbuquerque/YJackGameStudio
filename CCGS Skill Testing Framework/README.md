@@ -1,6 +1,6 @@
 # CCGS Skill Testing Framework
 
-Quality assurance infrastructure for the **Claude Code Game Studios** framework.
+Quality assurance infrastructure for the **Agentic Game Studios** framework.
 Tests the skills and agents themselves — not any game built with them.
 
 > **This folder is self-contained and optional.**

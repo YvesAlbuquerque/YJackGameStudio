@@ -1,7 +1,11 @@
-# Upgrading Claude Code Game Studios
+# Upgrading Agentic Game Studios
 
 This guide covers upgrading your existing game project repo from one version
 of the template to the next.
+
+> Historical note: older entries refer to the original Claude Code-only layout.
+> Current cross-agent assets live in `.agents/`; Claude Code compatibility files
+> remain in `.claude/`.
 
 **Find your current version** in your git log:
 ```bash

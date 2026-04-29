@@ -1,0 +1,26 @@
+# Hook Scripts
+
+Portable hook scripts live in `.agents/hooks/`. Automatic hook wiring is
+tool-specific:
+
+- Claude Code wires `.claude/hooks/` through `.claude/settings.json`.
+- Other tools should run the equivalent `.agents/hooks/` scripts manually or
+  configure their own hook system if available.
+
+| Hook | Event | Trigger | Action |
+| ---- | ----- | ------- | ------ |
+| `validate-commit.sh` | PreToolUse (Bash) | `git commit` commands | Validates design doc sections, JSON data files, hardcoded values, TODO format |
+| `validate-push.sh` | PreToolUse (Bash) | `git push` commands | Warns on pushes to protected branches (develop/main) |
+| `validate-assets.sh` | PostToolUse (Write/Edit) | Asset file changes | Checks naming conventions and JSON validity for files in `assets/` |
+| `session-start.sh` | SessionStart | Session begins | Loads sprint context, milestone, git activity; detects and previews active session state file for recovery |
+| `detect-gaps.sh` | SessionStart | Session begins | Detects fresh projects (suggests /start) and missing documentation when code/prototypes exist, suggests /reverse-document or /project-stage-detect |
+| `pre-compact.sh` | PreCompact | Context compression | Dumps session state (active.md, modified files, WIP design docs) into conversation before compaction so it survives summarization |
+| `post-compact.sh` | PostCompact | After compaction | Reminds AI agent to restore session state from `active.md` checkpoint |
+| `notify.sh` | Notification | Notification event | Shows Windows toast notification via PowerShell |
+| `session-stop.sh` | Stop | Session ends | Summarizes accomplishments and updates session log |
+| `log-agent.sh` | SubagentStart | Agent spawned | Audit trail start — logs subagent invocation with timestamp |
+| `log-agent-stop.sh` | SubagentStop | Agent stops | Audit trail stop — completes subagent record |
+| `validate-skill-change.sh` | PostToolUse (Write/Edit) | Skill file changes | Advises running `/skill-test` after any `.agents/skills/` file is written or edited |
+
+Hook reference documentation: `.agents/docs/hooks-reference/`
+Hook input schema documentation: `.agents/docs/hooks-reference/hook-input-schemas.md`
