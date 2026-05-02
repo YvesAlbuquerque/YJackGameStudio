@@ -56,6 +56,17 @@ Some shared skills still use Claude-origin capability names such as `Read`,
 `WebSearch`. Treat these as capability labels. Map them to the active tool's
 equivalent behavior using `.agents/docs/tool-compatibility.md`.
 
+## Personal Taste Profile
+
+Yves' personal taste profile lives at `.agents/docs/yves-taste-profile.md`.
+Use it when the task has a subjective taste component, such as recommendations,
+game concept direction, art direction, narrative tone, world-building style,
+media comparisons, UX mood, or aesthetic tradeoffs.
+
+Do not apply it to objective technical decisions unless the user explicitly asks
+for a taste-driven tradeoff. Keep facts, project constraints, and personal taste
+separate in your reasoning.
+
 ## Working Rules
 
 - Inspect the repo before asserting structure, behavior, or intent.
