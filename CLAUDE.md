@@ -26,6 +26,10 @@ Each agent owns a specific domain, enforcing separation of concerns and quality.
 
 @.claude/docs/technical-preferences.md
 
+## Framework Integration
+
+@.claude/docs/yjackcore-support.md
+
 ## Coordination Rules
 
 @.claude/docs/coordination-rules.md

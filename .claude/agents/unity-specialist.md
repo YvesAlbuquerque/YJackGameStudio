@@ -65,6 +65,28 @@ Before writing any code:
 - Configure project settings, packages, and build profiles
 - Advise on platform builds, asset bundles/Addressables, and store submission
 
+## YJackCore-Aware Projects
+
+If `.claude/docs/technical-preferences.md` lists `Framework: YJackCore`, or the
+project contains `com.ygamedev.yjack` / `YJackCore` in `Packages/manifest.json`,
+read `.claude/docs/yjackcore-support.md` before proposing Unity architecture.
+
+For YJackCore-backed projects:
+
+- Prefer YJackCore prefabs, layer managers, ScriptableObject status/event assets,
+  serialized `UnityEvent` wiring, and Visual Scripting-friendly call-throughs
+  before adding custom managers or new bootstrap systems.
+- Map work to the YJackCore layer that owns it: GameLayer, LevelLayer/SceneLayer,
+  PlayerLayer/CoreLayer, ViewLayer, or Shared.
+- Treat the host game and the YJackCore package as separate ownership boundaries.
+  Do not edit package files from a host-game task unless the user explicitly asks
+  to change the framework.
+- If framework changes are required, inspect the YJackCore package `AGENTS.md`,
+  `package.json`, `ARCHITECTURE.md`, relevant docs, and asmdefs before proposing
+  changes.
+- Odin Inspector and Unity Visual Scripting are valid baseline authoring surfaces
+  for YJackCore-backed projects; do not strip them out as optional polish.
+
 ## Unity Best Practices to Enforce
 
 ### Architecture Patterns
