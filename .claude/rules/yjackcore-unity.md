@@ -13,9 +13,9 @@ YJackCore package path.
 - Read `.claude/docs/yjackcore-support.md` before designing or reviewing Unity
   architecture for a YJackCore-backed project.
 - Prefer existing YJackCore layer surfaces before new host-game abstractions:
-  GameLayer for global services, LevelLayer for scene flow, PlayerLayer for
-  input/camera/player behavior, ViewLayer for presentation, Shared for reusable
-  ScriptableObject/event/utility patterns.
+  GameLayer for global services, LevelLayer/SceneLayer for scene flow,
+  PlayerLayer/CoreLayer for input/camera/player behavior, ViewLayer for
+  presentation, Shared for reusable ScriptableObject/event/utility patterns.
 - Keep host-game glue small. If behavior belongs in the framework, propose a
   separate YJackCore package change instead of hiding it in `src/`.
 - Prefer inspector-first authoring: serialized fields, UnityEvents,
