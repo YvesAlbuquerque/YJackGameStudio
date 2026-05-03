@@ -10,7 +10,7 @@ Treat a project as YJackCore-backed if any of these are true:
 - `Packages/manifest.json` contains `com.ygamedev.yjack` or `YJackCore`
 - a local package exists at `Packages/YJackCore/package.json`
 - a git submodule path points to `YJackCore`
-- `.claude/docs/technical-preferences.md` lists `Framework: YJackCore`
+- `.agents/docs/technical-preferences.md` lists `Framework: YJackCore`
 - technical preferences name a YJackCore package source, local path, or submodule
 - the user explicitly says the game uses YJackCore
 
@@ -148,7 +148,7 @@ For architecture-sensitive YJackCore work, include:
 When configuring a project for YJackCore:
 
 - Set engine to Unity and language to C#
-- Record YJackCore in `.claude/docs/technical-preferences.md`
+- Record YJackCore in `.agents/docs/technical-preferences.md`
 - Record the package source: UPM git URL, local path, or submodule path
 - Add YJackCore and Odin Inspector to allowed libraries only when actually used
 - Route framework architecture questions through YJackCore guidance plus the

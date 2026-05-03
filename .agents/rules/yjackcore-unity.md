@@ -10,7 +10,7 @@ paths:
 Apply these rules only when the project uses YJackCore or the edited path is a
 YJackCore package path.
 
-- Read `.claude/docs/yjackcore-support.md` before designing or reviewing Unity
+- Read `.agents/docs/yjackcore-support.md` before designing or reviewing Unity
   architecture for a YJackCore-backed project.
 - If a local YJackCore package or checkout is available, prefer its own
   `AGENTS.md`, `.agents/skills/*`, `.ai/commands/*`, docs, package metadata,

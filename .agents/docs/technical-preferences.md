@@ -10,6 +10,17 @@
 - **Rendering**: [TO BE CONFIGURED]
 - **Physics**: [TO BE CONFIGURED]
 
+## Framework Integration
+
+<!-- Optional. Populate when this project uses a framework/package such as YJackCore. -->
+
+- **Framework**: [None configured — e.g., YJackCore]
+- **Framework Source**: [TO BE CONFIGURED — UPM URL, local package path, or git submodule path]
+- **Framework Version**: [TO BE CONFIGURED]
+- **Framework Docs**: [TO BE CONFIGURED — e.g., .agents/docs/yjackcore-support.md]
+- **Framework Rules**: [TO BE CONFIGURED — project-specific rules agents must follow]
+- **Framework Routing Notes**: [TO BE CONFIGURED]
+
 ## Input & Platform
 
 <!-- Written by /setup-engine. Read by /ux-design, /ux-review, /test-setup, /team-ui, and /dev-story -->
