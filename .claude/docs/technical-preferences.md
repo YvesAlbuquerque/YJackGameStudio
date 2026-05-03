@@ -17,7 +17,7 @@
 - **Framework**: [None configured — e.g., YJackCore]
 - **Framework Source**: [TO BE CONFIGURED — UPM URL, local package path, or git submodule path]
 - **Framework Version**: [TO BE CONFIGURED]
-- **Framework Docs**: [TO BE CONFIGURED — e.g., docs/frameworks/yjackcore.md]
+- **Framework Docs**: [TO BE CONFIGURED — e.g., .claude/docs/yjackcore-support.md]
 - **Framework Rules**: [TO BE CONFIGURED — project-specific rules agents must follow]
 - **Framework Routing Notes**: [TO BE CONFIGURED]
 
