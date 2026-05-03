@@ -58,7 +58,7 @@ equivalent behavior using `.agents/docs/tool-compatibility.md`.
 
 ## Personal Taste Profile
 
-Yves' personal taste profile lives at `.agents/docs/yves-taste-profile.md`.
+Yves' personal taste profile lives at `.agents/docs/yves_taste_profile.md`.
 Use it when the task has a subjective taste component, such as recommendations,
 game concept direction, art direction, narrative tone, world-building style,
 media comparisons, UX mood, or aesthetic tradeoffs.
