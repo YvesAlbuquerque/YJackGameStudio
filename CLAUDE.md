@@ -20,7 +20,10 @@ only when Claude Code compatibility requires it.
 
 ## Framework Integration
 
-<!-- When a framework is configured (e.g., YJackCore for Unity projects), additional guidance will be listed here. -->
+No framework-specific integration guidance is enabled by default.
+Add framework support docs only when the project actually uses them.
+For example, include `@.claude/docs/yjackcore-support.md` only after
+`/setup-engine` selects or detects YJackCore for this project.
 
 If `.claude/docs/technical-preferences.md` contains `- **Framework**: YJackCore` in the Framework Integration section, read:
 
