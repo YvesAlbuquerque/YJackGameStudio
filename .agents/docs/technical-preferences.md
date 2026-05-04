@@ -12,14 +12,25 @@
 
 ## Framework Integration
 
-<!-- Optional. Populate when this project uses a framework/package such as YJackCore. -->
+<!-- Optional. Populate when this project uses a framework/package such as YJackCore.      -->
+<!-- For YJackCore: run /setup-engine with Unity and specify YJackCore as the framework.   -->
+<!-- The filled section for a YJackCore project would look like:                           -->
+<!--   Framework: YJackCore                                                                 -->
+<!--   Framework Source: UPM git URL | Packages/com.ygamedev.yjack (submodule) | ../YJackCore (sibling) -->
+<!--   Framework Version: 1.6.0                                                            -->
+<!--   Framework Docs: .agents/docs/yjackcore-support.md                                  -->
+<!--   Framework Rules: .agents/rules/yjackcore-unity.md                                  -->
+<!--   Framework Routing Notes: Route all YJackCore layer/boundary tasks through           -->
+<!--     YJackCore guidance first; fall back to unity-specialist for engine API questions. -->
+<!-- For non-trivial layouts (sibling/submodule/vendor/inline) also create                 -->
+<!-- .yjack-workspace.json at the project root (template: .agents/docs/templates/).        -->
 
-- **Framework**: [None configured — e.g., YJackCore]
-- **Framework Source**: [TO BE CONFIGURED — UPM URL, local package path, or git submodule path]
-- **Framework Version**: [TO BE CONFIGURED]
-- **Framework Docs**: [TO BE CONFIGURED — e.g., .agents/docs/yjackcore-support.md]
-- **Framework Rules**: [TO BE CONFIGURED — project-specific rules agents must follow]
-- **Framework Routing Notes**: [TO BE CONFIGURED]
+- **Framework**: [None configured]
+- **Framework Source**: [None configured]
+- **Framework Version**: [None configured]
+- **Framework Docs**: [None configured]
+- **Framework Rules**: [None configured]
+- **Framework Routing Notes**: [None configured]
 
 ## Input & Platform
 

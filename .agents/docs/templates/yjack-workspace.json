@@ -1,0 +1,21 @@
+{
+  "_comment": "YJackCore workspace manifest. Place this file at your Unity project root. Remove fields that do not apply to your layout.",
+
+  "layout": "submodule",
+
+  "packageName": "com.ygamedev.yjack",
+
+  "version": "1.6.0",
+
+  "unityVersion": "6000.0",
+
+  "packagePath": "Packages/com.ygamedev.yjack",
+
+  "agentsPath": "Packages/com.ygamedev.yjack/AGENTS.md",
+
+  "upmSource": "",
+
+  "siblingPath": "",
+
+  "notes": ""
+}

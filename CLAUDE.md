@@ -29,6 +29,8 @@ If `.claude/docs/technical-preferences.md` contains `- **Framework**: YJackCore`
 
 @.claude/docs/yjackcore-support.md
 
+@.claude/docs/yjackcore-consumer-authority.md
+
 ## Coordination Rules
 
 @.claude/docs/coordination-rules.md

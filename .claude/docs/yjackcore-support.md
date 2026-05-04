@@ -5,14 +5,17 @@ the user asks this template to adapt to YJackCore rules.
 
 ## Detection
 
-Treat a project as YJackCore-backed if any of these are true:
+Check in this order. Stop at the first positive signal.
 
-- `Packages/manifest.json` contains `com.ygamedev.yjack` or `YJackCore`
-- a local package exists at `Packages/YJackCore/package.json`
-- a git submodule path points to `YJackCore`
-- `.claude/docs/technical-preferences.md` contains `- **Framework**: YJackCore` in the Framework Integration section
-- technical preferences name a YJackCore package source, local path, or submodule
-- the user explicitly says the game uses YJackCore
+1. `.yjack-workspace.json` at the project root — read it to resolve layout and
+   local paths before any other step (see `.claude/docs/yjackcore-consumer-authority.md` §3)
+2. `Packages/manifest.json` contains `com.ygamedev.yjack` or `YJackCore`
+3. A local package exists at `Packages/YJackCore/package.json`
+4. A local package exists at `Packages/com.ygamedev.yjack/package.json`
+5. A git submodule path points to `YJackCore`
+6. `.claude/docs/technical-preferences.md` contains `- **Framework**: YJackCore` in the Framework Integration section
+7. Technical preferences name a YJackCore package source, local path, or submodule
+8. The user explicitly says the game uses YJackCore
 
 A sibling checkout such as `../YJackCore` may be used as reference material only
 after confirming it is the intended framework source or the closest available
@@ -147,10 +150,20 @@ For architecture-sensitive YJackCore work, include:
 
 When configuring a project for YJackCore:
 
-- Set engine to Unity and language to C#
+- Set engine to Unity (6000.0 or the version in use) and language to C#
 - Record YJackCore in `.claude/docs/technical-preferences.md`
-- Record the package source: UPM git URL, local path, or submodule path
+  - `Framework: YJackCore`
+  - `Framework Source`: UPM git URL, local path `Packages/com.ygamedev.yjack`, or submodule path
+  - `Framework Version: 1.6.0` (or the installed version)
+  - `Framework Docs: .claude/docs/yjackcore-support.md`
+  - `Framework Rules: .claude/rules/yjackcore-unity.md`
+  - `Framework Routing Notes`: route all layer/boundary tasks through YJackCore guidance first
+- If the layout is non-trivial (sibling, submodule, vendor, or inline), create
+  `.yjack-workspace.json` at the project root using the template at
+  `.agents/docs/templates/yjack-workspace.json`
 - Add YJackCore and Odin Inspector to allowed libraries only when actually used
 - Route framework architecture questions through YJackCore guidance plus the
   Unity specialist, in that order
 - Keep engine reference docs pinned to the Unity version used by the host project
+- Review `.claude/docs/yjackcore-consumer-authority.md` to understand the
+  authority hierarchy, workspace routing, and manual validation expectations

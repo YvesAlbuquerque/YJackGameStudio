@@ -7,9 +7,15 @@ paths:
 
 # YJackCore Unity Rules
 
-Apply these rules only when the project uses YJackCore or the edited path is a
-YJackCore package path.
+Apply these rules when the project uses YJackCore (including when editing YJackCore
+package paths).
 
+- Before any YJackCore task, check for `.yjack-workspace.json` at the project
+  root. If present, read it to resolve the package layout and local authority
+  paths before proceeding.
+- Read `.agents/docs/yjackcore-consumer-authority.md` to understand the
+  framework-vs-product authority hierarchy, workspace routing, and manual
+  Unity validation expectations.
 - Read `.agents/docs/yjackcore-support.md` before designing or reviewing Unity
   architecture for a YJackCore-backed project.
 - If a local YJackCore package or checkout is available, prefer its own

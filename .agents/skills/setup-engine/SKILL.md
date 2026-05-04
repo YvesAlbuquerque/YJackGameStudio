@@ -268,6 +268,14 @@ Also populate the `## Engine Specialists` section in `technical-preferences.md` 
 | General architecture review | unity-specialist |
 ```
 
+If YJackCore is configured, append this to the Unity routing notes:
+
+```markdown
+- **Framework Specialist Rule**: For YJackCore-backed projects, `unity-specialist`
+  must read `.agents/docs/yjackcore-support.md` and apply YJackCore layer
+  boundaries before proposing new managers, wrappers, or bootstrap systems.
+```
+
 **For Unreal:**
 ```markdown
 ## Engine Specialists

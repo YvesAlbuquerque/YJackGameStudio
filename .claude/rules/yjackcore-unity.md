@@ -1,16 +1,22 @@
 ---
 paths:
+  - "src/**"
   - "Packages/YJackCore/**"
   - "Packages/com.ygamedev.yjack/**"
 ---
 
 # YJackCore Unity Rules
 
-Apply these rules only when the project uses YJackCore and the edited path is a
-YJackCore package path. For host-game code in `src/` that integrates with
-YJackCore, the unity-specialist agent will read `.claude/docs/yjackcore-support.md`
-when technical preferences indicate YJackCore is active.
+Apply these rules when the project uses YJackCore (including when editing YJackCore
+package paths). For host-game code in `src/` that integrates with YJackCore,
+these rules apply whenever technical preferences indicate YJackCore is active.
 
+- Before any YJackCore task, check for `.yjack-workspace.json` at the project
+  root. If present, read it to resolve the package layout and local authority
+  paths before proceeding.
+- Read `.claude/docs/yjackcore-consumer-authority.md` to understand the
+  framework-vs-product authority hierarchy, workspace routing, and manual
+  Unity validation expectations.
 - Read `.claude/docs/yjackcore-support.md` before designing or reviewing Unity
   architecture for a YJackCore-backed project.
 - If a local YJackCore package or checkout is available, prefer its own

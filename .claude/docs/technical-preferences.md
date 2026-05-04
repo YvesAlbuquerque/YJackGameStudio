@@ -12,7 +12,18 @@
 
 ## Framework Integration
 
-<!-- Optional. Populate when this project uses a framework/package such as YJackCore. -->
+<!-- Optional. Populate when this project uses a framework/package such as YJackCore.      -->
+<!-- For YJackCore: run /setup-engine with Unity and specify YJackCore as the framework.   -->
+<!-- The filled section for a YJackCore project would look like:                           -->
+<!--   Framework: YJackCore                                                                 -->
+<!--   Framework Source: UPM git URL | Packages/com.ygamedev.yjack (submodule) | ../YJackCore (sibling) -->
+<!--   Framework Version: 1.6.0                                                            -->
+<!--   Framework Docs: .claude/docs/yjackcore-support.md                                  -->
+<!--   Framework Rules: .claude/rules/yjackcore-unity.md                                  -->
+<!--   Framework Routing Notes: Route all YJackCore layer/boundary tasks through           -->
+<!--     YJackCore guidance first; fall back to unity-specialist for engine API questions. -->
+<!-- For non-trivial layouts (sibling/submodule/vendor/inline) also create                 -->
+<!-- .yjack-workspace.json at the project root (template: .agents/docs/templates/).        -->
 
 - **Framework**: [None configured]
 - **Framework Source**: [None configured]
