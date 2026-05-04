@@ -1,0 +1,220 @@
+name: "Epic"
+description: "A large, owner-scoped work item that spans multiple stories or agent shards."
+title: "[Epic] "
+labels:
+  - "type:epic"
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Epic — Owner-Scoped Work Contract
+        An epic defines a high-level deliverable that the owner is committing to.
+        Break it into **Stories** before autonomous execution begins.
+        See [Label Taxonomy](https://github.com/YvesAlbuquerque/Claude-Code-Game-Studios/blob/main/.github/LABELS.md) for valid label values.
+
+  - type: input
+    id: epic_id
+    attributes:
+      label: Epic ID
+      description: "Stable identifier (e.g. EPIC-001 or AUTO-007). Used for cross-referencing."
+      placeholder: "EPIC-001"
+    validations:
+      required: true
+
+  - type: input
+    id: owner
+    attributes:
+      label: Owner
+      description: "Who is accountable for this epic? The person who approves outputs and accepts risk."
+      placeholder: "@YvesAlbuquerque"
+    validations:
+      required: true
+
+  - type: textarea
+    id: outputs
+    attributes:
+      label: Outputs
+      description: "What artifacts does this epic produce? List every deliverable an agent should hand off."
+      placeholder: |
+        - `design/systems/crafting.md` (approved GDD)
+        - `src/systems/crafting/` (implemented and tested)
+        - `tests/evidence/EPIC-001/` (validation evidence)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: risk_tier
+    attributes:
+      label: Risk Tier
+      description: "Approval boundary for decisions taken while executing this epic."
+      options:
+        - "LOW — routine; agents execute autonomously within approved scope"
+        - "MEDIUM — significant impact; requires owner review before proceeding"
+        - "HIGH — critical, irreversible, or cross-boundary; always escalates"
+    validations:
+      required: true
+
+  - type: textarea
+    id: escalation_conditions
+    attributes:
+      label: Escalation Conditions
+      description: "What specific situations must an agent stop and escalate to the owner?"
+      placeholder: |
+        - Any change to the recipe data schema
+        - Scope additions that touch systems outside `src/systems/crafting/`
+        - Any dependency on an unapproved third-party library
+    validations:
+      required: true
+
+  - type: textarea
+    id: owner_intent
+    attributes:
+      label: Owner Intent
+      description: "What outcome does the owner want? State in plain language — agents derive scope from this."
+      placeholder: "Ship the crafting system MVP so players can combine three base ingredients into one output item."
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: "What is included and explicitly excluded from this epic?"
+      placeholder: |
+        **In scope:**
+        - Recipe data model
+        - Crafting UI (modal only)
+
+        **Out of scope:**
+        - Ingredient sourcing / gathering loop
+        - Multiplayer sync
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: "Checklist of verifiable outcomes. Each item should be testable by an agent."
+      placeholder: |
+        - [ ] Player can open crafting modal from inventory
+        - [ ] Combining three matching ingredients produces the correct output item
+        - [ ] Invalid combinations surface an error message
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: "Other epics, stories, or external blockers that must be resolved first."
+      placeholder: |
+        - EPIC-002 (Inventory system) — must be merged
+        - Design GDD: `design/systems/crafting.md` — must be approved
+    validations:
+      required: false
+
+  - type: textarea
+    id: write_set
+    attributes:
+      label: Write Set (File Ownership)
+      description: "Directories or files that stories under this epic will write to. Used for conflict detection."
+      placeholder: |
+        - `src/systems/crafting/`
+        - `design/systems/crafting.md`
+        - `production/sprints/`
+    validations:
+      required: true
+
+  - type: dropdown
+    id: autonomy_tier
+    attributes:
+      label: Autonomy Tier
+      description: "Maximum autonomy level permitted for stories under this epic."
+      options:
+        - "auto:low — agents execute, owner approves all outputs"
+        - "auto:medium — agents execute LOW decisions autonomously; MEDIUM requires approval"
+        - "auto:high — agents execute LOW+MEDIUM autonomously; HIGH always escalates"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - "priority:critical"
+        - "priority:high"
+        - "priority:medium"
+        - "priority:low"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: effort
+    attributes:
+      label: Estimated Effort
+      options:
+        - "effort:XL — > 5 days, requires phase planning"
+        - "effort:L — 3–5 days, requires decomposition"
+        - "effort:M — 1–3 days"
+        - "effort:S — < 1 day"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: phase
+    attributes:
+      label: Phase
+      options:
+        - "phase:concept"
+        - "phase:pre-production"
+        - "phase:production"
+        - "phase:alpha"
+        - "phase:beta"
+        - "phase:release"
+        - "phase:post-launch"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: domain
+    attributes:
+      label: Domain
+      options:
+        - "domain:design"
+        - "domain:architecture"
+        - "domain:implementation"
+        - "domain:qa"
+        - "domain:infrastructure"
+        - "domain:narrative"
+        - "domain:art"
+        - "domain:audio"
+        - "domain:ui"
+        - "domain:live-ops"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: yjackcore
+    attributes:
+      label: YJackCore Alignment
+      description: "Check if this epic touches YJackCore layers or package boundaries."
+      options:
+        - label: "Involves YJackCore layer boundary (see `yjackcore:layer` label)"
+        - label: "Involves YJackCore package boundary (see `yjackcore:package` label)"
+        - label: "Involves host-game / YJackCore separation concern"
+
+  - type: textarea
+    id: handoff
+    attributes:
+      label: Handoff Criteria
+      description: "What must be true for this epic to be marked DONE and ownership released?"
+      placeholder: |
+        - All child stories are VALIDATED
+        - Acceptance criteria above are all checked off
+        - No open blockers remain
+        - Owner has reviewed and approved the sprint report
+    validations:
+      required: false

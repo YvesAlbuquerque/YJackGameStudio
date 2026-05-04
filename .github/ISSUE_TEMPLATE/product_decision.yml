@@ -1,0 +1,169 @@
+name: "Product Decision"
+description: "Record an owner decision or an escalated agent question requiring owner approval."
+title: "[Decision] "
+labels:
+  - "type:decision"
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Product Decision
+        Use this template when an agent must escalate a decision to the owner,
+        or when the owner wants to formally record a product or architectural decision.
+        See [Label Taxonomy](https://github.com/YvesAlbuquerque/Claude-Code-Game-Studios/blob/main/.github/LABELS.md) for valid label values.
+
+  - type: input
+    id: decision_id
+    attributes:
+      label: Decision ID
+      description: "Stable identifier (e.g. DEC-005). Used for traceability."
+      placeholder: "DEC-005"
+    validations:
+      required: false
+
+  - type: input
+    id: related_issue
+    attributes:
+      label: Related Issue / Work Item
+      description: "The story, shard, or epic that triggered this decision. Use the issue number."
+      placeholder: "#55 or STORY-014"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: decision_type
+    attributes:
+      label: Decision Type
+      options:
+        - "escalation — agent hit approval boundary and needs owner direction"
+        - "product — owner is recording a product or design choice"
+        - "architecture — owner is recording a technical or architectural choice"
+        - "scope-change — work item scope is changing; owner must re-approve"
+        - "risk-acceptance — owner is accepting an identified risk"
+        - "risk-rejection — owner is rejecting a proposed approach due to risk"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: risk_tier
+    attributes:
+      label: Risk Tier
+      description: "Approval boundary classification for this decision."
+      options:
+        - "LOW — routine; can be executed autonomously within approved scope"
+        - "MEDIUM — significant impact; requires owner review before proceeding"
+        - "HIGH — critical, irreversible, or cross-boundary impact; always escalates"
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: "What situation prompted this decision? What information is relevant?"
+      placeholder: |
+        The recipe resolver needs to handle ingredient stacking. Two approaches exist:
+        1. Resolve stacks as multiples of a single ingredient
+        2. Treat stacked items as a separate ingredient type
+        Both approaches are compatible with the current data model, but have different
+        implications for future balancing.
+    validations:
+      required: true
+
+  - type: textarea
+    id: options_considered
+    attributes:
+      label: Options Considered
+      description: "What alternatives were evaluated? Include pros and cons."
+      placeholder: |
+        **Option A — Resolve stacks as multiples**
+        - Pro: simpler resolver logic
+        - Con: requires UI changes to communicate stack counts
+
+        **Option B — Treat stacks as separate ingredient type**
+        - Pro: no UI changes needed
+        - Con: recipe table doubles in size; harder to author
+    validations:
+      required: false
+
+  - type: textarea
+    id: decision
+    attributes:
+      label: Decision
+      description: "What was decided? Leave blank if this is an escalation awaiting owner input."
+      placeholder: "Proceed with Option A. Owner accepts the UI complexity trade-off."
+    validations:
+      required: false
+
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Rationale
+      description: "Why was this decision made?"
+      placeholder: "Option A keeps the recipe table simple and aligns with the low-code authoring model."
+    validations:
+      required: false
+
+  - type: textarea
+    id: consequences
+    attributes:
+      label: Consequences
+      description: "What downstream impact does this decision have? What follow-up work is needed?"
+      placeholder: |
+        - STORY-015 (Crafting UI) must be updated to show stack counts
+        - Crafting GDD §4 must be updated to reflect the decision
+    validations:
+      required: false
+
+  - type: dropdown
+    id: status
+    attributes:
+      label: Decision Status
+      description: "Current lifecycle status. The issue-labels workflow will apply the corresponding `status:*` label."
+      options:
+        - "status:proposed — awaiting owner response"
+        - "status:approved — owner has made a decision; work can proceed"
+        - "status:deferred — decision postponed; work continues with current approach"
+        - "status:closed — superseded by a later decision or fully resolved"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - "priority:critical"
+        - "priority:high"
+        - "priority:medium"
+        - "priority:low"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: domain
+    attributes:
+      label: Domain
+      options:
+        - "domain:design"
+        - "domain:architecture"
+        - "domain:implementation"
+        - "domain:qa"
+        - "domain:infrastructure"
+        - "domain:narrative"
+        - "domain:art"
+        - "domain:audio"
+        - "domain:ui"
+        - "domain:live-ops"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: yjackcore
+    attributes:
+      label: YJackCore Alignment
+      options:
+        - label: "Decision affects YJackCore layer boundary"
+        - label: "Decision affects YJackCore package boundary"
+        - label: "Decision affects host-game / YJackCore separation"

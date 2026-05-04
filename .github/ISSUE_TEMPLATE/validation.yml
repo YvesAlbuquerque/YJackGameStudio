@@ -1,0 +1,142 @@
+name: "Validation Report"
+description: "Document the outcome of an autonomous or manual validation gate for a story, shard, or epic."
+title: "[Validation] "
+labels:
+  - "type:validation"
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Validation Report
+        Record the result of a validation gate. Link this issue to the story or shard being validated.
+        See [Label Taxonomy](https://github.com/YvesAlbuquerque/Claude-Code-Game-Studios/blob/main/.github/LABELS.md) for valid label values.
+
+  - type: input
+    id: validation_id
+    attributes:
+      label: Validation ID
+      description: "Stable identifier (e.g. VAL-003)."
+      placeholder: "VAL-003"
+    validations:
+      required: true
+
+  - type: input
+    id: target_issue
+    attributes:
+      label: Target Issue
+      description: "The story, shard, or epic being validated. Use the issue number."
+      placeholder: "#55 or STORY-014"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: validation_type
+    attributes:
+      label: Validation Type
+      options:
+        - "automated — CI / test runner"
+        - "agent-review — peer agent code or design review"
+        - "owner-review — owner manual review"
+        - "gate-check — phase gate readiness"
+        - "regression — regression suite run"
+        - "smoke — smoke test run"
+        - "soak — soak / stability test"
+        - "playtest — playtest session"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: verdict
+    attributes:
+      label: Verdict
+      options:
+        - "PASS — all criteria met"
+        - "PASS WITH NOTES — criteria met; minor issues logged"
+        - "CONCERNS — criteria partially met; owner review needed"
+        - "FAIL — one or more criteria not met; work item blocked"
+    validations:
+      required: true
+
+  - type: textarea
+    id: criteria_checked
+    attributes:
+      label: Criteria Checked
+      description: "List each acceptance criterion and its result."
+      placeholder: |
+        - [x] `RecipeResolver.Resolve` returns correct output — PASS
+        - [x] Invalid combinations return null — PASS
+        - [ ] Unit test coverage ≥ 80% — FAIL (current: 71%)
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: "Links to test output, CI run, screenshots, or committed evidence files."
+      placeholder: |
+        - CI run: https://github.com/…/actions/runs/…
+        - Evidence path: `tests/evidence/STORY-014/`
+        - Screenshot: (attach below)
+    validations:
+      required: false
+
+  - type: textarea
+    id: issues_found
+    attributes:
+      label: Issues Found
+      description: "List any defects, risks, or concerns discovered during validation."
+      placeholder: |
+        - Test coverage for null-input path is missing (low severity)
+        - Performance on large recipe tables not benchmarked (medium risk)
+    validations:
+      required: false
+
+  - type: textarea
+    id: recommended_action
+    attributes:
+      label: Recommended Action
+      description: "What should happen next? Escalate, fix, accept risk, or close?"
+      placeholder: |
+        - Open a follow-up story to add null-input coverage (STORY-016)
+        - Accept performance risk for MVP; schedule benchmarking post-alpha
+    validations:
+      required: false
+
+  - type: dropdown
+    id: autonomy_tier
+    attributes:
+      label: Autonomy Tier of Validated Item
+      options:
+        - "auto:low"
+        - "auto:medium"
+        - "auto:high"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: domain
+    attributes:
+      label: Domain
+      options:
+        - "domain:implementation"
+        - "domain:design"
+        - "domain:architecture"
+        - "domain:qa"
+        - "domain:infrastructure"
+        - "domain:narrative"
+        - "domain:art"
+        - "domain:audio"
+        - "domain:ui"
+        - "domain:live-ops"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: yjackcore
+    attributes:
+      label: YJackCore Alignment
+      options:
+        - label: "Validation involved YJackCore layer boundary checks"
+        - label: "Validation involved YJackCore package boundary checks"

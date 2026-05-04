@@ -1,0 +1,251 @@
+name: "Story"
+description: "An implementable unit of work scoped to a single agent specialist. Child of an Epic."
+title: "[Story] "
+labels:
+  - "type:story"
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Story — Agent Work Unit
+        A story is the smallest independently executable unit. It targets one specialist agent,
+        has a defined write set, and carries its own acceptance criteria.
+        See [Label Taxonomy](https://github.com/YvesAlbuquerque/Claude-Code-Game-Studios/blob/main/.github/LABELS.md) for valid label values.
+
+  - type: input
+    id: owner
+    attributes:
+      label: Owner
+      description: "Who commissioned this story and approves its output?"
+      placeholder: "@YvesAlbuquerque"
+    validations:
+      required: true
+
+  - type: textarea
+    id: outputs
+    attributes:
+      label: Outputs
+      description: "What artifacts does this story produce? Every deliverable the agent must hand off."
+      placeholder: |
+        - `src/systems/crafting/RecipeResolver.cs`
+        - `tests/systems/crafting/RecipeResolverTests.cs`
+        - `tests/evidence/STORY-014/` (test run output)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: risk_tier
+    attributes:
+      label: Risk Tier
+      description: "Approval boundary for decisions taken while executing this story."
+      options:
+        - "LOW — routine; agents execute autonomously within approved scope"
+        - "MEDIUM — significant impact; requires owner review before proceeding"
+        - "HIGH — critical, irreversible, or cross-boundary; always escalates"
+    validations:
+      required: true
+
+  - type: textarea
+    id: escalation_conditions
+    attributes:
+      label: Escalation Conditions
+      description: "What specific situations must the agent stop and escalate to the owner?"
+      placeholder: |
+        - Any change to the `RecipeData` schema
+        - Scope additions outside the declared write set
+        - Test failures that cannot be resolved without changing the design
+    validations:
+      required: true
+
+  - type: input
+    id: story_id
+    attributes:
+      label: Story ID
+      description: "Stable identifier (e.g. STORY-014). Used for cross-referencing."
+      placeholder: "STORY-014"
+    validations:
+      required: true
+
+  - type: input
+    id: parent_epic
+    attributes:
+      label: Parent Epic
+      description: "The epic this story belongs to. Use the epic issue number or ID."
+      placeholder: "#42 or EPIC-001"
+    validations:
+      required: false
+
+  - type: textarea
+    id: owner_intent
+    attributes:
+      label: Owner Intent
+      description: "What outcome does this story deliver? One or two sentences from the owner's perspective."
+      placeholder: "Implement the recipe resolver so that combining ingredients returns the correct output item."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: specialist_agent
+    attributes:
+      label: Specialist Agent
+      description: "Which agent role should execute this story?"
+      options:
+        - "team:combat"
+        - "team:level"
+        - "team:ui"
+        - "team:narrative"
+        - "team:audio"
+        - "team:qa"
+        - "team:live-ops"
+        - "team:release"
+        - "team:polish"
+        - "copilot (general)"
+        - "other (specify in notes)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: "What this story covers and what it does NOT cover."
+      placeholder: |
+        **In scope:**
+        - `RecipeResolver.Resolve(ingredients)` method
+        - Unit tests for valid and invalid combinations
+
+        **Out of scope:**
+        - UI wiring (covered in STORY-015)
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: "Verifiable checklist. Each item should be confirmable by an automated test or agent review."
+      placeholder: |
+        - [ ] `RecipeResolver.Resolve` returns the correct output for all defined recipes
+        - [ ] Invalid combinations return `null` and do not throw
+        - [ ] Unit test coverage ≥ 80% for `RecipeResolver`
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: "Other stories, issues, or artifacts that must be complete before work begins."
+      placeholder: |
+        - STORY-012 (Recipe data model) — must be merged
+        - `design/systems/crafting.md` — approved GDD section §3
+    validations:
+      required: false
+
+  - type: textarea
+    id: write_set
+    attributes:
+      label: Write Set (File Ownership)
+      description: "Files or directories this story will create or modify. Used for conflict detection."
+      placeholder: |
+        - `src/systems/crafting/RecipeResolver.cs`
+        - `tests/systems/crafting/RecipeResolverTests.cs`
+    validations:
+      required: true
+
+  - type: textarea
+    id: read_set
+    attributes:
+      label: Read Set (Input Artifacts)
+      description: "Files or artifacts the agent must read before executing. Referenced docs, schemas, specs."
+      placeholder: |
+        - `design/systems/crafting.md` §3 — recipe table
+        - `src/systems/crafting/RecipeData.cs` — data model
+    validations:
+      required: false
+
+  - type: dropdown
+    id: autonomy_tier
+    attributes:
+      label: Autonomy Tier
+      description: "The maximum autonomy level for this story."
+      options:
+        - "auto:low — agents execute, owner approves all outputs"
+        - "auto:medium — agents execute LOW decisions autonomously; MEDIUM requires approval"
+        - "auto:high — agents execute LOW+MEDIUM autonomously; HIGH always escalates"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - "priority:critical"
+        - "priority:high"
+        - "priority:medium"
+        - "priority:low"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: effort
+    attributes:
+      label: Estimated Effort
+      options:
+        - "effort:L — 3–5 days, requires decomposition"
+        - "effort:M — 1–3 days"
+        - "effort:S — < 1 day"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: domain
+    attributes:
+      label: Domain
+      options:
+        - "domain:implementation"
+        - "domain:design"
+        - "domain:architecture"
+        - "domain:qa"
+        - "domain:infrastructure"
+        - "domain:narrative"
+        - "domain:art"
+        - "domain:audio"
+        - "domain:ui"
+        - "domain:live-ops"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: yjackcore
+    attributes:
+      label: YJackCore Alignment
+      description: "Check if this story touches YJackCore layers or package boundaries."
+      options:
+        - label: "Involves YJackCore layer boundary"
+        - label: "Involves YJackCore package boundary"
+        - label: "Involves host-game / YJackCore separation concern"
+
+  - type: textarea
+    id: test_evidence
+    attributes:
+      label: Test Evidence Path
+      description: "Where should the agent write test output or evidence files?"
+      placeholder: "tests/evidence/STORY-014/"
+    validations:
+      required: false
+
+  - type: textarea
+    id: handoff
+    attributes:
+      label: Handoff Criteria
+      description: "What must be true for this story to be marked DONE and the agent to release ownership?"
+      placeholder: |
+        - All acceptance criteria checked off
+        - PR opened and linked to this issue
+        - Test evidence committed to evidence path
+        - No linter or build errors
+    validations:
+      required: false

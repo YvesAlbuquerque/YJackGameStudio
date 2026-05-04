@@ -2,7 +2,7 @@
 name: Bug Report
 about: Something isn't working as expected
 title: "[Bug] "
-labels: bug
+labels: bug, type:bug
 assignees: ''
 ---
 
@@ -46,6 +46,15 @@ What actually happened. Include any error messages or unexpected output.
 - [ ] Template
 - [ ] Documentation
 - [ ] Other:
+
+## Autonomous Work Context
+
+_Fill in if this bug was discovered during or blocks autonomous work._
+
+- **Related issue / work item**: <!-- #issue-number or STORY-/SHARD-/EPIC-ID -->
+- **Autonomy tier of affected item**: <!-- auto:low / auto:medium / auto:high / N/A -->
+- **Blocks autonomous execution?**: Yes / No
+- **Write set affected**: <!-- files the bug report touches, if known -->
 
 ## Additional Context
 
