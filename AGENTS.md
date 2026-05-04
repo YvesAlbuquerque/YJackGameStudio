@@ -95,8 +95,8 @@ The owner may set an autonomy mode that controls the delegation surface — the
 set of decisions agents may execute without pausing for owner review. The active
 mode is stored in `production/autonomy-config.md`.
 
-| Mode | Tag | Behaviour |
-|------|-----|-----------|
+| Mode | Tag | Behavior |
+|------|-----|----------|
 | Guided | `GUIDED` | Default. Every decision surfaced. Classic collaborative loop. |
 | Supervised | `SUPERVISED` | LOW-risk actions execute autonomously. MEDIUM and HIGH require owner approval. |
 | Autonomous | `AUTONOMOUS` | LOW and MEDIUM actions execute autonomously. HIGH always requires owner approval. |

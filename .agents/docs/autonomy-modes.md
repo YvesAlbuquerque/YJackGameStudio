@@ -41,8 +41,9 @@ use; see [Configuration File Format](#configuration-file-format) below).
 Agents read this file at the start of every session. If the file is absent, the
 mode defaults to `GUIDED`.
 
-The owner may change the mode at any time by editing `production/autonomy-config.md`
-or by asking an agent to set it:
+The owner may change the mode at any time by editing `production/autonomy-config.md`.
+File edits take effect at the start of the next session. To switch modes
+immediately within the current session, ask any agent to apply the change:
 
 ```
 "Set autonomy mode to SUPERVISED for this session."
@@ -50,9 +51,10 @@ or by asking an agent to set it:
 "Return to GUIDED mode."
 ```
 
-Changing the mode takes effect immediately for the current session and all
-subsequent sessions until changed again. In-flight work is not interrupted;
-the new boundary applies to the next pending decision.
+An in-session instruction takes effect immediately for the remainder of the
+session. It does not modify `production/autonomy-config.md` unless the owner
+asks to persist the change. In-flight work is not interrupted; the new boundary
+applies to the next pending decision.
 
 ---
 
@@ -64,7 +66,7 @@ All agent decisions and actions are classified into three risk tiers.
 
 | Category | Examples |
 |----------|---------|
-| Read-only analysis | Analyzing existing files, summarising docs, consistency checks |
+| Read-only analysis | Analyzing existing files, summarizing docs, consistency checks |
 | Internal planning | Decomposing tasks, writing a sprint plan draft, generating a checklist |
 | Non-persistent drafts | Holding a design draft in memory before owner reviews it |
 | Formatting / linting | Whitespace fixes, import ordering, comment updates |
@@ -107,8 +109,8 @@ The table below shows exactly what agents may do without asking the owner.
 
 | Action | GUIDED | SUPERVISED | AUTONOMOUS |
 |--------|--------|------------|------------|
-| Read files, analyse, summarise | Ask first | ✅ Auto | ✅ Auto |
-| Draft in memory (not written) | Ask first | ✅ Auto | ✅ Auto |
+| Read files, analyze, summarize | ✅ Always | ✅ Always | ✅ Always |
+| Draft in memory (not written) | ✅ Always | ✅ Always | ✅ Always |
 | Write status / session-state files | Ask first | ✅ Auto | ✅ Auto |
 | Write design / GDD sections | Ask first | Ask first | ✅ Auto |
 | Write agent config / preferences | Ask first | Ask first | ✅ Auto |
@@ -123,7 +125,9 @@ The table below shows exactly what agents may do without asking the owner.
 | Commit a sprint backlog | Ask first | Ask first | Ask first |
 
 > "Ask first" means the agent must surface the decision to the owner and wait
-> for explicit approval before proceeding.
+> for explicit approval before proceeding. Read-only access (inspecting files,
+> analyzing content, summarizing) is always allowed in every mode; agents must
+> be able to inspect the repository before asserting structure or intent.
 
 ---
 
@@ -295,7 +299,7 @@ autonomy mode:
 
 ## Configuration File Format
 
-`production/autonomy-config.md` stores the active mode and session overrides.
+`production/autonomy-config.md` stores the active mode and per-skill overrides.
 
 ```markdown
 # Autonomy Configuration
@@ -330,7 +334,7 @@ If `production/autonomy-config.md` does not exist, agents default to `GUIDED`.
 
 ### Review Modes (`production/review-mode.txt`)
 
-The review mode (`full`, `lean`, `solo`) in `director-gates.md` controls whether
+The review mode (`full`, `lean`, `solo`) in `.agents/docs/director-gates.md` controls whether
 director review gates fire inside skills. Autonomy mode and review mode are
 orthogonal controls:
 

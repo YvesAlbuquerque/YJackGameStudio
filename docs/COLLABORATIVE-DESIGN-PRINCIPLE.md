@@ -730,6 +730,6 @@ This principle has been fully embedded across the project:
 - **All 48 agent definitions** — Updated to enforce question-asking and approval
 - **All skills** — Updated to require approval before writing
 - **WORKFLOW-GUIDE.md** — Rewritten with collaborative examples
-- **README.md** — Clarifies collaborative (not autonomous) design
+- **README.md** — Clarifies collaborative model and introduces autonomy modes extension
 - **AskUserQuestion tool** — Integrated into 16 skills for structured option UI
 - **`.agents/docs/autonomy-modes.md`** — Autonomy modes specification (AUTO-001)
