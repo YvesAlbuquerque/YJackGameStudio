@@ -378,7 +378,8 @@ def parse_args():
     p.add_argument("--id", dest="task_id", metavar="ID",
                    help="Only process the task with this ID.")
     p.add_argument("--status", dest="status", metavar="STATUS", default="APPROVED",
-                   help="Only process tasks with this status (default: APPROVED).")
+                   help="Only process tasks with this status (default: APPROVED). "
+                        "Valid values: PROPOSED, APPROVED, IN_PROGRESS, BLOCKED, VALIDATED, CLOSED.")
     p.add_argument("--dir", dest="tasks_dir", metavar="DIR",
                    help="Tasks directory to scan.")
     p.add_argument("--repo", metavar="OWNER/REPO",

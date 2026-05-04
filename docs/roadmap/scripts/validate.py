@@ -53,7 +53,10 @@ ENUM_CONSTRAINTS = {
 }
 
 ID_PATTERNS = {
-    "autonomous":  re.compile(r"^AUTO-[0-9]{3}[a-z]?$"),
+    # Autonomous roadmap items are never split with a letter suffix.
+    # Decomposition of an AUTO task produces new AUTO-NNN IDs, not AUTO-NNNa.
+    "autonomous":  re.compile(r"^AUTO-[0-9]{3}$"),
+    # Bug, improvement, and feature subtasks append a letter suffix (e.g., BUG-003a).
     "bug":         re.compile(r"^BUG-[0-9]{3}[a-z]?$"),
     "improvement": re.compile(r"^IMP-[0-9]{3}[a-z]?$"),
     "feature":     re.compile(r"^FEAT-[0-9]{3}[a-z]?$"),

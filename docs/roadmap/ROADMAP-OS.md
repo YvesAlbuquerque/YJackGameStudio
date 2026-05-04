@@ -95,6 +95,11 @@ description: >
 
 IDs are **immutable** once created. Never reuse a closed task's ID.
 
+> **Autonomous vs. other subtasks:** `AUTO-NNN` items do not use letter suffixes.
+> When an autonomous task is decomposed, each sub-item receives a new `AUTO-NNN`
+> number. Bug, improvement, and feature subtasks may append a lowercase letter
+> suffix (e.g., `IMP-003a`, `IMP-003b`) to identify them as sub-tasks of `IMP-003`.
+
 ---
 
 ## Lifecycle States

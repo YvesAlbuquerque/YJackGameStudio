@@ -76,7 +76,10 @@ constraints:
       feature:    "^FEAT-[0-9]{3}[a-z]?$"
     description: >
       IDs are immutable once created. Never reuse a closed task ID.
-      Subtasks append a lowercase letter suffix (e.g., IMP-003a, IMP-003b).
+      Autonomous roadmap items (AUTO-NNN) are never split with a letter suffix;
+      their decomposition produces new AUTO-NNN IDs.
+      Bug, improvement, and feature subtasks append a lowercase letter suffix
+      (e.g., IMP-003a, IMP-003b) to identify them as sub-tasks of IMP-003.
 
   github_issue:
     type: integer_or_null
