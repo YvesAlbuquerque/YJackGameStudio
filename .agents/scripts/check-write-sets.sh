@@ -137,13 +137,15 @@ def parse_graph(path):
                         in_dependencies = True
                     elif key in ("status", "title", "specialist_agent",
                                  "blocked_by", "github_issue"):
-                        graph["contracts"][current_contract][key] = val
+                        # Skip empty values (e.g. `status: ""  # comment`)
+                        if val:
+                            graph["contracts"][current_contract][key] = val
                 continue
 
             # write_set list items (6-space indent)
             if in_write_set and indent == 6:
-                # Strip inline YAML comment from the list item value
-                m = re.match(r'^\s{6}-\s+"?(.*?)"?\s*(?:#.*)?$', stripped)
+                # Capture the list item, then strip inline YAML comments.
+                m = re.match(r'^\s{6}-\s+"?(.*?)"?\s*$', stripped)
                 if m:
                     item = re.sub(r'\s+#.*$', '', m.group(1)).strip()
                     if item:
