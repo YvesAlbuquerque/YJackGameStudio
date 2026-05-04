@@ -17,7 +17,7 @@
 #   2  — Usage error or graph file not found
 #
 # Requirements:
-#   - bash 4+
+#   - bash 3.2+ (no bash 4-specific features are used)
 #   - python3 (for YAML parsing; no third-party packages required — uses
 #     only stdlib: sys, yaml if available, else falls back to regex parsing)
 #
@@ -75,9 +75,10 @@ def parse_graph(path):
     with open(path) as f:
         for line in f:
             stripped = line.rstrip()
+            # Skip blank lines and comment lines, but do NOT reset section
+            # flags — blank lines and comments may appear inside a write_set
+            # or dependencies block without ending the section.
             if not stripped or stripped.lstrip().startswith("#"):
-                in_write_set = False
-                in_dependencies = False
                 continue
 
             indent = len(line) - len(line.lstrip())
@@ -204,7 +205,6 @@ def run_check(graph_path):
                         else:
                             print(f"  Reason: {pb} is an ancestor of {pa}")
                         print()
-                        break  # report one collision per pair, then move on
 
     if collisions == 0:
         print("No collisions found. Safe to schedule parallel execution.")
