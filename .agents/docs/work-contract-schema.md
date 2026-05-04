@@ -37,7 +37,7 @@ present before a contract advances from `PROPOSED` to `APPROVED`.
 | `type` | enum | ✅ | `epic` \| `story` \| `shard`. Controls decomposition rules (see §Lifecycle). |
 | `status` | enum | ✅ | Current lifecycle state (see §Lifecycle). |
 | `owner` | string | ✅ | GitHub username of the person who commissioned this contract and approves its output. |
-| `specialist_agent` | string | ✅ | Agent role assigned to execute this contract. Must match a known agent in `.agents/agents/`. |
+| `specialist_agent` | string | ✅ | Agent role assigned to execute this contract. Use team-routing values (`team:combat`, `team:qa`, etc.) or a specific agent name from `.agents/agents/`. For the full list of accepted values see the `Specialist Agent` dropdown in `.github/ISSUE_TEMPLATE/agent_work_contract.yml`. Use `other` and record the specific target in `notes`. |
 
 ### Intent
 
@@ -131,14 +131,17 @@ PROPOSED → APPROVED → IN_PROGRESS → VALIDATED → CLOSED
 
 ### States
 
-| State | Meaning | Who sets it |
-|-------|---------|-------------|
-| `PROPOSED` | Contract created; fields may be incomplete; not yet approved for execution | Author / agent |
-| `APPROVED` | All required fields present; owner has approved; ready for agent pickup | Owner |
-| `IN_PROGRESS` | Agent has started work; write-set is locked | Agent (on start) |
-| `BLOCKED` | Execution halted; `partial_work` must be populated | Agent (on block) |
-| `VALIDATED` | All `success_criteria` checked; `handoff` conditions met; validation gate passed | Agent + optional owner |
-| `CLOSED` | Contract complete and merged; write-set lock released | Owner or agent (post-merge) |
+The canonical YAML/file value for each state is lowercase snake_case.
+The GitHub label equivalent is `status:` + kebab-case.
+
+| Display name | YAML `status` value | GitHub label | Meaning | Who sets it |
+|---|---|---|---|---|
+| `PROPOSED` | `proposed` | `status:proposed` | Contract created; fields may be incomplete; not yet approved for execution | Author / agent |
+| `APPROVED` | `approved` | `status:approved` | All required fields present; owner has approved; ready for agent pickup | Owner |
+| `IN_PROGRESS` | `in_progress` | `status:in-progress` | Agent has started work; write-set is locked | Agent (on start) |
+| `BLOCKED` | `blocked` | `status:blocked` | Execution halted; `partial_work` must be populated | Agent (on block) |
+| `VALIDATED` | `validated` | `status:validated` | All `success_criteria` checked; `handoff` conditions met; validation gate passed | Agent + optional owner |
+| `CLOSED` | `closed` | `status:closed` | Contract complete and merged; write-set lock released | Owner or agent (post-merge) |
 
 ### Transition Rules
 
@@ -265,11 +268,13 @@ Before any contract advances to `IN_PROGRESS`, the agent must check all currentl
 
 ```
 For each path P in this contract's write_set:
-  If P (or any prefix/parent of P) appears in another contract's write_set
-  AND that contract is APPROVED or IN_PROGRESS:
-    → COLLISION DETECTED
-    → Surface to owner; do not advance to IN_PROGRESS
-    → Owner must resolve: defer one contract, merge them, or grant explicit parallel write permission
+  For each path otherPath in any other contract C where C.status is approved or in_progress:
+    If P == otherPath
+    OR P is a prefix/ancestor of otherPath  (e.g. P=src/, otherPath=src/player/Controller.gd)
+    OR otherPath is a prefix/ancestor of P  (e.g. otherPath=src/, P=src/player/Controller.gd):
+      → COLLISION DETECTED between this contract and C
+      → Surface to owner; do not advance to IN_PROGRESS
+      → Owner must resolve: defer one contract, merge them, or grant explicit parallel write permission
 ```
 
 Agents cannot unilaterally resolve write-set collisions. All collisions escalate
@@ -617,7 +622,7 @@ status_log:
 | [coordination-rules.md](coordination-rules.md) | Defines parallel task protocol and vertical/horizontal delegation |
 | AUTO-006 Dependency Graph | Extends `dependencies` into a project-wide adjacency list; uses `write_set` for collision detection |
 | AUTO-007 Sprint Planner | Consumes `APPROVED` contracts to schedule sprint work; respects `dependencies` |
-| `.github/ISSUE_TEMPLATE/story.yml` | GitHub issue form representation of this schema |
+| `.github/ISSUE_TEMPLATE/agent_work_contract.yml` | GitHub issue form representation of this schema (all types: epic, story, shard) |
 | `.github/ISSUE_TEMPLATE/agent_shard.yml` | Shard-level issue form |
 | `.agents/docs/templates/work-contract.yml` | Full YAML template for offline contract authoring |
 | `production/session-state/active.md` | Status log mirror for audit continuity |

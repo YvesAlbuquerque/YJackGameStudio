@@ -2,7 +2,6 @@ name: "Agent Work Contract"
 description: "Machine-readable work contract for autonomous agent execution. Use for any story, shard, or epic that an agent will execute autonomously."
 title: "[Contract] "
 labels:
-  - "type:story"
   - "status:proposed"
 assignees: []
 body:
@@ -33,11 +32,11 @@ body:
     id: type
     attributes:
       label: Contract Type
-      description: "Determines decomposition rules and scheduling behaviour."
+      description: "Determines decomposition rules and scheduling behaviour. `epic` = large deliverable spanning multiple stories; `story` = implementable unit for one specialist agent; `shard` = parallelisable atomic sub-task from a story."
       options:
-        - "epic — large deliverable spanning multiple stories"
-        - "story — implementable unit for one specialist agent"
-        - "shard — parallelisable atomic sub-task from a story"
+        - "epic"
+        - "story"
+        - "shard"
     validations:
       required: true
 
@@ -54,7 +53,7 @@ body:
     id: specialist_agent
     attributes:
       label: Specialist Agent
-      description: "The agent role that will execute this contract."
+      description: "The agent role that will execute this contract. Use team routing values (e.g. `team:combat`) or a specific agent name from `.agents/agents/`. Select `other` and fill in the Notes field below."
       options:
         - "team:combat"
         - "team:level"
@@ -65,10 +64,19 @@ body:
         - "team:live-ops"
         - "team:release"
         - "team:polish"
-        - "copilot (general)"
-        - "other (specify in notes)"
+        - "copilot"
+        - "other"
     validations:
       required: true
+
+  - type: input
+    id: specialist_agent_notes
+    attributes:
+      label: Specialist Agent Notes
+      description: "If 'other' was selected above, specify the agent name or routing path here."
+      placeholder: "e.g. unity-specialist, godot-gdscript-specialist"
+    validations:
+      required: false
 
   # ── Intent ──────────────────────────────────────────────────────────────────
 
@@ -145,11 +153,11 @@ body:
     id: risk_tier
     attributes:
       label: Risk Tier
-      description: "Approval boundary for decisions taken while executing this contract. See autonomy-modes.md."
+      description: "Approval boundary for decisions taken while executing this contract. `LOW` = agents execute autonomously; `MEDIUM` = significant impact, owner review before proceeding; `HIGH` = critical/irreversible/cross-boundary, always escalates. See autonomy-modes.md."
       options:
-        - "LOW — routine; agents execute autonomously within approved scope"
-        - "MEDIUM — significant impact; requires owner review before proceeding"
-        - "HIGH — critical, irreversible, or cross-boundary; always escalates"
+        - "LOW"
+        - "MEDIUM"
+        - "HIGH"
     validations:
       required: true
 
@@ -277,11 +285,11 @@ body:
     id: autonomy_tier
     attributes:
       label: Autonomy Tier
-      description: "Maximum autonomy level permitted for this contract. Corresponds to the auto:* label."
+      description: "Maximum autonomy level permitted for this contract. Corresponds to the auto:* label. `auto:low` = owner approves all outputs; `auto:medium` = LOW decisions auto, MEDIUM requires approval; `auto:high` = LOW+MEDIUM auto, HIGH always escalates."
       options:
-        - "auto:low — agents execute; owner approves all outputs before merge"
-        - "auto:medium — LOW decisions auto; MEDIUM requires owner approval"
-        - "auto:high — LOW+MEDIUM auto; HIGH always escalates"
+        - "auto:low"
+        - "auto:medium"
+        - "auto:high"
     validations:
       required: true
 

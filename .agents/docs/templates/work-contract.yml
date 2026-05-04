@@ -91,11 +91,11 @@ doc_impact: []                                        # optional — docs that m
 #     section: "§Player Systems"
 #     change: "Add PlayerMovement.gd as the canonical movement component"
 
-yjackcore:                                            # optional — remove if YJackCore is not involved
-  # layer values: none | GameLayer | LevelLayer | PlayerLayer | CoreLayer | ViewLayer | Shared | host-only | framework-change
-  layer: none
-  package_boundary: false     # true → HIGH risk; touches Packages/YJackCore/** or Packages/com.ygamedev.yjack/**
-  host_game_separation: false # true → must verify no YJackCore Core imports leak into host-game code
+# yjackcore:                                            # optional — include only when YJackCore is involved
+#   # layer values: none | GameLayer | LevelLayer | PlayerLayer | CoreLayer | ViewLayer | Shared | host-only | framework-change
+#   layer: none
+#   package_boundary: false     # true → HIGH risk; touches Packages/YJackCore/** or Packages/com.ygamedev.yjack/**
+#   host_game_separation: false # true → must verify no YJackCore Core imports leak into host-game code
 
 # ── Outputs ──────────────────────────────────────────────────────────────────
 
