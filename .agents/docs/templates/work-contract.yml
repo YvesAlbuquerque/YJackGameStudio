@@ -1,0 +1,129 @@
+# Work Contract — Agent Autonomous Execution Unit
+#
+# Schema:    .agents/docs/work-contract-schema.md
+# Version:   1.0
+# Storage:   production/contracts/<contract_id>.yml
+#            or GitHub issue using .github/ISSUE_TEMPLATE/agent_work_contract.yml
+#
+# Instructions:
+#   Replace every placeholder in <angle brackets>.
+#   Fields marked REQUIRED must be present before the contract advances to APPROVED.
+#   Remove unused optional sections rather than leaving them blank.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Identity ─────────────────────────────────────────────────────────────────
+
+contract_id: "<EPIC-001 | STORY-014 | SHARD-007>"   # REQUIRED — stable, never reused
+type: story                                           # REQUIRED — epic | story | shard
+status: proposed                                      # REQUIRED — see lifecycle in schema doc
+owner: "@<github-username>"                           # REQUIRED — approves outputs and accepts risk
+specialist_agent: "<team:combat | team:qa | copilot | other>"  # REQUIRED
+
+# ── Intent ───────────────────────────────────────────────────────────────────
+
+owner_goal: >                                         # REQUIRED — one sentence from the owner's perspective
+  <What outcome does the owner want from this contract?>
+
+success_criteria:                                     # REQUIRED — verifiable checklist
+  - "[ ] <First verifiable criterion>"
+  - "[ ] <Second verifiable criterion>"
+
+non_goals:                                            # REQUIRED — explicit exclusions
+  - "<What this contract does NOT cover>"
+
+# ── Execution Context ────────────────────────────────────────────────────────
+
+dependencies: []                                      # optional — contracts that must be VALIDATED or CLOSED first
+# Example:
+# dependencies:
+#   - contract_id: STORY-012
+#     title: "Recipe data model"
+#     github_issue: 42        # optional GitHub issue number
+#     status: validated       # last-known status; agent re-checks on pickup
+#     required_outputs:
+#       - src/systems/crafting/RecipeData.cs
+
+write_set:                                            # REQUIRED — files this contract EXCLUSIVELY writes
+  - "<path/to/file.ext>"                              # no overlap with parallel contracts
+# Tip: list every file that will be created or modified.
+# A directory path (e.g. src/systems/crafting/) covers all files under it.
+
+read_context: []                                      # optional — files the agent MUST read before starting
+# Example:
+# read_context:
+#   - path: design/systems/crafting.md
+#     section: "§3 Recipe Table"
+#   - path: src/systems/crafting/RecipeData.cs
+
+# ── Risk and Approval ────────────────────────────────────────────────────────
+
+risk_tier: LOW                                        # REQUIRED — LOW | MEDIUM | HIGH
+                                                      # See autonomy-modes.md for definitions
+
+approval_boundary: >                                  # REQUIRED — plain-text statement
+  <State what the agent may execute autonomously vs. what requires owner approval.
+   Reference the active autonomy mode (GUIDED | SUPERVISED | AUTONOMOUS).>
+
+escalation_conditions:                                # REQUIRED — when must the agent STOP and surface to owner?
+  - "<Specific situation that triggers escalation>"
+
+# ── Validation ───────────────────────────────────────────────────────────────
+
+validation:                                           # REQUIRED
+  automated:                                          # commands to run; leave empty list if none
+    - "<command to run, e.g. dotnet test --filter MyTests>"
+  agent_review: false                                 # true if a peer agent should review the output
+  owner_review: false                                 # true if the owner must manually review before VALIDATED
+  evidence_path: "<tests/evidence/<contract_id>/>"    # where test output is committed
+
+manual_checks: []                                     # optional — items requiring human/owner validation
+# Every entry here is implicitly HIGH risk.
+# Example:
+# manual_checks:
+#   - "Owner verifies animation blending in Play Mode"
+
+# ── Documentation and Framework Impact ───────────────────────────────────────
+
+doc_impact: []                                        # optional — docs that must be updated
+# Example:
+# doc_impact:
+#   - path: docs/architecture/master-architecture.md
+#     section: "§Player Systems"
+#     change: "Add PlayerMovement.gd as the canonical movement component"
+
+yjackcore:                                            # optional — remove if YJackCore is not involved
+  # layer values: none | GameLayer | LevelLayer | PlayerLayer | CoreLayer | ViewLayer | Shared | host-only | framework-change
+  layer: none
+  package_boundary: false     # true → HIGH risk; touches Packages/YJackCore/** or Packages/com.ygamedev.yjack/**
+  host_game_separation: false # true → must verify no YJackCore Core imports leak into host-game code
+
+# ── Outputs ──────────────────────────────────────────────────────────────────
+
+outputs:                                              # REQUIRED — every artifact this contract must produce
+  - path: "<path/to/output>"
+    type: file                                        # file | test-evidence | pr | report
+
+handoff:                                              # REQUIRED — conditions that must ALL be true before VALIDATED
+  - All success_criteria checked off
+  - All write_set files committed with no uncommitted changes
+  - validation.evidence_path populated and committed (if applicable)
+  - All manual_checks escalated and owner-approved
+  - status_log updated with VALIDATED entry
+# Add contract-specific conditions above.
+
+# ── Status Tracking (agents append; never delete) ─────────────────────────────
+
+status_log:
+  - timestamp: "<ISO-8601 timestamp>"
+    from: ""
+    to: proposed
+    agent: "<author>"
+    note: "Contract created"
+
+# partial_work — populate when transitioning to BLOCKED
+# partial_work:
+#   completed:
+#     - "<Completed work item>"
+#   remaining:
+#     - "<Remaining work item>"
+#   blocked_by: "<What is blocking execution>"

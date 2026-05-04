@@ -1,0 +1,352 @@
+name: "Agent Work Contract"
+description: "Machine-readable work contract for autonomous agent execution. Use for any story, shard, or epic that an agent will execute autonomously."
+title: "[Contract] "
+labels:
+  - "type:story"
+  - "status:proposed"
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Agent Work Contract
+        A work contract is the unit of autonomous delegation. It defines the agent's write scope,
+        success criteria, non-goals, dependencies, risk tier, validation requirements, and handoff
+        conditions. No two contracts in parallel may share a `write_set` entry without explicit
+        owner resolution.
+
+        Schema reference: [`.agents/docs/work-contract-schema.md`](https://github.com/YvesAlbuquerque/Claude-Code-Game-Studios/blob/main/.agents/docs/work-contract-schema.md)
+        See [Label Taxonomy](https://github.com/YvesAlbuquerque/Claude-Code-Game-Studios/blob/main/.github/LABELS.md) for valid label values.
+
+  # ── Identity ────────────────────────────────────────────────────────────────
+
+  - type: input
+    id: contract_id
+    attributes:
+      label: Contract ID
+      description: "Stable identifier used for all cross-references. Never reuse an ID."
+      placeholder: "STORY-014"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Contract Type
+      description: "Determines decomposition rules and scheduling behaviour."
+      options:
+        - "epic — large deliverable spanning multiple stories"
+        - "story — implementable unit for one specialist agent"
+        - "shard — parallelisable atomic sub-task from a story"
+    validations:
+      required: true
+
+  - type: input
+    id: owner
+    attributes:
+      label: Owner
+      description: "GitHub username of the person who commissioned this contract and approves its output."
+      placeholder: "@YvesAlbuquerque"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: specialist_agent
+    attributes:
+      label: Specialist Agent
+      description: "The agent role that will execute this contract."
+      options:
+        - "team:combat"
+        - "team:level"
+        - "team:ui"
+        - "team:narrative"
+        - "team:audio"
+        - "team:qa"
+        - "team:live-ops"
+        - "team:release"
+        - "team:polish"
+        - "copilot (general)"
+        - "other (specify in notes)"
+    validations:
+      required: true
+
+  # ── Intent ──────────────────────────────────────────────────────────────────
+
+  - type: textarea
+    id: owner_goal
+    attributes:
+      label: Owner Goal
+      description: "One sentence: what outcome does the owner want from this contract?"
+      placeholder: "Implement the recipe resolver so that combining ingredients returns the correct output item."
+    validations:
+      required: true
+
+  - type: textarea
+    id: success_criteria
+    attributes:
+      label: Success Criteria
+      description: "Verifiable checklist. Every item must be confirmable by an automated test, an agent review, or an explicit owner check."
+      placeholder: |
+        - [ ] `RecipeResolver.Resolve` returns the correct output for all defined recipes
+        - [ ] Invalid combinations return `null` and do not throw
+        - [ ] Unit test coverage ≥ 80% for `RecipeResolver`
+    validations:
+      required: true
+
+  - type: textarea
+    id: non_goals
+    attributes:
+      label: Non-Goals
+      description: "Explicit exclusions. What the owner has decided this contract does NOT cover. Prevents scope creep during execution."
+      placeholder: |
+        - UI wiring (covered in STORY-015)
+        - Multiplayer sync (deferred)
+    validations:
+      required: true
+
+  # ── Execution Context ────────────────────────────────────────────────────────
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: "Other contracts that must reach VALIDATED or CLOSED before this contract may start. Use contract_id and GitHub issue number."
+      placeholder: |
+        - STORY-012 (Recipe data model) — must be VALIDATED; #42
+        - `design/systems/crafting.md` — approved GDD section §3
+    validations:
+      required: false
+
+  - type: textarea
+    id: write_set
+    attributes:
+      label: Write Set (File Ownership)
+      description: "Files or directories this contract EXCLUSIVELY creates or modifies. No two parallel contracts may share a write-set entry without owner approval."
+      placeholder: |
+        - `src/systems/crafting/RecipeResolver.cs`
+        - `tests/systems/crafting/RecipeResolverTests.cs`
+    validations:
+      required: true
+
+  - type: textarea
+    id: read_context
+    attributes:
+      label: Read Context (Input Artifacts)
+      description: "Files or artifacts the agent MUST read before starting. Include specific sections where relevant."
+      placeholder: |
+        - `design/systems/crafting.md` §3 — recipe table
+        - `src/systems/crafting/RecipeData.cs` — data model
+    validations:
+      required: false
+
+  # ── Risk and Approval ────────────────────────────────────────────────────────
+
+  - type: dropdown
+    id: risk_tier
+    attributes:
+      label: Risk Tier
+      description: "Approval boundary for decisions taken while executing this contract. See autonomy-modes.md."
+      options:
+        - "LOW — routine; agents execute autonomously within approved scope"
+        - "MEDIUM — significant impact; requires owner review before proceeding"
+        - "HIGH — critical, irreversible, or cross-boundary; always escalates"
+    validations:
+      required: true
+
+  - type: textarea
+    id: approval_boundary
+    attributes:
+      label: Approval Boundary
+      description: "What the agent may execute autonomously vs. what requires owner approval, referencing the active autonomy mode."
+      placeholder: |
+        SUPERVISED mode: agent may decompose and plan (LOW). Writing to src/ always escalates (HIGH).
+    validations:
+      required: true
+
+  - type: textarea
+    id: escalation_conditions
+    attributes:
+      label: Escalation Conditions
+      description: "Specific situations that must cause the agent to stop and surface to the owner, regardless of autonomy mode."
+      placeholder: |
+        - Any change to the `RecipeData` schema
+        - Scope additions outside the declared write set
+        - Test failures that cannot be resolved without changing the design
+    validations:
+      required: true
+
+  # ── Validation ───────────────────────────────────────────────────────────────
+
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation Steps
+      description: "How the agent verifies its own output. Include automated commands, whether agent/owner review is required, and the evidence path."
+      placeholder: |
+        Automated:
+        - `dotnet test --filter RecipeResolverTests`
+
+        Agent review: no
+        Owner review: yes — src/ writes require owner sign-off
+        Evidence path: `tests/evidence/STORY-014/`
+    validations:
+      required: true
+
+  - type: textarea
+    id: manual_checks
+    attributes:
+      label: Manual Checks
+      description: "Items that require owner or human validation. Every item here is HIGH risk and will be escalated."
+      placeholder: |
+        - Owner verifies recipe output matches the design table in the game editor
+    validations:
+      required: false
+
+  # ── Documentation and Framework Impact ───────────────────────────────────────
+
+  - type: textarea
+    id: doc_impact
+    attributes:
+      label: Documentation Impact
+      description: "Documentation files that must be updated as part of this contract. Include path, section, and change description."
+      placeholder: |
+        - `docs/architecture/master-architecture.md` §Systems — add RecipeResolver entry
+        - `design/systems/crafting.md` §4 — note implementation reference
+    validations:
+      required: false
+
+  - type: dropdown
+    id: yjackcore_layer
+    attributes:
+      label: YJackCore Layer
+      description: "The YJackCore architectural layer this contract operates in. Select 'none' if YJackCore is not involved."
+      options:
+        - "none"
+        - "GameLayer — host-game top-level managers, bootstrap, game config"
+        - "LevelLayer — src/levels/, scene-specific logic"
+        - "PlayerLayer — src/player/, src/characters/"
+        - "CoreLayer — Packages/YJackCore/Runtime/Core/ (package boundary — HIGH risk)"
+        - "ViewLayer — src/ui/, src/hud/ (wiring is host-game; API is YJackCore)"
+        - "Shared — src/shared/, cross-cutting utilities"
+        - "host-only — src/** only; zero YJackCore API contact"
+        - "framework-change — any YJackCore package path (always HIGH risk)"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: yjackcore_flags
+    attributes:
+      label: YJackCore Boundary Flags
+      description: "Check all that apply. Checked items trigger YJackCore-aware agent routing."
+      options:
+        - label: "Touches YJackCore package boundary (Packages/YJackCore/** or Packages/com.ygamedev.yjack/**) — HIGH risk"
+        - label: "Involves host-game / YJackCore separation concern — must verify no Core imports leak into host-game code"
+        - label: "Involves .yjack-workspace.json or workspace routing"
+
+  # ── Outputs ──────────────────────────────────────────────────────────────────
+
+  - type: textarea
+    id: outputs
+    attributes:
+      label: Outputs
+      description: "Every artifact this contract must produce or update. Each line: path and type (file | test-evidence | pr | report)."
+      placeholder: |
+        - `src/systems/crafting/RecipeResolver.cs` — file
+        - `tests/systems/crafting/RecipeResolverTests.cs` — file
+        - `tests/evidence/STORY-014/` — test-evidence
+    validations:
+      required: true
+
+  - type: textarea
+    id: handoff
+    attributes:
+      label: Handoff Criteria
+      description: "Conditions that must ALL be true before the agent marks this contract VALIDATED and releases ownership."
+      placeholder: |
+        - All success criteria checked off
+        - All write_set files committed with no uncommitted changes
+        - Test evidence committed to evidence path
+        - No linter or build errors
+        - Owner has reviewed and approved
+    validations:
+      required: true
+
+  # ── Scheduling ───────────────────────────────────────────────────────────────
+
+  - type: dropdown
+    id: autonomy_tier
+    attributes:
+      label: Autonomy Tier
+      description: "Maximum autonomy level permitted for this contract. Corresponds to the auto:* label."
+      options:
+        - "auto:low — agents execute; owner approves all outputs before merge"
+        - "auto:medium — LOW decisions auto; MEDIUM requires owner approval"
+        - "auto:high — LOW+MEDIUM auto; HIGH always escalates"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - "priority:critical"
+        - "priority:high"
+        - "priority:medium"
+        - "priority:low"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: effort
+    attributes:
+      label: Estimated Effort
+      options:
+        - "effort:XL — > 5 days, requires phase planning"
+        - "effort:L — 3–5 days, requires decomposition"
+        - "effort:M — 1–3 days"
+        - "effort:S — < 1 day"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: domain
+    attributes:
+      label: Domain
+      options:
+        - "domain:implementation"
+        - "domain:design"
+        - "domain:architecture"
+        - "domain:qa"
+        - "domain:infrastructure"
+        - "domain:narrative"
+        - "domain:art"
+        - "domain:audio"
+        - "domain:ui"
+        - "domain:live-ops"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: phase
+    attributes:
+      label: Phase
+      options:
+        - "phase:concept"
+        - "phase:pre-production"
+        - "phase:production"
+        - "phase:alpha"
+        - "phase:beta"
+        - "phase:release"
+        - "phase:post-launch"
+    validations:
+      required: false
+
+  - type: input
+    id: parent_issue
+    attributes:
+      label: Parent Issue
+      description: "The epic or story this contract belongs to (if applicable)."
+      placeholder: "#42 or EPIC-001"
+    validations:
+      required: false
