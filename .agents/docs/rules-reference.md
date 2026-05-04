@@ -18,4 +18,4 @@ rules explicitly.
 | `test-standards.md` | `tests/**` | Test naming, coverage requirements, fixture patterns |
 | `prototype-code.md` | `prototypes/**` | Relaxed standards, README required, hypothesis documented |
 | `shader-code.md` | `assets/shaders/**` | Naming conventions, performance targets, cross-platform rules |
-| `yjackcore-unity.md` | `src/**`, `Packages/YJackCore/**`, `Packages/com.ygamedev.yjack/**` | YJackCore layer boundaries, specialist precedence, inspector-first authoring, package integrity |
+| `yjackcore-unity.md` | `src/**`, `Packages/YJackCore/**`, `Packages/com.ygamedev.yjack/**` | YJackCore workspace manifest detection, authority routing (YJackCore > yjackcore-support > unity-specialist), layer boundaries, inspector-first authoring, package integrity, manual validation expectations |

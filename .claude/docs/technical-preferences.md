@@ -13,6 +13,8 @@
 ## Framework Integration
 
 <!-- Optional. Populate when this project uses a framework/package such as YJackCore. -->
+<!-- When YJackCore is active, also place .yjack-workspace.json at the Unity project root. -->
+<!-- See .agents/docs/yjackcore-support.md and .agents/docs/yjackcore-workspace-manifest.md. -->
 
 - **Framework**: [None configured]
 - **Framework Source**: [None configured]

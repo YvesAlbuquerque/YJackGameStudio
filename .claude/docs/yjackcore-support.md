@@ -7,6 +7,7 @@ the user asks this template to adapt to YJackCore rules.
 
 Treat a project as YJackCore-backed if any of these are true:
 
+- `.yjack-workspace.json` exists at the Unity project root (highest confidence)
 - `Packages/manifest.json` contains `com.ygamedev.yjack` or `YJackCore`
 - a local package exists at `Packages/YJackCore/package.json`
 - a git submodule path points to `YJackCore`
@@ -14,9 +15,37 @@ Treat a project as YJackCore-backed if any of these are true:
 - technical preferences name a YJackCore package source, local path, or submodule
 - the user explicitly says the game uses YJackCore
 
+When `.yjack-workspace.json` is present, read it first to resolve the package
+root path and authority notes. See `.agents/docs/yjackcore-workspace-manifest.md`
+for the manifest schema and layout examples.
+
 A sibling checkout such as `../YJackCore` may be used as reference material only
 after confirming it is the intended framework source or the closest available
 local YJackCore repo.
+
+## Framework-vs-Product Authority
+
+YJackCore is a separately maintained framework package. Its own repository is
+the authoritative source for all framework-specific decisions. The Game Studio
+template is the authoritative source for host-game workflow, skills, and studio
+process only.
+
+| Decision type | Authoritative source |
+|--------------|----------------------|
+| Layer boundaries, package structure, asmdefs | YJackCore `AGENTS.md` and architecture docs |
+| Compile symbols, optional modules | YJackCore `AGENTS.md` and nearest subtree docs |
+| ScriptableObject/event patterns | YJackCore skill families |
+| Editor tooling, Odin Inspector usage | YJackCore editor docs |
+| Host-game scene/prefab wiring | Game Studio + YJackCore layer guidance |
+| Generic Unity engine/API | Game Studio `unity-specialist` |
+| Studio workflow, sprints, GDDs | Game Studio skills and templates |
+
+When a decision spans both authorities (e.g. a host-game feature that needs a
+new framework entry point), follow the collaboration protocol:
+1. Confirm whether the change is host-only or requires a framework change.
+2. If host-only, use YJackCore layer surfaces and the Game Studio workflow.
+3. If a framework change is required, context-switch to the YJackCore package
+   path, follow its own instructions, and propose the change separately.
 
 ## Specialist Precedence
 
@@ -143,6 +172,28 @@ For architecture-sensitive YJackCore work, include:
 - **Manual validation still required**: Unity scene/prefab wiring, Play Mode
   behavior, package resolution, compile symbols, and any package manager steps
 
+## Manual Unity Validation Expectations
+
+The following steps **cannot** be autonomously confirmed by any agent and must
+be escalated to the owner for manual execution:
+
+- **Domain reload** — required after any assembly definition (`.asmdef`) or
+  package change; Unity must complete the domain reload before subsequent
+  compile-symbol branches are reliable.
+- **Play Mode smoke test** — verify scene and prefab wiring in Play Mode after
+  any structural change to a prefab, scene, or bootstrap manager.
+- **Package Manager resolution** — confirm `Packages/packages-lock.json` is
+  consistent and the installed package version matches the intended version.
+- **Compile-symbol verification** — check that `#if YJACK_*` branches compile
+  correctly with and without the optional module installed.
+- **Inspector serialization** — visually confirm Odin-serialized fields appear
+  correctly in the Unity Inspector window after a domain reload.
+- **Asset `.meta` integrity** — ensure `.meta` files are present and consistent
+  after any package layout change (submodule update, path change, etc.).
+
+Always surface the relevant items from this list before closing a task that
+touches `Packages/**`, `.asmdef` files, or compile symbols.
+
 ## Setup Checklist
 
 When configuring a project for YJackCore:
@@ -150,6 +201,9 @@ When configuring a project for YJackCore:
 - Set engine to Unity and language to C#
 - Record YJackCore in `.claude/docs/technical-preferences.md`
 - Record the package source: UPM git URL, local path, or submodule path
+- Place `.yjack-workspace.json` at the Unity project root (copy from
+  `.agents/docs/templates/yjack-workspace.json` and fill in `layout`,
+  `version`, `unityVersion`, and `packageRoot`)
 - Add YJackCore and Odin Inspector to allowed libraries only when actually used
 - Route framework architecture questions through YJackCore guidance plus the
   Unity specialist, in that order

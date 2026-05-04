@@ -1,0 +1,24 @@
+{
+  "_comment": "YJackCore workspace manifest — place as .yjack-workspace.json in the Unity project root.",
+  "_doc": "See .agents/docs/yjackcore-workspace-manifest.md for field definitions and layout examples.",
+  "packageId": "com.ygamedev.yjack",
+  "version": "1.6.0",
+  "unityVersion": "6000.0",
+  "layout": "submodule",
+  "packageRoot": "Packages/com.ygamedev.yjack",
+  "agentReadOrder": [
+    "AGENTS.md",
+    ".ai/AI_ARCHITECTURE.md",
+    "package.json",
+    "ARCHITECTURE.md",
+    "Docs/Workflow/framework-vision.md",
+    "Docs/index.md"
+  ],
+  "authorityNotes": "YJackCore AGENTS.md and .agents/skills/ take precedence over Game Studio generic Unity specialist for all YJackCore-specific decisions.",
+  "manualValidationRequired": [
+    "Unity domain reload after package changes",
+    "Play Mode smoke test for scene/prefab wiring",
+    "Package Manager resolution and compile-symbol verification",
+    "Odin Inspector serialization in the Inspector window"
+  ]
+}

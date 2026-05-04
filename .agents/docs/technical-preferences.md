@@ -13,13 +13,15 @@
 ## Framework Integration
 
 <!-- Optional. Populate when this project uses a framework/package such as YJackCore. -->
+<!-- When YJackCore is active, also place .yjack-workspace.json at the Unity project root. -->
+<!-- See .agents/docs/yjackcore-support.md and .agents/docs/yjackcore-workspace-manifest.md. -->
 
 - **Framework**: [None configured — e.g., YJackCore]
-- **Framework Source**: [TO BE CONFIGURED — UPM URL, local package path, or git submodule path]
-- **Framework Version**: [TO BE CONFIGURED]
-- **Framework Docs**: [TO BE CONFIGURED — e.g., .agents/docs/yjackcore-support.md]
-- **Framework Rules**: [TO BE CONFIGURED — project-specific rules agents must follow]
-- **Framework Routing Notes**: [TO BE CONFIGURED]
+- **Framework Source**: [None configured — e.g., UPM git URL, local path, or submodule path]
+- **Framework Version**: [None configured — e.g., 1.6.0]
+- **Framework Docs**: [None configured — e.g., .agents/docs/yjackcore-support.md]
+- **Framework Rules**: [None configured — e.g., .agents/rules/yjackcore-unity.md]
+- **Framework Routing Notes**: [None configured — YJackCore authority takes precedence over Game Studio generic Unity specialist for framework-specific decisions]
 
 ## Input & Platform
 
