@@ -1,0 +1,31 @@
+id: "AUTO-001"
+type: autonomous
+title: "Owner-Directed Autonomy Modes and Approval Boundaries"
+subsystem: autonomy
+priority: P1
+effort: M
+status: VALIDATED
+github_issue: null
+labels:
+  - autonomous
+  - roadmap
+  - foundation
+description: >
+  Define the owner-facing control model that governs all autonomous agent behavior
+  in the studio. Establishes three autonomy modes (GUIDED, SUPERVISED, AUTONOMOUS),
+  approval boundary tiers (LOW / MEDIUM / HIGH), the escalation protocol, and
+  the configuration file format at production/autonomy-config.md.
+acceptance_criteria:
+  - "Autonomy modes documented in .agents/docs/autonomy-modes.md"
+  - "Risk tier classification table defined"
+  - "Per-mode action table covers all common agent actions"
+  - "Escalation protocol documented with examples"
+  - "production/autonomy-config.md format specified and a default file exists"
+  - "AGENTS.md collaboration protocol section updated"
+artifacts:
+  - ".agents/docs/autonomy-modes.md"
+  - "production/autonomy-config.md"
+notes: >
+  Implemented. autonomy-modes.md was created as the canonical spec.
+  production/autonomy-config.md exists with default GUIDED mode.
+  This is a FOUNDATION item; all other AUTO work depends on the autonomy model.

@@ -1,0 +1,203 @@
+# Roadmap OS — Task File Schema
+# Version: 1.0
+# Used by: docs/roadmap/scripts/validate.py
+#
+# All task YAML files in docs/roadmap/tasks/**/*.yaml must conform to this schema.
+# Run `python3 docs/roadmap/scripts/validate.py` to check all task files.
+
+fields:
+  required:
+    - id
+    - type
+    - title
+    - subsystem
+    - priority
+    - effort
+    - status
+    - description
+
+  optional:
+    - notes
+    - github_issue
+    - labels
+    - dependencies
+    - acceptance_criteria
+    - artifacts
+    - parent_id
+    - subtasks
+
+constraints:
+  type:
+    enum: [autonomous, bug, improvement, feature]
+    description: >
+      autonomous — AUTO-NNN items from the roadmap.
+      bug — defects or regressions.
+      improvement — incremental enhancements to existing behavior.
+      feature — new capabilities not yet present in the system.
+
+  priority:
+    enum: [P1, P2, P3]
+    description: >
+      P1 — critical; blocks other work or addresses a serious defect.
+      P2 — important; scheduled in the next 1-2 sprints.
+      P3 — nice-to-have; scheduled when capacity allows.
+
+  effort:
+    enum: [S, M, L, XL]
+    description: >
+      S  — small; less than one day.
+      M  — medium; 1–3 days.
+      L  — large; 3–5 days. MUST be decomposed into subtasks before work starts.
+      XL — extra-large; more than 5 days. MUST go through Phase 1 Planning before
+           decomposition. See docs/roadmap/ROADMAP-OS.md § XL Phase 1 Planning.
+
+  status:
+    enum: [PROPOSED, APPROVED, IN_PROGRESS, BLOCKED, VALIDATED, CLOSED]
+    description: >
+      PROPOSED   — identified but not yet owner-reviewed.
+      APPROVED   — owner has approved for scheduling.
+      IN_PROGRESS — actively being worked on.
+      BLOCKED    — work started but blocked; notes field must explain blocker.
+      VALIDATED  — all acceptance criteria verified.
+      CLOSED     — complete and archived.
+    transitions:
+      PROPOSED:    [APPROVED]
+      APPROVED:    [IN_PROGRESS, BLOCKED]
+      IN_PROGRESS: [BLOCKED, VALIDATED]
+      BLOCKED:     [IN_PROGRESS, APPROVED]
+      VALIDATED:   [CLOSED]
+      CLOSED:      []
+
+  id:
+    patterns:
+      autonomous: "^AUTO-[0-9]{3}$"
+      bug:        "^BUG-[0-9]{3}[a-z]?$"
+      improvement: "^IMP-[0-9]{3}[a-z]?$"
+      feature:    "^FEAT-[0-9]{3}[a-z]?$"
+    description: >
+      IDs are immutable once created. Never reuse a closed task ID.
+      Autonomous roadmap items (AUTO-NNN) are never split with a letter suffix;
+      their decomposition produces new AUTO-NNN IDs.
+      Bug, improvement, and feature subtasks append a lowercase letter suffix
+      (e.g., IMP-003a, IMP-003b) to identify them as sub-tasks of IMP-003.
+
+  github_issue:
+    type: integer_or_null
+    description: >
+      GitHub issue number once the issue has been created.
+      null means no issue has been created yet.
+      Set this field after running generate-issues.py.
+
+  labels:
+    type: list_of_strings
+    description: >
+      Labels to apply to the GitHub issue. The generate-issues.py script
+      adds type-specific default labels automatically:
+        autonomous  → [autonomous, roadmap]
+        bug         → [bug]
+        improvement → [enhancement]
+        feature     → [feature]
+      Additional labels may be added per task (e.g., yjackcore, high-risk,
+      auto:low, auto:medium, auto:high).
+
+  dependencies:
+    type: list_of_strings
+    description: >
+      IDs of tasks this task depends on. All listed IDs must exist as
+      task files in docs/roadmap/tasks/. Circular dependencies are not allowed.
+
+  acceptance_criteria:
+    type: list_of_strings
+    description: >
+      Checklist items that must all pass before the task can move to VALIDATED.
+      Each item is a short, verifiable statement.
+
+  artifacts:
+    type: list_of_strings
+    description: >
+      Expected output files or documents produced by this task.
+      Paths should be relative to the repository root.
+
+  parent_id:
+    type: string_or_null
+    description: >
+      ID of the parent task. Set on subtasks produced by L/XL decomposition.
+      The parent task file should list this subtask in its `subtasks` field.
+
+  subtasks:
+    type: list_of_strings
+    description: >
+      IDs of child tasks. Set on L or XL parent tasks after decomposition.
+      All listed IDs must exist as task files.
+
+decomposition_rules:
+  L:
+    action: decompose_before_start
+    min_subtasks: 2
+    max_subtasks: 4
+    allowed_subtask_effort: [S, M]
+    description: >
+      L tasks must be decomposed into 2–4 subtasks, each rated S or M,
+      before any implementation begins. Add the subtask IDs to the parent's
+      `subtasks` field and set `parent_id` on each subtask file.
+
+  XL:
+    action: phase1_planning_first
+    planning_doc_path: "docs/roadmap/plans/{id}-plan.md"
+    min_subtasks: 2
+    max_subtasks: 6
+    allowed_subtask_effort: [S, M, L]
+    description: >
+      XL tasks require Phase 1 Planning before decomposition.
+      Phase 1 produces a planning document at docs/roadmap/plans/<id>-plan.md.
+      The plan must be owner-approved before decomposition begins.
+      After approval, the XL task follows the L decomposition protocol.
+
+github_integration:
+  issue_title_format: "[{id}] {title}"
+  duplicate_detection:
+    strategy: title_prefix_search
+    prefix_format: "[{id}]"
+    description: >
+      Before creating a GitHub issue, the generation script searches all open
+      and closed issues for any whose title starts with "[{id}]". If found,
+      creation is skipped and the existing issue URL is logged.
+  default_labels:
+    autonomous:  [autonomous, roadmap]
+    bug:         [bug]
+    improvement: [enhancement]
+    feature:     [feature]
+  body_template: |
+    <!-- Auto-generated from docs/roadmap/tasks/{type}/{id}.yaml -->
+    <!-- Do not edit this body directly; update the YAML file and re-run generate-issues.py -->
+
+    ## Description
+
+    {description}
+
+    ## Subsystem
+
+    `{subsystem}`
+
+    ## Priority / Effort
+
+    Priority: **{priority}** | Effort: **{effort}**
+
+    ## Acceptance Criteria
+
+    {acceptance_criteria_list}
+
+    ## Artifacts
+
+    {artifacts_list}
+
+    ## Dependencies
+
+    {dependencies_list}
+
+    ## Notes
+
+    {notes}
+
+    ---
+    _Task file: `docs/roadmap/tasks/{type}/{id}.yaml`_

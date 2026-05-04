@@ -1,0 +1,38 @@
+id: "AUTO-016"
+type: autonomous
+title: "Documentation and Product-Positioning Drift"
+subsystem: docs
+priority: P1
+effort: M
+status: PROPOSED
+github_issue: null
+labels:
+  - autonomous
+  - roadmap
+  - foundation
+description: >
+  Correct positioning drift in existing documentation so that it accurately
+  reflects the autonomous studio model rather than the collaborative assistant
+  model. Audit docs/COLLABORATIVE-DESIGN-PRINCIPLE.md, docs/WORKFLOW-GUIDE.md,
+  AGENTS.md, and the README for language that positions the studio as purely
+  assistant-driven. Update documentation to reflect the owner-directed autonomous
+  model while preserving the owner-as-director principle. Ensure updated docs
+  communicate what changes and what stays the same. Documentation updates must
+  not contradict the collaborative design principles that still apply.
+  Changes must be reviewed by the owner before merge.
+acceptance_criteria:
+  - "docs/COLLABORATIVE-DESIGN-PRINCIPLE.md reflects the autonomous model"
+  - "docs/WORKFLOW-GUIDE.md updated for owner-directed autonomous operation"
+  - "AGENTS.md collaboration protocol section updated"
+  - "README.md product description reflects new positioning"
+  - "Owner-as-director principle preserved throughout all updates"
+  - "Owner reviews and approves the documentation changes"
+artifacts:
+  - "docs/COLLABORATIVE-DESIGN-PRINCIPLE.md (updated)"
+  - "docs/WORKFLOW-GUIDE.md (updated)"
+  - "AGENTS.md (updated)"
+  - "README.md (updated)"
+notes: >
+  This is a FOUNDATION item; must be completed before AUTO-003 onwards fully
+  takes effect. Documentation updates require owner review before merge.
+  The owner is always the creative director — that principle must not change.

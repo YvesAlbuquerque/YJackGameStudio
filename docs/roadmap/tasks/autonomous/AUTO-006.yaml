@@ -1,0 +1,36 @@
+id: "AUTO-006"
+type: autonomous
+title: "Dependency Graph and File Ownership Protocol"
+subsystem: contracts
+priority: P1
+effort: M
+status: PROPOSED
+github_issue: null
+labels:
+  - autonomous
+  - roadmap
+  - infrastructure
+dependencies:
+  - "AUTO-005"
+description: >
+  Establish a machine-readable dependency graph for agent work contracts and a
+  file ownership protocol to prevent conflicts. Define how contracts declare file
+  ownership (reads vs. writes). Define conflict detection: two contracts with
+  overlapping write scope cannot execute in parallel without explicit resolution.
+  Establish dependency graph format (YAML adjacency list in production/) and how
+  agents read it before scheduling. Define ownership transfer protocol when a
+  contract closes.
+acceptance_criteria:
+  - "Dependency graph schema documented in .agents/docs/dependency-graph.md"
+  - "File ownership protocol documented with read/write distinction"
+  - "Conflict detection rules defined"
+  - "Ownership transfer protocol documented"
+  - "Graph is human-readable and auditable"
+  - "Conflict resolution always escalates to owner"
+artifacts:
+  - ".agents/docs/dependency-graph.md"
+  - ".agents/docs/templates/dependency-graph.yaml"
+notes: >
+  Conflict resolution must always escalate to the owner; agents cannot
+  unilaterally resolve ownership conflicts. The graph format must be compatible
+  with AUTO-007 (scheduler) which reads it before assigning work.

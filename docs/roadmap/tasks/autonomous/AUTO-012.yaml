@@ -1,0 +1,37 @@
+id: "AUTO-012"
+type: autonomous
+title: "Autonomous Run Memory and Handoff Model"
+subsystem: session
+priority: P2
+effort: M
+status: PROPOSED
+github_issue: null
+labels:
+  - autonomous
+  - roadmap
+  - validation
+dependencies:
+  - "AUTO-005"
+description: >
+  Define how agents persist memory across sessions and hand off state to the
+  next agent or session. Extend the production/session-state/ model to support
+  structured handoff records. A handoff record captures: active contracts,
+  pending decisions, last validated state, next scheduled action, and risk items
+  requiring owner attention. Define when a handoff record is written (end of
+  session, before escalation, after sprint completion). Agents starting a new
+  session must read the handoff record and resume from the last validated state.
+  Decide and document which path owns persistent handoff records and whether
+  production/session-state/active.md should be gitignored.
+acceptance_criteria:
+  - "Handoff record schema documented in .agents/docs/"
+  - "Session-state lifecycle documented (ephemeral vs. persistent distinction)"
+  - "Agents read handoff records at session start"
+  - "Handoff records contain no secrets or credentials"
+  - "production/session-state/ gitignore policy is explicitly documented"
+artifacts:
+  - ".agents/docs/handoff-record-schema.md"
+  - ".agents/docs/session-state-lifecycle.md"
+notes: >
+  production/session-state/ is a tracked directory; session-logs/ is gitignored.
+  This task must explicitly decide and document the gitignore policy for
+  production/session-state/active.md.
