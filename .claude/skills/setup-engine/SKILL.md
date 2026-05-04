@@ -1,7 +1,7 @@
 ---
 name: setup-engine
 description: "Configure the project's game engine and version. Pins the engine in CLAUDE.md, detects knowledge gaps, and populates engine reference docs via WebSearch when the version is beyond the LLM's training data."
-argument-hint: "[engine] | [engine version] | refresh | upgrade [old-version] [new-version] | no args for guided selection"
+argument-hint: "[engine] | [engine version] | unity yjackcore [version-or-source] | refresh | upgrade [old-version] [new-version] | no args for guided selection"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, WebSearch, WebFetch, Task, AskUserQuestion
 ---
@@ -10,13 +10,29 @@ When this skill is invoked:
 
 ## 1. Parse Arguments
 
-Four modes:
+Six modes:
 
 - **Full spec**: `/setup-engine godot 4.6` — engine and version provided
 - **Engine only**: `/setup-engine unity` — engine provided, version will be looked up
+- **Unity framework spec**: `/setup-engine unity yjackcore [version-or-source]` — configure Unity/C# and mark the project as YJackCore-backed
 - **No args**: `/setup-engine` — fully guided mode (engine recommendation + version)
 - **Refresh**: `/setup-engine refresh` — update reference docs (see Section 10)
 - **Upgrade**: `/setup-engine upgrade [old-version] [new-version]` — migrate to a new engine version (see Section 11)
+
+### YJackCore argument handling
+
+If any argument equals `yjackcore` or `com.ygamedev.yjack`:
+
+- Force the engine recommendation to Unity and language to C#.
+- Treat the next non-engine argument, if any, as the framework version or source
+  hint. Examples: `v1.6.0`, `https://github.com/YvesAlbuquerque/YJackCore.git`,
+  or `Packages/YJackCore`.
+- Read `.claude/docs/yjackcore-support.md` before proposing defaults.
+- If a local YJackCore checkout or package path is known, read its `package.json`
+  and use that package version and Unity target as evidence.
+- Do not assume package installation has happened. Record the intended package
+  source in technical preferences and list manual Unity Package Manager
+  validation as required.
 
 ---
 
@@ -159,6 +175,19 @@ Update the Technology Stack section, replacing the `[CHOOSE]` placeholders with 
 - **Asset Pipeline**: Unity Asset Import Pipeline + Addressables
 ```
 
+**For Unity + YJackCore:**
+Use the Unity template above, then also record in the Technology Stack notes or
+Technical Preferences that the project consumes YJackCore. YJackCore is a Unity
+package/framework, not the engine:
+
+```markdown
+- **Engine**: Unity [version]
+- **Language**: C#
+- **Framework**: YJackCore (`com.ygamedev.yjack`)
+- **Build System**: Unity Build Pipeline
+- **Asset Pipeline**: Unity Asset Import Pipeline + Addressables
+```
+
 **For Unreal:**
 ```markdown
 - **Engine**: Unreal Engine [version]
@@ -176,6 +205,31 @@ engine-appropriate defaults. Read the existing template first, then fill in:
 
 ### Engine & Language Section
 - Fill from the engine choice made in step 4
+
+### Framework Integration Section
+
+If YJackCore was selected or detected, populate `## Framework Integration`:
+
+```markdown
+## Framework Integration
+- **Framework**: YJackCore
+- **Framework Source**: [UPM URL, local package path, or git submodule path]
+- **Framework Version**: [package version, tag, or "Pinned by UPM source"]
+- **Framework Docs**: .claude/docs/yjackcore-support.md
+- **Framework Rules**: Reuse YJackCore layer managers, prefabs, ScriptableObject status/event assets, UnityEvents, and inspector-first authoring before custom host-game managers.
+- **Framework Routing Notes**: Unity specialists must read `.claude/docs/yjackcore-support.md`. If changing the framework package itself, switch to the YJackCore repo/package docs and inspect package boundaries before editing.
+```
+
+Also add YJackCore to **Allowed Libraries / Addons** only when the project is
+actually configured to consume it:
+
+```markdown
+- YJackCore (`com.ygamedev.yjack`) — Unity low-code framework package
+- Odin Inspector — required YJackCore authoring dependency
+```
+
+Do not add optional YJackCore-related Unity packages speculatively. Use the
+package manifest or local `package.json` as the source of truth.
 
 ### Naming Conventions (engine defaults)
 
@@ -266,6 +320,14 @@ Also populate the `## Engine Specialists` section in `technical-preferences.md` 
 | Scene / prefab / level files (.unity, .prefab) | unity-specialist |
 | Native extension / plugin files (.dll, native plugins) | unity-specialist |
 | General architecture review | unity-specialist |
+```
+
+If YJackCore is configured, append this to the Unity routing notes:
+
+```markdown
+- **Framework Specialist Rule**: For YJackCore-backed projects, `unity-specialist`
+  must read `.claude/docs/yjackcore-support.md` and apply YJackCore layer
+  boundaries before proposing new managers, wrappers, or bootstrap systems.
 ```
 
 **For Unreal:**

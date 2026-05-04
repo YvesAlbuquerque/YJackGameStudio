@@ -17,6 +17,20 @@ only when Claude Code compatibility requires it.
 
 @.claude/docs/directory-structure.md
 @.claude/docs/technical-preferences.md
+
+## Framework Integration
+
+No framework-specific integration guidance is enabled by default.
+Add framework support docs only when the project actually uses them.
+For example, include `@.claude/docs/yjackcore-support.md` only after
+`/setup-engine` selects or detects YJackCore for this project.
+
+If `.claude/docs/technical-preferences.md` contains `- **Framework**: YJackCore` in the Framework Integration section, read:
+
+@.claude/docs/yjackcore-support.md
+
+## Coordination Rules
+
 @.claude/docs/coordination-rules.md
 @.claude/docs/coding-standards.md
 @.claude/docs/context-management.md

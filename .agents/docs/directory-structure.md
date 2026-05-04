@@ -4,6 +4,7 @@
 /
 ├── AGENTS.md                    # Master configuration
 ├── .agents/                     # Agent definitions, skills, hooks, rules, docs
+├── Packages/                    # Unity packages/submodules when using Unity (e.g., YJackCore)
 ├── src/                         # Game source code (core, gameplay, ai, networking, ui, tools)
 ├── assets/                      # Game assets (art, audio, vfx, shaders, data)
 ├── design/                      # Game design documents (gdd, narrative, levels, balance)

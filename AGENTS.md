@@ -49,6 +49,19 @@ Prefer the provider-neutral layer unless a tool-specific adapter says otherwise:
 The `.claude/` directory is retained for Claude Code compatibility. Do not make
 new shared workflow changes only in `.claude/`; mirror or author them in `.agents/`.
 
+## Framework Integration
+
+Optional framework/package integrations are recorded in
+`.agents/docs/technical-preferences.md`. When a Unity project uses YJackCore,
+read `.agents/docs/yjackcore-support.md` and `.agents/rules/yjackcore-unity.md`
+before proposing architecture or implementation.
+
+If a local YJackCore package or checkout is available, prefer its own
+`AGENTS.md`, `.agents/skills/*`, `.ai/commands/*`, docs, package metadata,
+asmdefs, and subtree instructions over this repo's generic Unity specialist.
+Use the Game-Studio Unity specialist as the fallback for generic Unity
+engine/API behavior or when YJackCore-specific assets are unavailable.
+
 ## Tool Capability Translation
 
 Some shared skills still use Claude-origin capability names such as `Read`,

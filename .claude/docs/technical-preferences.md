@@ -10,6 +10,17 @@
 - **Rendering**: [TO BE CONFIGURED]
 - **Physics**: [TO BE CONFIGURED]
 
+## Framework Integration
+
+<!-- Optional. Populate when this project uses a framework/package such as YJackCore. -->
+
+- **Framework**: [None configured]
+- **Framework Source**: [None configured]
+- **Framework Version**: [None configured]
+- **Framework Docs**: [None configured]
+- **Framework Rules**: [None configured]
+- **Framework Routing Notes**: [None configured]
+
 ## Input & Platform
 
 <!-- Written by /setup-engine. Read by /ux-design, /ux-review, /test-setup, /team-ui, and /dev-story -->
