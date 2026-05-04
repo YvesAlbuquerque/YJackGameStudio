@@ -10,6 +10,23 @@ paths:
 Apply these rules only when the project uses YJackCore or the edited path is a
 YJackCore package path.
 
+## Workspace Routing
+
+When a task touches `Packages/YJackCore/**` or `Packages/com.ygamedev.yjack/**`,
+route to the YJackCore-aware agent path first, before the generic Unity specialist:
+
+1. Check for `.yjack-workspace.json` in the Unity project root.
+2. If found, read it to determine the active `layout` and resolve `sourcePath`.
+3. If `sourcePath` is non-null, read `<sourcePath>/AGENTS.md` (or `agentEntryPoint`
+   if set) before proposing any YJackCore architecture or package changes.
+4. If `sourcePath` is null (UPM layout) or no manifest is present, fall back to
+   `.agents/docs/yjackcore-support.md` and then the Game Studio unity-specialist.
+
+Do not route YJackCore package tasks through the generic Unity specialist first.
+Generic Unity guidance is the fallback, not the default, for YJackCore work.
+
+## Authority and Package Boundaries
+
 - Read `.agents/docs/yjackcore-support.md` before designing or reviewing Unity
   architecture for a YJackCore-backed project.
 - If a local YJackCore package or checkout is available, prefer its own

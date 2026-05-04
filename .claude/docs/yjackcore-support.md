@@ -7,6 +7,7 @@ the user asks this template to adapt to YJackCore rules.
 
 Treat a project as YJackCore-backed if any of these are true:
 
+- `.yjack-workspace.json` exists in the Unity project root
 - `Packages/manifest.json` contains `com.ygamedev.yjack` or `YJackCore`
 - a local package exists at `Packages/YJackCore/package.json`
 - a git submodule path points to `YJackCore`
@@ -14,9 +15,10 @@ Treat a project as YJackCore-backed if any of these are true:
 - technical preferences name a YJackCore package source, local path, or submodule
 - the user explicitly says the game uses YJackCore
 
-A sibling checkout such as `../YJackCore` may be used as reference material only
-after confirming it is the intended framework source or the closest available
-local YJackCore repo.
+Check for `.yjack-workspace.json` first; it is the most reliable and explicit
+signal. A sibling checkout such as `../YJackCore` may be used as reference
+material only after confirming it is the intended framework source or the
+closest available local YJackCore repo.
 
 ## Specialist Precedence
 
@@ -43,6 +45,36 @@ Use this order:
 Do not copy YJackCore implementation details blindly. Local package metadata,
 nearest docs, asmdefs, and subtree instructions win over this summary.
 
+## Framework vs Product Authority
+
+YJackCore is a reusable framework package. The game built on top of it is the
+product. These are separate ownership boundaries with different governing
+authorities.
+
+**Framework authority (YJackCore):**
+- YJackCore's own `AGENTS.md` and `.agents/skills/` take precedence over the
+  Game Studio generic Unity specialist for all YJackCore-specific decisions.
+- Package internals (`Packages/YJackCore/**`, `Packages/com.ygamedev.yjack/**`)
+  are governed by YJackCore's own guidance, not the host game's rules.
+- Framework architecture, layer ownership, compile symbols, asmdef boundaries,
+  and ScriptableObject/event patterns are YJackCore authority.
+
+**Product authority (host game):**
+- Host-game code in `src/` is the product. The Game Studio's own rules and the
+  unity-specialist agent govern host-game decisions.
+- The product may wire to YJackCore layers but must not alter framework internals
+  except through an explicit framework-change workflow.
+- GDDs, stories, and architecture decisions for the product are owned by the
+  game studio, not by the YJackCore package maintainer.
+
+**Decision routing:**
+1. Task about framework internals? → YJackCore authority. Read its `AGENTS.md`
+   and `.agents/skills/` first.
+2. Task about host-game code integrating YJackCore? → Product authority, but
+   read this file first to select the correct YJackCore layer.
+3. Task about generic Unity APIs unrelated to YJackCore layers? → Use the Game
+   Studio unity-specialist directly.
+
 ## Preferred YJackCore Reading Order
 
 When a local YJackCore package or checkout is available, start with:
@@ -68,6 +100,136 @@ Useful YJackCore skill families include:
 - `yjack-scriptableobject-patterns`: status assets, events, reset semantics
 - `yjack-testing-and-validation`: honest automated/manual Unity validation split
 - `yjack-doc-impact`: selective doc-review and update decisions
+
+## Workspace Manifest
+
+A `.yjack-workspace.json` file in the Unity project root tells agents which
+YJackCore layout is in use and where to find YJackCore's own guidance assets.
+Check for this file before checking `Packages/manifest.json` or scanning for
+`package.json` files; when it exists, it is the authoritative source for layout
+and path resolution.
+
+A template is available at `.agents/docs/templates/yjack-workspace.json`.
+Copy it to your Unity project root and configure the fields for your layout.
+
+### Manifest Fields
+
+| Field | Purpose |
+| ----- | ------- |
+| `packageId` | Unity package name; must be `com.ygamedev.yjack` |
+| `version` | Installed package version |
+| `unity` | Unity version the project targets (e.g., `6000.0`) |
+| `layout` | Layout type: `upm`, `sibling`, `submodule`, `vendor`, or `inline` |
+| `packagePath` | Path where Unity resolves the package, relative to project root |
+| `sourcePath` | Path to YJackCore source where `AGENTS.md` lives; `null` if not locally available |
+| `upmSource` | UPM git URL or file reference; used with `upm` and `sibling` layouts |
+| `agentEntryPoint` | Override path to `AGENTS.md`; defaults to `<sourcePath>/AGENTS.md` |
+| `agentSkillsPath` | Override path to `.agents/skills/`; defaults to `<sourcePath>/.agents/skills` |
+
+### Layout Examples
+
+**UPM** — Package resolved by Unity Package Manager from a git URL. No local
+source available for agent guidance; fall back to this file.
+
+```json
+{
+  "yjack": {
+    "packageId": "com.ygamedev.yjack",
+    "version": "1.6.0",
+    "unity": "6000.0",
+    "layout": "upm",
+    "packagePath": "Packages/com.ygamedev.yjack",
+    "sourcePath": null,
+    "upmSource": "https://github.com/YGameDev/YJackCore.git#v1.6.0",
+    "agentEntryPoint": null,
+    "agentSkillsPath": null
+  }
+}
+```
+
+**Sibling checkout** — YJackCore checked out as a sibling directory alongside
+the Unity project. Useful during active framework development.
+
+```json
+{
+  "yjack": {
+    "packageId": "com.ygamedev.yjack",
+    "version": "1.6.0",
+    "unity": "6000.0",
+    "layout": "sibling",
+    "packagePath": "Packages/com.ygamedev.yjack",
+    "sourcePath": "../YJackCore",
+    "upmSource": "file:../YJackCore",
+    "agentEntryPoint": "../YJackCore/AGENTS.md",
+    "agentSkillsPath": "../YJackCore/.agents/skills"
+  }
+}
+```
+
+**Submodule** — YJackCore added as a git submodule under `Packages/`.
+
+```json
+{
+  "yjack": {
+    "packageId": "com.ygamedev.yjack",
+    "version": "1.6.0",
+    "unity": "6000.0",
+    "layout": "submodule",
+    "packagePath": "Packages/YJackCore",
+    "sourcePath": "Packages/YJackCore",
+    "upmSource": null,
+    "agentEntryPoint": "Packages/YJackCore/AGENTS.md",
+    "agentSkillsPath": "Packages/YJackCore/.agents/skills"
+  }
+}
+```
+
+**Vendor** — YJackCore source copied directly into `Packages/com.ygamedev.yjack/`.
+
+```json
+{
+  "yjack": {
+    "packageId": "com.ygamedev.yjack",
+    "version": "1.6.0",
+    "unity": "6000.0",
+    "layout": "vendor",
+    "packagePath": "Packages/com.ygamedev.yjack",
+    "sourcePath": "Packages/com.ygamedev.yjack",
+    "upmSource": null,
+    "agentEntryPoint": "Packages/com.ygamedev.yjack/AGENTS.md",
+    "agentSkillsPath": "Packages/com.ygamedev.yjack/.agents/skills"
+  }
+}
+```
+
+**Inline** — YJackCore embedded directly inside the `Assets/` folder, outside
+the normal `Packages/` tree. Use sparingly; prefer `Packages/` layouts.
+
+```json
+{
+  "yjack": {
+    "packageId": "com.ygamedev.yjack",
+    "version": "1.6.0",
+    "unity": "6000.0",
+    "layout": "inline",
+    "packagePath": "Assets/YJackCore",
+    "sourcePath": "Assets/YJackCore",
+    "upmSource": null,
+    "agentEntryPoint": "Assets/YJackCore/AGENTS.md",
+    "agentSkillsPath": "Assets/YJackCore/.agents/skills"
+  }
+}
+```
+
+### Path Resolution Order
+
+When resolving where to find YJackCore guidance assets:
+
+1. Read `.yjack-workspace.json` if present in the project root.
+2. Use `agentEntryPoint` if non-null; otherwise `<sourcePath>/AGENTS.md`.
+3. Use `agentSkillsPath` if non-null; otherwise `<sourcePath>/.agents/skills`.
+4. If `sourcePath` is `null` (UPM layout or manifest absent), fall back to this
+   document and the Game Studio unity-specialist.
 
 ## Package Assumptions
 
@@ -143,13 +305,49 @@ For architecture-sensitive YJackCore work, include:
 - **Manual validation still required**: Unity scene/prefab wiring, Play Mode
   behavior, package resolution, compile symbols, and any package manager steps
 
+## Manual Unity Validation Expectations
+
+The Unity Editor must be used directly for many YJackCore-related validations.
+The steps below cannot be autonomously confirmed and must be escalated to the
+owner when they are required by a task.
+
+### Always Requires Manual Validation
+
+- **Domain reload** — assembly compilation errors after changing asmdefs, compile
+  symbols, or package references
+- **Prefab wiring** — serialized field linkage, nested-prefab overrides, and
+  prefab variants
+- **Scene composition** — layer manager references, UnityEvent wiring between
+  GameObjects, and scene-level ScriptableObject assignments
+- **Play Mode behavior** — runtime initialization order, event flow, and
+  YJackCore manager lifecycle
+- **Package Manager steps** — installing, updating, or removing the YJackCore
+  package via the Unity Package Manager window
+- **Inspector-driven setup** — any authoring step that requires clicking in the
+  Unity Inspector (Odin Inspector groups, buttons, custom drawers)
+- **Addressable labels and asset groups** — if the project uses Addressables
+- **Build verification** — final IL2CPP or Mono build with all modules included
+
+### Automation Boundary
+
+Automated tests (Unity Test Runner, NUnit) can validate:
+
+- Pure C# logic that does not require a scene or domain reload
+- ScriptableObject asset state in Edit Mode tests
+- Layer-boundary contracts that can be tested without runtime manager startup
+
+Report the automation/manual boundary explicitly in every task that touches
+YJackCore runtime wiring.
+
 ## Setup Checklist
 
 When configuring a project for YJackCore:
 
 - Set engine to Unity and language to C#
-- Record YJackCore in `.claude/docs/technical-preferences.md`
+- Record YJackCore in `.claude/docs/technical-preferences.md` (Framework section)
 - Record the package source: UPM git URL, local path, or submodule path
+- Copy `.agents/docs/templates/yjack-workspace.json` to the Unity project root
+  and set `layout`, `packagePath`, `sourcePath`, and related fields
 - Add YJackCore and Odin Inspector to allowed libraries only when actually used
 - Route framework architecture questions through YJackCore guidance plus the
   Unity specialist, in that order

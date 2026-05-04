@@ -13,6 +13,17 @@
 ## Framework Integration
 
 <!-- Optional. Populate when this project uses a framework/package such as YJackCore. -->
+<!-- For YJackCore projects set the fields as follows:                                -->
+<!--   Framework:              YJackCore                                              -->
+<!--   Framework Source:       upm:<git-url> | file:<local-path> | submodule:<path>  -->
+<!--   Framework Version:      e.g., 1.6.0                                           -->
+<!--   Framework Docs:         .claude/docs/yjackcore-support.md                     -->
+<!--   Framework Rules:        .claude/rules/yjackcore-unity.md                      -->
+<!--   Framework Routing Notes: Read .claude/docs/yjackcore-support.md before any    -->
+<!--                            Unity architecture work; route YJackCore package      -->
+<!--                            tasks through the YJackCore layer first.             -->
+<!-- Also place a .yjack-workspace.json in the Unity project root (copy the template -->
+<!-- from .agents/docs/templates/yjack-workspace.json) for agent path resolution.    -->
 
 - **Framework**: [None configured]
 - **Framework Source**: [None configured]

@@ -1,0 +1,13 @@
+{
+  "yjack": {
+    "packageId": "com.ygamedev.yjack",
+    "version": "1.6.0",
+    "unity": "6000.0",
+    "layout": "upm",
+    "packagePath": "Packages/com.ygamedev.yjack",
+    "sourcePath": null,
+    "upmSource": "https://github.com/YGameDev/YJackCore.git#v1.6.0",
+    "agentEntryPoint": null,
+    "agentSkillsPath": null
+  }
+}
