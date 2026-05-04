@@ -1,0 +1,23 @@
+id: "BUG-001"
+type: bug
+title: "Skill validation false-positive when notes field is missing"
+subsystem: roadmap-os
+priority: P2
+effort: S
+status: PROPOSED
+github_issue: null
+labels:
+  - bug
+  - roadmap-os
+description: >
+  The validate.py script reports a validation error on task YAML files that do
+  not include the optional `notes` field, even though the schema marks `notes`
+  as optional. The error message incorrectly states "missing required field: notes".
+acceptance_criteria:
+  - "validate.py exits 0 on a task YAML file that omits the notes field"
+  - "The error message accurately distinguishes required vs optional field violations"
+  - "All existing task files that omit notes continue to pass validation"
+notes: >
+  Reproduced by running: python3 docs/roadmap/scripts/validate.py
+  with any task file that does not include a notes field.
+  Root cause: the required fields list in validate.py incorrectly includes notes.

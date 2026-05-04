@@ -1,0 +1,38 @@
+id: "AUTO-015"
+type: autonomous
+title: "Autonomous Brownfield Adoption for YJackCore-Backed Unity Projects"
+subsystem: yjackcore
+priority: P2
+effort: L
+status: PROPOSED
+github_issue: null
+labels:
+  - autonomous
+  - roadmap
+  - execution
+  - yjackcore
+dependencies:
+  - "AUTO-002"
+  - "AUTO-009"
+description: >
+  Extend the /adopt skill to handle brownfield Unity projects that already use
+  YJackCore. Detect YJackCore package presence and version during /adopt audit.
+  Apply YJackCore-specific compliance checks: package boundary integrity,
+  assembly definition structure, low-code authoring conventions. Produce a
+  migration plan that respects YJackCore package authority (AUTO-002). Integrate
+  with bootstrap templates from AUTO-009 to provide a clear upgrade path.
+  The /adopt skill must not modify Packages/YJackCore/** without explicit owner
+  authorization. Migration plan must be phased; no big-bang migration.
+acceptance_criteria:
+  - "/adopt skill detects YJackCore package and version"
+  - "YJackCore-specific compliance checks are run and reported"
+  - "Migration plan is phased, not a big-bang rewrite"
+  - "Packages/YJackCore/** is never modified without owner authorization"
+  - "Migration plan integrates with bootstrap templates from AUTO-009"
+artifacts:
+  - ".agents/skills/adopt/SKILL.md (updated)"
+  - ".agents/docs/yjackcore-compliance-checks.md"
+notes: >
+  This is an L effort task and must be decomposed before implementation.
+  Requires AUTO-002 and AUTO-009 to be VALIDATED.
+  No modification to Packages/YJackCore/** without owner authorization.

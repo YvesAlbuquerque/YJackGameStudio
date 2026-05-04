@@ -1,0 +1,34 @@
+id: "AUTO-002"
+type: autonomous
+title: "YJackCore Consumer Authority and Workspace Routing"
+subsystem: yjackcore
+priority: P1
+effort: M
+status: VALIDATED
+github_issue: null
+labels:
+  - autonomous
+  - roadmap
+  - foundation
+  - yjackcore
+description: >
+  Clarify which authority governs YJackCore decisions and how agents route
+  YJackCore-related work to the correct specialist. Documents the authority
+  hierarchy (YJackCore AGENTS.md takes precedence over generic Unity specialist),
+  workspace routing rules for Packages/YJackCore/** paths, and the generic Unity
+  fallback behavior when YJackCore-specific assets are absent.
+acceptance_criteria:
+  - "Authority hierarchy documented"
+  - ".agents/rules/yjackcore-unity.md updated with correct path scope"
+  - ".claude/rules/yjackcore-unity.md updated to match"
+  - ".agents/docs/yjackcore-authority.md exists"
+  - ".agents/docs/yjackcore-support.md exists"
+  - "Workspace routing covers upm, sibling, submodule, vendor, and inline layouts"
+artifacts:
+  - ".agents/rules/yjackcore-unity.md"
+  - ".claude/rules/yjackcore-unity.md"
+  - ".agents/docs/yjackcore-authority.md"
+  - ".agents/docs/yjackcore-support.md"
+notes: >
+  Implemented. Authority and routing rules are in place.
+  This is a FOUNDATION item required by AUTO-009 and AUTO-015.

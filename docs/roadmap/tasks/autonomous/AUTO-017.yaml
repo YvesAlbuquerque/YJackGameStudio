@@ -1,0 +1,38 @@
+id: "AUTO-017"
+type: autonomous
+title: "Autonomous Asset Pipeline Issue Generation"
+subsystem: assets
+priority: P3
+effort: M
+status: PROPOSED
+github_issue: null
+labels:
+  - autonomous
+  - roadmap
+  - reporting
+dependencies:
+  - "AUTO-005"
+  - "AUTO-006"
+description: >
+  Upgrade /asset-spec to generate structured GitHub issues for each required
+  asset, enabling autonomous tracking and delegation. Extend /asset-spec output
+  to produce agent work contracts (AUTO-005) as GitHub issues. Each asset issue
+  captures: asset ID, spec reference, assignee agent, format requirements, size
+  budget, and validation criteria. Define how asset issues link to the sprint
+  plan and dependency graph (AUTO-006). Provide a rollup view of asset pipeline
+  status for owner review. Issue generation must be idempotent. Asset issues
+  must reference the approved asset specification; they must not duplicate spec
+  content.
+acceptance_criteria:
+  - "/asset-spec skill updated to produce work contract issues per asset"
+  - "Each asset issue captures all required fields"
+  - "Asset issues link to sprint plan and dependency graph"
+  - "Rollup view of asset pipeline status provided"
+  - "Issue generation is idempotent (no duplicates on re-run)"
+  - "Asset issues reference spec; they do not duplicate spec content"
+artifacts:
+  - ".agents/skills/asset-spec/SKILL.md (updated)"
+  - ".github/ISSUE_TEMPLATE/asset-work-contract.md"
+notes: >
+  Issue generation must remain idempotent.
+  Asset issues must reference the approved specification, not copy it.

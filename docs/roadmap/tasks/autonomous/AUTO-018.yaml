@@ -1,0 +1,39 @@
+id: "AUTO-018"
+type: autonomous
+title: "Multi-Agent QA and Playtest Evidence Workflow"
+subsystem: qa
+priority: P3
+effort: L
+status: PROPOSED
+github_issue: null
+labels:
+  - autonomous
+  - roadmap
+  - quality
+dependencies:
+  - "AUTO-005"
+  - "AUTO-010"
+description: >
+  Define how multiple agents coordinate to execute a QA plan and collect
+  playtest evidence autonomously. Extend /qa-plan to produce a set of agent
+  work contracts (AUTO-005) that can be distributed across specialist QA agents.
+  Define how QA agents collect, record, and validate test evidence against
+  acceptance criteria. Integrate with /playtest-report to produce structured
+  evidence that gates phase advancement (AUTO-010). Define how conflicting QA
+  findings are escalated to the owner. QA evidence must be traceable to GDD
+  requirements. No QA gate may be marked passed without satisfying evidence.
+acceptance_criteria:
+  - "/qa-plan updated to produce work contract issues for each QA task"
+  - "QA agents collect and record evidence against acceptance criteria"
+  - "Evidence is traceable to GDD requirements"
+  - "Conflicting QA findings trigger owner escalation"
+  - "/playtest-report integration produces structured gate evidence"
+  - "No QA gate passes without meeting defined evidence criteria"
+artifacts:
+  - ".agents/skills/qa-plan/SKILL.md (updated)"
+  - ".agents/docs/qa-evidence-schema.md"
+  - ".agents/skills/playtest-report/SKILL.md (updated)"
+notes: >
+  This is an L effort task and must be decomposed before implementation.
+  QA evidence must be traceable to GDD requirements.
+  No gate may be marked passed without evidence satisfying defined criteria.
