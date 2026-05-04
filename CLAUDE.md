@@ -20,6 +20,10 @@ only when Claude Code compatibility requires it.
 
 ## Framework Integration
 
+<!-- When a framework is configured (e.g., YJackCore for Unity projects), additional guidance will be listed here. -->
+
+If `.claude/docs/technical-preferences.md` contains `- **Framework**: YJackCore` in the Framework Integration section, read:
+
 @.claude/docs/yjackcore-support.md
 
 ## Coordination Rules

@@ -67,11 +67,11 @@ Before writing any code:
 
 ## YJackCore-Aware Projects
 
-If `.claude/docs/technical-preferences.md` lists `Framework: YJackCore`, or the
-project contains `com.ygamedev.yjack` / `YJackCore` in `Packages/manifest.json`,
-the project has `Packages/YJackCore/package.json`, or the user explicitly says
-the game uses YJackCore, read `.claude/docs/yjackcore-support.md` before
-proposing Unity architecture.
+If `.claude/docs/technical-preferences.md` contains `- **Framework**: YJackCore` in the
+Framework Integration section, or the project contains `com.ygamedev.yjack` / `YJackCore`
+in `Packages/manifest.json`, the project has `Packages/YJackCore/package.json`, or the
+user explicitly says the game uses YJackCore, read `.claude/docs/yjackcore-support.md`
+before proposing Unity architecture.
 
 ### Specialist Precedence
 

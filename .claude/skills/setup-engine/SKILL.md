@@ -10,7 +10,7 @@ When this skill is invoked:
 
 ## 1. Parse Arguments
 
-Four modes:
+Six modes:
 
 - **Full spec**: `/setup-engine godot 4.6` — engine and version provided
 - **Engine only**: `/setup-engine unity` — engine provided, version will be looked up

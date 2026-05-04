@@ -10,7 +10,7 @@ Treat a project as YJackCore-backed if any of these are true:
 - `Packages/manifest.json` contains `com.ygamedev.yjack` or `YJackCore`
 - a local package exists at `Packages/YJackCore/package.json`
 - a git submodule path points to `YJackCore`
-- `.claude/docs/technical-preferences.md` lists `Framework: YJackCore`
+- `.claude/docs/technical-preferences.md` contains `- **Framework**: YJackCore` in the Framework Integration section
 - technical preferences name a YJackCore package source, local path, or submodule
 - the user explicitly says the game uses YJackCore
 
