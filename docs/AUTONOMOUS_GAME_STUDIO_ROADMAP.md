@@ -275,7 +275,7 @@ AUTO-017  Autonomous asset pipeline issue generation                     [REPORT
 **Goal:** Make validation gates (`/gate-check`) executable autonomously rather than advisory-only.
 
 **Scope:**
-- Define machine-readable pass/fail criteria for each gate in `workflow-catalog.yaml`.
+- Define machine-readable pass/fail criteria for each gate in `.agents/docs/workflow-catalog.yaml`.
 - Implement an autonomous gate runner that evaluates criteria, produces a structured verdict, and either advances the phase or escalates to the owner.
 - Gates that cannot be evaluated without human judgment must escalate with a clear description of what the owner needs to decide.
 - Integrate gate results into work contract lifecycle (AUTO-005): a contract cannot close until its gate passes.
@@ -284,7 +284,7 @@ AUTO-017  Autonomous asset pipeline issue generation                     [REPORT
 - Gate verdicts must always be auditable; the evidence for each pass/fail must be recorded.
 - The owner can always override a gate verdict with an explicit decision record.
 
-**Artifacts:** Updated `workflow-catalog.yaml` with machine-readable criteria, gate runner specification.
+**Artifacts:** Updated `.agents/docs/workflow-catalog.yaml` with machine-readable criteria, gate runner specification.
 
 ---
 
@@ -318,7 +318,7 @@ AUTO-017  Autonomous asset pipeline issue generation                     [REPORT
 
 **Constraints:**
 - Handoff records must not contain secrets or credentials.
-- The `production/session-state/` directory remains gitignored and holds **ephemeral within-session state** (e.g., `active.md` — discarded after each session). Handoff records that must survive across sessions (e.g., pending decisions, validated contract state) belong in `production/session-logs/` or a tracked location. The implementation of this item must define clear criteria — such as "any state that a new agent session needs to resume work correctly is tracked; all other state is ephemeral" — to prevent inconsistent record placement.
+- `production/session-state/` is a **tracked** directory (it holds a `.gitkeep`); working files written during a session (e.g., `active.md`) are not gitignored by default. `production/session-logs/` is gitignored. The implementation of this item must decide and document which path owns persistent handoff records and whether `production/session-state/active.md` should be gitignored, so that all agents and tooling handle ephemeral vs. persistent state consistently.
 
 **Artifacts:** Handoff record schema, session-state lifecycle documentation update.
 
