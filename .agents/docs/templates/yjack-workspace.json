@@ -1,0 +1,94 @@
+{
+  "_comment": [
+    "This is the .yjack-workspace.json manifest template.",
+    "Place the file you choose at the project root (next to Packages/ and Assets/).",
+    "Agents read this file to resolve YJackCore paths without guessing layout.",
+    "Remove the '_comment', '_layouts', and any unused layout block before committing.",
+    "",
+    "Required fields: layout, packageName, version, unityVersion",
+    "Optional fields: packagePath, sourcePath, upmUrl, agentsPath, modules, notes",
+    "",
+    "layout values:",
+    "  upm       — installed via Unity Package Manager using a git URL or registry",
+    "  sibling   — YJackCore repository checked out as a sibling folder (../YJackCore)",
+    "  submodule — YJackCore added as a git submodule inside the project",
+    "  vendor    — YJackCore source copied into a local Packages/ subdirectory",
+    "  inline    — YJackCore embedded directly inside Assets/ (legacy, not recommended)"
+  ],
+
+  "_layouts": {
+
+    "upm": {
+      "_comment": "Package installed through Unity Package Manager via a git URL.",
+      "layout": "upm",
+      "packageName": "com.ygamedev.yjack",
+      "version": "1.6.0",
+      "unityVersion": "6000.0",
+      "upmUrl": "https://github.com/ygamedev/yjackcore.git#1.6.0",
+      "modules": ["GameLayer", "LevelLayer", "PlayerLayer", "ViewLayer", "Shared"],
+      "notes": "UPM layout. No local source available. Use yjackcore-support.md as authority fallback."
+    },
+
+    "sibling": {
+      "_comment": "YJackCore repository cloned as a sibling folder next to this project.",
+      "layout": "sibling",
+      "packageName": "com.ygamedev.yjack",
+      "version": "1.6.0",
+      "unityVersion": "6000.0",
+      "sourcePath": "../YJackCore",
+      "packagePath": "../YJackCore",
+      "agentsPath": "../YJackCore/.agents",
+      "modules": ["GameLayer", "LevelLayer", "PlayerLayer", "ViewLayer", "Shared"],
+      "notes": "Sibling checkout. Agents should read ../YJackCore/AGENTS.md as highest authority."
+    },
+
+    "submodule": {
+      "_comment": "YJackCore added as a git submodule at Packages/com.ygamedev.yjack.",
+      "layout": "submodule",
+      "packageName": "com.ygamedev.yjack",
+      "version": "1.6.0",
+      "unityVersion": "6000.0",
+      "packagePath": "Packages/com.ygamedev.yjack",
+      "sourcePath": "Packages/com.ygamedev.yjack",
+      "agentsPath": "Packages/com.ygamedev.yjack/.agents",
+      "modules": ["GameLayer", "LevelLayer", "PlayerLayer", "ViewLayer", "Shared"],
+      "notes": "Submodule layout. Agents should read Packages/com.ygamedev.yjack/AGENTS.md first."
+    },
+
+    "vendor": {
+      "_comment": "YJackCore source vendored (copied) into Packages/YJackCore.",
+      "layout": "vendor",
+      "packageName": "com.ygamedev.yjack",
+      "version": "1.6.0",
+      "unityVersion": "6000.0",
+      "packagePath": "Packages/YJackCore",
+      "sourcePath": "Packages/YJackCore",
+      "agentsPath": "Packages/YJackCore/.agents",
+      "modules": ["GameLayer", "PlayerLayer", "ViewLayer", "Shared"],
+      "notes": "Vendor layout. Package is editable locally. Changes require explicit owner approval."
+    },
+
+    "inline": {
+      "_comment": "YJackCore embedded inside Assets/ (legacy, not recommended for new projects).",
+      "layout": "inline",
+      "packageName": "com.ygamedev.yjack",
+      "version": "1.6.0",
+      "unityVersion": "6000.0",
+      "packagePath": "Assets/YJackCore",
+      "sourcePath": "Assets/YJackCore",
+      "modules": ["GameLayer", "ViewLayer", "Shared"],
+      "notes": "Inline / legacy layout. Assets/ embedding bypasses UPM isolation. Migrate to Packages/ when possible."
+    }
+
+  },
+
+  "_CHOOSE_ONE_LAYOUT_BELOW_AND_DELETE_THE_REST": true,
+
+  "layout": "upm",
+  "packageName": "com.ygamedev.yjack",
+  "version": "1.6.0",
+  "unityVersion": "6000.0",
+  "upmUrl": "https://github.com/ygamedev/yjackcore.git#1.6.0",
+  "modules": [],
+  "notes": ""
+}

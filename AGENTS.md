@@ -53,14 +53,18 @@ new shared workflow changes only in `.claude/`; mirror or author them in `.agent
 
 Optional framework/package integrations are recorded in
 `.agents/docs/technical-preferences.md`. When a Unity project uses YJackCore,
-read `.agents/docs/yjackcore-support.md` and `.agents/rules/yjackcore-unity.md`
-before proposing architecture or implementation.
+read `.agents/docs/yjackcore-authority.md`, `.agents/docs/yjackcore-support.md`,
+and `.agents/rules/yjackcore-unity.md` before proposing architecture or
+implementation.
 
 If a local YJackCore package or checkout is available, prefer its own
 `AGENTS.md`, `.agents/skills/*`, `.ai/commands/*`, docs, package metadata,
 asmdefs, and subtree instructions over this repo's generic Unity specialist.
 Use the Game-Studio Unity specialist as the fallback for generic Unity
 engine/API behavior or when YJackCore-specific assets are unavailable.
+
+If a `.yjack-workspace.json` is present at the project root, read it to resolve
+the YJackCore installation layout and path before reading `Packages/manifest.json`.
 
 ## Tool Capability Translation
 

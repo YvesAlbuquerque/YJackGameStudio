@@ -3,6 +3,9 @@
 Use this document when a Unity project consumes the YJackCore package or when
 the user asks this template to adapt to YJackCore rules.
 
+For authority hierarchy, workspace routing, and manual validation expectations,
+read `.claude/docs/yjackcore-authority.md` first.
+
 ## Detection
 
 Treat a project as YJackCore-backed if any of these are true:
@@ -143,6 +146,17 @@ For architecture-sensitive YJackCore work, include:
 - **Manual validation still required**: Unity scene/prefab wiring, Play Mode
   behavior, package resolution, compile symbols, and any package manager steps
 
+## Workspace Manifest
+
+For workspace path resolution, create a `.yjack-workspace.json` file at the
+project root. Agents read this file first to determine the YJackCore layout
+(UPM, sibling checkout, submodule, vendor, or inline) before falling back to
+`Packages/manifest.json`.
+
+Copy the relevant layout example from
+`.claude/docs/templates/yjack-workspace.json` and remove the unused blocks and
+the `_comment`/`_layouts` keys before committing.
+
 ## Setup Checklist
 
 When configuring a project for YJackCore:
@@ -150,6 +164,7 @@ When configuring a project for YJackCore:
 - Set engine to Unity and language to C#
 - Record YJackCore in `.claude/docs/technical-preferences.md`
 - Record the package source: UPM git URL, local path, or submodule path
+- Create `.yjack-workspace.json` at the project root using the layout template
 - Add YJackCore and Odin Inspector to allowed libraries only when actually used
 - Route framework architecture questions through YJackCore guidance plus the
   Unity specialist, in that order

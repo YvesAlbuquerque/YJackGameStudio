@@ -13,13 +13,17 @@
 ## Framework Integration
 
 <!-- Optional. Populate when this project uses a framework/package such as YJackCore. -->
+<!-- For YJackCore projects, also place a .yjack-workspace.json at the project root. -->
+<!-- See .agents/docs/templates/yjack-workspace.json for layout examples. -->
+<!-- See .agents/docs/yjackcore-authority.md for authority hierarchy and routing rules. -->
 
 - **Framework**: [None configured — e.g., YJackCore]
-- **Framework Source**: [TO BE CONFIGURED — UPM URL, local package path, or git submodule path]
-- **Framework Version**: [TO BE CONFIGURED]
-- **Framework Docs**: [TO BE CONFIGURED — e.g., .agents/docs/yjackcore-support.md]
-- **Framework Rules**: [TO BE CONFIGURED — project-specific rules agents must follow]
-- **Framework Routing Notes**: [TO BE CONFIGURED]
+- **Framework Source**: [None configured — e.g., UPM URL, local package path, or git submodule path]
+- **Framework Version**: [None configured — e.g., 1.6.0]
+- **Framework Docs**: [None configured — e.g., .agents/docs/yjackcore-support.md]
+- **Framework Rules**: [None configured — e.g., .agents/rules/yjackcore-unity.md]
+- **Framework Routing Notes**: [None configured — e.g., YJackCore authority doc then unity-specialist]
+- **Workspace Manifest**: [None configured — e.g., .yjack-workspace.json]
 
 ## Input & Platform
 
