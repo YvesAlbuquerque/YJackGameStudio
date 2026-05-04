@@ -14,6 +14,49 @@ body:
         See [Label Taxonomy](https://github.com/YvesAlbuquerque/Claude-Code-Game-Studios/blob/main/.github/LABELS.md) for valid label values.
 
   - type: input
+    id: owner
+    attributes:
+      label: Owner
+      description: "Who commissioned this shard and approves its output?"
+      placeholder: "@YvesAlbuquerque"
+    validations:
+      required: true
+
+  - type: textarea
+    id: outputs
+    attributes:
+      label: Outputs
+      description: "What artifacts does this shard produce? Every file or evidence the agent must hand off."
+      placeholder: |
+        - `tests/systems/crafting/RecipeResolverTests.cs`
+        - `tests/evidence/SHARD-007/` (test run output)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: risk_tier
+    attributes:
+      label: Risk Tier
+      description: "Approval boundary for decisions taken while executing this shard."
+      options:
+        - "LOW — routine; agents execute autonomously within approved scope"
+        - "MEDIUM — significant impact; requires owner review before proceeding"
+        - "HIGH — critical, irreversible, or cross-boundary; always escalates"
+    validations:
+      required: true
+
+  - type: textarea
+    id: escalation_conditions
+    attributes:
+      label: Escalation Conditions
+      description: "What specific situations must the agent stop and escalate to the owner?"
+      placeholder: |
+        - Any changes required outside the declared write set
+        - Test failures that cannot be resolved without changing the parent story scope
+    validations:
+      required: true
+
+  - type: input
     id: shard_id
     attributes:
       label: Shard ID
@@ -58,7 +101,7 @@ body:
         - "copilot (general)"
         - "other (specify in notes)"
     validations:
-      required: false
+      required: true
 
   - type: textarea
     id: write_set

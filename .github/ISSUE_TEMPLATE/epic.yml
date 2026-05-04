@@ -22,6 +22,51 @@ body:
     validations:
       required: true
 
+  - type: input
+    id: owner
+    attributes:
+      label: Owner
+      description: "Who is accountable for this epic? The person who approves outputs and accepts risk."
+      placeholder: "@YvesAlbuquerque"
+    validations:
+      required: true
+
+  - type: textarea
+    id: outputs
+    attributes:
+      label: Outputs
+      description: "What artifacts does this epic produce? List every deliverable an agent should hand off."
+      placeholder: |
+        - `design/systems/crafting.md` (approved GDD)
+        - `src/systems/crafting/` (implemented and tested)
+        - `tests/evidence/EPIC-001/` (validation evidence)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: risk_tier
+    attributes:
+      label: Risk Tier
+      description: "Approval boundary for decisions taken while executing this epic."
+      options:
+        - "LOW — routine; agents execute autonomously within approved scope"
+        - "MEDIUM — significant impact; requires owner review before proceeding"
+        - "HIGH — critical, irreversible, or cross-boundary; always escalates"
+    validations:
+      required: true
+
+  - type: textarea
+    id: escalation_conditions
+    attributes:
+      label: Escalation Conditions
+      description: "What specific situations must an agent stop and escalate to the owner?"
+      placeholder: |
+        - Any change to the recipe data schema
+        - Scope additions that touch systems outside `src/systems/crafting/`
+        - Any dependency on an unapproved third-party library
+    validations:
+      required: true
+
   - type: textarea
     id: owner_intent
     attributes:
@@ -80,7 +125,7 @@ body:
         - `design/systems/crafting.md`
         - `production/sprints/`
     validations:
-      required: false
+      required: true
 
   - type: dropdown
     id: autonomy_tier

@@ -15,15 +15,27 @@ Recommended groups: **Domain**, **Effort**. Optional groups: **Phase**, **Status
 Every
 autonomous work item should have at least one label from each **required** group.
 
-To create or sync labels from this taxonomy, run:
+To bootstrap all labels at once, use [`labels.yml`](labels.yml) with
+[`github-label-sync`](https://github.com/Financial-Times/github-label-sync):
 
 ```bash
-gh label list --repo YvesAlbuquerque/Claude-Code-Game-Studios
+github-label-sync --access-token $GITHUB_TOKEN \
+  --labels .github/labels.yml \
+  YvesAlbuquerque/Claude-Code-Game-Studios
 ```
 
-To bootstrap labels from the machine-readable definition, use [`labels.yml`](labels.yml) with
-[`github-label-sync`](https://github.com/Financial-Times/github-label-sync) or the
-`gh label` CLI.
+Or create individual labels with the `gh` CLI:
+
+```bash
+gh label create "priority:high" --color "D93F0B" \
+  --description "Must be in the current sprint" \
+  --repo YvesAlbuquerque/Claude-Code-Game-Studios
+```
+
+> **Note:** `priority:*`, `auto:*`, `effort:*`, `phase:*`, `domain:*`, and `status:*` labels are
+> applied automatically by the `.github/workflows/issue-labels.yml` workflow when an issue is
+> opened or edited from a structured template. `type:*` labels are applied by the template itself.
+> You do not need to apply these labels manually for templated issues.
 
 ---
 

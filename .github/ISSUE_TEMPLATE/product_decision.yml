@@ -120,11 +120,12 @@ body:
     id: status
     attributes:
       label: Decision Status
+      description: "Current lifecycle status. The issue-labels workflow will apply the corresponding `status:*` label."
       options:
-        - "PENDING — awaiting owner response"
-        - "DECIDED — owner has made a decision"
-        - "DEFERRED — decision postponed; work continues with current approach"
-        - "SUPERSEDED — replaced by a later decision"
+        - "status:proposed — awaiting owner response"
+        - "status:approved — owner has made a decision; work can proceed"
+        - "status:deferred — decision postponed; work continues with current approach"
+        - "status:closed — superseded by a later decision or fully resolved"
     validations:
       required: true
 

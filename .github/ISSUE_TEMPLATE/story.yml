@@ -14,6 +14,51 @@ body:
         See [Label Taxonomy](https://github.com/YvesAlbuquerque/Claude-Code-Game-Studios/blob/main/.github/LABELS.md) for valid label values.
 
   - type: input
+    id: owner
+    attributes:
+      label: Owner
+      description: "Who commissioned this story and approves its output?"
+      placeholder: "@YvesAlbuquerque"
+    validations:
+      required: true
+
+  - type: textarea
+    id: outputs
+    attributes:
+      label: Outputs
+      description: "What artifacts does this story produce? Every deliverable the agent must hand off."
+      placeholder: |
+        - `src/systems/crafting/RecipeResolver.cs`
+        - `tests/systems/crafting/RecipeResolverTests.cs`
+        - `tests/evidence/STORY-014/` (test run output)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: risk_tier
+    attributes:
+      label: Risk Tier
+      description: "Approval boundary for decisions taken while executing this story."
+      options:
+        - "LOW — routine; agents execute autonomously within approved scope"
+        - "MEDIUM — significant impact; requires owner review before proceeding"
+        - "HIGH — critical, irreversible, or cross-boundary; always escalates"
+    validations:
+      required: true
+
+  - type: textarea
+    id: escalation_conditions
+    attributes:
+      label: Escalation Conditions
+      description: "What specific situations must the agent stop and escalate to the owner?"
+      placeholder: |
+        - Any change to the `RecipeData` schema
+        - Scope additions outside the declared write set
+        - Test failures that cannot be resolved without changing the design
+    validations:
+      required: true
+
+  - type: input
     id: story_id
     attributes:
       label: Story ID
@@ -58,7 +103,7 @@ body:
         - "copilot (general)"
         - "other (specify in notes)"
     validations:
-      required: false
+      required: true
 
   - type: textarea
     id: scope
@@ -107,7 +152,7 @@ body:
         - `src/systems/crafting/RecipeResolver.cs`
         - `tests/systems/crafting/RecipeResolverTests.cs`
     validations:
-      required: false
+      required: true
 
   - type: textarea
     id: read_set
