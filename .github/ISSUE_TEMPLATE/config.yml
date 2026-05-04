@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Autonomous Studio Roadmap
+    url: https://github.com/YvesAlbuquerque/Claude-Code-Game-Studios/blob/main/docs/AUTONOMOUS_GAME_STUDIO_ROADMAP.md
+    about: Review the autonomous studio roadmap before opening a work item.
+  - name: Label Taxonomy
+    url: https://github.com/YvesAlbuquerque/Claude-Code-Game-Studios/blob/main/.github/LABELS.md
+    about: Understand the label system before submitting an issue.

@@ -1,0 +1,281 @@
+# Label definitions for YvesAlbuquerque/Claude-Code-Game-Studios
+#
+# Apply with:
+#   github-label-sync --access-token $GITHUB_TOKEN --labels .github/labels.yml YvesAlbuquerque/Claude-Code-Game-Studios
+#
+# Or manually via gh CLI:
+#   gh label create "type:epic" --color "6E40C9" --description "Large owner-scoped deliverable spanning multiple stories" --repo YvesAlbuquerque/Claude-Code-Game-Studios
+
+# ---------------------------------------------------------------------------
+# TYPE
+# ---------------------------------------------------------------------------
+- name: "type:epic"
+  color: "6E40C9"
+  description: "Large owner-scoped deliverable spanning multiple stories"
+
+- name: "type:story"
+  color: "0075CA"
+  description: "Implementable work unit for one specialist agent"
+
+- name: "type:shard"
+  color: "005CC5"
+  description: "Parallelisable atomic sub-task derived from a story"
+
+- name: "type:validation"
+  color: "238636"
+  description: "Validation gate report for a story, shard, or epic"
+
+- name: "type:decision"
+  color: "BF8700"
+  description: "Owner product/architecture decision or escalation request"
+
+- name: "type:bug"
+  color: "D73A4A"
+  description: "Something is broken or incorrect"
+
+- name: "type:feature"
+  color: "A2EEEF"
+  description: "New capability request"
+
+- name: "type:improvement"
+  color: "84b6EB"
+  description: "Enhancement to an existing component"
+
+- name: "type:chore"
+  color: "E4E669"
+  description: "Maintenance, dependency update, or non-functional change"
+
+- name: "type:docs"
+  color: "0075CA"
+  description: "Documentation-only change"
+
+# ---------------------------------------------------------------------------
+# PRIORITY
+# ---------------------------------------------------------------------------
+- name: "priority:critical"
+  color: "B60205"
+  description: "Blocks other work or is a release stopper"
+
+- name: "priority:high"
+  color: "D93F0B"
+  description: "Must be in the current sprint"
+
+- name: "priority:medium"
+  color: "E4E669"
+  description: "Should be in the current sprint if capacity allows"
+
+- name: "priority:low"
+  color: "0E8A16"
+  description: "Nice to have; schedule in a future sprint"
+
+# ---------------------------------------------------------------------------
+# EFFORT
+# ---------------------------------------------------------------------------
+- name: "effort:XL"
+  color: "5319E7"
+  description: "> 5 days — requires phase-level planning before starting"
+
+- name: "effort:L"
+  color: "5319E7"
+  description: "3–5 days — requires decomposition into shards"
+
+- name: "effort:M"
+  color: "5319E7"
+  description: "1–3 days"
+
+- name: "effort:S"
+  color: "5319E7"
+  description: "< 1 day"
+
+# ---------------------------------------------------------------------------
+# PHASE
+# ---------------------------------------------------------------------------
+- name: "phase:concept"
+  color: "BFD4F2"
+  description: "Concept and ideation phase"
+
+- name: "phase:pre-production"
+  color: "BFD4F2"
+  description: "Pre-production: design, architecture, planning"
+
+- name: "phase:production"
+  color: "BFD4F2"
+  description: "Active production sprint"
+
+- name: "phase:alpha"
+  color: "BFD4F2"
+  description: "Alpha milestone"
+
+- name: "phase:beta"
+  color: "BFD4F2"
+  description: "Beta milestone"
+
+- name: "phase:release"
+  color: "BFD4F2"
+  description: "Release candidate / ship phase"
+
+- name: "phase:post-launch"
+  color: "BFD4F2"
+  description: "Post-launch live-ops and maintenance"
+
+# ---------------------------------------------------------------------------
+# DOMAIN
+# ---------------------------------------------------------------------------
+- name: "domain:design"
+  color: "F9D0C4"
+  description: "Game design, GDDs, balance, systems design"
+
+- name: "domain:architecture"
+  color: "F9D0C4"
+  description: "Technical architecture, ADRs, engine decisions"
+
+- name: "domain:implementation"
+  color: "F9D0C4"
+  description: "Code implementation"
+
+- name: "domain:qa"
+  color: "F9D0C4"
+  description: "Testing, validation, quality assurance"
+
+- name: "domain:infrastructure"
+  color: "F9D0C4"
+  description: "CI/CD, tooling, build pipeline, agent framework"
+
+- name: "domain:narrative"
+  color: "F9D0C4"
+  description: "Writing, dialogue, lore, story"
+
+- name: "domain:art"
+  color: "F9D0C4"
+  description: "Visual assets, art direction"
+
+- name: "domain:audio"
+  color: "F9D0C4"
+  description: "Sound effects, music, audio integration"
+
+- name: "domain:ui"
+  color: "F9D0C4"
+  description: "User interface and UX"
+
+- name: "domain:live-ops"
+  color: "F9D0C4"
+  description: "Live-ops, telemetry, monetisation, events"
+
+# ---------------------------------------------------------------------------
+# AUTONOMY
+# ---------------------------------------------------------------------------
+- name: "auto:low"
+  color: "C2E0C6"
+  description: "Agents execute; owner approves all outputs before merge"
+
+- name: "auto:medium"
+  color: "FEF2C0"
+  description: "LOW-risk decisions execute autonomously; MEDIUM pauses for owner approval"
+
+- name: "auto:high"
+  color: "F1C6C6"
+  description: "LOW+MEDIUM decisions execute autonomously; HIGH always escalates"
+
+# ---------------------------------------------------------------------------
+# STATUS
+# ---------------------------------------------------------------------------
+- name: "status:proposed"
+  color: "EDEDED"
+  description: "Issue created; not yet approved for execution"
+
+- name: "status:approved"
+  color: "0075CA"
+  description: "Owner has approved; ready for agent pickup"
+
+- name: "status:in-progress"
+  color: "FEF2C0"
+  description: "Agent is actively working on this"
+
+- name: "status:blocked"
+  color: "D93F0B"
+  description: "Execution is blocked; needs owner or dependency resolution"
+
+- name: "status:in-review"
+  color: "BFD4F2"
+  description: "Work complete; awaiting validation or owner review"
+
+- name: "status:validated"
+  color: "238636"
+  description: "Validation gate passed"
+
+- name: "status:closed"
+  color: "EDEDED"
+  description: "Work is complete and merged"
+
+- name: "status:deferred"
+  color: "E4E669"
+  description: "Postponed to a future sprint"
+
+- name: "status:wont-fix"
+  color: "EDEDED"
+  description: "Will not be addressed"
+
+# ---------------------------------------------------------------------------
+# YJACKCORE
+# ---------------------------------------------------------------------------
+- name: "yjackcore:layer"
+  color: "7057FF"
+  description: "Issue touches a YJackCore layer boundary"
+
+- name: "yjackcore:package"
+  color: "7057FF"
+  description: "Issue touches a YJackCore package boundary"
+
+- name: "yjackcore:host-game"
+  color: "7057FF"
+  description: "Issue involves host-game / YJackCore separation concerns"
+
+- name: "yjackcore:workspace"
+  color: "7057FF"
+  description: "Issue involves .yjack-workspace.json or workspace routing"
+
+# ---------------------------------------------------------------------------
+# ROADMAP / INFORMATIONAL
+# ---------------------------------------------------------------------------
+- name: "roadmap"
+  color: "0075CA"
+  description: "Issue derives from docs/AUTONOMOUS_GAME_STUDIO_ROADMAP.md"
+
+- name: "autonomous"
+  color: "6E40C9"
+  description: "Issue is part of the autonomous studio operating model"
+
+# ---------------------------------------------------------------------------
+# STANDARD GITHUB (kept for compatibility)
+# ---------------------------------------------------------------------------
+- name: "bug"
+  color: "D73A4A"
+  description: "Something isn't working"
+
+- name: "enhancement"
+  color: "A2EEEF"
+  description: "New feature or request"
+
+- name: "good first issue"
+  color: "7057FF"
+  description: "Good for newcomers"
+
+- name: "help wanted"
+  color: "008672"
+  description: "Extra attention is needed"
+
+- name: "question"
+  color: "D876E3"
+  description: "Further information is requested"
+
+- name: "duplicate"
+  color: "CFD3D7"
+  description: "This issue or pull request already exists"
+
+- name: "invalid"
+  color: "E4E669"
+  description: "This doesn't seem right"
+
+- name: "wontfix"
+  color: "FFFFFF"
+  description: "This will not be worked on"

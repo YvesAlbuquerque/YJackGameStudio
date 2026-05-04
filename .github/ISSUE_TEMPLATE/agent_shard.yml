@@ -1,0 +1,188 @@
+name: "Agent Shard"
+description: "A parallelisable sub-task delegated to a single specialist agent. Child of a Story."
+title: "[Shard] "
+labels:
+  - "type:shard"
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Agent Shard — Parallelisable Execution Unit
+        A shard is the smallest atomic work unit that can run in parallel with other shards.
+        Each shard maps to exactly one specialist agent and has a non-overlapping write set.
+        See [Label Taxonomy](https://github.com/YvesAlbuquerque/Claude-Code-Game-Studios/blob/main/.github/LABELS.md) for valid label values.
+
+  - type: input
+    id: shard_id
+    attributes:
+      label: Shard ID
+      description: "Stable identifier (e.g. SHARD-007). Used for dependency tracking."
+      placeholder: "SHARD-007"
+    validations:
+      required: true
+
+  - type: input
+    id: parent_story
+    attributes:
+      label: Parent Story
+      description: "The story this shard belongs to. Use the issue number or story ID."
+      placeholder: "#55 or STORY-014"
+    validations:
+      required: false
+
+  - type: textarea
+    id: owner_intent
+    attributes:
+      label: Owner Intent
+      description: "What must this shard produce? One sentence."
+      placeholder: "Write unit tests for RecipeResolver covering all valid recipe combinations."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: specialist_agent
+    attributes:
+      label: Assigned Specialist Agent
+      description: "The single agent role that owns this shard."
+      options:
+        - "team:combat"
+        - "team:level"
+        - "team:ui"
+        - "team:narrative"
+        - "team:audio"
+        - "team:qa"
+        - "team:live-ops"
+        - "team:release"
+        - "team:polish"
+        - "copilot (general)"
+        - "other (specify in notes)"
+    validations:
+      required: false
+
+  - type: textarea
+    id: write_set
+    attributes:
+      label: Write Set (File Ownership)
+      description: "Files this shard exclusively writes to. Must NOT overlap with sibling shards."
+      placeholder: |
+        - `tests/systems/crafting/RecipeResolverTests.cs`
+    validations:
+      required: true
+
+  - type: textarea
+    id: read_set
+    attributes:
+      label: Read Set (Input Artifacts)
+      description: "Files or artifacts the agent must read before executing."
+      placeholder: |
+        - `src/systems/crafting/RecipeResolver.cs`
+        - `design/systems/crafting.md` §3
+    validations:
+      required: false
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: "Verifiable checklist specific to this shard."
+      placeholder: |
+        - [ ] All `RecipeResolver` test cases pass
+        - [ ] Edge cases for empty and null ingredient arrays are covered
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Shard Dependencies
+      description: "Other shards that must complete before this one can start."
+      placeholder: |
+        - SHARD-006 (RecipeResolver implementation) — must be merged
+    validations:
+      required: false
+
+  - type: dropdown
+    id: autonomy_tier
+    attributes:
+      label: Autonomy Tier
+      options:
+        - "auto:low — agents execute, owner approves all outputs"
+        - "auto:medium — agents execute LOW decisions autonomously; MEDIUM requires approval"
+        - "auto:high — agents execute LOW+MEDIUM autonomously; HIGH always escalates"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - "priority:critical"
+        - "priority:high"
+        - "priority:medium"
+        - "priority:low"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: effort
+    attributes:
+      label: Estimated Effort
+      options:
+        - "effort:M — 1–3 days"
+        - "effort:S — < 1 day"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: domain
+    attributes:
+      label: Domain
+      options:
+        - "domain:implementation"
+        - "domain:design"
+        - "domain:architecture"
+        - "domain:qa"
+        - "domain:infrastructure"
+        - "domain:narrative"
+        - "domain:art"
+        - "domain:audio"
+        - "domain:ui"
+        - "domain:live-ops"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: yjackcore
+    attributes:
+      label: YJackCore Alignment
+      options:
+        - label: "Involves YJackCore layer boundary"
+        - label: "Involves YJackCore package boundary"
+        - label: "Involves host-game / YJackCore separation concern"
+
+  - type: textarea
+    id: validation_steps
+    attributes:
+      label: Validation Steps
+      description: "How should the agent verify its own output before marking this shard DONE?"
+      placeholder: |
+        1. Run `dotnet test --filter RecipeResolverTests`
+        2. Confirm all tests pass
+        3. Commit test output to `tests/evidence/SHARD-007/`
+    validations:
+      required: false
+
+  - type: textarea
+    id: handoff
+    attributes:
+      label: Handoff Criteria
+      description: "What must be true for this shard to be DONE and ownership to transfer back to the story?"
+      placeholder: |
+        - Acceptance criteria all checked
+        - Write set committed, no uncommitted changes
+        - Test evidence present in evidence path
+        - No overlap conflict with sibling shards detected
+    validations:
+      required: false
