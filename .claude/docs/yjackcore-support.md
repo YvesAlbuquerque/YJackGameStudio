@@ -10,6 +10,7 @@ read `.claude/docs/yjackcore-authority.md` first.
 
 Treat a project as YJackCore-backed if any of these are true:
 
+- `.yjack-workspace.json` is present at the project root
 - `Packages/manifest.json` contains `com.ygamedev.yjack` or `YJackCore`
 - a local package exists at `Packages/YJackCore/package.json`
 - a git submodule path points to `YJackCore`
@@ -154,8 +155,9 @@ project root. Agents read this file first to determine the YJackCore layout
 `Packages/manifest.json`.
 
 Copy the relevant layout example from
-`.claude/docs/templates/yjack-workspace.json` and remove the unused blocks and
-the `_comment`/`_layouts` keys before committing.
+`.claude/docs/templates/yjack-workspace.json` and remove the `_comment`,
+`_layouts`, and `_CHOOSE_ONE_LAYOUT_BELOW_AND_DELETE_THE_REST` keys, plus any
+unused layout blocks, before committing.
 
 ## Setup Checklist
 

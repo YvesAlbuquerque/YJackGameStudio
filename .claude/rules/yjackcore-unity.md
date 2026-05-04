@@ -1,6 +1,5 @@
 ---
 paths:
-  - "src/**"
   - "Packages/YJackCore/**"
   - "Packages/com.ygamedev.yjack/**"
 ---
@@ -8,7 +7,11 @@ paths:
 # YJackCore Unity Rules
 
 Apply these rules when the project uses YJackCore and the edited path is a
-YJackCore package path or host-game source code in `src/`.
+YJackCore package path. For host-game code in `src/` that integrates with
+YJackCore, guidance is routed through the unity-specialist agent reading
+`.claude/docs/yjackcore-authority.md` and `.claude/docs/yjackcore-support.md`
+when technical preferences or a `.yjack-workspace.json` indicate YJackCore is
+active.
 
 ## Task Routing
 
