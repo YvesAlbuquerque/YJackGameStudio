@@ -71,3 +71,23 @@ When an orchestration skill spawns multiple independent agents:
 2. Collect all results before proceeding to dependent phases
 3. If any agent is BLOCKED, surface it immediately — do not silently skip
 4. Always produce a partial report if some agents complete and others block
+
+### Write-Set Collision Rule
+
+Before scheduling two contracts to run in parallel, verify that their
+`write_set` entries do not overlap. Two contracts whose write sets share a
+file or a directory ancestry must not execute concurrently. See
+[work-contract-schema.md §Parallel Execution Rules](../../.agents/docs/work-contract-schema.md#parallel-execution-rules)
+for the full collision-detection and ownership-transfer protocol.
+
+## Work Contracts
+
+Every unit of autonomous agent work must be backed by a **work contract** that
+declares its write scope, success criteria, validation requirements, and
+escalation conditions. This prevents silent scope creep, parallel file
+collisions, and incomplete handoffs.
+
+Schema and lifecycle: [`.agents/docs/work-contract-schema.md`](../../.agents/docs/work-contract-schema.md)  
+YAML template: [`.agents/docs/templates/work-contract.yml`](../../.agents/docs/templates/work-contract.yml)  
+GitHub issue form: [`.github/ISSUE_TEMPLATE/agent_work_contract.yml`](../../.github/ISSUE_TEMPLATE/agent_work_contract.yml)
+
