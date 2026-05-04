@@ -310,8 +310,13 @@ GUIDED
 
 ## Overrides
 
-<!-- Per-session or per-skill overrides. Format:
-     SKILL: <skill-name> → <mode>  (applies to every run of that skill)
+<!-- Per-session or per-skill overrides.
+     Per-skill format:
+       SKILL: <skill-name> → <mode>  (applies to every run of that skill)
+       Example: SKILL: smoke-check → SUPERVISED
+     Per-session overrides are not stored here; tell any agent
+       "Set autonomy mode to <mode> for this session only."
+     Session overrides last only until the session ends.
 -->
 ```
 
@@ -333,10 +338,14 @@ orthogonal controls:
   leads, etc.).
 - Autonomy mode governs which _actions_ require owner approval before execution.
 
-A project can run `AUTONOMOUS` + `full` review (agents run all internal director
-gates but execute LOW/MEDIUM actions without pausing for owner) or `GUIDED` +
-`solo` review (owner approves every action, but internal agent review gates are
-skipped for speed).
+Concrete examples:
+
+| Autonomy mode | Review mode | Effect |
+|---------------|-------------|--------|
+| `AUTONOMOUS` | `full` | Agents execute LOW/MEDIUM actions automatically **and** run all internal director-review gates at each workflow step. |
+| `AUTONOMOUS` | `lean` | Agents execute LOW/MEDIUM actions automatically; director gates fire only at phase-gate milestones. |
+| `GUIDED` | `solo` | Owner approves every action; no internal director/QA review gates fire. |
+| `SUPERVISED` | `lean` | Owner approves MEDIUM/HIGH actions; internal director gates fire at phase milestones only. |
 
 ### Gate Check (`/gate-check`)
 
