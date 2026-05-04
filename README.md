@@ -257,6 +257,28 @@ Validation is workflow-specific:
 
 Do not claim runtime, build, hook, or test validation unless it actually happened.
 
+## Owner-Directed Autonomy
+
+The studio operates in one of three modes that the owner sets in
+`production/autonomy-config.md`:
+
+| Mode | Agent autonomy |
+|------|---------------|
+| `GUIDED` (default) | Every decision surfaced to the owner. Classic collaborative loop. |
+| `SUPERVISED` | LOW-risk actions (analysis, planning, status) execute automatically. MEDIUM and HIGH require owner approval. |
+| `AUTONOMOUS` | LOW and MEDIUM actions execute automatically. HIGH always requires owner approval. |
+
+**Regardless of mode**, the following always require explicit owner approval:
+
+- Starting a new game or brainstorm session
+- Advancing through any production phase gate
+- Writing game source files (`src/`)
+- Opening or merging a pull request
+- Creating a release
+- Modifying YJackCore package files
+
+Full specification: `.agents/docs/autonomy-modes.md`
+
 ## Design Philosophy
 
 The template is grounded in professional game-development practices:
