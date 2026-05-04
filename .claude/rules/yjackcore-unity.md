@@ -6,20 +6,34 @@ paths:
 
 # YJackCore Unity Rules
 
-Apply these rules only when the project uses YJackCore and the edited path is a
+Apply these rules when the project uses YJackCore and the edited path is a
 YJackCore package path. For host-game code in `src/` that integrates with
-YJackCore, the unity-specialist agent will read `.claude/docs/yjackcore-support.md`
-when technical preferences indicate YJackCore is active.
+YJackCore, guidance is routed through the unity-specialist agent reading
+`.claude/docs/yjackcore-authority.md` and `.claude/docs/yjackcore-support.md`
+when technical preferences or a `.yjack-workspace.json` indicate YJackCore is
+active.
 
-- Read `.claude/docs/yjackcore-support.md` before designing or reviewing Unity
-  architecture for a YJackCore-backed project.
-- If a local YJackCore package or checkout is available, prefer its own
-  `AGENTS.md`, `.agents/skills/*`, `.ai/commands/*`, docs, package metadata,
-  asmdefs, and subtree instructions over this generic Game-Studio fallback.
-- Use the Game-Studio Unity specialist for generic Unity engine/API behavior;
-  use YJackCore-specific guidance for framework layer ownership, package
-  boundaries, compile symbols, ScriptableObject/event patterns, editor tooling,
-  testing, and doc impact.
+## Task Routing
+
+Before acting on any YJackCore-related task, load guidance in this order:
+
+1. **YJackCore's own repository guidance** (highest authority): If a local
+   YJackCore package or checkout is available, read its `AGENTS.md`,
+   `.ai/AI_ARCHITECTURE.md`, `package.json`, `ARCHITECTURE.md`, nearest layer
+   docs, and closest `.agents/skills/*/SKILL.md` before proposing any
+   framework architecture or package changes.
+2. **Game Studio YJackCore guidance** (consumer fallback): Read
+   `.claude/docs/yjackcore-authority.md` and `.claude/docs/yjackcore-support.md`
+   when YJackCore-specific assets are absent or the task is host-game work.
+3. **Generic Unity specialist** (engine fallback): Use the Game-Studio
+   `unity-specialist` for generic Unity engine/API behavior, subsystem choices,
+   profiling, rendering, input, UI, and Addressables.
+
+If a `.yjack-workspace.json` is present at the project root, read it first to
+resolve paths and layout before reading `Packages/manifest.json`.
+
+## Authoring and Boundary Rules
+
 - Prefer existing YJackCore layer surfaces before new host-game abstractions:
   GameLayer for global services, LevelLayer/SceneLayer for scene flow,
   PlayerLayer/CoreLayer for input/camera/player behavior, ViewLayer for
@@ -39,3 +53,11 @@ when technical preferences indicate YJackCore is active.
   module is installed; bare paths are compatibility fallbacks.
 - Report architecture-sensitive work with Architecture impact, Doc impact, and
   Manual validation still required.
+
+## Manual Validation
+
+Agents cannot run the Unity Editor. Always flag the following as requiring
+manual owner confirmation: domain reload, Play Mode behavior, Package Manager
+resolution, compile symbol branches, Odin Inspector rendering, `.meta` file
+integrity, asset database refresh, and build (Development or Release). See
+`.claude/docs/yjackcore-authority.md` for the full validation table.

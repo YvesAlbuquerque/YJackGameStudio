@@ -13,13 +13,17 @@
 ## Framework Integration
 
 <!-- Optional. Populate when this project uses a framework/package such as YJackCore. -->
+<!-- For YJackCore projects, also place a .yjack-workspace.json at the project root. -->
+<!-- See .claude/docs/templates/yjack-workspace.json for layout examples. -->
+<!-- See .claude/docs/yjackcore-authority.md for authority hierarchy and routing rules. -->
 
-- **Framework**: [None configured]
-- **Framework Source**: [None configured]
-- **Framework Version**: [None configured]
-- **Framework Docs**: [None configured]
-- **Framework Rules**: [None configured]
-- **Framework Routing Notes**: [None configured]
+- **Framework**: [None configured — e.g., YJackCore]
+- **Framework Source**: [None configured — e.g., UPM URL, local package path, or git submodule path]
+- **Framework Version**: [None configured — e.g., 1.6.0]
+- **Framework Docs**: [None configured — e.g., .claude/docs/yjackcore-support.md]
+- **Framework Rules**: [None configured — e.g., .claude/rules/yjackcore-unity.md]
+- **Framework Routing Notes**: [None configured — e.g., YJackCore authority doc then unity-specialist]
+- **Workspace Manifest**: [None configured — e.g., .yjack-workspace.json]
 
 ## Input & Platform
 
