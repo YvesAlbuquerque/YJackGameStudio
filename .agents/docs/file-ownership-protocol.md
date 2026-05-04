@@ -28,11 +28,16 @@ file or an ancestor directory. No other agent may write to an exclusively owned
 file while the owning contract is `IN_PROGRESS`.
 
 **Ownership is active** from the moment the contract transitions to `IN_PROGRESS`
-until it transitions to `VALIDATED` or `CLOSED`.
+until it transitions to `CLOSED`.
 
 **Ownership is released** when the contract reaches `CLOSED`. Any follow-on
 contract that needs to modify the same file must declare it in its own `write_set`
 and receive a new `APPROVED` status before starting.
+
+> **Note on `VALIDATED`:** Downstream contracts that *depend* on this contract
+> may advance to `IN_PROGRESS` once it reaches `VALIDATED` (their ordering gate
+> is satisfied). However, the write-set lock on the owned files is not released
+> until `CLOSED`. Until then, no other contract may write those files.
 
 ### Rule 2 — Read-Only Consultation
 

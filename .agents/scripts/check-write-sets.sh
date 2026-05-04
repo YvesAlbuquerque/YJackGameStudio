@@ -18,8 +18,9 @@
 #
 # Requirements:
 #   - bash 3.2+ (no bash 4-specific features are used)
-#   - python3 (for YAML parsing; no third-party packages required — uses
-#     only stdlib: sys, yaml if available, else falls back to regex parsing)
+#   - python3 stdlib (sys, re). PyYAML (third-party) is used automatically
+#     when installed — it is faster and more robust. The script falls back to
+#     a built-in regex parser when PyYAML is not available.
 #
 # Notes:
 #   - Collision detection uses the prefix/ancestry rule:
@@ -34,6 +35,19 @@
 # ─────────────────────────────────────────────────────────────────────────────
 
 set -euo pipefail
+
+# Validate argument count (extra arguments are not accepted).
+if [[ $# -gt 1 ]]; then
+  echo "Error: too many arguments." >&2
+  echo "Usage: $0 [production/dependency-graph.yml]" >&2
+  exit 2
+fi
+
+# Require python3.
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "Error: python3 is required but was not found in PATH." >&2
+  exit 2
+fi
 
 GRAPH_FILE="${1:-production/dependency-graph.yml}"
 
@@ -113,7 +127,9 @@ def parse_graph(path):
                 in_dependencies = False
                 m = re.match(r'^\s{4}(\w+):\s*(.*)', stripped)
                 if m:
-                    key, val = m.group(1), m.group(2).strip()
+                    key, raw_val = m.group(1), m.group(2).strip()
+                    # Strip inline YAML comment (e.g. "approved  # ready" → "approved")
+                    val = re.sub(r'\s+#.*$', '', raw_val).strip().strip('"').strip("'")
                     if key == "write_set":
                         in_write_set = True
                         indent_write_set = 6
@@ -121,16 +137,17 @@ def parse_graph(path):
                         in_dependencies = True
                     elif key in ("status", "title", "specialist_agent",
                                  "blocked_by", "github_issue"):
-                        graph["contracts"][current_contract][key] = val.strip('"').strip("'")
+                        graph["contracts"][current_contract][key] = val
                 continue
 
             # write_set list items (6-space indent)
             if in_write_set and indent == 6:
-                m = re.match(r'^\s{6}-\s+"?(.*?)"?\s*$', stripped)
+                # Strip inline YAML comment from the list item value
+                m = re.match(r'^\s{6}-\s+"?(.*?)"?\s*(?:#.*)?$', stripped)
                 if m:
-                    graph["contracts"][current_contract]["write_set"].append(
-                        m.group(1).strip()
-                    )
+                    item = re.sub(r'\s+#.*$', '', m.group(1)).strip()
+                    if item:
+                        graph["contracts"][current_contract]["write_set"].append(item)
                 continue
 
             # dependencies list items (6-space indent)
@@ -217,5 +234,3 @@ def run_check(graph_path):
 
 sys.exit(run_check(sys.argv[1]))
 PYTHON
-PYTHON_EXIT=$?
-exit $PYTHON_EXIT

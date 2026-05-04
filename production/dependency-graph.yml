@@ -10,11 +10,11 @@
 #   parallel work. The pre-flight collision check script reads this file.
 #
 # Usage:
-#   - Add an entry for every new contract (PROPOSED or APPROVED).
+#   - Add an entry for every new contract (proposed or approved).
 #   - Keep `status` in sync with the matching GitHub issue label.
 #   - Update `last_updated` and `updated_by` on every write.
 #   - Run `.agents/scripts/check-write-sets.sh production/dependency-graph.yml`
-#     before advancing any contract to IN_PROGRESS.
+#     before advancing any contract to in_progress.
 #
 # ─────────────────────────────────────────────────────────────────────────────
 
