@@ -620,9 +620,12 @@ status_log:
 |-------------------|--------------|
 | [autonomy-modes.md](autonomy-modes.md) | Defines `risk_tier` and `approval_boundary` values |
 | [coordination-rules.md](coordination-rules.md) | Defines parallel task protocol and vertical/horizontal delegation |
-| AUTO-006 Dependency Graph | Extends `dependencies` into a project-wide adjacency list; uses `write_set` for collision detection |
-| AUTO-007 Sprint Planner | Consumes `APPROVED` contracts to schedule sprint work; respects `dependencies` |
+| [dependency-graph.md](dependency-graph.md) | Extends `dependencies` into a project-wide adjacency list; defines the collision detection algorithm and four-shard simulation |
+| [file-ownership-protocol.md](file-ownership-protocol.md) | File ownership and read-only consultation rules; Unity `.meta` and YJackCore boundary guidance |
+| AUTO-007 Sprint Planner | Consumes `APPROVED` contracts to schedule sprint work; respects the dependency graph |
 | `.github/ISSUE_TEMPLATE/agent_work_contract.yml` | GitHub issue form representation of this schema (all types: epic, story, shard) |
 | `.github/ISSUE_TEMPLATE/agent_shard.yml` | Shard-level issue form |
 | `.agents/docs/templates/work-contract.yml` | Full YAML template for offline contract authoring |
+| `production/dependency-graph.yml` | Live project-wide dependency graph; updated by agents as contracts change state |
 | `production/session-state/active.md` | Status log mirror for audit continuity |
+| `.agents/scripts/check-write-sets.sh` | Pre-flight script that runs the write-set collision algorithm against the dependency graph |
