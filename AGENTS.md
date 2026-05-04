@@ -89,6 +89,27 @@ follow: Question -> Options -> Decision -> Draft -> Approval.
 For direct implementation requests, make the requested changes, but keep scope
 small and report validation honestly.
 
+### Autonomy Modes
+
+The owner may set an autonomy mode that controls the delegation surface — the
+set of decisions agents may execute without pausing for owner review. The active
+mode is stored in `production/autonomy-config.md`.
+
+| Mode | Tag | Behaviour |
+|------|-----|-----------|
+| Guided | `GUIDED` | Default. Every decision surfaced. Classic collaborative loop. |
+| Supervised | `SUPERVISED` | LOW-risk actions execute autonomously. MEDIUM and HIGH require owner approval. |
+| Autonomous | `AUTONOMOUS` | LOW and MEDIUM actions execute autonomously. HIGH always requires owner approval. |
+
+If `production/autonomy-config.md` is absent, default to `GUIDED`.
+
+**Hard gates — never bypassed by any mode:**
+- A new game may not start or be set up without the owner explicitly initiating it.
+- A project may not advance through any phase gate without explicit owner approval.
+- Game source files (`src/`), PRs, releases, and YJackCore package files always require owner approval.
+
+Full specification: `.agents/docs/autonomy-modes.md`
+
 ## Project Structure
 
 See `.agents/docs/directory-structure.md` and `.agents/docs/quick-start.md`.

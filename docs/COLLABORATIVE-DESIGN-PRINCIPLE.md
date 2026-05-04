@@ -676,6 +676,52 @@ WHEN implementing:
 
 ---
 
+## 🔄 Autonomy Modes — Extending Collaboration Without Losing Safety
+
+The collaborative model above describes the default **GUIDED** operation: every
+decision surfaces to the owner. For owners who want to delegate more execution
+to agents, two additional modes are available.
+
+### Operating Modes
+
+| Mode | Who decides LOW-risk actions? | Who decides MEDIUM-risk actions? | Who decides HIGH-risk actions? |
+|------|-------------------------------|----------------------------------|-------------------------------|
+| `GUIDED` (default) | Owner | Owner | Owner |
+| `SUPERVISED` | Agent (auto) | Owner | Owner |
+| `AUTONOMOUS` | Agent (auto) | Agent (auto) | Owner |
+
+Set the active mode in `production/autonomy-config.md`. If the file is absent,
+`GUIDED` is assumed.
+
+### What Never Changes
+
+Regardless of mode:
+
+- **The owner cannot be removed from HIGH-risk decisions.** These include
+  starting a new game, advancing a phase gate, writing game source files,
+  opening PRs, creating releases, and modifying YJackCore package files.
+- **A game will not start and no phase will change without explicit owner approval.**
+  Agents treat every phase-gate result as an escalation requiring a go/no-go
+  from the owner before proceeding.
+- The Question → Options → Decision pattern still applies to creative and design
+  decisions regardless of mode. Autonomy modes affect _execution_ gating, not
+  the collaborative design process itself.
+
+### Escalation and Rollback
+
+When an agent determines that an action exceeds the current mode boundary:
+
+1. It stops and describes the action and its risk tier.
+2. It waits for the owner's explicit approval, rejection, or hold.
+3. If an already-executed autonomous action turns out to be wrong, the agent
+   proposes a rollback and awaits owner approval before reversing anything.
+
+Full specification including risk-tier tables, per-artifact gating rules,
+scenario walkthroughs, and YJackCore alignment:
+→ `.agents/docs/autonomy-modes.md`
+
+---
+
 ## Implementation Status
 
 This principle has been fully embedded across the project:
@@ -686,3 +732,4 @@ This principle has been fully embedded across the project:
 - **WORKFLOW-GUIDE.md** — Rewritten with collaborative examples
 - **README.md** — Clarifies collaborative (not autonomous) design
 - **AskUserQuestion tool** — Integrated into 16 skills for structured option UI
+- **`.agents/docs/autonomy-modes.md`** — Autonomy modes specification (AUTO-001)
