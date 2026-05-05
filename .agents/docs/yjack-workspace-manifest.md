@@ -26,7 +26,7 @@ reading `Packages/manifest.json` or `Packages/com.ygamedev.yjack/package.json`.*
 {
   "framework": "YJackCore",
   "frameworkPackage": "com.ygamedev.yjack",
-  "source": "upm|sibling|submodule|vendor|inline",
+  "source": "upm",
   "packagePath": "Packages/com.ygamedev.yjack",
   "unityVersion": "6000.0",
   "authoringMode": "low-code",
