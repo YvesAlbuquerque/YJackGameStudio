@@ -1,0 +1,77 @@
+# Dependency Graph — Project-Wide Contract Adjacency List
+#
+# Schema:     .agents/docs/dependency-graph.md
+# Version:    1.0
+# Updated by: Agents append entries; owners approve resolutions.
+#
+# Purpose:
+#   Machine-readable map of all work contracts, their write sets, dependency
+#   ordering, and current status. Agents read this file before scheduling
+#   parallel work. The pre-flight collision check script reads this file.
+#
+# Usage:
+#   - Add an entry for every new contract (proposed or approved).
+#   - Keep `status` in sync with the matching GitHub issue label.
+#   - Update `last_updated` and `updated_by` on every write.
+#   - Run `.agents/scripts/check-write-sets.sh production/dependency-graph.yml`
+#     before advancing any contract to in_progress.
+#
+# ─────────────────────────────────────────────────────────────────────────────
+
+schema_version: "1.0"
+last_updated: "2026-05-04T21:00:00Z"
+updated_by: "copilot"
+
+# contracts:
+#   <CONTRACT_ID>:
+#     title: "<Human-readable title>"
+#     status: <proposed|approved|in_progress|blocked|validated|closed>
+#     specialist_agent: "<agent name>"
+#     github_issue: <number>          # optional
+#     write_set:
+#       - "<path/to/file.ext>"
+#       - "<path/to/directory/>"      # covers all files under this directory
+#     dependencies:                   # optional
+#       - contract_id: "<OTHER-ID>"
+#         status: "<last-known status>"
+#     blocked_by: "<contract_id or description>"  # required when status: blocked
+
+contracts: {}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Example (remove or adapt when adding real contracts):
+#
+# contracts:
+#   STORY-GDD-001:
+#     title: "Movement system GDD"
+#     status: validated
+#     specialist_agent: copilot
+#     github_issue: 45
+#     write_set:
+#       - design/systems/movement.md
+#     dependencies: []
+#
+#   STORY-IMPL-001:
+#     title: "Player movement implementation"
+#     status: approved
+#     specialist_agent: copilot
+#     github_issue: 46
+#     write_set:
+#       - src/player/movement/PlayerMovement.gd
+#       - tests/player/movement/
+#     dependencies:
+#       - contract_id: STORY-GDD-001
+#         status: validated
+#
+#   SHARD-ANIM-001:
+#     title: "Player movement animation shard"
+#     status: proposed
+#     specialist_agent: team:polish
+#     github_issue: 47
+#     write_set:
+#       - src/player/movement/PlayerMovementAnimator.gd
+#       - Assets/Animations/Player/
+#       - Assets/Animations/Player.meta
+#     dependencies:
+#       - contract_id: STORY-IMPL-001
+#         status: approved
