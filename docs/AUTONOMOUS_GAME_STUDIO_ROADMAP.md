@@ -22,7 +22,7 @@ YJackCore alignment should be explicit, not incidental. The Game Studio framewor
 
 Facts:
 
-- The repo contains 49 agents, 72 skills, 12 hooks, 12 rules, and 38 docs templates.
+- The repo contains 49 agents, 72 skills, 12 hooks, 11 rules, and 39 docs templates.
 - `README.md` positions the system as "collaborative, not autonomous."
 - `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md` requires Question -> Options -> Decision -> Draft -> Approval before writes.
 - `.claude/docs/coordination-rules.md` documents subagent parallelism and experimental agent teams, but says agent teams are "not yet used in this project."
