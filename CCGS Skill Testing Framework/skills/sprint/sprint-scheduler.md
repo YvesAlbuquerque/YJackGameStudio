@@ -167,7 +167,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 
 **Fixture:**
 - `production/dependency-graph.yml` contains 3 contracts:
-  - STORY-G: `approved`, dependencies: [STORY-H]
+  - STORY-G: `approved`, dependencies: [{ contract_id: STORY-H, status: in_progress }]
   - STORY-H: `in_progress` (not validated or closed)
   - STORY-I: `approved`, dependencies: [] (ready)
 
