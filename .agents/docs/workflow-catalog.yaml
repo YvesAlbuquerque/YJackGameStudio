@@ -224,6 +224,14 @@ phases:
           min_count: 1
         description: "Plan the first sprint with prioritized stories from epics"
 
+      - id: sprint-scheduler
+        name: "Autonomous Sprint Scheduler"
+        command: /sprint-scheduler
+        required: false
+        artifact:
+          glob: "production/sprints/schedule-sprint-*.yml"
+        description: "Autonomous alternative to /sprint-plan. Reads work contracts and dependency graph to schedule sprint work based on dependencies, effort, and parallel execution safety."
+
       - id: vertical-slice
         name: "Vertical Slice (playtested)"
         command: /playtest-report
@@ -246,6 +254,15 @@ phases:
         artifact:
           glob: "production/sprints/sprint-*.md"
         description: "Plan the current sprint with prioritized, ready stories"
+
+      - id: sprint-scheduler
+        name: "Sprint Scheduler (Autonomous)"
+        command: /sprint-scheduler
+        required: false
+        repeatable: true
+        artifact:
+          glob: "production/sprints/schedule-sprint-*.yml"
+        description: "Autonomous sprint planner and issue scheduler. Reads the dependency graph and work contracts to propose a sprint schedule based on priority, dependencies, effort, and parallel execution safety. Respects autonomy mode boundaries and YJackCore manual validation requirements. Run instead of /sprint-plan for autonomous scheduling."
 
       - id: story-readiness
         name: "Story Readiness Check"
