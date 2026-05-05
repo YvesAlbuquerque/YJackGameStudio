@@ -255,7 +255,7 @@ The system supports three modes. The default is **collaborative**.
 
 **HIGH-risk actions are owner-gated in every mode.** This includes architecture changes, framework package edits, scope expansion, and release actions.
 
-Set the mode in your work contract (`autonomy_mode` field) or in `production/autonomy-config.md`. When in doubt, default to collaborative.
+Set the mode in your work contract (`autonomy_mode` field). When in doubt, default to collaborative.
 
 See [`.agents/docs/autonomy-modes.md`](.agents/docs/autonomy-modes.md) for full definitions.
 
