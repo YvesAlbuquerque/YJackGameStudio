@@ -454,8 +454,9 @@ The owner may override the mode at any time:
 To validate the scheduler against a sample backlog:
 
 1. Create test contracts in `production/contracts/` or as GitHub issues
-2. Run `./agents/skills/sprint-scheduler/SKILL.md --dry-run`
-3. Verify:
+2. Run `/sprint-scheduler --dry-run`
+3. Optionally run `/skill-test` against a representative backlog fixture to exercise the full skill workflow
+4. Verify:
    - Dependency ordering is correct (no contract scheduled before its dependencies)
    - Write-set collisions are detected and flagged
    - Priority tiers are respected (Must Have before Should Have before Nice to Have)
