@@ -1,6 +1,6 @@
 ---
 name: Feature Request
-about: Suggest a new agent, skill, hook, or improvement
+about: Suggest a new agent, skill, hook, adapter, or improvement
 title: "[Feature] "
 labels: enhancement
 assignees: ''
@@ -13,9 +13,10 @@ A brief description of what you'd like added or changed.
 ## Type
 
 - [ ] New agent
-- [ ] New skill (slash command)
+- [ ] New skill / workflow
 - [ ] New hook
 - [ ] New rule
+- [ ] New provider adapter
 - [ ] New template
 - [ ] Improvement to existing component
 - [ ] Other:
@@ -27,9 +28,11 @@ What problem does this solve? What workflow does it improve?
 ## Proposed Solution
 
 How do you think this should work? Include details like:
-- For agents: what domain, what tier, what tools
-- For skills: what the workflow looks like, what it outputs
-- For hooks: what event triggers it, what it validates
+
+- For agents: domain, tier, and expected responsibilities
+- For skills: workflow phases, required inputs, and outputs
+- For hooks: event trigger, validation target, and failure behavior
+- For provider adapters: which tool should load which files
 
 ## Alternatives Considered
 

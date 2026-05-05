@@ -67,9 +67,37 @@ Before writing any code:
 
 ## YJackCore-Aware Projects
 
-If `.claude/docs/technical-preferences.md` lists `Framework: YJackCore`, or the
-project contains `com.ygamedev.yjack` / `YJackCore` in `Packages/manifest.json`,
-read `.claude/docs/yjackcore-support.md` before proposing Unity architecture.
+If `.claude/docs/technical-preferences.md` contains `- **Framework**: YJackCore` in the
+Framework Integration section, or the project contains `com.ygamedev.yjack` / `YJackCore`
+in `Packages/manifest.json`, the project has `Packages/YJackCore/package.json`, or the
+user explicitly says the game uses YJackCore, read `.claude/docs/yjackcore-support.md`
+before proposing Unity architecture.
+
+### Specialist Precedence
+
+YJackCore's own repository guidance is more specific than this generic Unity
+specialist. When a local YJackCore package or checkout is available, treat its
+specialist assets as the primary source for framework decisions and use this
+agent as the Unity engine/API fallback.
+
+Use this order:
+
+1. Confirm whether YJackCore is active from package metadata, technical
+   preferences, or the user's statement.
+2. If a local YJackCore checkout/package is available, read its `AGENTS.md`,
+   `package.json`, `ARCHITECTURE.md`, `Docs/Workflow/framework-vision.md`,
+   `Docs/index.md`, nearest layer docs, and the closest `.agents/skills/*`
+   guidance before proposing framework architecture.
+3. Use YJackCore-specific skills/agents for framework ownership, layer
+   boundaries, package edits, compile symbols, ScriptableObject/event patterns,
+   editor tooling, testing, and doc impact.
+4. Use this Unity specialist for general Unity engine behavior, subsystem
+   choices, package/module usage, profiling, rendering, input, UI, Addressables,
+   and host-project integration.
+5. If YJackCore-specific assets are unavailable, fall back to
+   `.claude/docs/yjackcore-support.md` plus the generic Unity rules in this file.
+6. If the project is not YJackCore-backed, ignore the YJackCore guidance and use
+   the normal Unity specialist path.
 
 For YJackCore-backed projects:
 
@@ -81,9 +109,9 @@ For YJackCore-backed projects:
 - Treat the host game and the YJackCore package as separate ownership boundaries.
   Do not edit package files from a host-game task unless the user explicitly asks
   to change the framework.
-- If framework changes are required, inspect the YJackCore package `AGENTS.md`,
-  `package.json`, `ARCHITECTURE.md`, relevant docs, and asmdefs before proposing
-  changes.
+- If framework changes are required, inspect the YJackCore package instructions,
+  package metadata, architecture docs, relevant docs, and asmdefs before
+  proposing changes.
 - Odin Inspector and Unity Visual Scripting are valid baseline authoring surfaces
   for YJackCore-backed projects; do not strip them out as optional polish.
 

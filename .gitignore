@@ -9,9 +9,12 @@
 Thumbs.db
 Desktop.ini
 
-# === Claude Code Local ===
+# === AI Agent Local ===
 .claude/settings.local.json
 CLAUDE.local.md
+AGENTS.local.md
+GEMINI.local.md
+.gemini/.env
 production/session-logs/
 
 # === Internal Planning (not for public) ===

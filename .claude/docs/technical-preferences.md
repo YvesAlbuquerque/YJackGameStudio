@@ -14,12 +14,12 @@
 
 <!-- Optional. Populate when this project uses a framework/package such as YJackCore. -->
 
-- **Framework**: [None configured — e.g., YJackCore]
-- **Framework Source**: [TO BE CONFIGURED — UPM URL, local package path, or git submodule path]
-- **Framework Version**: [TO BE CONFIGURED]
-- **Framework Docs**: [TO BE CONFIGURED — e.g., docs/frameworks/yjackcore.md]
-- **Framework Rules**: [TO BE CONFIGURED — project-specific rules agents must follow]
-- **Framework Routing Notes**: [TO BE CONFIGURED]
+- **Framework**: [None configured]
+- **Framework Source**: [None configured]
+- **Framework Version**: [None configured]
+- **Framework Docs**: [None configured]
+- **Framework Rules**: [None configured]
+- **Framework Routing Notes**: [None configured]
 
 ## Input & Platform
 

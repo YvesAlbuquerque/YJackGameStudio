@@ -96,3 +96,70 @@ unless those checks were actually run. See `.agents/docs/validation-evidence.md`
   explicitly authorizes framework modification.
 - Classification required: every work contract must declare whether work is
   *game-repo work*, *framework-package work*, or *both*.
+
+## Tool Entry Points
+
+This repo is the cross-agent source of truth. Each provider has a dedicated
+entry point:
+
+| System | Entrypoint | Notes |
+|--------|------------|-------|
+| Codex | `AGENTS.md` | Uses cross-agent instructions and can load `.agents/skills/` as project skills. |
+| GitHub Copilot | `.github/copilot-instructions.md` | Also includes path-specific instructions under `.github/instructions/`. |
+| Gemini CLI | `GEMINI.md` and `.gemini/settings.json` | Configured to load both `AGENTS.md` and `GEMINI.md`. |
+| Google Antigravity | `AGENTS.md`, `GEMINI.md`, `.agents/rules/` | Uses the shared rules/docs layout. `.agent/rules/game-studio.md` is a compatibility pointer. |
+| Claude Code | `CLAUDE.md` and `.claude/` | Preserved as a compatibility layer. |
+
+## Shared Source Of Truth
+
+Prefer the provider-neutral layer unless a tool-specific adapter says otherwise:
+
+- `.agents/agents/` — studio role definitions
+- `.agents/skills/` — procedural skills and slash-command equivalents
+- `.agents/rules/` — path/domain rules
+- `.agents/docs/` — shared docs, templates, workflow catalog, technical preferences
+- `.agents/hooks/` — portable hook scripts; automatic wiring is tool-specific
+
+The `.claude/` directory is retained for Claude Code compatibility. Do not make
+new shared workflow changes only in `.claude/`; mirror or author them in `.agents/`.
+
+## Working Rules
+
+- Inspect the repo before asserting structure, behavior, or intent.
+- Separate facts, inferences, and open questions.
+- Prefer existing repo patterns over new abstractions.
+- Preserve existing style unless there is a concrete reason to change it.
+- Do not imply build, runtime, hook, or test validation happened unless it did.
+- Keep changes low-risk and phased; do not broad-rewrite unless asked.
+- Never commit, push, or publish unless explicitly asked.
+- Do not read or expose secrets.
+
+## Collaboration Protocol
+
+For design and architecture work, follow: Question → Options → Decision → Draft → Approval.
+For direct implementation requests, make the requested changes, keep scope small,
+and report validation honestly.
+
+## Project Structure
+
+High-level paths:
+
+- `src/` — game source code
+- `design/` — GDDs, narrative docs, UX docs, level designs
+- `docs/` — architecture, ADRs, engine references, technical docs
+- `production/` — sprints, milestones, release tracking, session state
+- `tests/` — test suites once the selected engine is configured
+- `prototypes/` — throwaway prototypes isolated from production source
+
+See `.agents/docs/directory-structure.md` and `.agents/docs/quick-start.md` for
+full path listings. Scoped instructions also exist in `design/AGENTS.md`,
+`docs/AGENTS.md`, `src/AGENTS.md`, and `CCGS Skill Testing Framework/AGENTS.md`.
+
+## Skill Use
+
+If the tool supports project skills or slash commands, use the relevant skill
+normally. If not, read the skill file and follow its phases:
+`.agents/skills/<skill-name>/SKILL.md`
+
+Common entry points: `/start`, `/setup-engine`, `/project-stage-detect`, `/adopt`,
+`/design-system`, `/create-architecture`, `/dev-story`, `/story-done`.

@@ -1,0 +1,10 @@
+{
+  "contextFileName": [
+    "AGENTS.md",
+    "GEMINI.md"
+  ],
+  "fileFiltering": {
+    "respectGitIgnore": true,
+    "enableRecursiveFileSearch": true
+  }
+}

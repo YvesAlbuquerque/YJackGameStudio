@@ -21,6 +21,10 @@ YJackCore repo docs override generic Game Studio Unity guidance. Read in order:
 4. YJackCore `Docs/Workflow/framework-vision.md`
 5. Nearest YJackCore layer doc for the task
 
+If a local YJackCore package or checkout is available, prefer its own
+`AGENTS.md`, `.agents/skills/*`, `.ai/commands/*`, docs, package metadata,
+asmdefs, and subtree instructions over this generic Game-Studio fallback.
+
 ## Package File Permission
 
 - YJackCore package files are **read-only by default** for all agents.
@@ -58,6 +62,15 @@ Prefer YJackCore layer surfaces before inventing new architecture:
 
 Keep host-game glue small. If glue grows into reusable framework behavior,
 propose a YJackCore change rather than burying it in `src/`.
+
+- Prefer inspector-first authoring: serialized fields, UnityEvents,
+  ScriptableObject assets, prefabs, Odin-driven inspector ergonomics, and Visual
+  Scripting-friendly entry points.
+- Treat Unity-module-backed compile-symbol paths as the primary path when the
+  module is installed; bare paths are compatibility fallbacks.
+- Do not edit YJackCore package files casually. Preserve package boundaries,
+  `.asmdef` dependencies, Unity asset `.meta` files, and submodule/package
+  integrity.
 
 ## Manual Validation Debt
 
