@@ -436,7 +436,7 @@ This skill operates within the autonomy mode boundaries defined in
 - **AUTONOMOUS mode:** LOW and MEDIUM auto-approved; HIGH always escalates
 
 **Hard gates (never bypassed by any mode):**
-- Sprint commitment (writing the schedule) is always MEDIUM risk minimum
+- Sprint commitment (writing the schedule) is always HIGH risk and always escalates
 - Any contract with `risk_tier: HIGH` always escalates
 - YJackCore package boundary tasks always escalate
 - Write-set collision resolution always escalates
