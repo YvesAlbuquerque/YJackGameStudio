@@ -11,10 +11,10 @@ For workspace detection, read `.agents/docs/yjack-workspace-manifest.md`.
 
 Treat a project as YJackCore-backed if any of these are true:
 
+- `.yjack-workspace.json` exists in the repo root *(highest confidence — read this first)*
 - `Packages/manifest.json` contains `com.ygamedev.yjack` or `YJackCore`
 - A local package exists at `Packages/YJackCore/package.json`
 - A git submodule path points to `YJackCore`
-- `.yjack-workspace.json` exists in the repo root
 - `technical-preferences.md` lists `Framework: YJackCore`
 - The owner explicitly states the game uses YJackCore
 

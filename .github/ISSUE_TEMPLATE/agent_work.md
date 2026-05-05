@@ -12,6 +12,11 @@ assignees: ''
 <!-- One sentence: what does the owner want to achieve? -->
 
 
+## Success Criteria
+
+<!-- Measurable conditions that define completion for this contract. -->
+- 
+
 ## Scope
 
 <!-- What is explicitly in scope for this work unit? -->
@@ -29,7 +34,7 @@ assignees: ''
 - **specialist_agent***: <!-- e.g., engine-programmer, qa-tester, technical-writer -->
 - **autonomy_mode***: <!-- collaborative | supervised | trusted -->
 - **risk_tier***: <!-- LOW | MEDIUM | HIGH -->
-- **approval_boundary**: <!-- What may the agent do without asking vs. what needs owner sign-off? -->
+- **approval_boundary***: <!-- What may the agent do without asking vs. what needs owner sign-off? -->
 
 ### YJackCore Classification (Required When YJackCore Is Active)
 
@@ -88,6 +93,10 @@ assignees: ''
 - **checks_run**: 
 - **checks_unavailable**: 
 - **static_inspection**: 
+- **docs_review**: 
+- **script_validation**: 
+- **engine_validation**: <!-- not-run | n/a | result -->
+- **unity_editor_validation**: <!-- not-run | n/a | result -->
 - **manual_validation_still_required**: 
 - **known_risks**: 
 - **confidence**: <!-- HIGH | MEDIUM | LOW -->

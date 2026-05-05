@@ -1,8 +1,4 @@
 <p align="center">
-  <img src="docs/assets/cover_art.png" alt="Claude Code Game Studios Cover Art" width="100%">
-</p>
-
-<p align="center">
   <h1 align="center">Claude Code Game Studios</h1>
   <p align="center">
     Turn a single Claude Code session into a full game development studio.
