@@ -56,11 +56,6 @@ handoff:
   - status_log updated with VALIDATED entry
 
 status_log:
-  - timestamp: "2026-05-05T09:00:00Z"
-    from: ""
-    to: proposed
-    agent: "copilot"
-    note: "Example contract created for sprint-scheduler testing"
   - timestamp: "2026-05-05T09:05:00Z"
     from: proposed
     to: approved
