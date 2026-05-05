@@ -132,8 +132,8 @@ Include only contracts where:
    - **Nice to Have (P2)** — stretch goals or polish tasks
 
 2. **Within each priority tier, sort by:**
-   - **YJackCore layer depth** — GameLayer → LevelLayer → PlayerLayer → ViewLayer → Shared
-     (deeper layers should be implemented first to establish architectural foundation)
+   - **YJackCore layer depth** — CoreLayer → GameLayer → LevelLayer → PlayerLayer → ViewLayer → Shared
+     (deeper/foundational layers should be implemented first to establish architectural foundation)
    - **Effort estimate** — smaller tasks first within the same layer (enables faster feedback loops)
    - **Risk tier** — LOW before MEDIUM before HIGH (reduces approval churn)
 
