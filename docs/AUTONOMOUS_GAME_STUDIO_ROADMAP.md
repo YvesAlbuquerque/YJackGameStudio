@@ -1,7 +1,7 @@
 # Autonomous Game Studio Roadmap
 
 Date: 2026-05-04
-Repo: `YvesAlbuquerque/Claude-Code-Game-Studios`
+Repo: current repository (see `README.md` for canonical links)
 Target state: owner-directed autonomous game studio, aligned with YJackCore.
 
 ## Conclusion
