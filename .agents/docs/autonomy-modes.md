@@ -68,8 +68,7 @@ These actions **always require owner approval**, regardless of mode:
 The active mode should be declared in one of:
 
 - The current work contract (`autonomy_mode` field in `.agents/docs/work-contract-schema.md`)
-- `production/autonomy-config.md` for session-level override
-- Explicit owner instruction at session start
+- Explicit owner instruction at session start for a session-level override
 
 If no mode is declared, default to **collaborative**.
 
