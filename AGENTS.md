@@ -1,6 +1,6 @@
 # YJackGameStudio — Agent Entry Point
 
-Repository: `YvesAlbuquerque/Claude-Code-Game-Studios`
+Repository: current checkout/fork
 Studio OS: YJackGameStudio
 Last updated: 2026-05-05
 
