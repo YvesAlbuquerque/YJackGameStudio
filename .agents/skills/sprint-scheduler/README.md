@@ -87,7 +87,8 @@ The scheduler respects the active autonomy mode from `production/autonomy-config
 For YJackCore-backed projects, the scheduler:
 
 1. **Detects YJackCore projects** via `.yjack-workspace.json`
-2. **Sequences by layer depth** — GameLayer → LevelLayer → PlayerLayer → ViewLayer → Shared
+2. **Sequences by layer depth** — CoreLayer → GameLayer → LevelLayer → PlayerLayer → ViewLayer → Shared
+   - `CoreLayer` is treated as the most coordination-sensitive/foundational layer and should be scheduled first when present
 3. **Flags package boundary tasks** — `yjackcore.package_boundary: true` is always HIGH risk
 4. **Flags manual validation** — Unity Play Mode, domain reload, Inspector wiring
 5. **Always escalates** package modifications regardless of autonomy mode
