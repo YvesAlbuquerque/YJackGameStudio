@@ -39,7 +39,7 @@ updated_by: "copilot"
 contracts:
   STORY-EXAMPLE-001:
     title: "Example story for sprint-scheduler testing"
-    status: approved
+    status: proposed
     specialist_agent: copilot
     write_set:
       - design/examples/example-gdd.md

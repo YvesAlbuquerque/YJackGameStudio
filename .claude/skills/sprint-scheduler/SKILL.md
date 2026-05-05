@@ -261,20 +261,15 @@ summary:
 
 ### Escalation Decision
 
-Before writing the schedule, check the autonomy mode and schedule risk tier:
+Before writing the schedule, note that **sprint commitment is always `HIGH` risk** per
+`.agents/docs/autonomy-modes.md` ("Commit a sprint backlog — Ask first" in every mode).
+This means the sprint schedule write **always** requires explicit owner approval,
+regardless of individual contract risk tiers or autonomy mode:
 
-1. **If any contract in the schedule has `risk_tier: HIGH`:**
-   - Always escalate to owner regardless of mode
-   - Present the full schedule and ask for approval
-
-2. **If all contracts are `risk_tier: MEDIUM` and mode is `AUTONOMOUS`:**
-   - Auto-approve and proceed to write
-
-3. **If any contract is `risk_tier: MEDIUM` and mode is `SUPERVISED` or `GUIDED`:**
-   - Escalate to owner with the schedule
-
-4. **If all contracts are `risk_tier: LOW` and mode is `SUPERVISED` or `AUTONOMOUS`:**
-   - Auto-approve and proceed to write
+1. **Always escalate to owner before writing the schedule:**
+   - Present the full schedule and ask for explicit approval
+   - Do not auto-commit the sprint backlog even in `AUTONOMOUS` mode
+   - This hard gate cannot be bypassed by any autonomy mode setting
 
 ### Approval Prompt
 
@@ -306,7 +301,7 @@ Proceed? (yes / no / revise)
 
 ### Write Files
 
-If approved (or auto-approved per autonomy mode):
+If approved:
 
 1. **Write the YAML schedule:**
    - `production/sprints/schedule-sprint-NNN.yml`
