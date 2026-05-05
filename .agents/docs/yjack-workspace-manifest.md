@@ -195,7 +195,7 @@ Common values:
 3. Apply `allowedAgentActions.frameworkPackage` as the default permission for
    all paths under `packagePath`.
 4. Add all `manualValidation` entries to the work contract's
-   `manual_validation_still_required` field.
+   `manual_validation_required` field.
 5. If `source` is `sibling`, the framework package is outside this repo — do not
    commit framework changes from this repo's git history.
 
