@@ -19,7 +19,7 @@
 # ─────────────────────────────────────────────────────────────────────────────
 
 schema_version: "1.0"
-last_updated: "2026-05-04T21:00:00Z"
+last_updated: "2026-05-05T09:10:00Z"
 updated_by: "copilot"
 
 # contracts:
@@ -36,7 +36,14 @@ updated_by: "copilot"
 #         status: "<last-known status>"
 #     blocked_by: "<contract_id or description>"  # required when status: blocked
 
-contracts: {}
+contracts:
+  STORY-EXAMPLE-001:
+    title: "Example story for sprint-scheduler testing"
+    status: approved
+    specialist_agent: copilot
+    write_set:
+      - design/examples/example-gdd.md
+    dependencies: []
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Example (remove or adapt when adding real contracts):
