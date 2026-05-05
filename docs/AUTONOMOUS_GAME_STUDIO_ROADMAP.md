@@ -32,9 +32,9 @@ Facts:
 - GitHub Issues were disabled on this repo at audit time and had to be enabled before creating this backlog.
 - `.claude/docs/technical-preferences.md` has a Framework Integration section for YJackCore, but it is still unconfigured.
 - `.claude/docs/yjackcore-support.md` correctly describes YJackCore detection and layer mapping.
-- The local YJackCore checkout confirms package name `com.ygamedev.yjack`, version `1.6.0`, Unity `6000.0`, and dependencies on TextMeshPro, Cinemachine, Visual Scripting, Mathematics, and Input System.
-- YJackCore's docs define a low-code, inspector-first, ScriptableObject, UnityEvent, Visual Scripting-friendly framework direction.
-- YJackCore already has a Roadmap OS with structured tasks, priority, effort, generated roadmaps, GitHub Issues integration, L/XL decomposition rules, and planning-routing rules.
+- An audit-time local YJackCore checkout used for comparison showed package name `com.ygamedev.yjack`, version `1.6.0`, Unity `6000.0`, and dependencies on TextMeshPro, Cinemachine, Visual Scripting, Mathematics, and Input System; treat these as an external snapshot, not a repo-verifiable fact.
+- External YJackCore documentation describes a low-code, inspector-first, ScriptableObject, UnityEvent, and Visual Scripting-friendly framework direction.
+- External YJackCore materials reviewed during the audit indicate a Roadmap OS with structured tasks, priority, effort, generated roadmaps, GitHub Issues integration, L/XL decomposition rules, and planning-routing rules.
 
 Inferences:
 
