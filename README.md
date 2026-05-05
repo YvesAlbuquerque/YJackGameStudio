@@ -1,4 +1,8 @@
 <p align="center">
+  <img src="docs/assets/cover_art.png" alt="Claude Code Game Studios Cover Art" width="100%">
+</p>
+
+<p align="center">
   <h1 align="center">Claude Code Game Studios</h1>
   <p align="center">
     Turn a single Claude Code session into a full game development studio.
@@ -6,6 +10,11 @@
     49 agents. 72 skills. One coordinated AI team.
   </p>
 </p>
+
+> **YJackGameStudio** — When used as the owner-directed studio OS for YJack + YJackCore
+> projects, this template becomes an autonomous AI production layer that orchestrates
+> planning, issue contracts, ownership, validation evidence, and YJackCore routing.
+> See [AGENTS.md](AGENTS.md) for the product thesis and authority boundaries.
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
@@ -27,6 +36,35 @@ Building a game solo with AI is powerful — but a single chat session has no st
 **Claude Code Game Studios** solves this by giving your AI session the structure of a real studio. Instead of one general-purpose assistant, you get 49 specialized agents organized into a studio hierarchy — directors who guard the vision, department leads who own their domains, and specialists who do the hands-on work. Each agent has defined responsibilities, escalation paths, and quality gates.
 
 The result: you still make every decision, but now you have a team that asks the right questions, catches mistakes early, and keeps your project organized from first brainstorm to launch.
+
+### YJackGameStudio: Owner-Directed Autonomous Studio OS
+
+> **YJackGameStudio is an owner-directed autonomous game studio OS for agentic game development.**
+
+When used as YJackGameStudio, this system goes beyond a collaborative assistant template:
+
+- The owner states a game goal, selects an autonomy mode, and the studio creates
+  structured, dependency-aware, validation-aware issues with routing to the right
+  specialist agents.
+- Work is tracked as explicit **work contracts** — not chat history.
+- Agents operate within owner-set boundaries: they do not claim unlimited autonomy.
+  HIGH-risk decisions always require owner approval.
+
+YJackGameStudio can operate in two configurations:
+
+| Configuration | Description |
+|--------------|-------------|
+| **Standalone** | Generic multi-agent game studio for any engine |
+| **Integrated with YJackCore** | Full studio OS for games built on the YJackCore Unity framework |
+
+**The split when integrated:**
+
+| Layer | Role |
+|-------|------|
+| **YJackCore** | Unity runtime/editor authoring framework (`com.ygamedev.yjack`) |
+| **YJackGameStudio** | Autonomous AI production/studio layer — planning, contracts, ownership, validation, routing |
+
+YJackCore is the authority for Unity package files, layer architecture, and the low-code authoring substrate. YJackGameStudio consumes YJackCore guidance. It does not modify YJackCore package files unless the owner explicitly authorizes a framework change.
 
 ---
 
@@ -205,17 +243,23 @@ Agents follow a structured delegation model:
 4. **Change propagation** — cross-department changes are coordinated by `producer`
 5. **Domain boundaries** — agents don't modify files outside their domain without explicit delegation
 
-### Collaborative, Not Autonomous
+### Autonomy Modes
 
-This is **not** an auto-pilot system. Every agent follows a strict collaboration protocol:
+The system supports three modes. The default is **collaborative**.
 
-1. **Ask** — agents ask questions before proposing solutions
-2. **Present options** — agents show 2-4 options with pros/cons
-3. **You decide** — the user always makes the call
-4. **Draft** — agents show work before finalizing
-5. **Approve** — nothing gets written without your sign-off
+| Mode | Owner Touchpoints | When to Use |
+|------|-------------------|-------------|
+| **Collaborative** (default) | Every step — Ask → Options → Decide → Draft → Approve | All new projects; any time you want full visibility |
+| **Supervised Autonomous** | Sprint start, sprint end, HIGH-risk gates | When you've pre-approved a sprint scope and trust the agents to execute |
+| **Trusted Autonomous** | HIGH-risk gates + async status reports | Standing mandate; owner reviews milestones and escalations only |
 
-You stay in control. The agents provide structure and expertise, not autonomy.
+**HIGH-risk actions are owner-gated in every mode.** This includes architecture changes, framework package edits, scope expansion, and release actions.
+
+Set the mode in your work contract (`autonomy_mode` field) or in `production/autonomy-config.md`. When in doubt, default to collaborative.
+
+See [`.agents/docs/autonomy-modes.md`](.agents/docs/autonomy-modes.md) for full definitions.
+
+You stay in control. Agents provide structure, decompose work, and surface options — they do not operate without boundaries.
 
 ### Automated Safety
 
