@@ -1185,10 +1185,11 @@ Every agent interaction follows this pattern:
 5. You review and refine
 6. Agent asks "May I write this to [filepath]?" before writing
 
-**Autonomous modes (SUPERVISED and AUTONOMOUS)** allow agents to execute
-LOW-risk and MEDIUM-risk actions without pausing, while HIGH-risk decisions
-always surface to the owner regardless of mode. The creative design protocol
-above remains collaborative across all modes.
+**In SUPERVISED mode**, agents execute LOW-risk actions autonomously while
+MEDIUM-risk and HIGH-risk decisions still surface to the owner for approval.
+**In AUTONOMOUS mode**, agents execute both LOW-risk and MEDIUM-risk actions
+autonomously, while HIGH-risk decisions always surface to the owner regardless
+of mode. The creative design protocol above remains collaborative across all modes.
 
 See `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md` for the full protocol with examples.
 See `.agents/docs/autonomy-modes.md` for the autonomy mode specification.
@@ -1419,7 +1420,7 @@ conflicts go to `producer`.
 
 ## Appendix B: Slash Command Quick-Reference
 
-### All 72 Commands by Category
+### All 73 Commands by Category
 
 #### Onboarding and Navigation (5)
 
@@ -1486,7 +1487,7 @@ conflicts go to `producer`.
 | `/gate-check` | Formal phase gate with PASS/CONCERNS/FAIL | All transitions |
 | `/reverse-document` | Generate design docs from existing code | Any |
 
-#### QA and Testing (9)
+#### QA and Testing (10)
 
 | Command | Purpose | Phase |
 |---------|---------|-------|
@@ -1499,6 +1500,7 @@ conflicts go to `producer`.
 | `/test-evidence-review` | Quality review of test files and manual evidence | 5 |
 | `/test-flakiness` | Detect non-deterministic tests from CI logs | 5-6 |
 | `/skill-test` | Validate skill files for structural and behavioral correctness | Any |
+| `/skill-improve` | Improve a skill using a test-fix-retest loop | Any |
 
 #### Production Management (6)
 

@@ -191,7 +191,7 @@ Engine specialist sets are included for Godot, Unity, and Unreal.
 ### YJackCore Framework
 
 For Unity projects, an optional framework-aware agent path exists for
-[YJackCore](https://github.com/YourGameDevStudio/YJackCore), a low-code,
+[YJackCore](https://github.com/YvesAlbuquerque/YJackCore), a low-code,
 inspector-first Unity package for gameplay systems.
 
 **YJackCore is entirely optional.** The generic Unity specialist path works for
@@ -199,7 +199,7 @@ all Unity projects. When YJackCore is detected (via `Packages/manifest.json`,
 `.yjack-workspace.json`, or technical preferences), agents route through
 YJackCore-specific guidance for:
 
-- Framework layer boundaries (GameLayer, LevelLayer, PlayerLayer, ViewLayer, Shared)
+- Framework layer boundaries (GameLayer, LevelLayer, PlayerLayer/CoreLayer, ViewLayer, Shared)
 - Package integrity and assembly definition structure
 - Low-code authoring model preservation
 - ScriptableObject patterns and UnityEvent surfaces
