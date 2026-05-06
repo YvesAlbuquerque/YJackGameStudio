@@ -7,6 +7,11 @@
   </p>
 </p>
 
+> **YJackGameStudio** — When used as the owner-directed studio OS for YJack + YJackCore
+> projects, this template becomes an autonomous AI production layer that orchestrates
+> planning, issue contracts, ownership, validation evidence, and YJackCore routing.
+> See [AGENTS.md](AGENTS.md) for the product thesis and authority boundaries.
+
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
   <a href=".agents/agents"><img src="https://img.shields.io/badge/agents-49-blueviolet" alt="49 Agents"></a>
@@ -32,6 +37,37 @@ shared layer under `.agents/` plus native adapters for the major agentic coding
 systems.
 
 ## Supported Agent Systems
+
+### YJackGameStudio: Owner-Directed Autonomous Studio OS
+
+> **YJackGameStudio is an owner-directed autonomous game studio OS for agentic game development.**
+
+When used as YJackGameStudio, this system goes beyond a collaborative assistant template:
+
+- The owner states a game goal, selects an autonomy mode, and the studio creates
+  structured, dependency-aware, validation-aware issues with routing to the right
+  specialist agents.
+- Work is tracked as explicit **work contracts** — not chat history.
+- Agents operate within owner-set boundaries: they do not claim unlimited autonomy.
+  HIGH-risk decisions always require owner approval.
+
+YJackGameStudio can operate in two configurations:
+
+| Configuration | Description |
+|--------------|-------------|
+| **Standalone** | Generic multi-agent game studio for any engine |
+| **Integrated with YJackCore** | Full studio OS for games built on the YJackCore Unity framework |
+
+**The split when integrated:**
+
+| Layer | Role |
+|-------|------|
+| **YJackCore** | Unity runtime/editor authoring framework (`com.ygamedev.yjack`) |
+| **YJackGameStudio** | Autonomous AI production/studio layer — planning, contracts, ownership, validation, routing |
+
+YJackCore is the authority for Unity package files, layer architecture, and the low-code authoring substrate. YJackGameStudio consumes YJackCore guidance. It does not modify YJackCore package files unless the owner explicitly authorizes a framework change.
+
+---
 
 | System | Entrypoint | Notes |
 |--------|------------|-------|
@@ -256,6 +292,62 @@ Validation is workflow-specific:
 - Hooks: Claude Code wires `.claude/hooks/`; other tools can run equivalent scripts from `.agents/hooks/` manually.
 
 Do not claim runtime, build, hook, or test validation unless it actually happened.
+
+### Autonomy Modes
+
+The system supports three modes. The default is **collaborative**.
+
+| Mode | Owner Touchpoints | When to Use |
+|------|-------------------|-------------|
+| **Collaborative** (default) | Every step — Ask → Options → Decide → Draft → Approve | All new projects; any time you want full visibility |
+| **Supervised Autonomous** | Sprint start, sprint end, HIGH-risk gates | When you've pre-approved a sprint scope and trust the agents to execute |
+| **Trusted Autonomous** | HIGH-risk gates + async status reports | Standing mandate; owner reviews milestones and escalations only |
+
+**HIGH-risk actions are owner-gated in every mode.** This includes architecture changes, framework package edits, scope expansion, and release actions.
+
+Set the mode in your work contract (`autonomy_mode` field). When in doubt, default to collaborative.
+
+See [`.agents/docs/autonomy-modes.md`](.agents/docs/autonomy-modes.md) for full definitions.
+
+You stay in control. Agents provide structure, decompose work, and surface options — they do not operate without boundaries.
+
+### Automated Safety
+
+**Hooks** run automatically on every session:
+
+| Hook | Trigger | What It Does |
+|------|---------|--------------|
+| `validate-commit.sh` | PreToolUse (Bash) | Checks for hardcoded values, TODO format, JSON validity, design doc sections — exits early if the command is not `git commit` |
+| `validate-push.sh` | PreToolUse (Bash) | Warns on pushes to protected branches — exits early if the command is not `git push` |
+| `validate-assets.sh` | PostToolUse (Write/Edit) | Validates naming conventions and JSON structure — exits early if the file is not in `assets/` |
+| `session-start.sh` | Session open | Shows current branch and recent commits for orientation |
+| `detect-gaps.sh` | Session open | Detects fresh projects (suggests `/start`) and missing design docs when code or prototypes exist |
+| `pre-compact.sh` | Before compaction | Preserves session progress notes |
+| `post-compact.sh` | After compaction | Reminds Claude to restore session state from `active.md` |
+| `notify.sh` | Notification event | Shows Windows toast notification via PowerShell |
+| `session-stop.sh` | Session close | Archives `active.md` to session log and records git activity |
+| `log-agent.sh` | Agent spawned | Audit trail start — logs subagent invocation |
+| `log-agent-stop.sh` | Agent stops | Audit trail stop — completes subagent record |
+| `validate-skill-change.sh` | PostToolUse (Write/Edit) | Advises running `/skill-test` after any `.claude/skills/` change |
+
+> **Note**: `validate-commit.sh`, `validate-assets.sh`, and `validate-skill-change.sh` fire on every Bash/Write tool call and exit immediately (exit 0) when the command or file path is not relevant. This is normal hook behavior — not a performance concern.
+
+**Permission rules** in `settings.json` auto-allow safe operations (git status, test runs) and block dangerous ones (force push, `rm -rf`, reading `.env` files).
+
+### Path-Scoped Rules
+
+Coding standards are automatically enforced based on file location:
+
+| Path | Enforces |
+|------|----------|
+| `src/gameplay/**` | Data-driven values, delta time usage, no UI references |
+| `src/core/**` | Zero allocations in hot paths, thread safety, API stability |
+| `src/ai/**` | Performance budgets, debuggability, data-driven parameters |
+| `src/networking/**` | Server-authoritative, versioned messages, security |
+| `src/ui/**` | No game state ownership, localization-ready, accessibility |
+| `design/gdd/**` | Required 8 sections, formula format, edge cases |
+| `tests/**` | Test naming, coverage requirements, fixture patterns |
+| `prototypes/**` | Relaxed standards, README required, hypothesis documented |
 
 ## Design Philosophy
 
