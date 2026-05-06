@@ -1172,9 +1172,10 @@ Full gate definitions and check pattern: `.agents/docs/director-gates.md`
 
 ### The Collaboration Protocol
 
-This system is **user-driven collaborative**, not autonomous.
+This system is **owner-driven collaborative** by default, with optional
+autonomous execution modes for owners who want to delegate more.
 
-**Pattern:** Question > Options > Decision > Draft > Approval
+**Default Pattern (GUIDED mode):** Question > Options > Decision > Draft > Approval
 
 Every agent interaction follows this pattern:
 1. Agent asks clarifying questions
@@ -1184,8 +1185,15 @@ Every agent interaction follows this pattern:
 5. You review and refine
 6. Agent asks "May I write this to [filepath]?" before writing
 
-See `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md` for the full protocol with
-examples.
+**Autonomous modes (SUPERVISED and AUTONOMOUS)** allow agents to execute
+LOW-risk and MEDIUM-risk actions without pausing, while HIGH-risk decisions
+always surface to the owner regardless of mode. The creative design protocol
+above remains collaborative across all modes.
+
+See `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md` for the full protocol with examples.
+See `.agents/docs/autonomy-modes.md` for the autonomy mode specification.
+See `docs/AUTONOMOUS_GAME_STUDIO_ROADMAP.md` for the roadmap toward increased
+autonomous capabilities.
 
 ### The AskUserQuestion Tool
 
@@ -1411,7 +1419,7 @@ conflicts go to `producer`.
 
 ## Appendix B: Slash Command Quick-Reference
 
-### All 66 Commands by Category
+### All 72 Commands by Category
 
 #### Onboarding and Navigation (5)
 
