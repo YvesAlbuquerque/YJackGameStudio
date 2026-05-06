@@ -205,7 +205,7 @@ YJackCore-specific guidance for:
 - ScriptableObject patterns and UnityEvent surfaces
 
 See `.agents/docs/yjackcore-support.md` and
-`.agents/docs/yjackcore-consumer-authority.md` for the full framework-aware routing model.
+`.agents/docs/yjackcore-authority.md` for the full framework-aware routing model.
 
 ## Getting Started
 
