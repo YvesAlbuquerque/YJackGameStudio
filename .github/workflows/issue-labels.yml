@@ -19,6 +19,7 @@ jobs:
             const currentLabels = context.payload.issue.labels.map(l => l.name);
             const currentLabelsLower = new Set(currentLabels.map(l => l.toLowerCase()));
 
+            // Keep in sync with `.github/LABELS.md` taxonomy sections.
             const LABEL_PATTERN = /\b(priority|auto|effort|phase|domain|status|risk):[a-zA-Z0-9-]+\b/g;
 
             // Groups that are mutually exclusive — only one label per group should be present.
