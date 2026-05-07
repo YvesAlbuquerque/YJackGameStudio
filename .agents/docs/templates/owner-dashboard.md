@@ -97,7 +97,7 @@
 
 3. **Issue #49 — Update movement GDD with wall-run edge cases**
    - **Risk:** MEDIUM
-   - **Within autonomy boundary:** Yes in AUTONOMOUS mode; No in SUPERVISED mode (requires owner go-ahead)
+   - **Within autonomy boundary:** Yes in AUTONOMOUS mode; No in SUPERVISED mode (requires owner approval)
    - **Estimated Effort:** 1 hour
    - **Next Action:** Add §Edge Cases to design/systems/movement.md
    - **Dependencies:** None

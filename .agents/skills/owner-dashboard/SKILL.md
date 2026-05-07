@@ -66,7 +66,7 @@ For each open issue, extract:
 Classify each issue into one of these categories:
 1. **In Progress** — `status:in-progress`
 2. **Blocked** — `status:blocked`
-3. **Awaiting Owner Go-Ahead (mode boundary)** — `status:approved` + risk tier above the current autonomy mode threshold (e.g., MEDIUM or HIGH in SUPERVISED mode; HIGH in AUTONOMOUS mode)
+3. **Awaiting Owner Approval (mode boundary)** — `status:approved` + risk tier above the current autonomy mode threshold (e.g., MEDIUM or HIGH in SUPERVISED mode; HIGH in AUTONOMOUS mode)
 4. **Ready for Pickup** — `status:approved` + risk tier within autonomy boundary
 5. **Proposed** — `status:proposed` (needs owner approval to move to `approved`)
 
