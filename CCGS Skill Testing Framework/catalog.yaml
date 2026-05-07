@@ -180,6 +180,17 @@ skills:
     priority: medium
     category: sprint
 
+  - name: sprint-scheduler
+    spec: CCGS Skill Testing Framework/skills/sprint/sprint-scheduler.md
+    last_static: ""
+    last_static_result: ""
+    last_spec: ""
+    last_spec_result: ""
+    last_category: ""
+    last_category_result: ""
+    priority: medium
+    category: sprint
+
   - name: sprint-status
     spec: CCGS Skill Testing Framework/skills/sprint/sprint-status.md
     last_static: ""

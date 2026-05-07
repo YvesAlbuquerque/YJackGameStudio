@@ -101,7 +101,10 @@ import re
 import os
 
 VERDICT_KEYWORDS = re.compile(
-    r'\b(PASS|FAIL|CONCERNS|APPROVED|BLOCKED|COMPLETE|READY|COMPLIANT|NON-COMPLIANT)\b'
+    r'\b(PASS|FAIL|CONCERNS|APPROVED|BLOCKED|COMPLETE|READY|COMPLIANT|NON-COMPLIANT'
+    r'|CLEAR TO SHIP|FIX CRITICALS FIRST|DO NOT SHIP'  # security-audit release verdicts
+    r'|MIGRATION COMPLETE|ADOPTION COMPLETE'            # adopt completion verdicts
+    r')\b'
 )
 
 ASK_WRITE_PATTERNS = [
@@ -125,9 +128,14 @@ HANDOFF_PATTERNS = [
     re.compile(r'`/\w[\w-]+`'),   # references another slash command
 ]
 
-REQUIRED_FM_FIELDS = ['name:', 'description:', 'argument-hint:', 'user-invocable:', 'allowed-tools:']
+REQUIRED_FM_FIELDS = ['name', 'description', 'argument-hint', 'user-invocable', 'allowed-tools']
 
 WRITE_TOOLS = re.compile(r'\b(Write|Edit)\b')
+
+
+def fm_has_field(fm, key):
+    """Return True if key appears as a YAML field (line-anchored) in the frontmatter."""
+    return bool(re.search(r'^' + re.escape(key) + r'\s*:', fm, re.MULTILINE))
 
 
 def parse_frontmatter(text):
@@ -166,10 +174,10 @@ def check_skill(path):
     # level: PASS | WARN | FAIL
 
     # ── Check 1: Required frontmatter fields ──────────────────────────────────
-    missing = [field for field in REQUIRED_FM_FIELDS if field not in fm]
+    missing = [key for key in REQUIRED_FM_FIELDS if not fm_has_field(fm, key)]
     if missing:
         results.append((1, 'Frontmatter Fields', 'FAIL',
-                         f"missing: {', '.join(missing)}"))
+                         f"missing: {', '.join(k + ':' for k in missing)}"))
     else:
         results.append((1, 'Frontmatter Fields', 'PASS', ''))
 

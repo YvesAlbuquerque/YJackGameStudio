@@ -78,8 +78,10 @@ jobs:
       - name: Run 7 static checks on all SKILL.md files
         id: static
         run: |
+          set +e
           bash .agents/scripts/validate-skill-static.sh all > /tmp/static-report.txt 2>&1
           STATIC_RC=$?
+          set -e
           cat /tmp/static-report.txt
           echo "exit_code=${STATIC_RC}" >> "$GITHUB_OUTPUT"
         # Always capture output even if the check fails
@@ -118,8 +120,10 @@ jobs:
       - name: Check catalog vs filesystem
         id: consistency
         run: |
+          set +e
           bash .agents/scripts/check-catalog-consistency.sh > /tmp/consistency-report.txt 2>&1
           CONSISTENCY_RC=$?
+          set -e
           cat /tmp/consistency-report.txt
           echo "exit_code=${CONSISTENCY_RC}" >> "$GITHUB_OUTPUT"
         continue-on-error: true
