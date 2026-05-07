@@ -98,9 +98,27 @@ declares its write scope, success criteria, validation requirements, and
 escalation conditions. This prevents silent scope creep, parallel file
 collisions, and incomplete handoffs.
 
-Schema and lifecycle: [`.agents/docs/work-contract-schema.md`](work-contract-schema.md)  
-Dependency graph and collision detection: [`.agents/docs/dependency-graph.md`](dependency-graph.md)  
-File ownership protocol: [`.agents/docs/file-ownership-protocol.md`](file-ownership-protocol.md)  
-YAML template: [`.agents/docs/templates/work-contract.yml`](templates/work-contract.yml)  
-GitHub issue form: [`.github/ISSUE_TEMPLATE/agent_work_contract.yml`](../../.github/ISSUE_TEMPLATE/agent_work_contract.yml)  
+Schema and lifecycle: [`.agents/docs/work-contract-schema.md`](work-contract-schema.md)
+Dependency graph and collision detection: [`.agents/docs/dependency-graph.md`](dependency-graph.md)
+File ownership protocol: [`.agents/docs/file-ownership-protocol.md`](file-ownership-protocol.md)
+YAML template: [`.agents/docs/templates/work-contract.yml`](templates/work-contract.yml)
+GitHub issue form: [`.github/ISSUE_TEMPLATE/agent_work_contract.yml`](../../.github/ISSUE_TEMPLATE/agent_work_contract.yml)
 Pre-flight check script: [`.agents/scripts/check-write-sets.sh`](../../.agents/scripts/check-write-sets.sh)
+
+### Handoff Protocol
+
+When work on a contract begins, the agent creates a handoff file:
+`production/session-state/handoff-{issue-id}.md`
+
+Handoff files enable context transfer between agents and sessions without
+requiring chat history. They are tracked in git and persist until the issue closes.
+
+Update the handoff file when:
+- Contract status changes
+- Milestone is reached
+- Blocker is encountered
+- Session ends
+
+See [autonomous-memory-model.md](autonomous-memory-model.md) for the full
+memory architecture and [handoff-record-schema.md](handoff-record-schema.md)
+for the handoff file schema and update protocol.

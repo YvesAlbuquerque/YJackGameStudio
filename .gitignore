@@ -16,6 +16,8 @@ AGENTS.local.md
 GEMINI.local.md
 .gemini/.env
 production/session-logs/
+# Ephemeral session state — see .agents/docs/autonomous-memory-model.md
+production/session-state/active.md
 
 # === CCGS Skill Testing Framework runtime outputs ===
 CCGS Skill Testing Framework/results/

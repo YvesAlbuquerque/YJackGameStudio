@@ -1,6 +1,10 @@
 # Context Management
 
-Context is the most critical resource in a Claude Code session. Manage it actively.
+Context is the most critical resource in an agent tool session. Manage it actively.
+
+This document covers context window management and file-backed state strategy.
+For the full autonomous memory model including handoff records and durable lessons,
+see [autonomous-memory-model.md](autonomous-memory-model.md).
 
 ## File-Backed State (Primary Strategy)
 
@@ -19,6 +23,10 @@ after each significant milestone:
 
 The state file should contain: current task, progress checklist, key decisions
 made, files being worked on, and open questions.
+
+**Important:** `active.md` is ephemeral and gitignored. It is deleted on clean
+session end and recreated fresh each session. For persistent context transfer
+between sessions or agents, use handoff files instead (see §Handoff Files below).
 
 ### Status Line Block (Production+ only)
 
@@ -39,6 +47,27 @@ Task: Implement hitbox detection
 - Remove or empty the block when no active work focus exists
 
 After any disruption (compaction, crash, `/clear`), read the state file first.
+
+### Handoff Files
+
+For context transfer between agents or sessions, use handoff files:
+`production/session-state/handoff-{issue-id}.md`
+
+Handoff files are tracked in git and persist until the issue closes. They contain:
+- Last validated state (what is complete, what remains)
+- Active blockers and pending decisions
+- Next scheduled action
+- Risk items and agent notes
+
+When resuming work on an issue, read the handoff file to understand where the
+previous agent left off. Update the handoff file when:
+- Contract status changes
+- Milestone is reached
+- Blocker is encountered
+- Session ends
+
+See [handoff-record-schema.md](handoff-record-schema.md) for the complete schema
+and update protocol.
 
 ### Incremental File Writing
 

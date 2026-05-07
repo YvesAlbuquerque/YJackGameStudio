@@ -14,41 +14,38 @@
 
 ## Model Tier Assignment
 
-Skills and agents are assigned to model tiers based on task complexity:
+The original Claude Code template assigned Haiku/Sonnet/Opus by task complexity.
+In the provider-neutral layer, treat these as capability tiers instead of model
+requirements:
 
-| Tier | Model | When to use |
-|------|-------|-------------|
-| **Haiku** | `claude-haiku-4-5-20251001` | Read-only status checks, formatting, simple lookups — no creative judgment needed |
-| **Sonnet** | `claude-sonnet-4-6` | Implementation, design authoring, analysis of individual systems — default for most work |
-| **Opus** | `claude-opus-4-6` | Multi-document synthesis, high-stakes phase gate verdicts, cross-system holistic review |
+| Tier | Capability | When to use |
+|------|------------|-------------|
+| Fast | Low-latency model | Read-only status checks, formatting, simple lookups |
+| Standard | Default coding model | Implementation, design authoring, individual-system analysis |
+| Deep reasoning | Strongest available model | Multi-document synthesis, phase gates, high-stakes architecture review |
 
-Skills with `model: haiku`: `/help`, `/sprint-status`, `/story-readiness`, `/scope-check`,
-`/project-stage-detect`, `/changelog`, `/patch-notes`, `/onboard`
-
-Skills with `model: opus`: `/review-all-gdds`, `/architecture-review`, `/gate-check`
-
-All other skills default to Sonnet. When creating new skills, assign Haiku if the
-skill only reads and formats; assign Opus if it must synthesize 5+ documents with
-high-stakes output; otherwise leave unset (Sonnet).
+When a tool supports explicit model selection, choose the nearest equivalent.
+When it does not, use the tool default and preserve the review/delegation intent.
 
 ## Subagents vs Agent Teams
 
 This project uses two distinct multi-agent patterns:
 
-### Subagents (current, always active)
-Spawned via `Task` within a single Claude Code session. Used by all `team-*` skills
-and orchestration skills. Subagents share the session's permission context, run
-sequentially or in parallel within the session, and return results to the parent.
+### Subagents (when supported)
+Spawned through the active tool's delegation mechanism within a single session.
+Used by all `team-*` skills and orchestration skills. Subagents typically share
+the session's permission context, run sequentially or in parallel within the
+session, and return results to the parent.
 
 **When to spawn in parallel**: If two subagents' inputs are independent (neither
 needs the other's output to begin), spawn both Task calls simultaneously rather
 than waiting. Example: `/review-all-gdds` Phase 1 (consistency) and Phase 2
 (design theory) are independent — spawn both at the same time.
 
-### Agent Teams (experimental — opt-in)
-Multiple independent Claude Code *sessions* running simultaneously, coordinated
-via a shared task list. Each session has its own context window and token budget.
-Requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` environment variable.
+### Agent Teams (experimental / tool-specific)
+Multiple independent agent sessions running simultaneously, coordinated via a
+shared task list. Each session has its own context window and token budget.
+Use only when the active tool explicitly supports this mode.
 
 **Use agent teams when**:
 - Work spans multiple subsystems that will not touch the same files
@@ -83,9 +80,9 @@ before advancing any contract to `IN_PROGRESS`. Exit code 1 means collisions wer
 found; do not proceed without owner resolution.
 
 Full collision-detection algorithm and the four-shard simulation proving it:
-[dependency-graph.md](../../.agents/docs/dependency-graph.md)  
+[dependency-graph.md](dependency-graph.md)  
 File ownership, read-only consultation, Unity `.meta` handling, and YJackCore
-package boundary rules: [file-ownership-protocol.md](../../.agents/docs/file-ownership-protocol.md)
+package boundary rules: [file-ownership-protocol.md](file-ownership-protocol.md)
 
 ### Dependency Pre-flight
 
@@ -101,10 +98,27 @@ declares its write scope, success criteria, validation requirements, and
 escalation conditions. This prevents silent scope creep, parallel file
 collisions, and incomplete handoffs.
 
-Schema and lifecycle: [`.agents/docs/work-contract-schema.md`](../../.agents/docs/work-contract-schema.md)  
-Dependency graph and collision detection: [`.agents/docs/dependency-graph.md`](../../.agents/docs/dependency-graph.md)  
-File ownership protocol: [`.agents/docs/file-ownership-protocol.md`](../../.agents/docs/file-ownership-protocol.md)  
-YAML template: [`.agents/docs/templates/work-contract.yml`](../../.agents/docs/templates/work-contract.yml)  
-GitHub issue form: [`.github/ISSUE_TEMPLATE/agent_work_contract.yml`](../../.github/ISSUE_TEMPLATE/agent_work_contract.yml)  
+Schema and lifecycle: [`.agents/docs/work-contract-schema.md`](work-contract-schema.md)
+Dependency graph and collision detection: [`.agents/docs/dependency-graph.md`](dependency-graph.md)
+File ownership protocol: [`.agents/docs/file-ownership-protocol.md`](file-ownership-protocol.md)
+YAML template: [`.agents/docs/templates/work-contract.yml`](templates/work-contract.yml)
+GitHub issue form: [`.github/ISSUE_TEMPLATE/agent_work_contract.yml`](../../.github/ISSUE_TEMPLATE/agent_work_contract.yml)
 Pre-flight check script: [`.agents/scripts/check-write-sets.sh`](../../.agents/scripts/check-write-sets.sh)
 
+### Handoff Protocol
+
+When work on a contract begins, the agent creates a handoff file:
+`production/session-state/handoff-{issue-id}.md`
+
+Handoff files enable context transfer between agents and sessions without
+requiring chat history. They are tracked in git and persist until the issue closes.
+
+Update the handoff file when:
+- Contract status changes
+- Milestone is reached
+- Blocker is encountered
+- Session ends
+
+See [autonomous-memory-model.md](autonomous-memory-model.md) for the full
+memory architecture and [handoff-record-schema.md](handoff-record-schema.md)
+for the handoff file schema and update protocol.

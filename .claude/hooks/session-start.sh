@@ -1,6 +1,6 @@
 #!/bin/bash
-# Claude Code SessionStart hook: Load project context at session start
-# Outputs context information that Claude sees when a session begins
+# agent tool SessionStart hook: Load project context at session start
+# Outputs context information that AI agent sees when a session begins
 #
 # Input schema (SessionStart): No stdin input
 
@@ -54,21 +54,49 @@ if [ -d "src" ]; then
     fi
 fi
 
-# --- Active session state recovery ---
+# --- Active session state recovery (AUTO-012) ---
+# See .agents/docs/autonomous-memory-model.md for memory tier details
 STATE_FILE="production/session-state/active.md"
 if [ -f "$STATE_FILE" ]; then
     echo ""
     echo "=== ACTIVE SESSION STATE DETECTED ==="
-    echo "A previous session left state at: $STATE_FILE"
-    echo "Read this file to recover context and continue where you left off."
+    echo "⚠️  Possible crash recovery — active.md should not exist at session start"
     echo ""
-    echo "Quick summary (last 20 lines):"
-    tail -20 "$STATE_FILE" 2>/dev/null
+    echo "Recovery steps:"
+    echo "1. Read active.md (ephemeral state from crashed session)"
+    echo "2. Read handoff-*.md files (persistent state from last commit)"
+    echo "3. Reconcile state (compare timestamps, update handoff if active is newer)"
+    echo "4. Archive active.md to session-logs, then delete it"
+    echo "5. Create fresh active.md based on reconciled state"
+    echo ""
+    echo "Quick preview of active.md:"
+    head -20 "$STATE_FILE" 2>/dev/null
     TOTAL_LINES=$(wc -l < "$STATE_FILE" 2>/dev/null)
     if [ "$TOTAL_LINES" -gt 20 ]; then
-        echo "  ... ($TOTAL_LINES total lines — read the full file to continue)"
+        echo "  ... ($TOTAL_LINES total lines — read the full file for complete context)"
     fi
-    echo "=== END SESSION STATE PREVIEW ==="
+    echo "=== END ACTIVE.MD PREVIEW ==="
+fi
+
+# --- Handoff file detection ---
+HANDOFF_FILES=$(ls production/session-state/handoff-*.md 2>/dev/null || true)
+if [ -n "$HANDOFF_FILES" ]; then
+    echo ""
+    echo "=== ACTIVE HANDOFF FILES ==="
+    echo "Found persistent handoff records for in-progress work:"
+    echo ""
+    for file in $HANDOFF_FILES; do
+        basename "$file"
+        # Show owner goal from handoff if available
+        GOAL=$(grep -A 1 "^## Owner Goal" "$file" 2>/dev/null | tail -1)
+        if [ -n "$GOAL" ]; then
+            echo "  Goal: $GOAL"
+        fi
+    done
+    echo ""
+    echo "Read these files to understand work context and resume from last validated state."
+    echo "See .agents/docs/handoff-record-schema.md for handoff file structure."
+    echo "=== END HANDOFF FILES ==="
 fi
 
 echo "==================================="
