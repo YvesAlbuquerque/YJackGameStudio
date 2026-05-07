@@ -195,6 +195,10 @@
   color: "D93F0B"
   description: "Execution is blocked; needs owner or dependency resolution"
 
+- name: "status:needs-owner"
+  color: "FBCA04"
+  description: "Waiting for explicit owner decision before work can continue"
+
 - name: "status:in-review"
   color: "BFD4F2"
   description: "Work complete; awaiting validation or owner review"
@@ -233,6 +237,41 @@
 - name: "yjackcore:workspace"
   color: "7057FF"
   description: "Issue involves .yjack-workspace.json or workspace routing"
+
+# ---------------------------------------------------------------------------
+# RISK
+# ---------------------------------------------------------------------------
+- name: "risk:architecture"
+  color: "BFDADC"
+  description: "Architecture decision risk requiring explicit impact review"
+
+- name: "risk:data-loss"
+  color: "B60205"
+  description: "Potential irreversible data/file/history loss risk"
+
+- name: "risk:yjackcore-boundary"
+  color: "5319E7"
+  description: "YJackCore package boundary, asmdef, or compile-symbol risk"
+
+- name: "risk:unity-scene-prefab"
+  color: "C2E0C6"
+  description: "Unity scene/prefab/inspector wiring risk requiring manual validation"
+
+- name: "risk:scope-creep"
+  color: "FEF2C0"
+  description: "Scope growth beyond approved write_set/non_goals"
+
+- name: "risk:legal-release"
+  color: "D93F0B"
+  description: "Legal, certification, or release-compliance risk"
+
+- name: "risk:monetization"
+  color: "F9D0C4"
+  description: "Store/payment/economy monetization risk"
+
+- name: "risk:player-safety"
+  color: "D73A4A"
+  description: "Player safety, harm-prevention, or moderation risk"
 
 # ---------------------------------------------------------------------------
 # ROADMAP / INFORMATIONAL

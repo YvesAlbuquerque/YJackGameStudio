@@ -5,7 +5,7 @@
 - **ID**: RISK-[NNNN]
 - **Identified By**: [Agent or person]
 - **Date Identified**: [Date]
-- **Category**: [Technical | Design | Schedule | Resource | External | Quality]
+- **Risk Class**: [risk:architecture | risk:data-loss | risk:yjackcore-boundary | risk:unity-scene-prefab | risk:scope-creep | risk:legal-release | risk:monetization | risk:player-safety]
 
 ## Assessment
 
@@ -56,3 +56,9 @@
 - **Last Reviewed**: [Date]
 - **Trend**: [Increasing | Stable | Decreasing]
 - **Notes**: [Any updates]
+
+## Escalation
+
+- **Stop Condition**: [Concrete trigger that forces agent to stop execution]
+- **Owner Approval Trigger**: [What owner must approve before resuming]
+- **Issue Labels**: [`risk:*` + `status:needs-owner` or `status:blocked` as applicable]

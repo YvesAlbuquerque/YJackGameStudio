@@ -27,6 +27,7 @@ jobs:
               'phase:',
               'domain:',
               'status:',
+              'risk:',
             ];
 
             // Groups that are mutually exclusive — only one label per group should be present.
@@ -43,6 +44,13 @@ jobs:
 
             for (const line of body.split('\n')) {
               const trimmed = line.trim();
+              const inlineMatch = trimmed.match(/(priority|auto|effort|phase|domain|status|risk):[a-z0-9-]+/i);
+              if (inlineMatch) {
+                const label = inlineMatch[0].toLowerCase();
+                if (!currentLabels.includes(label)) {
+                  labelsToAdd.push(label);
+                }
+              }
               for (const prefix of PREFIXES) {
                 if (trimmed.startsWith(prefix)) {
                   // Extract label: take text up to first ' —' (em dash) or first space

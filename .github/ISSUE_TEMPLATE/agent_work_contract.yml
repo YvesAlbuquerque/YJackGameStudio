@@ -161,6 +161,21 @@ body:
     validations:
       required: true
 
+  - type: checkboxes
+    id: risk_classes
+    attributes:
+      label: Risk Classes
+      description: "Select every risk class that applies. Use labels from .agents/docs/risk-register-schema.md."
+      options:
+        - label: "risk:architecture"
+        - label: "risk:data-loss"
+        - label: "risk:yjackcore-boundary"
+        - label: "risk:unity-scene-prefab"
+        - label: "risk:scope-creep"
+        - label: "risk:legal-release"
+        - label: "risk:monetization"
+        - label: "risk:player-safety"
+
   - type: textarea
     id: approval_boundary
     attributes:
@@ -175,7 +190,7 @@ body:
     id: escalation_conditions
     attributes:
       label: Escalation Conditions
-      description: "Specific situations that must cause the agent to stop and surface to the owner, regardless of autonomy mode."
+      description: "Specific situations that must cause the agent to stop and surface to the owner, regardless of autonomy mode. If waiting for owner decision, apply `status:needs-owner`."
       placeholder: |
         - Any change to the `RecipeData` schema
         - Scope additions outside the declared write set

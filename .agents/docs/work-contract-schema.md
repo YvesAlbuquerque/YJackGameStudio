@@ -60,8 +60,10 @@ present before a contract advances from `PROPOSED` to `APPROVED`.
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `risk_tier` | enum | ✅ | `LOW` \| `MEDIUM` \| `HIGH`. Determines approval boundary. See [autonomy-modes.md](autonomy-modes.md). |
+| `risk_classes` | list | ✅ | Risk taxonomy tags for this contract. Valid values map to `risk:*` labels from [risk-register-schema.md](risk-register-schema.md). |
 | `approval_boundary` | string | ✅ | Plain-text statement of what the agent may execute autonomously vs. what requires owner approval, referencing the active autonomy mode. |
 | `escalation_conditions` | list | ✅ | Specific situations that must cause the agent to stop and surface to the owner, regardless of autonomy mode. |
+| `risk_register` | list | — | Structured risk entries (`risk_id`, `description`, `risk_class`, `likelihood`, `impact`, `risk_tier`, `owner`, `mitigation`, `status`, `stop_condition`, `owner_approval_trigger`). Required when `risk_classes` contains any `HIGH`-default class. |
 
 ### Validation
 
@@ -153,6 +155,8 @@ The GitHub label equivalent is `status:` + kebab-case.
 **APPROVED → IN_PROGRESS**
 - All `dependencies` are `VALIDATED` or `CLOSED`.
 - Agent has read all `read_context` entries.
+- No unresolved `HIGH` risks in `risk_register` (`status` must be `RESOLVED` or `ACCEPTED`).
+- If waiting on owner risk decision, apply issue label `status:needs-owner` and remain `BLOCKED`.
 - Agent writes `IN_PROGRESS` entry to `status_log`.
 
 **IN_PROGRESS → BLOCKED**
