@@ -281,16 +281,11 @@ local audit; not synchronized across machines.
    # Update handoff frontmatter
    # Add closed and archived timestamps, final_status
 
-   # Move to archive
-   mkdir -p production/session-logs/handoff-archive
-   mv production/session-state/handoff-{issue}.md \
-      production/session-logs/handoff-archive/handoff-{issue}.md
-
-   # Commit the move
-   git add production/session-state/handoff-{issue}.md
-   git add production/session-logs/handoff-archive/handoff-{issue}.md
-   git commit -m "Archive handoff for closed issue #{issue}"
-   ```
+    # Move to archive
+    mkdir -p production/session-logs/handoff-archive
+    mv production/session-state/handoff-{issue}.md \
+       production/session-logs/handoff-archive/handoff-{issue}.md
+    ```
 3. Extract durable lessons from handoff:
    - Conventions discovered
    - Patterns learned

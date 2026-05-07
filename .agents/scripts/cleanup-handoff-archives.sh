@@ -25,8 +25,14 @@ if [ ! -d "$ARCHIVE_DIR" ]; then
     exit 0
 fi
 
+# Validate retention input to prevent malformed find predicates
+if ! [[ "$RETENTION_DAYS" =~ ^[0-9]+$ ]]; then
+    echo -e "${RED}Invalid HANDOFF_RETENTION_DAYS: '$RETENTION_DAYS' (must be a non-negative integer).${NC}"
+    exit 1
+fi
+
 # Find archives older than retention period
-ARCHIVES_TO_DELETE=$(find "$ARCHIVE_DIR" -name "handoff-*.md" -mtime +${RETENTION_DAYS} 2>/dev/null || true)
+ARCHIVES_TO_DELETE=$(find "$ARCHIVE_DIR" -name "handoff-*.md" -mtime "+$RETENTION_DAYS" 2>/dev/null || true)
 
 if [ -z "$ARCHIVES_TO_DELETE" ]; then
     echo -e "${GREEN}No archives older than ${RETENTION_DAYS} days found.${NC}"

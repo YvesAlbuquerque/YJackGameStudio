@@ -20,8 +20,8 @@ status: "{proposed | approved | in_progress | blocked | validated | closed}"
 ## Last Validated State
 
 ### Completed
-- [ ] {First completed item}
-- [ ] {Second completed item}
+- [x] {First completed item}
+- [x] {Second completed item}
 
 ### Remaining
 - [ ] {First remaining item}

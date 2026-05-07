@@ -4,7 +4,7 @@ Context is the most critical resource in an agent tool session. Manage it active
 
 This document covers context window management and file-backed state strategy.
 For the full autonomous memory model including handoff records and durable lessons,
-see [autonomous-memory-model.md](autonomous-memory-model.md).
+see [autonomous-memory-model.md](../../.agents/docs/autonomous-memory-model.md).
 
 ## File-Backed State (Primary Strategy)
 
@@ -66,7 +66,7 @@ previous agent left off. Update the handoff file when:
 - Blocker is encountered
 - Session ends
 
-See [handoff-record-schema.md](handoff-record-schema.md) for the complete schema
+See [handoff-record-schema.md](../../.agents/docs/handoff-record-schema.md) for the complete schema
 and update protocol.
 
 ### Incremental File Writing

@@ -80,9 +80,9 @@ before advancing any contract to `IN_PROGRESS`. Exit code 1 means collisions wer
 found; do not proceed without owner resolution.
 
 Full collision-detection algorithm and the four-shard simulation proving it:
-[dependency-graph.md](dependency-graph.md)  
+[dependency-graph.md](../../.agents/docs/dependency-graph.md)  
 File ownership, read-only consultation, Unity `.meta` handling, and YJackCore
-package boundary rules: [file-ownership-protocol.md](file-ownership-protocol.md)
+package boundary rules: [file-ownership-protocol.md](../../.agents/docs/file-ownership-protocol.md)
 
 ### Dependency Pre-flight
 
@@ -98,10 +98,10 @@ declares its write scope, success criteria, validation requirements, and
 escalation conditions. This prevents silent scope creep, parallel file
 collisions, and incomplete handoffs.
 
-Schema and lifecycle: [`.agents/docs/work-contract-schema.md`](work-contract-schema.md)
-Dependency graph and collision detection: [`.agents/docs/dependency-graph.md`](dependency-graph.md)
-File ownership protocol: [`.agents/docs/file-ownership-protocol.md`](file-ownership-protocol.md)
-YAML template: [`.agents/docs/templates/work-contract.yml`](templates/work-contract.yml)
+Schema and lifecycle: [`.agents/docs/work-contract-schema.md`](../../.agents/docs/work-contract-schema.md)
+Dependency graph and collision detection: [`.agents/docs/dependency-graph.md`](../../.agents/docs/dependency-graph.md)
+File ownership protocol: [`.agents/docs/file-ownership-protocol.md`](../../.agents/docs/file-ownership-protocol.md)
+YAML template: [`.agents/docs/templates/work-contract.yml`](../../.agents/docs/templates/work-contract.yml)
 GitHub issue form: [`.github/ISSUE_TEMPLATE/agent_work_contract.yml`](../../.github/ISSUE_TEMPLATE/agent_work_contract.yml)
 Pre-flight check script: [`.agents/scripts/check-write-sets.sh`](../../.agents/scripts/check-write-sets.sh)
 
@@ -119,6 +119,6 @@ Update the handoff file when:
 - Blocker is encountered
 - Session ends
 
-See [autonomous-memory-model.md](autonomous-memory-model.md) for the full
-memory architecture and [handoff-record-schema.md](handoff-record-schema.md)
+See [autonomous-memory-model.md](../../.agents/docs/autonomous-memory-model.md) for the full
+memory architecture and [handoff-record-schema.md](../../.agents/docs/handoff-record-schema.md)
 for the handoff file schema and update protocol.

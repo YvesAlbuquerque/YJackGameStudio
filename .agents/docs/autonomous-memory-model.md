@@ -247,9 +247,9 @@ Agents use `store_memory` tool to commit durable lessons:
 ```yaml
 subject: "YJackCore layer routing"
 fact: "Combat systems always map to GameLayer or LevelLayer; never directly to CoreLayer"
-citations: ".agents/docs/yjackcore-support.md:45-50"
+citations:
+  - ".agents/docs/yjackcore-support.md:45-50"
 reason: "Prevents host-game logic from coupling to YJackCore package internals"
-scope: "repository"
 ```
 
 ---
@@ -325,14 +325,14 @@ Migration steps:
 ## Implementation Checklist
 
 - [x] Memory model specification (this document)
-- [ ] Handoff record schema document
-- [ ] Session state lifecycle document
-- [ ] Update `.gitignore` to exclude `active.md`
-- [ ] Update `session-start.sh` hook
-- [ ] Update `session-stop.sh` hook
-- [ ] Create handoff record template
-- [ ] Create cleanup script for archives
-- [ ] Update context-management.md to reference new model
-- [ ] Update coordination-rules.md to reference handoff files
-- [ ] Create validation test scenario
-- [ ] Document GitHub memory integration best practices
+- [x] Handoff record schema document
+- [x] Session state lifecycle document
+- [x] Update `.gitignore` to exclude `active.md`
+- [x] Update `session-start.sh` hook
+- [x] Update `session-stop.sh` hook
+- [x] Create handoff record template
+- [x] Create cleanup script for archives
+- [x] Update context-management.md to reference new model
+- [x] Update coordination-rules.md to reference handoff files
+- [x] Create validation test scenario
+- [x] Document GitHub memory integration best practices

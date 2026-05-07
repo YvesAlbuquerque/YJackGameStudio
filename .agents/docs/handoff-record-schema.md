@@ -252,13 +252,12 @@ When an issue closes:
 1. Move handoff file to `production/session-logs/handoff-archive/{issue-id}.md`
 2. Append final metadata to frontmatter:
    ```yaml
-   closed: "2026-05-08T09:00:00Z"
-   archived: "2026-05-08T09:01:00Z"
-   final_status: "validated"
-   ```
-3. Commit the archive with message: `"Archive handoff for closed issue #44"`
-4. Delete the active handoff file from `production/session-state/`
-5. Extract durable lessons and commit to GitHub memory API or agent MEMORY.md
+    closed: "2026-05-08T09:00:00Z"
+    archived: "2026-05-08T09:01:00Z"
+    final_status: "validated"
+    ```
+3. Delete the active handoff file from `production/session-state/`
+4. Extract durable lessons and commit to GitHub memory API or agent MEMORY.md
 
 After 90 days (configurable), the cleanup script may delete archives to prevent
 unbounded growth. Archives are gitignored, so this does not affect version history.
