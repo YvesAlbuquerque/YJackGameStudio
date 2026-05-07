@@ -30,6 +30,8 @@ jobs:
               'status:',
               'risk:',
             ];
+            const PREFIX_NAMES = PREFIXES.map(prefix => prefix.slice(0, -1));
+            const INLINE_LABEL_PATTERN = new RegExp(`(${PREFIX_NAMES.join('|')}):[a-zA-Z0-9-]+`);
 
             // Groups that are mutually exclusive — only one label per group should be present.
             const EXCLUSIVE_GROUPS = {
@@ -45,7 +47,7 @@ jobs:
 
             for (const line of body.split('\n')) {
               const trimmed = line.trim();
-              const inlineMatch = trimmed.match(/(priority|auto|effort|phase|domain|status|risk):[a-zA-Z0-9-]+/);
+              const inlineMatch = trimmed.match(INLINE_LABEL_PATTERN);
               if (inlineMatch) {
                 const label = inlineMatch[0].toLowerCase();
                 if (!currentLabelsLower.has(label)) {

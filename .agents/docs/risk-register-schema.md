@@ -55,7 +55,7 @@ upward and escalate.
 
 1. Start from the class default tier in §Deterministic Risk Classes.
 2. Escalate to `HIGH` if any stop condition in this document is triggered.
-3. Escalate one tier when manual verification is unresolved (for example Unity
+3. Escalate one tier when manual verification is unresolved (e.g. Unity
    scene/prefab validation not confirmed).
 4. Never downgrade `HIGH`-default classes below `HIGH` without explicit owner acceptance
    recorded in the risk entry.
