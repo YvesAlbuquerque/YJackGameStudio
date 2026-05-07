@@ -24,6 +24,8 @@ jobs:
             //   priority:high
             //   effort:XL — > 5 days
             //   - [x] risk:architecture
+            // Includes em dash, en dash, and hyphen-minus because issue-form rendered
+            // lines may contain any of these separators after the label token.
             const LABEL_LINE_PATTERN = /^(?:- \[[ xX]\]\s*)?((?:priority|auto|effort|phase|domain|status|risk):[a-zA-Z0-9-]+)(?:\s+[—–-].*)?$/;
 
             // Groups that are mutually exclusive — only one label per group should be present.
@@ -44,6 +46,8 @@ jobs:
               const match = trimmed.match(LABEL_LINE_PATTERN);
               if (!match) continue;
 
+              // Preserve casing from structured form values (e.g., effort:XL).
+              // Deduping remains case-insensitive via `normalized`.
               const candidate = match[1];
               const normalized = candidate.toLowerCase();
               if (!currentLabelsLower.has(normalized) && !labelsToAddLower.has(normalized)) {
