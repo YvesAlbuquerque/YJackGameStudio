@@ -406,6 +406,28 @@ Do NOT reference the draft verdict text — re-check specific files or ask the u
 
 ---
 
+## 5b. Validation Evidence Packet
+
+After finalizing the gate verdict, produce a validation evidence packet using:
+
+- Standard: `.agents/docs/autonomous-validation-evidence.md`
+- Template: `.agents/docs/templates/validation-evidence-packet.md`
+
+Write to:
+
+- `production/qa/validation-packets/validation-gate-check-[target-phase]-[date].md`
+
+The packet must include:
+
+- checks run
+- checks unavailable
+- manual validation still required
+
+For Unity + YJackCore scopes, include manual scene/prefab/package confirmation
+using `.agents/docs/templates/yjackcore-unity-manual-validation.md`.
+
+---
+
 ## 6. Update Stage on PASS
 
 When the verdict is **PASS** and the user confirms they want to advance:

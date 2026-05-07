@@ -34,6 +34,7 @@ Each child issue must include:
 - `write_set`
 - `dependencies`
 - `validation_criteria`
+- `validation_packet` (path in `production/qa/validation-packets/`)
 - `risk_tier` (`LOW` / `MEDIUM` / `HIGH`)
 - idempotency key: `team-skill:<name>|scope:<slug>|track:<track>`
 

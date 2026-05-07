@@ -363,6 +363,29 @@ Confirm in conversation: "Session state updated."
 
 ---
 
+## Phase 7b: Validation Evidence Packet
+
+Before closing `/story-done`, prepare a validation evidence packet using:
+
+- Standard: `.agents/docs/autonomous-validation-evidence.md`
+- Template: `.agents/docs/templates/validation-evidence-packet.md`
+
+Write to:
+
+- `production/qa/validation-packets/validation-story-done-[story-slug]-[date].md`
+
+The packet must explicitly list:
+
+- Checks run (and outcomes)
+- Checks unavailable (and why)
+- Manual validation still required
+
+If the story involves Unity + YJackCore, attach the manual checklist from:
+
+- `.agents/docs/templates/yjackcore-unity-manual-validation.md`
+
+---
+
 ## Phase 8: Surface the Next Story
 
 After completion, help the developer keep momentum:

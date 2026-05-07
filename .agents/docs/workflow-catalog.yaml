@@ -13,6 +13,9 @@
 #
 # Phase gates (/gate-check): verdicts are ADVISORY — they guide the decision
 # but never hard-block advancement. The user always decides whether to proceed.
+# Gate outputs must include a validation packet in
+# production/qa/validation-packets/ using
+# .agents/docs/templates/validation-evidence-packet.md.
 
 phases:
 
