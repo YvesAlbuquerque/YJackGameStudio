@@ -256,7 +256,7 @@ When an issue closes:
     archived: "2026-05-08T09:01:00Z"
     final_status: "validated"
     ```
-3. Delete the active handoff file from `production/session-state/` and commit the tracked deletion (`git add -u`) so the open handoff is removed from git history
+3. Delete the active handoff file from `production/session-state/` and commit the tracked deletion (`git add -u`) so the open handoff is no longer tracked in future commits
 4. Keep the archive as local-only history (`production/session-logs/` is gitignored)
 5. Extract durable lessons and commit to GitHub memory API or agent MEMORY.md
 
