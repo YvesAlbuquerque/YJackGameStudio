@@ -208,6 +208,24 @@ Ask: "May I write this QA sign-off report to `production/qa/qa-signoff-[sprint]-
 
 Write only after receiving approval.
 
+### Validation Evidence Packet (required)
+
+After sign-off (or BLOCKED partial run), create a validation evidence packet:
+
+- Standard: `.agents/docs/autonomous-validation-evidence.md`
+- Template: `.agents/docs/templates/validation-evidence-packet.md`
+- Path: `production/qa/validation-packets/validation-team-qa-[scope]-[date].md`
+
+The packet must record:
+
+- checks run
+- checks unavailable
+- manual validation still required
+
+For Unity + YJackCore QA scopes, include the manual checklist from:
+
+- `.agents/docs/templates/yjackcore-unity-manual-validation.md`
+
 ## Error Recovery Protocol
 
 If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
