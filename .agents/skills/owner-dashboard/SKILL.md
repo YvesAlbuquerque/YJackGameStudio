@@ -66,7 +66,7 @@ For each open issue, extract:
 Classify each issue into one of these categories:
 1. **In Progress** — `status:in-progress`
 2. **Blocked** — `status:blocked`
-3. **Awaiting Approval** — `status:approved` + risk tier above current autonomy boundary
+3. **Awaiting Owner Go-Ahead (mode boundary)** — `status:approved` + risk tier above the current autonomy mode threshold (e.g., MEDIUM or HIGH in SUPERVISED mode; HIGH in AUTONOMOUS mode)
 4. **Ready for Pickup** — `status:approved` + risk tier within autonomy boundary
 5. **Proposed** — `status:proposed` (needs owner approval to move to `approved`)
 
@@ -96,8 +96,8 @@ Scan for validation evidence packets that indicate manual validation is required
 # Find all validation packets
 find production/qa/validation-packets/ -name "*.md" -type f 2>/dev/null
 
-# Grep for "Manual Validation Required" or "Unity validation" markers
-grep -r "Manual Validation Required" production/qa/validation-packets/ 2>/dev/null
+# Grep for "Manual Validation Still Required" (standard section header) and Unity markers
+grep -r "## Manual Validation Still Required" production/qa/validation-packets/ 2>/dev/null
 grep -r "Unity Editor" production/qa/validation-packets/ 2>/dev/null
 ```
 
@@ -108,8 +108,8 @@ grep -r "Unity Editor" production/qa/validation-packets/ 2>/dev/null
 - Build validation (Development or Release)
 
 Read `.agents/docs/technical-preferences.md` to detect if this is a YJackCore project:
-- Framework field contains "YJackCore"
-- Workspace Manifest field is not `[None configured]`
+- Framework field contains `YJackCore` (any value starting with `[None configured` is treated as unset)
+- Or `.yjack-workspace.json` exists at the repository root
 
 If YJackCore is active, include a **YJackCore Validation Debt** section in the
 dashboard that lists:
@@ -393,3 +393,12 @@ analyzing YJackCore-related issues.
 - `/gate-check` — Phase gate validation
 - `/project-stage-detect` — Overall project stage and readiness
 - `/milestone-review` — End-of-milestone comprehensive review
+
+---
+
+## Skill Completion
+
+The skill outputs `production/dashboard.md` with status **COMPLETE** when the
+dashboard is generated successfully. If data sources are unavailable or the
+dashboard cannot be produced, output status is **BLOCKED** and the reason is
+noted in the dashboard header.

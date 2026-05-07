@@ -17,16 +17,7 @@ This wrapper delegates to the provider-neutral skill implementation.
 
 ## Execution
 
-Follow all phases from `.agents/skills/owner-dashboard/SKILL.md` exactly:
-
-1. Read autonomy configuration
-2. Scan GitHub issues
-3. Scan handoff files
-4. Check validation debt
-5. Identify autonomous next actions
-6. Identify owner decisions needed
-7. Compile risk register summary
-8. Output dashboard to `production/dashboard.md`
+Follow all phases from `.agents/skills/owner-dashboard/SKILL.md` exactly. The definitive phase list is in that file; do not rely on any partial enumeration here.
 
 ---
 
