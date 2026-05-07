@@ -12,6 +12,14 @@ the user with the subagent's proposals as selectable options. Write the agent's
 full analysis in conversation, then capture the decision with concise labels.
 The user must approve before moving to the next phase.
 
+## Issue-Backed Planning and Execution (required)
+
+Apply the shared protocol in `.agents/docs/team-issue-orchestration.md`.
+
+Team-specific delta for `/team-ui`:
+- Discipline track is **UX**.
+- Keep explicit owner checkpoints via `AskUserQuestion` for creative/high-risk tradeoffs.
+
 ## Team Composition
 - **ux-designer** — User flows, wireframes, accessibility, input handling
 - **ui-programmer** — UI framework, screens, widgets, data binding, implementation
