@@ -51,6 +51,15 @@ Each risk item tracked in a contract, issue, or packet must include:
 `risk_tier` must be deterministic from class + current context. If uncertain, classify
 upward and escalate.
 
+### Tier Derivation Rules
+
+1. Start from the class default tier in §Deterministic Risk Classes.
+2. Escalate to `HIGH` if any stop condition in this document is triggered.
+3. Escalate one tier when manual verification is unresolved (for example Unity
+   scene/prefab validation not confirmed).
+4. Never downgrade `HIGH`-default classes below `HIGH` without explicit owner acceptance
+   recorded in the risk entry.
+
 ---
 
 ## Stop Conditions and Owner Approval Triggers
@@ -110,4 +119,3 @@ Use these labels when tracking risks in GitHub:
 | Unity scene/prefab wiring | Scene/prefab/inspector or manual Unity verification needed | `risk:unity-scene-prefab` unresolved | Stop implementation; require owner/manual Unity validation confirmation |
 | Scope expansion during implementation | Requested output exceeds contract write_set/non_goals | `risk:scope-creep` unresolved | Pause, propose revised contract, wait for owner approval |
 | Release/legal/monetization/player safety check | Compliance/safety requirements not validated | `risk:legal-release`, `risk:monetization`, or `risk:player-safety` unresolved | Escalate with explicit go/no-go request; no release advance until resolved |
-

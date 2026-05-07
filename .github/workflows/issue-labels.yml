@@ -17,6 +17,7 @@ jobs:
           script: |
             const body = context.payload.issue.body || '';
             const currentLabels = context.payload.issue.labels.map(l => l.name);
+            const currentLabelsLower = new Set(currentLabels.map(l => l.toLowerCase()));
 
             // Label prefixes extracted from form dropdown values.
             // Options are written as "prefix:value — description" or "prefix:value".
@@ -44,10 +45,10 @@ jobs:
 
             for (const line of body.split('\n')) {
               const trimmed = line.trim();
-              const inlineMatch = trimmed.match(/(priority|auto|effort|phase|domain|status|risk):[a-zA-Z0-9-]+/i);
+              const inlineMatch = trimmed.match(/(priority|auto|effort|phase|domain|status|risk):[a-z0-9-]+/i);
               if (inlineMatch) {
                 const label = inlineMatch[0].toLowerCase();
-                if (!currentLabels.includes(label)) {
+                if (!currentLabelsLower.has(label)) {
                   labelsToAdd.push(label);
                 }
               }
@@ -55,8 +56,9 @@ jobs:
                 if (trimmed.startsWith(prefix)) {
                   // Extract label: take text up to first ' —' (em dash) or first space
                   const label = trimmed.split(' \u2014')[0].split(' \u2013')[0].trim();
-                  if (label && !currentLabels.includes(label)) {
-                    labelsToAdd.push(label);
+                  const normalized = label.toLowerCase();
+                  if (label && !currentLabelsLower.has(normalized)) {
+                    labelsToAdd.push(normalized);
                   }
                   break;
                 }

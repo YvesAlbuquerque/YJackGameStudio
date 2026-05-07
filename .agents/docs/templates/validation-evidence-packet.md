@@ -51,7 +51,7 @@ If none: `None`.
 
 | Risk ID | Class | Tier | Status | Escalation label | Owner decision required? |
 | --- | --- | --- | --- | --- | --- |
-| [RISK-0001] | [risk:architecture] | LOW / MEDIUM / HIGH | OPEN / MITIGATING / RESOLVED / ACCEPTED | `status:needs-owner` / `status:blocked` / `None` | Yes / No |
+| RISK-0001 | risk:architecture | LOW / MEDIUM / HIGH | OPEN / MITIGATING / RESOLVED / ACCEPTED | `status:needs-owner` / `status:blocked` / `None` | Yes / No |
 
 If none: `None`.
 
