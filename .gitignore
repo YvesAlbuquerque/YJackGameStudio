@@ -17,6 +17,9 @@ GEMINI.local.md
 .gemini/.env
 production/session-logs/
 
+# === CCGS Skill Testing Framework runtime outputs ===
+CCGS Skill Testing Framework/results/
+
 # === Internal Planning (not for public) ===
 
 expansions/

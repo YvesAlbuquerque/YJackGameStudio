@@ -1,0 +1,148 @@
+name: Skill Catalog CI
+
+# Validates skill structural compliance and catalog consistency.
+# Runs on every push/PR that touches skill files, catalog, or the validator scripts.
+#
+# Jobs:
+#   fixture-tests       — Sanity-checks the validator scripts against known-good
+#                         and known-bad skill fixtures before running on real skills.
+#   skill-static-checks — Runs the 7 static structural checks on every SKILL.md.
+#   catalog-consistency — Checks catalog.yaml matches the skills on disk and flags
+#                         count drift vs README.
+#
+# CI NEVER writes to catalog.yaml.  Recording test results back to the catalog
+# is an explicit manual or agent-driven step (/skill-test spec, /skill-improve, etc.).
+
+on:
+  push:
+    paths:
+      - '.agents/skills/**'
+      - '.agents/scripts/validate-skill-static.sh'
+      - '.agents/scripts/check-catalog-consistency.sh'
+      - 'CCGS Skill Testing Framework/catalog.yaml'
+      - 'CCGS Skill Testing Framework/README.md'
+      - 'CCGS Skill Testing Framework/fixtures/**'
+  pull_request:
+    paths:
+      - '.agents/skills/**'
+      - '.agents/scripts/validate-skill-static.sh'
+      - '.agents/scripts/check-catalog-consistency.sh'
+      - 'CCGS Skill Testing Framework/catalog.yaml'
+      - 'CCGS Skill Testing Framework/README.md'
+      - 'CCGS Skill Testing Framework/fixtures/**'
+
+jobs:
+  # ── 1. Fixture sanity checks ──────────────────────────────────────────────
+  fixture-tests:
+    name: Fixture Sanity (validator self-test)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Make scripts executable
+        run: |
+          chmod +x .agents/scripts/validate-skill-static.sh
+          chmod +x .agents/scripts/check-catalog-consistency.sh
+
+      - name: Good fixture must PASS
+        run: |
+          bash .agents/scripts/validate-skill-static.sh \
+            "CCGS Skill Testing Framework/fixtures/good-skill/SKILL.md"
+
+      - name: Bad fixture must FAIL (expected non-zero exit)
+        run: |
+          if bash .agents/scripts/validate-skill-static.sh \
+            "CCGS Skill Testing Framework/fixtures/bad-skill/SKILL.md"; then
+            echo "ERROR: bad fixture passed when it should fail — validator is broken" >&2
+            exit 1
+          fi
+          echo "OK: bad fixture correctly detected as NON-COMPLIANT"
+
+  # ── 2. Static structural checks on all skills ─────────────────────────────
+  skill-static-checks:
+    name: Static Checks (all skills)
+    runs-on: ubuntu-latest
+    needs: fixture-tests
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Make script executable
+        run: chmod +x .agents/scripts/validate-skill-static.sh
+
+      - name: Run 7 static checks on all SKILL.md files
+        id: static
+        run: |
+          set +e
+          bash .agents/scripts/validate-skill-static.sh all > /tmp/static-report.txt 2>&1
+          STATIC_RC=$?
+          set -e
+          cat /tmp/static-report.txt
+          echo "exit_code=${STATIC_RC}" >> "$GITHUB_OUTPUT"
+        # Always capture output even if the check fails
+        continue-on-error: true
+
+      - name: Write job summary
+        if: always()
+        run: |
+          echo "## Skill Static Check Report" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          cat /tmp/static-report.txt >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Fail if any skill is NON-COMPLIANT
+        if: steps.static.outputs.exit_code != '0'
+        run: |
+          echo "One or more skills failed static validation. See the job summary for details." >&2
+          grep "NON-COMPLIANT" /tmp/static-report.txt || true
+          exit 1
+
+  # ── 3. Catalog consistency checks ─────────────────────────────────────────
+  catalog-consistency:
+    name: Catalog Consistency
+    runs-on: ubuntu-latest
+    needs: fixture-tests
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Make script executable
+        run: chmod +x .agents/scripts/check-catalog-consistency.sh
+
+      - name: Check catalog vs filesystem
+        id: consistency
+        run: |
+          set +e
+          bash .agents/scripts/check-catalog-consistency.sh > /tmp/consistency-report.txt 2>&1
+          CONSISTENCY_RC=$?
+          set -e
+          cat /tmp/consistency-report.txt
+          echo "exit_code=${CONSISTENCY_RC}" >> "$GITHUB_OUTPUT"
+        continue-on-error: true
+
+      - name: Write job summary
+        if: always()
+        run: |
+          echo "## Catalog Consistency Report" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          cat /tmp/consistency-report.txt >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "> **Note**: CI never auto-updates \`catalog.yaml\`." >> "$GITHUB_STEP_SUMMARY"
+          echo "> Run \`/skill-test audit\` or the manual update step to record results." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Fail if inconsistencies found
+        if: steps.consistency.outputs.exit_code != '0'
+        run: |
+          echo "Catalog inconsistencies detected. See the job summary for details." >&2
+          grep "\[FAIL\]\|\[WARN\]" /tmp/consistency-report.txt || true
+          exit 1

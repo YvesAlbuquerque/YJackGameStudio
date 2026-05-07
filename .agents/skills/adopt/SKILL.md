@@ -254,6 +254,10 @@ Gap counts:
   LOW:      [N] — optional improvements
 
 Estimated remediation: [X blocking items × ~Y min each = roughly Z hours]
+
+Verdict: READY (no BLOCKING or HIGH gaps)
+  — or —
+Verdict: BLOCKED ([N] BLOCKING gap(s) must be resolved before pipeline skills run reliably)
 ```
 
 Before asking to write, show a **Gap Preview**:
