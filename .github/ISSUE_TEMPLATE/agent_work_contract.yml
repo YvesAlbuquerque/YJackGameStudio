@@ -175,6 +175,8 @@ body:
         - label: "risk:legal-release"
         - label: "risk:monetization"
         - label: "risk:player-safety"
+    validations:
+      required: true
 
   - type: textarea
     id: approval_boundary

@@ -52,7 +52,7 @@
 
 ## Current Status
 
-- **Status**: [Open | Mitigating | Occurred | Closed]
+- **Status**: [OPEN | MITIGATING | RESOLVED | ACCEPTED]
 - **Last Reviewed**: [Date]
 - **Trend**: [Increasing | Stable | Decreasing]
 - **Notes**: [Any updates]

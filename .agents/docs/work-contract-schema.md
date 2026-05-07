@@ -63,7 +63,7 @@ present before a contract advances from `PROPOSED` to `APPROVED`.
 | `risk_classes` | list | ✅ | Risk taxonomy tags for this contract. Valid values map to `risk:*` labels from [risk-register-schema.md](risk-register-schema.md). |
 | `approval_boundary` | string | ✅ | Plain-text statement of what the agent may execute autonomously vs. what requires owner approval, referencing the active autonomy mode. |
 | `escalation_conditions` | list | ✅ | Specific situations that must cause the agent to stop and surface to the owner, regardless of autonomy mode. |
-| `risk_register` | list | — | Structured risk entries (`risk_id`, `description`, `risk_class`, `likelihood`, `impact`, `risk_tier`, `owner`, `mitigation`, `status`, `stop_condition`, `owner_approval_trigger`). Required when `risk_classes` contains any `HIGH`-default class; see [risk-register-schema.md §Deterministic Risk Classes](risk-register-schema.md#deterministic-risk-classes). |
+| `risk_register` | list | — | Structured risk entries (`risk_id`, `description`, `risk_class`, `likelihood`, `impact`, `risk_tier`, `owner`, `mitigation`, `status`, `stop_condition`, `owner_approval_trigger`, `issue_labels`). Required when `risk_classes` contains any `HIGH`-default class; see [risk-register-schema.md §Deterministic Risk Classes](risk-register-schema.md#deterministic-risk-classes). |
 
 ### Validation
 

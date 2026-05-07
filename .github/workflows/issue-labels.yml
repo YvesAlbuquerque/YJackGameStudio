@@ -20,7 +20,11 @@ jobs:
             const currentLabelsLower = new Set(currentLabels.map(l => l.toLowerCase()));
 
             // Keep in sync with `.github/LABELS.md` taxonomy sections.
-            const LABEL_PATTERN = /\b(priority|auto|effort|phase|domain|status|risk):[a-zA-Z0-9-]+\b/g;
+            // Match only structured label lines from issue forms:
+            //   priority:high
+            //   effort:XL — > 5 days
+            //   - [x] risk:architecture
+            const LABEL_LINE_PATTERN = /^(?:- \[[ xX]\]\s*)?((?:priority|auto|effort|phase|domain|status|risk):[a-zA-Z0-9-]+)(?:\s+[—–-].*)?$/;
 
             // Groups that are mutually exclusive — only one label per group should be present.
             const EXCLUSIVE_GROUPS = {
@@ -33,15 +37,18 @@ jobs:
             };
 
             const labelsToAdd = [];
+            const labelsToAddLower = new Set();
 
             for (const line of body.split('\n')) {
               const trimmed = line.trim();
-              const matches = trimmed.match(LABEL_PATTERN) || [];
-              for (const match of matches) {
-                const normalized = match.toLowerCase();
-                if (!currentLabelsLower.has(normalized)) {
-                  labelsToAdd.push(normalized);
-                }
+              const match = trimmed.match(LABEL_LINE_PATTERN);
+              if (!match) continue;
+
+              const candidate = match[1];
+              const normalized = candidate.toLowerCase();
+              if (!currentLabelsLower.has(normalized) && !labelsToAddLower.has(normalized)) {
+                labelsToAdd.push(candidate);
+                labelsToAddLower.add(normalized);
               }
             }
 
@@ -56,7 +63,11 @@ jobs:
               for (const [prefix, pattern] of Object.entries(EXCLUSIVE_GROUPS)) {
                 if (newLabel.startsWith(prefix)) {
                   for (const existing of currentLabels) {
-                    if (pattern.test(existing) && existing !== newLabel && !labelsToRemove.includes(existing)) {
+                    if (
+                      pattern.test(existing) &&
+                      existing.toLowerCase() !== newLabel.toLowerCase() &&
+                      !labelsToRemove.includes(existing)
+                    ) {
                       labelsToRemove.push(existing);
                     }
                   }
