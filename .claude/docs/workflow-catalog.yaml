@@ -319,6 +319,14 @@ phases:
         required: false
         description: "Quick 30-line snapshot of sprint progress without a full report"
 
+      - id: owner-dashboard
+        name: "Owner Dashboard"
+        command: /owner-dashboard
+        required: false
+        artifact:
+          glob: "production/dashboard.md"
+        description: "Generate concise owner status showing active issues, blocked items, validation debt, decisions needed, and risks. Separates facts from recommendations and autonomous next actions from owner decisions. Regenerates after significant state changes."
+
   polish:
     label: "Polish"
     description: "Performance, balance, playtesting, bug fixing"

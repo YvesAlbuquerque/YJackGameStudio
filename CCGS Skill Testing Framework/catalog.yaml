@@ -621,6 +621,17 @@ skills:
     priority: low
     category: sprint
 
+  - name: owner-dashboard
+    spec: CCGS Skill Testing Framework/skills/sprint/owner-dashboard.md
+    last_static: ""
+    last_static_result: ""
+    last_spec: ""
+    last_spec_result: ""
+    last_category: ""
+    last_category_result: ""
+    priority: low
+    category: sprint
+
   - name: retrospective
     spec: CCGS Skill Testing Framework/skills/sprint/retrospective.md
     last_static: ""
