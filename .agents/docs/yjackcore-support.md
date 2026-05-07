@@ -164,10 +164,13 @@ unused layout blocks, before committing.
 When configuring a project for YJackCore:
 
 - Set engine to Unity and language to C#
+- Start from `.agents/docs/templates/yjackcore-unity-bootstrap.md` for AGENTS, ARCHITECTURE, technical preferences, and framework notes templates
 - Record YJackCore in `.agents/docs/technical-preferences.md`
 - Record the package source: UPM git URL, local path, or submodule path
+- Record the package path (or explicit `N/A` for pure UPM) and selected layer routing notes
 - Create `.yjack-workspace.json` at the project root using the layout template
 - Add YJackCore and Odin Inspector to allowed libraries only when actually used
 - Route framework architecture questions through YJackCore guidance plus the
   Unity specialist, in that order
+- Keep host-game repo changes separate from YJackCore package changes unless framework edits are explicitly authorized
 - Keep engine reference docs pinned to the Unity version used by the host project

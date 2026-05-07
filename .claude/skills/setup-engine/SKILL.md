@@ -208,7 +208,9 @@ engine-appropriate defaults. Read the existing template first, then fill in:
 
 ### Framework Integration Section
 
-If YJackCore was selected or detected, populate `## Framework Integration`:
+If YJackCore was selected or detected, apply the bootstrap defaults from
+`.claude/docs/templates/yjackcore-unity-bootstrap.md` and then populate
+`## Framework Integration`:
 
 ```markdown
 ## Framework Integration
@@ -219,6 +221,25 @@ If YJackCore was selected or detected, populate `## Framework Integration`:
 - **Framework Rules**: Reuse YJackCore layer managers, prefabs, ScriptableObject status/event assets, UnityEvents, and inspector-first authoring before custom host-game managers.
 - **Framework Routing Notes**: Unity specialists must read `.claude/docs/yjackcore-support.md`. If changing the framework package itself, switch to the YJackCore repo/package docs and inspect package boundaries before editing.
 ```
+
+Then choose one workspace layout (`upm`, `sibling`, `submodule`, `vendor`,
+`inline`) and create `.yjack-workspace.json` from
+`.claude/docs/templates/yjack-workspace.json`.
+
+Always record:
+- framework version
+- framework source
+- package path (or explicit `N/A` for pure UPM)
+- layer routing notes (GameLayer, LevelLayer/SceneLayer, PlayerLayer/CoreLayer, ViewLayer, Shared)
+
+Low-code defaults to preserve in docs and implementation plans:
+- ScriptableObjects for reusable state/events
+- serialized UnityEvents and inspector-first wiring
+- Visual Scripting-friendly entry points
+- prefab/scene composition before new custom bootstrap managers
+
+When documenting architecture, keep host-game repo changes separate from
+YJackCore package changes.
 
 Also add YJackCore to **Allowed Libraries / Addons** only when the project is
 actually configured to consume it:
