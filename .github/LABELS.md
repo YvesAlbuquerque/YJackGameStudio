@@ -9,6 +9,7 @@ This document defines every label used in this repository. Labels are grouped by
 | **Type** | `type:story`, `type:bug`, `type:epic` |
 | **Priority** | `priority:high`, `priority:medium` |
 | **Autonomy** | `auto:low`, `auto:medium`, `auto:high` *(autonomous work items only)* |
+| **Risk (when present)** | `risk:architecture`, `risk:data-loss`, `risk:yjackcore-boundary` |
 
 Recommended groups: **Domain**, **Effort**. Optional groups: **Phase**, **Status**, **YJackCore**.
 
@@ -139,6 +140,7 @@ Maps to the approval boundary model from [AUTO-001](../docs/AUTONOMOUS_GAME_STUD
 | `status:approved` | `#0075CA` (blue) | Owner has approved; ready for agent pickup |
 | `status:in-progress` | `#FEF2C0` (yellow) | Agent is actively working on this |
 | `status:blocked` | `#D93F0B` (orange-red) | Execution is blocked; needs owner or dependency resolution |
+| `status:needs-owner` | `#FBCA04` (amber) | Agent is waiting for explicit owner decision before continuing |
 | `status:in-review` | `#BFD4F2` (light blue) | Work complete; awaiting validation or owner review |
 | `status:validated` | `#238636` (green) | Validation gate passed |
 | `status:closed` | `#EDEDED` (grey) | Work is complete and merged |
@@ -157,6 +159,21 @@ Applies when an issue touches the YJackCore framework integration.
 | `yjackcore:package` | `#7057FF` (violet) | Issue touches a YJackCore package boundary |
 | `yjackcore:host-game` | `#7057FF` (violet) | Issue involves host-game / YJackCore separation concerns |
 | `yjackcore:workspace` | `#7057FF` (violet) | Issue involves `.yjack-workspace.json` or workspace routing |
+
+---
+
+## Risk Labels *(apply when escalation/risk tracking is required)*
+
+| Label | Colour | Meaning |
+|---|---|---|
+| `risk:architecture` | `#BFDADC` (light teal) | Architecture decision risk requiring explicit impact review |
+| `risk:data-loss` | `#B60205` (dark red) | Potential irreversible data/file/history loss risk |
+| `risk:yjackcore-boundary` | `#5319E7` (violet) | YJackCore package boundary, asmdef, or compile-symbol risk |
+| `risk:unity-scene-prefab` | `#C2E0C6` (light green) | Unity scene/prefab/inspector wiring risk requiring manual validation |
+| `risk:scope-creep` | `#FEF2C0` (light yellow) | Scope growth beyond approved write_set/non_goals |
+| `risk:legal-release` | `#D93F0B` (orange-red) | Legal, certification, or release-compliance risk |
+| `risk:monetization` | `#F9D0C4` (salmon) | Store/payment/economy monetization risk |
+| `risk:player-safety` | `#D73A4A` (red) | Player safety, harm-prevention, or moderation risk |
 
 ---
 

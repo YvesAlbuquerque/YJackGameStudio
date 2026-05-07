@@ -45,6 +45,18 @@ If none: `None`.
 
 ---
 
+## Risk Register Review
+
+> Replace the example row below with real risk entries for this validation scope.
+
+| Risk ID | Class | Tier | Status | Escalation label | Owner decision required? |
+| --- | --- | --- | --- | --- | --- |
+| RISK-0001 | risk:architecture | LOW / MEDIUM / HIGH | OPEN / MITIGATING / RESOLVED / ACCEPTED | `status:needs-owner` / `status:blocked` / `None` | Yes / No |
+
+If none: `None`.
+
+---
+
 ## Verdict and Escalation
 
 - **Overall verdict**: PASS / CONCERNS / FAIL / BLOCKED
