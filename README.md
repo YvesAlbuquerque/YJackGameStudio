@@ -188,6 +188,25 @@ Tier 3 - Specialists
 
 Engine specialist sets are included for Godot, Unity, and Unreal.
 
+### YJackCore Framework
+
+For Unity projects, an optional framework-aware agent path exists for
+[YJackCore](https://github.com/YvesAlbuquerque/YJackCore), a low-code,
+inspector-first Unity package for gameplay systems.
+
+**YJackCore is entirely optional.** The generic Unity specialist path works for
+all Unity projects. When YJackCore is detected (via `Packages/manifest.json`,
+`.yjack-workspace.json`, or technical preferences), agents route through
+YJackCore-specific guidance for:
+
+- Framework layer boundaries (GameLayer, LevelLayer, PlayerLayer/CoreLayer, ViewLayer, Shared)
+- Package integrity and assembly definition structure
+- Low-code authoring model preservation
+- ScriptableObject patterns and UnityEvent surfaces
+
+See `.agents/docs/yjackcore-support.md` and
+`.agents/docs/yjackcore-authority.md` for the full framework-aware routing model.
+
 ## Getting Started
 
 1. Install the AI coding tool you want to use.
@@ -259,8 +278,10 @@ Do not claim runtime, build, hook, or test validation unless it actually happene
 
 ## Owner-Directed Autonomy
 
-The studio operates in one of three modes that the owner sets in
-`production/autonomy-config.md`:
+The owner sets the level of agent autonomy in `production/autonomy-config.md`.
+Under all modes, the owner remains the creative director and final arbiter.
+
+The studio operates in one of three modes:
 
 | Mode | Agent autonomy |
 |------|---------------|
@@ -278,6 +299,9 @@ The studio operates in one of three modes that the owner sets in
 - Modifying YJackCore package files
 
 Full specification: `.agents/docs/autonomy-modes.md`
+
+For the roadmap toward increased autonomous capabilities while maintaining
+owner direction and control, see: `docs/AUTONOMOUS_GAME_STUDIO_ROADMAP.md`
 
 ## Design Philosophy
 
