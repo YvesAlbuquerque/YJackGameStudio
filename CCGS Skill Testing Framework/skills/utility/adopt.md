@@ -8,6 +8,10 @@ skill pipeline. It classifies every gap by severity (BLOCKING / HIGH / MEDIUM / 
 composes a numbered, ordered migration plan, and writes it to `docs/adoption-plan-[date].md`
 after explicit user approval via `AskUserQuestion`.
 
+When a YJackCore-backed Unity project is detected, the skill additionally audits workspace
+manifest completeness, layer mapping in the systems index, framework integration docs, package
+boundary integrity, and flags items that require manual Unity validation.
+
 This skill is distinct from `/project-stage-detect` (which checks what exists).
 `/adopt` checks whether what exists will actually work with the template's skills.
 
@@ -24,6 +28,9 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - [ ] Contains severity tier keywords: BLOCKING, HIGH, MEDIUM, LOW
 - [ ] Contains "May I write" or `AskUserQuestion` language before writing the adoption plan
 - [ ] Has a next-step handoff at the end (e.g., offering to fix the highest-priority gap immediately)
+- [ ] Contains YJackCore detection logic referencing `.yjack-workspace.json`, `Packages/manifest.json`, and `technical-preferences.md`
+- [ ] Phase 2g YJackCore Compliance Audit section is present with package boundary guard
+- [ ] Adoption plan template includes YJackCore Integration section with Group A/B/C structure
 
 ---
 
@@ -200,6 +207,189 @@ None. `/adopt` is a brownfield audit utility. No director gates apply.
 - [ ] Phase 7 always offers a single specific next action (not a generic list)
 - [ ] Never regenerates existing artifacts — only fills gaps in what exists
 - [ ] Does not invoke director gates at any point
+- [ ] When YJackCore is detected, adoption plan summary includes YJackCore detection method and protected package paths
+- [ ] When YJackCore is detected, adoption plan includes Step 4 YJackCore Integration with Group A/B/C structure
+- [ ] Manual Unity validation items are always placed in Group C and flagged with ⚠️ note
+- [ ] Package boundary violations (framework changes) are called out as separate work items, not included in host-game plan
+
+---
+
+## Test Cases — YJackCore
+
+### Case 6: YJackCore Detection — `.yjack-workspace.json` present
+
+**Fixture:**
+- Standard brownfield project with GDDs and ADRs
+- `.yjack-workspace.json` present at project root with `layout: submodule`, `packageName: com.ygamedev.yjack`,
+  `version: 1.6.0`, `unityVersion: 6000.0`
+- `design/gdd/systems-index.md` exists but has no `Layer` column
+- `.agents/docs/technical-preferences.md` has `## Framework Integration` with `Framework: YJackCore`
+
+**Input:** `/adopt`
+
+**Expected behavior:**
+1. Phase 1 YJackCore detection triggers via `.yjack-workspace.json`
+2. Skill emits: "YJackCore detected via .yjack-workspace.json. Package path(s) protected: [paths]."
+3. Phase 2g audit runs:
+   - 2g-1: `.yjack-workspace.json` found with required fields — PASS
+   - 2g-2: `## Framework Integration` found with `Framework: YJackCore` — PASS
+   - 2g-4: `Layer` column missing from systems-index — **BLOCKING** gap
+4. Adoption Audit Summary includes:
+   - "YJackCore: detected via .yjack-workspace.json"
+   - YJackCore BLOCKING: 1
+5. Migration plan includes Step 4 YJackCore Integration:
+   - Group B: "Add Layer column to systems-index.md" as a separate actionable item
+
+**Assertions:**
+- [ ] YJackCore detected line appears in skill output before the summary
+- [ ] BLOCKING gap from missing Layer column is listed in Gap Preview as a named item
+- [ ] Adoption plan includes "Step 4: YJackCore Integration" section
+- [ ] Group B item for Layer column includes time estimate and checkbox
+- [ ] Package paths are listed as protected in the adoption plan header
+
+---
+
+### Case 7: YJackCore Detection — `Packages/manifest.json` only
+
+**Fixture:**
+- `.yjack-workspace.json` absent
+- `Packages/manifest.json` exists and contains `"com.ygamedev.yjack": "1.6.0"`
+- `.agents/docs/technical-preferences.md` has NO `## Framework Integration` section
+- `design/gdd/systems-index.md` has a `Layer` column with all rows populated
+
+**Input:** `/adopt`
+
+**Expected behavior:**
+1. Phase 1 YJackCore detection triggers via `Packages/manifest.json`
+2. Skill emits: "YJackCore detected via Packages/manifest.json."
+3. Phase 2g audit:
+   - 2g-1: `.yjack-workspace.json` missing — **HIGH** gap
+   - 2g-2: `## Framework Integration` absent — **HIGH** gap
+   - 2g-4: `Layer` column present with valid values — PASS
+4. Summary shows:
+   - "YJackCore: detected via Packages/manifest.json"
+   - YJackCore HIGH: 2
+5. Adoption plan Step 4 Group A includes:
+   - A1: Create `.yjack-workspace.json`
+   - A2: Add `## Framework Integration` to `technical-preferences.md`
+
+**Assertions:**
+- [ ] YJackCore detected via Packages/manifest.json is reported
+- [ ] Missing `.yjack-workspace.json` classified as HIGH (not BLOCKING)
+- [ ] Missing `## Framework Integration` classified as HIGH
+- [ ] Group A lists both items as independently actionable (parallelizable label present)
+- [ ] No YJackCore BLOCKING gaps — systems-index Layer column is compliant
+
+---
+
+### Case 8: YJackCore Detection — technical-preferences only (no workspace file or manifest)
+
+**Fixture:**
+- `.yjack-workspace.json` absent
+- `Packages/manifest.json` absent
+- `.agents/docs/technical-preferences.md` contains `- **Framework**: YJackCore`
+- `design/gdd/systems-index.md` has `Layer` column; 3 of 5 rows are `[TBD]`
+- 2 GDDs have no YJackCore layer declaration
+- `docs/framework/yjackcore-integration.md` missing
+
+**Input:** `/adopt`
+
+**Expected behavior:**
+1. Phase 1 detection triggers via `technical-preferences.md`
+2. Phase 2g audit:
+   - 2g-1: `.yjack-workspace.json` missing — HIGH
+   - 2g-3: `docs/framework/yjackcore-integration.md` missing — MEDIUM
+   - 2g-4: Layer column present, 3 rows `[TBD]` — MEDIUM (each row as a gap)
+   - 2g-4: 2 GDDs missing layer declaration — MEDIUM each
+3. No BLOCKING YJackCore gaps
+4. Adoption plan includes all MEDIUM items in Group B
+
+**Assertions:**
+- [ ] YJackCore detected via technical-preferences is reported
+- [ ] Per-row `[TBD]` items listed as distinct MEDIUM gaps
+- [ ] `docs/framework/yjackcore-integration.md` gap includes creation command pointing to bootstrap template
+- [ ] Group B lists items as parallelizable with Group A
+
+---
+
+### Case 9: YJackCore Package Boundary Violation Detected
+
+**Fixture:**
+- `.yjack-workspace.json` present (valid)
+- `src/systems/GameManager.cs` contains the string `Packages/YJackCore/Runtime/Core`
+  (direct internal path reference)
+- `design/gdd/systems-index.md` has `Layer` column with all rows populated
+
+**Input:** `/adopt`
+
+**Expected behavior:**
+1. Phase 2g-5 package boundary grep finds the internal path reference in `src/`
+2. Gap classified as **HIGH** — host code coupled to YJackCore internals
+3. Gap preview shows: "`src/systems/GameManager.cs`: direct YJackCore internal path reference (boundary violation)"
+4. Migration plan item explains the violation and recommends replacing with the public API surface
+5. No plan item proposes modifying any file under `Packages/YJackCore/**`
+
+**Assertions:**
+- [ ] Package boundary violation is detected and classified as HIGH
+- [ ] The offending file and path are named explicitly in the Gap Preview
+- [ ] Migration plan item recommends using public API surface — not patching YJackCore internals
+- [ ] No suggested fix modifies any file under `Packages/YJackCore/**` or `Packages/com.ygamedev.yjack/**`
+
+---
+
+### Case 10: YJackCore Manual Unity Validation Items Flagged
+
+**Fixture:**
+- `.yjack-workspace.json` present with `layout: submodule`
+- `src/` contains `.asmdef` files referencing YJackCore assemblies
+- GDDs reference prefab and ScriptableObject assets
+- A story references YJackCore ViewLayer components
+
+**Input:** `/adopt`
+
+**Expected behavior:**
+1. Phase 2g-6 flags:
+   - Domain reload check (`.asmdef` files detected)
+   - Play Mode scene wiring (prefab/ScriptableObject references in GDDs)
+   - UI rendering + input routing (ViewLayer story reference)
+   - Package Manager resolution (submodule layout)
+2. Adoption plan Step 4 Group C includes one entry per flagged item
+3. Each Group C entry is marked: "⚠️ Requires manual Unity validation — owner must
+   confirm in Unity Editor"
+4. The plan references `.agents/docs/templates/yjackcore-unity-manual-validation.md`
+
+**Assertions:**
+- [ ] Manual validation items appear exclusively in Group C (not mixed into Groups A or B)
+- [ ] ⚠️ marker is present on each Group C entry
+- [ ] Reference to `yjackcore-unity-manual-validation.md` template is included
+- [ ] Adoption Audit Summary shows "Manual Unity validation required: [N items]"
+- [ ] These items do not auto-mark as BLOCKING (they are informational flags, not format gaps)
+
+---
+
+### Case 11: YJackCore Not Detected — Standard Audit Runs Unchanged
+
+**Fixture:**
+- Standard brownfield project (GDDs, ADRs, stories)
+- No `.yjack-workspace.json`
+- No YJackCore references in `Packages/manifest.json` (or manifest absent)
+- `technical-preferences.md` has no `## Framework Integration` section
+- `Packages/YJackCore/` does not exist
+
+**Input:** `/adopt`
+
+**Expected behavior:**
+1. Phase 1 YJackCore detection finds no signals — `yjackcore_detected: false`
+2. Phase 2g is skipped entirely
+3. No YJackCore line in the Adoption Audit Summary
+4. No "Step 4: YJackCore Integration" section in the adoption plan
+5. Standard audit proceeds and completes with standard gap classification
+
+**Assertions:**
+- [ ] No YJackCore detection message appears in output
+- [ ] Phase 2g is not executed (no 2g gap items appear)
+- [ ] Adoption plan has no YJackCore section
+- [ ] Standard audit behavior is unchanged compared to pre-YJackCore version
 
 ---
 
@@ -212,3 +402,6 @@ None. `/adopt` is a brownfield audit utility. No director gates apply.
   that triggers an immediate fix offer before writing the plan; not separately tested.
 - The review-mode.txt prompt (Phase 6b) runs after plan writing if `production/review-mode.txt`
   does not exist; not separately tested here.
+- YJackCore detection via git submodule (`.gitmodules` containing `YJackCore`) follows
+  the same pattern as Case 7 (detection method recorded, Phase 2g runs); not separately
+  fixture-tested here.

@@ -52,6 +52,26 @@ Then read silently before presenting anything else.
 - `docs/engine-reference/` — engine reference docs present?
 - Glob `docs/adoption-plan-*.md` — note the filename of the most recent prior plan if any exist
 
+### YJackCore Detection
+
+After the existence check, detect whether the project is YJackCore-backed. Treat the project
+as YJackCore-backed (`yjackcore_detected: true`) if **any** of the following are true:
+
+- `.yjack-workspace.json` is present at the project root
+- `Packages/manifest.json` contains `com.ygamedev.yjack` or `YJackCore`
+- `Packages/YJackCore/package.json` exists
+- `.gitmodules` contains a reference to `YJackCore` (git submodule detection)
+- `.agents/docs/technical-preferences.md` contains `- **Framework**: YJackCore`
+
+Record the detection method and the detected package path(s) for use in later phases.
+
+If `yjackcore_detected` is true:
+- Read `.agents/docs/yjackcore-authority.md` and `.agents/docs/yjackcore-support.md`.
+- Record all YJackCore package paths as **protected** (e.g. `Packages/YJackCore/`,
+  `Packages/com.ygamedev.yjack/`). All audit phases must scan these paths read-only
+  and must never propose writes to them without explicit owner authorization.
+- Emit: "YJackCore detected via [method]. Package path(s) protected: [paths]."
+
 ### Infer phase (if no stage.txt)
 Use the same heuristic as `/project-stage-detect`:
 - 10+ source files in `src/` → Production
@@ -165,6 +185,82 @@ Read `.agents/docs/technical-preferences.md`. Check each field for `[TO BE CONFI
 - Performance budgets → MEDIUM
 - Forbidden Patterns, Allowed Libraries → LOW (starts empty by design)
 
+### 2g: YJackCore Compliance Audit
+
+*Skip this section if `yjackcore_detected` is `false`.*
+
+Read `.agents/docs/yjackcore-authority.md` and `.agents/docs/yjackcore-support.md` before
+performing this audit. This section audits host-game compliance with YJackCore conventions
+and never proposes modifications to files under `Packages/YJackCore/**` or
+`Packages/com.ygamedev.yjack/**`.
+
+#### 2g-1: Workspace Manifest
+
+Check for `.yjack-workspace.json` at the project root:
+- Missing: **HIGH** gap — agents cannot reliably resolve package paths across layouts
+- Present: verify required fields (`layout`, `packageName`, `version`, `unityVersion`) are
+  populated and not placeholder text. Each missing required field → **MEDIUM** gap.
+
+#### 2g-2: Framework Integration in Technical Preferences
+
+Check `.agents/docs/technical-preferences.md` for a `## Framework Integration` section:
+
+| Field | Impact if missing |
+|---|---|
+| `Framework:` set to `YJackCore` | HIGH — YJackCore routing skipped by agent skills |
+| `Framework Source:` | MEDIUM — package path resolution unreliable |
+| `Framework Version:` | MEDIUM — version drift risk; ADR engine checks may mismatch |
+| `Framework Docs:` and `Framework Rules:` | LOW — reference links only |
+| `Workspace Manifest:` pointing to `.yjack-workspace.json` | LOW — can be inferred |
+
+#### 2g-3: Framework Integration Notes
+
+Check for `docs/framework/yjackcore-integration.md`:
+- Missing entirely: **MEDIUM** — no layer ownership record; GDD authors lack routing guidance
+- Present but missing `## Layer Ownership` section: **MEDIUM**
+- Present but missing `## Ownership Boundary` section: **LOW**
+
+#### 2g-4: Systems Index Layer Mapping
+
+If `design/gdd/systems-index.md` exists, check whether the table contains a `Layer` column
+with YJackCore layer values:
+- `Layer` column missing entirely: **BLOCKING** — stories cannot be layer-routed; all
+  YJackCore-aware skills will assign incorrect layer ownership, potentially placing
+  host-game code in framework-owned layers (e.g. GameLayer) or missing Shared placement
+- `Layer` column present but all rows are empty or `[TBD]`: **HIGH** — routing data absent
+- `Layer` column present with at least some valid values: PASS (record which rows are still
+  `[TBD]` as **MEDIUM** gaps)
+
+Valid layer values: `GameLayer`, `LevelLayer`, `SceneLayer`, `PlayerLayer`, `CoreLayer`,
+`ViewLayer`, `Shared`, `host-only`, `framework-change`.
+
+For each GDD file, grep for any of the valid layer names or the word `layer`:
+- No layer declaration found: **MEDIUM** — story generation will not include layer context
+
+#### 2g-5: Package Boundary Integrity
+
+Grep `src/` for hard-coded internal YJackCore package paths
+(`Packages/YJackCore/Runtime`, `Packages/com.ygamedev.yjack/Runtime`):
+- Any match: **HIGH** — host code is coupled to YJackCore internals, creating fragile boundary
+
+This is a read-only audit. Do not propose modifications to any file under
+`Packages/YJackCore/**` or `Packages/com.ygamedev.yjack/**`.
+
+#### 2g-6: Manual Unity Validation Items
+
+Flag the following conditions as requiring **manual Unity validation** (owner must confirm
+in the Unity Editor — agents cannot autonomously verify these):
+
+| Condition detected | Validation required |
+|---|---|
+| YJackCore detected and `src/` has `.asmdef` files | Domain reload + compile symbol check |
+| GDDs reference prefabs or ScriptableObject assets | Play Mode scene wiring |
+| Stories reference YJackCore ViewLayer components | UI rendering + input routing |
+| `.yjack-workspace.json` `layout` is `submodule` | Package Manager resolution check |
+| Any change to files adjacent to `Packages/YJackCore/` | `.meta` GUID integrity check |
+
+Record every flagged manual validation item — they will appear in the adoption plan output.
+
 ---
 
 ## Phase 3: Classify and Prioritise Gaps
@@ -175,17 +271,38 @@ Organise every gap found across all audits into four severity tiers:
 Examples: ADR missing Status field, systems-index parenthetical status values,
 engine not configured when ADRs exist.
 
+**If `yjackcore_detected` is true**, add to BLOCKING:
+- `design/gdd/systems-index.md` exists but `Layer` column is entirely missing
+
 **HIGH** — Will cause stories to be generated with missing safety checks, or
 infrastructure bootstrapping will fail.
 Examples: ADRs missing Engine Compatibility, GDDs missing Acceptance Criteria
 (stories can't be generated from them), tr-registry.yaml missing.
 
+**If `yjackcore_detected` is true**, add to HIGH:
+- `.yjack-workspace.json` missing (package path resolution unreliable)
+- `## Framework Integration` section absent from `technical-preferences.md`
+- `Layer` column present in systems-index but all rows have empty or `[TBD]` values
+- `src/` code directly references YJackCore internal paths (boundary violation)
+
 **MEDIUM** — Degrades quality and pipeline tracking but does not break functionality.
 Examples: GDDs missing Tuning Knobs or Formulas sections, stories missing TR-IDs,
 sprint-status.yaml missing.
 
+**If `yjackcore_detected` is true**, add to MEDIUM:
+- `.yjack-workspace.json` present but missing required fields
+- `Framework Source:` or `Framework Version:` missing from technical preferences
+- `docs/framework/yjackcore-integration.md` missing or missing `## Layer Ownership`
+- Individual systems-index rows with `[TBD]` layer values
+- GDDs with no YJackCore layer declaration
+
 **LOW** — Retroactive improvements that are nice-to-have but not urgent.
 Examples: Stories missing Manifest Version stamps, GDDs missing Open Questions section.
+
+**If `yjackcore_detected` is true**, add to LOW:
+- `Framework Docs:`, `Framework Rules:`, or `Workspace Manifest:` fields missing from
+  technical preferences
+- `## Ownership Boundary` section missing from `docs/framework/yjackcore-integration.md`
 
 Count totals per tier. If zero BLOCKING and zero HIGH gaps: report that the project
 is template-compatible and only advisory improvements remain.
@@ -220,6 +337,36 @@ List each ADR as a separate checkable item.
 For each affected GDD, list which sections are missing and the fix:
 `/design-system retrofit design/gdd/[filename].md`
 
+**Special case — YJackCore migration (only if `yjackcore_detected` is true):**
+
+Insert a **YJackCore Integration** section in the plan after infrastructure bootstrap steps.
+Every YJackCore gap item must be a separate, independently-actionable entry. Identify and
+label items that can be executed in parallel:
+
+- **Group A — Workspace & Config** *(parallelizable with Group B)*:
+  - Create or repair `.yjack-workspace.json` from
+    `.agents/docs/templates/yjack-workspace.json`
+  - Add or repair `## Framework Integration` section in
+    `.agents/docs/technical-preferences.md`
+
+- **Group B — Design Docs** *(parallelizable with Group A)*:
+  - Add `Layer` column to `design/gdd/systems-index.md` with valid YJackCore layer values
+  - Add YJackCore layer ownership declaration to each GDD lacking one
+  - Create `docs/framework/yjackcore-integration.md` from
+    `.agents/docs/templates/yjackcore-unity-bootstrap.md` section 4
+
+- **Group C — Manual Unity Validation** *(always sequential; owner-only)*:
+  - For each manual validation item flagged in Phase 2g-6, list a separate entry with:
+    > ⚠️ **Requires manual Unity validation** — owner must confirm in Unity Editor
+    > before marking Done. Use the checklist at
+    > `.agents/docs/templates/yjackcore-unity-manual-validation.md`.
+
+For any gap that can only be resolved by modifying framework package files, **do not include
+it in the host-game adoption plan**. Instead, call it out explicitly:
+> ⚠️ **Framework package change required** — create a separate work item with explicit
+> owner authorization and follow the YJackCore repository's own `AGENTS.md` for package
+> boundary rules.
+
 **Infrastructure bootstrap ordering** — always present in this sequence:
 1. Fix ADR formats first (registry depends on reading ADR Status fields)
 2. Run `/architecture-review` → bootstraps `tr-registry.yaml`
@@ -243,6 +390,7 @@ Present a compact summary before writing:
 ## Adoption Audit Summary
 Phase detected: [phase]
 Engine: [configured / NOT CONFIGURED]
+YJackCore: [detected via <method> / not detected]
 GDDs audited: [N] ([X] fully compliant, [Y] with gaps)
 ADRs audited: [N] ([X] fully compliant, [Y] with gaps)
 Stories audited: [N]
@@ -252,6 +400,12 @@ Gap counts:
   HIGH:     [N] — unsafe to run /create-stories or /story-readiness
   MEDIUM:   [N] — quality degradation
   LOW:      [N] — optional improvements
+
+[If yjackcore_detected is true:]
+YJackCore gaps:
+  BLOCKING: [N]  HIGH: [N]  MEDIUM: [N]  LOW: [N]
+  Manual Unity validation required: [N items]
+  Protected package paths: [list]
 
 Estimated remediation: [X blocking items × ~Y min each = roughly Z hours]
 
@@ -293,6 +447,7 @@ If approved, write `docs/adoption-plan-[date].md` with this structure:
 > **Generated**: [date]
 > **Project phase**: [phase]
 > **Engine**: [name + version, or "Not configured"]
+> **YJackCore**: [detected via <method> + version, or "Not detected"]
 > **Template version**: v1.0+
 
 Work through these steps in order. Check off each item as you complete it.
@@ -337,13 +492,79 @@ Run `/gate-check [current-phase]`
 
 ---
 
-## Step 4: Medium-Priority Gaps
+## Step 4: YJackCore Integration
+
+*(Include this section only if YJackCore was detected)*
+
+> **Package paths protected** (never modify from host-game tasks):
+> [list protected paths, e.g. `Packages/YJackCore/**`]
+>
+> Any gap resolved only by editing framework package files must be tracked as a
+> separate work item with explicit owner authorization.
+
+### Group A — Workspace & Config *(run in parallel with Group B)*
+
+[One entry per workspace/config gap. Example:]
+
+#### A1. Create `.yjack-workspace.json`
+**Problem**: Package path layout is unrecorded; agents fall back to guesswork.
+**Fix**: Copy `.agents/docs/templates/yjack-workspace.json`, choose the matching layout
+block, and fill in `version`, `unityVersion`, and `packagePath`.
+**Time**: 15 min
+- [ ] `.yjack-workspace.json` created and populated
+
+#### A2. Add Framework Integration to technical preferences
+**Problem**: `## Framework Integration` section absent; YJackCore routing is skipped.
+**Fix**: Add the section from `.agents/docs/templates/yjackcore-unity-bootstrap.md`
+section 3 to `.agents/docs/technical-preferences.md`.
+**Time**: 10 min
+- [ ] `## Framework Integration` section populated
+
+### Group B — Design Docs *(run in parallel with Group A)*
+
+[One entry per design-doc gap. Example:]
+
+#### B1. Add Layer column to systems-index.md
+**Problem**: `design/gdd/systems-index.md` has no `Layer` column; story routing is broken.
+**Fix**: Add a `Layer` column to the systems table. Use valid values: GameLayer,
+LevelLayer, SceneLayer, PlayerLayer, CoreLayer, ViewLayer, Shared, host-only.
+**Time**: 30 min (one row per system)
+- [ ] `Layer` column added with valid values for all MVP systems
+
+#### B2. Add YJackCore layer declarations to GDDs
+**Problem**: GDDs do not declare their owning YJackCore layer; stories lack routing context.
+**Fix**: Add a `**YJackCore Layer**:` field in each GDD Overview section.
+**Time**: 10 min per GDD
+[One checkbox per affected GDD]
+
+#### B3. Create framework integration notes
+**Problem**: `docs/framework/yjackcore-integration.md` is missing.
+**Fix**: Copy section 4 from `.agents/docs/templates/yjackcore-unity-bootstrap.md` to
+`docs/framework/yjackcore-integration.md` and fill in the workspace details.
+**Time**: 20 min
+- [ ] `docs/framework/yjackcore-integration.md` created
+
+### Group C — Manual Unity Validation *(owner-only; sequential after Groups A & B)*
+
+> ⚠️ These items require the Unity Editor. Agents cannot confirm them.
+> Use the checklist at `.agents/docs/templates/yjackcore-unity-manual-validation.md`.
+
+[One entry per flagged manual validation item, e.g.:]
+
+#### C1. Confirm domain reload after asmdef changes
+**Validation type**: Domain reload (script compilation)
+**Why manual**: Requires Unity Editor with project loaded
+- [ ] Owner confirms domain reload succeeded with no compile errors
+
+---
+
+## Step 5: Medium-Priority Gaps
 
 [One sub-section per medium gap]
 
 ---
 
-## Step 5: Optional Improvements
+## Step 6: Optional Improvements
 
 [One sub-section per low gap]
 
