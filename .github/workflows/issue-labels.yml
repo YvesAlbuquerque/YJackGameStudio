@@ -45,7 +45,7 @@ jobs:
 
             for (const line of body.split('\n')) {
               const trimmed = line.trim();
-              const inlineMatch = trimmed.match(/(priority|auto|effort|phase|domain|status|risk):[a-z0-9-]+/i);
+              const inlineMatch = trimmed.match(/(priority|auto|effort|phase|domain|status|risk):[a-zA-Z0-9-]+/);
               if (inlineMatch) {
                 const label = inlineMatch[0].toLowerCase();
                 if (!currentLabelsLower.has(label)) {
