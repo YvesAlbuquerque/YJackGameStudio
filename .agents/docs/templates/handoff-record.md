@@ -20,8 +20,9 @@ status: "{proposed | approved | in_progress | blocked | validated | closed}"
 ## Last Validated State
 
 ### Completed
-- [x] {First completed item}
-- [x] {Second completed item}
+- [ ] {First completed item}
+- [ ] {Second completed item}
+<!-- Mark completed items as [x] when you update the handoff -->
 
 ### Remaining
 - [ ] {First remaining item}

@@ -285,6 +285,10 @@ local audit; not synchronized across machines.
     mkdir -p production/session-logs/handoff-archive
     mv production/session-state/handoff-{issue}.md \
        production/session-logs/handoff-archive/handoff-{issue}.md
+
+    # Commit tracked-state cleanup only (archive path is gitignored)
+    git add -u production/session-state/handoff-{issue}.md
+    git commit -m "Close issue #{issue}: remove active handoff from tracked session-state"
     ```
 3. Extract durable lessons from handoff:
    - Conventions discovered
