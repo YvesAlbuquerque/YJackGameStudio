@@ -247,8 +247,7 @@ Agents use `store_memory` tool to commit durable lessons:
 ```yaml
 subject: "YJackCore layer routing"
 fact: "Combat systems always map to GameLayer or LevelLayer; never directly to CoreLayer"
-citations:
-  - ".agents/docs/yjackcore-support.md:45-50"
+citations: [".agents/docs/yjackcore-support.md:45-50"]
 reason: "Prevents host-game logic from coupling to YJackCore package internals"
 ```
 

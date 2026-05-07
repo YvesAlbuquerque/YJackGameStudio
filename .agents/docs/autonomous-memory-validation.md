@@ -230,8 +230,7 @@ and crash recovery without relying on chat history.
    ```yaml
    subject: "YJackCore layer routing"
    fact: "Combat systems always map to GameLayer or LevelLayer; never directly to CoreLayer"
-    citations:
-      - ".agents/docs/yjackcore-support.md:45-50"
+    citations: [".agents/docs/yjackcore-support.md:45-50"]
     reason: "Prevents host-game logic from coupling to YJackCore package internals. Future agents working on combat features need this routing rule to avoid architectural violations."
    ```
 3. GitHub memory API stores the fact
