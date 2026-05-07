@@ -28,7 +28,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - [ ] Contains severity tier keywords: BLOCKING, HIGH, MEDIUM, LOW
 - [ ] Contains "May I write" or `AskUserQuestion` language before writing the adoption plan
 - [ ] Has a next-step handoff at the end (e.g., offering to fix the highest-priority gap immediately)
-- [ ] Contains YJackCore detection logic referencing `.yjack-workspace.json`, `Packages/manifest.json`, and `technical-preferences.md`
+- [ ] Contains YJackCore detection logic referencing `.yjack-workspace.json`, `Packages/manifest.json`, and `.agents/docs/technical-preferences.md`
 - [ ] Phase 2g YJackCore Compliance Audit section is present with package boundary guard
 - [ ] Adoption plan template includes YJackCore Integration section with Group A/B/C structure
 

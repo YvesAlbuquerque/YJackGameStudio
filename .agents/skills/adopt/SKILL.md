@@ -231,8 +231,13 @@ with YJackCore layer values:
 - `Layer` column present with at least some valid values: PASS (record which rows are still
   `[TBD]` as **MEDIUM** gaps)
 
-Valid layer values: `GameLayer`, `LevelLayer`, `SceneLayer`, `PlayerLayer`, `CoreLayer`,
-`ViewLayer`, `Shared`, `host-only`, `framework-change`.
+Valid layer values for host-game systems: `GameLayer`, `LevelLayer`, `SceneLayer`,
+`PlayerLayer`, `CoreLayer`, `ViewLayer`, `Shared`, `host-only`.
+
+The value `framework-change` is reserved for work items that require modifying the
+YJackCore package itself. Do not assign it to rows in `design/gdd/systems-index.md`;
+instead, record such items as separate, owner-authorized framework work items (see
+Phase 4 special case).
 
 For each GDD file, grep for any of the valid layer names or the word `layer`:
 - No layer declaration found: **MEDIUM** — story generation will not include layer context
@@ -257,7 +262,6 @@ in the Unity Editor — agents cannot autonomously verify these):
 | GDDs reference prefabs or ScriptableObject assets | Play Mode scene wiring |
 | Stories reference YJackCore ViewLayer components | UI rendering + input routing |
 | `.yjack-workspace.json` `layout` is `submodule` | Package Manager resolution check |
-| Any change to files adjacent to `Packages/YJackCore/` | `.meta` GUID integrity check |
 
 Record every flagged manual validation item — they will appear in the adoption plan output.
 
@@ -526,8 +530,10 @@ section 3 to `.agents/docs/technical-preferences.md`.
 
 #### B1. Add Layer column to systems-index.md
 **Problem**: `design/gdd/systems-index.md` has no `Layer` column; story routing is broken.
-**Fix**: Add a `Layer` column to the systems table. Use valid values: GameLayer,
-LevelLayer, SceneLayer, PlayerLayer, CoreLayer, ViewLayer, Shared, host-only.
+**Fix**: Add a `Layer` column to the systems table. Valid host-game values: `GameLayer`,
+`LevelLayer`, `SceneLayer`, `PlayerLayer`, `CoreLayer`, `ViewLayer`, `Shared`, `host-only`.
+Do not use `framework-change` in this table — any system requiring framework package
+changes must be tracked as a separate, owner-authorized framework work item.
 **Time**: 30 min (one row per system)
 - [ ] `Layer` column added with valid values for all MVP systems
 
