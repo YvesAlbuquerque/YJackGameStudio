@@ -26,6 +26,7 @@ jobs:
             //   - [x] risk:architecture
             // Includes em dash, en dash, and hyphen-minus because issue-form rendered
             // lines may contain any of these separators after the label token.
+            // Hyphen-minus is also allowed inside label values (e.g. risk:legal-release).
             const LABEL_LINE_PATTERN = /^(?:- \[[ xX]\]\s*)?((?:priority|auto|effort|phase|domain|status|risk):[a-zA-Z0-9-]+)(?:\s+[—–-].*)?$/;
 
             // Groups that are mutually exclusive — only one label per group should be present.
@@ -47,7 +48,8 @@ jobs:
               if (!match) continue;
 
               // Preserve casing from structured form values (e.g., effort:XL).
-              // Deduping remains case-insensitive via `normalized`.
+              // `match[1]` captures only the label token (without checkbox prefix or
+              // trailing description), and deduping remains case-insensitive.
               const candidate = match[1];
               const normalized = candidate.toLowerCase();
               if (!currentLabelsLower.has(normalized) && !labelsToAddLower.has(normalized)) {
