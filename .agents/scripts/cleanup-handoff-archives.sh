@@ -25,7 +25,7 @@ if [ ! -d "$ARCHIVE_DIR" ]; then
     exit 0
 fi
 
-# Validate retention input to prevent malformed find predicates
+# Validate retention input to prevent malformed find predicates (0 is valid)
 if ! [[ "$RETENTION_DAYS" =~ ^[0-9]+$ ]]; then
     echo -e "${RED}Invalid HANDOFF_RETENTION_DAYS: '$RETENTION_DAYS' (must be a non-negative integer).${NC}"
     exit 1
