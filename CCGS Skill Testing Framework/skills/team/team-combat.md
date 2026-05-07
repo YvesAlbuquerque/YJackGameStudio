@@ -9,7 +9,9 @@ phases: Design → Architecture (with engine specialist validation) → Implemen
 (parallel) → Integration → Validation → Sign-off. Uses `AskUserQuestion` at each
 phase transition. Delegates all file writes to sub-agents. Produces a summary report
 with verdict COMPLETE / NEEDS WORK / BLOCKED and handoffs to `/code-review`,
-`/balance-check`, and `/team-polish`.
+`/balance-check`, and `/team-polish`. Before domain phases, it creates an issue-backed
+execution plan starting with a planning/docs-first child issue, then shard issues for
+design, architecture, implementation, tests, art discipline work, and QA.
 
 ---
 
@@ -25,10 +27,39 @@ with verdict COMPLETE / NEEDS WORK / BLOCKED and handoffs to `/code-review`,
 - [ ] Phase 3 is explicitly marked as parallel (gameplay-programmer, ai-programmer, technical-artist, sound-designer)
 - [ ] Phase 2 includes spawning the primary engine specialist (read from `.claude/docs/technical-preferences.md`)
 - [ ] Team Composition lists all seven roles (game-designer, gameplay-programmer, ai-programmer, technical-artist, sound-designer, engine specialist, qa-tester)
+- [ ] Includes issue-backed orchestration requirements: planning/docs-first child issue + idempotent child issues for design/architecture/implementation/tests/art/QA
+- [ ] Preserves explicit owner decision points for creative and high-risk tradeoffs while supporting conversational updates
+- [ ] Unity/YJackCore routing is required for child issues (`framework` vs `host`, `yjackcore.layer`, `yjackcore.package_boundary`)
 
 ---
 
 ## Test Cases
+
+### Case 0: Issue Plan First — planning/docs-first child issue and shards are created before execution
+
+**Fixture:**
+- Parent feature issue exists for "parry and riposte system"
+- No child issues exist yet for this scope
+- Unity + YJackCore project context is active
+
+**Input:** `/team-combat parry and riposte system`
+
+**Expected behavior:**
+1. Skill starts by creating/updating a planning/docs-first child issue for this scope
+2. Skill creates idempotent child issues for: design, architecture, implementation, tests, art discipline, and QA
+3. Each child issue includes `specialist_agent`, `write_set`, `dependencies`, `validation_criteria`, and `risk_tier`
+4. Unity child issues include YJackCore routing metadata: `framework` vs `host`, `yjackcore.layer`, `yjackcore.package_boundary`
+5. Domain execution phases begin only after planning/docs issue exists
+6. Skill still provides conversational status/options and owner checkpoints
+
+**Assertions:**
+- [ ] Planning/docs-first child issue is created before design/implementation execution
+- [ ] Required child issue tracks are all present (design, architecture, implementation, tests, art, QA)
+- [ ] Child issue creation is idempotent (no duplicate shard creation on re-run)
+- [ ] Unity/YJackCore routing metadata is attached to Unity-scoped shard issues
+- [ ] Conversational checkpoints are preserved (issue-driven + conversational dual mode)
+
+---
 
 ### Case 1: Happy Path — All agents succeed, full pipeline runs to completion
 

@@ -16,6 +16,18 @@ the user with the subagent's proposals as selectable options. Write the agent's
 full analysis in conversation, then capture the decision with concise labels.
 The user must approve before moving to the next step.
 
+## Issue-Backed Planning and Execution (required)
+
+Before entering the domain phases below, apply the shared protocol in `.agents/docs/team-issue-orchestration.md`.
+
+Minimum requirements for this skill:
+- Start by creating/updating a **planning/docs-first child issue** for the requested scope.
+- Generate idempotent child issues for: design, architecture, implementation, tests, Audio discipline work, and QA (mark N/A only when truly out of scope).
+- Keep explicit owner decision gates via `AskUserQuestion` for creative and high-risk tradeoffs.
+- Execute independent child issues in parallel only after dependencies/gates are satisfied; surface BLOCKED shards immediately.
+- Maintain conversational summaries/options while tracking execution against issue shards (support both modes).
+- For Unity work, annotate child issues with YJackCore routing (`framework` vs `host`), `yjackcore.layer`, and `yjackcore.package_boundary` when applicable.
+
 1. **Read the argument** for the target feature or area (e.g., `combat`,
    `main menu`, `forest biome`, `boss encounter`).
 
