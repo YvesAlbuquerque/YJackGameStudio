@@ -21,7 +21,7 @@
 
 | Check | Type | Command / Method | Result | Evidence |
 | --- | --- | --- | --- | --- |
-| [check-name] | [static/automated] | `[command]` | PASS / FAIL / WARN | [output/file] |
+| [check-name] | [static/automated] | `[command]` | PASS / CONCERNS / FAIL / WARN / NOT RUN / BLOCKED | [output/file] |
 
 ---
 

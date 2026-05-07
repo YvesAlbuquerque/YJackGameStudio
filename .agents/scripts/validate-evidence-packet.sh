@@ -32,8 +32,14 @@ for file in "$@"; do
     fi
   done
 
-  if ! grep -Eq "PASS|FAIL|WARN|NOT RUN|BLOCKED|CONCERNS" "$file"; then
-    echo "FAIL: $file (no explicit status keyword found)"
+  if ! grep -Eq '^- \*\*Overall verdict\*\*: (PASS|CONCERNS|FAIL|BLOCKED)$' "$file"; then
+    echo "FAIL: $file (overall verdict must be a concrete value: PASS|CONCERNS|FAIL|BLOCKED)"
+    missing=1
+    status=1
+  fi
+
+  if ! grep -Eq '^\|[^|]+\|[^|]+\|[^|]+\| *(PASS|CONCERNS|FAIL|WARN|NOT RUN|BLOCKED) *\|[^|]*\|$' "$file"; then
+    echo "FAIL: $file (checks table needs at least one completed row with a concrete result)"
     missing=1
     status=1
   fi

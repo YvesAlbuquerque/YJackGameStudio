@@ -22,8 +22,10 @@
 
 | Check | Type | Command / Method | Result | Evidence |
 | --- | --- | --- | --- | --- |
+| Host/framework routing check | static | Manual file review | PASS | Scope classified as `unity-yjackcore` framework-aligned template work |
+| Package boundary integrity check | static | Manual file review | PASS | No edits under `Packages/YJackCore/**` or `Packages/com.ygamedev.yjack/**` |
 | YJackCore template sections present | static | Manual file review | PASS | Scene, Prefab, Package sections included |
-| Package boundary reminder included | static | Manual file review | PASS | Explicit checklist item references package boundary |
+| Manual Unity checklist attached | static | Manual file review | PASS | `.agents/docs/templates/yjackcore-unity-manual-validation.md` included in this scope |
 
 ---
 

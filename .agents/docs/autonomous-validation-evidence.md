@@ -6,7 +6,10 @@ report validation results without implying unrun checks.
 ## Packet Location
 
 - Default directory: `production/qa/validation-packets/`
-- Suggested filename: `validation-[scope]-[YYYY-MM-DD].md`
+- Generic default filename: `validation-[scope]-[YYYY-MM-DD].md`
+- If a workflow/skill defines a stricter naming contract (for example
+  `validation-story-done-*`, `validation-gate-check-*`, `validation-team-qa-*`),
+  follow the workflow-specific pattern.
 - Required template: `.agents/docs/templates/validation-evidence-packet.md`
 
 ## Required Packet Sections
@@ -19,7 +22,10 @@ Every packet must include all sections below:
 4. **Manual Validation Still Required**
 5. **Verdict and Escalation**
 
-Use explicit status keywords: `PASS`, `FAIL`, `WARN`, `NOT RUN`, `BLOCKED`.
+Use explicit status keywords: `PASS`, `CONCERNS`, `FAIL`, `WARN`, `NOT RUN`, `BLOCKED`.
+
+- `CONCERNS` means checks are largely passing but non-blocking risks/conditions
+  remain and must be tracked.
 
 ## Scope-Specific Required Evidence
 

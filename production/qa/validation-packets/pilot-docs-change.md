@@ -21,7 +21,9 @@
 
 | Check | Type | Command / Method | Result | Evidence |
 | --- | --- | --- | --- | --- |
+| File existence check | static | Manual file review | PASS | `.agents/docs/autonomous-validation-evidence.md` exists |
 | Required sections present | static | Manual file review | PASS | File contains all required sections |
+| Cross-reference links check | static | Manual file review | PASS | No cross-reference links in this doc scope (N/A by content) |
 | Workflow catalog note update | static | Manual file review | PASS | `.agents/docs/workflow-catalog.yaml` header note added |
 
 ---
