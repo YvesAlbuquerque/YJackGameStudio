@@ -20,7 +20,7 @@ Before entering the domain phases below, apply the shared protocol in `.agents/d
 
 Minimum requirements for this skill:
 - Start by creating/updating a **planning/docs-first child issue** for the requested scope.
-- Generate idempotent child issues for: design, architecture, implementation, tests, discipline work (QA is primary; UX/Art/Audio only if needed by scope), and final QA validation (mark N/A only when truly out of scope).
+- Generate idempotent child issues for: design, architecture, implementation, tests, discipline track (Art/Audio/UX only if needed by scope; otherwise mark N/A), and QA.
 - Keep explicit owner decision gates via `AskUserQuestion` for creative and high-risk tradeoffs.
 - Execute independent child issues in parallel only after dependencies/gates are satisfied; surface BLOCKED shards immediately.
 - Maintain conversational summaries/options while tracking execution against issue shards (support both modes).

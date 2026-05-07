@@ -9,7 +9,7 @@ This protocol is the shared execution contract for all `team-*` skills.
 
 ## 2) Start with a planning/docs-first child issue
 
-Before any implementation shard is created, create or update a **planning/docs-first** child issue.
+Before any execution shard is created, create or update a **planning/docs-first** child issue.
 
 Required output of the planning issue:
 - scope summary

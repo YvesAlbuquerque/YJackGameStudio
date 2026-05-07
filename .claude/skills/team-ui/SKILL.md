@@ -14,15 +14,11 @@ The user must approve before moving to the next phase.
 
 ## Issue-Backed Planning and Execution (required)
 
-Before entering the domain phases below, apply the shared protocol in `.agents/docs/team-issue-orchestration.md`.
+Apply the shared protocol in `.agents/docs/team-issue-orchestration.md`.
 
-Minimum requirements for this skill:
-- Start by creating/updating a **planning/docs-first child issue** for the requested scope.
-- Generate idempotent child issues for: design, architecture, implementation, tests, UX discipline work, and QA (mark N/A only when truly out of scope).
-- Keep explicit owner decision gates via `AskUserQuestion` for creative and high-risk tradeoffs.
-- Execute independent child issues in parallel only after dependencies/gates are satisfied; surface BLOCKED shards immediately.
-- Maintain conversational summaries/options while tracking execution against issue shards (support both modes).
-- For Unity work, annotate child issues with YJackCore routing (`framework` vs `host`), `yjackcore.layer`, and `yjackcore.package_boundary` when applicable.
+Team-specific delta for `/team-ui`:
+- Discipline track is **UX**.
+- Keep explicit owner checkpoints via `AskUserQuestion` for creative/high-risk tradeoffs.
 
 ## Team Composition
 - **ux-designer** — User flows, wireframes, accessibility, input handling
