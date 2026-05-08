@@ -5,7 +5,11 @@
 # work contracts in the dependency graph.
 #
 # Usage:
-#   .agents/scripts/check-write-sets.sh [graph_file]
+#   .agents/scripts/check-write-sets.sh [OPTIONS] [graph_file]
+#
+# Options:
+#   --format=text    Output human-readable text (default)
+#   --format=json    Output machine-parseable JSON
 #
 # Arguments:
 #   graph_file   Path to the YAML dependency graph.
@@ -36,10 +40,43 @@
 
 set -euo pipefail
 
+# Parse options
+OUTPUT_FORMAT="text"
+POSITIONAL_ARGS=()
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --format=*)
+      OUTPUT_FORMAT="${1#*=}"
+      if [[ "$OUTPUT_FORMAT" != "text" && "$OUTPUT_FORMAT" != "json" ]]; then
+        echo "Error: invalid format '$OUTPUT_FORMAT'. Use 'text' or 'json'." >&2
+        exit 2
+      fi
+      shift
+      ;;
+    --format)
+      echo "Error: --format requires a value (--format=text or --format=json)" >&2
+      exit 2
+      ;;
+    -*)
+      echo "Error: unknown option '$1'" >&2
+      echo "Usage: $0 [--format=text|json] [production/dependency-graph.yml]" >&2
+      exit 2
+      ;;
+    *)
+      POSITIONAL_ARGS+=("$1")
+      shift
+      ;;
+  esac
+done
+
+# Restore positional parameters
+set -- "${POSITIONAL_ARGS[@]}"
+
 # Validate argument count (extra arguments are not accepted).
 if [[ $# -gt 1 ]]; then
   echo "Error: too many arguments." >&2
-  echo "Usage: $0 [production/dependency-graph.yml]" >&2
+  echo "Usage: $0 [--format=text|json] [production/dependency-graph.yml]" >&2
   exit 2
 fi
 
@@ -60,10 +97,13 @@ fi
 # ---------------------------------------------------------------------------
 # Python helper — parse the YAML graph and run collision detection.
 # Written inline so the script has no external file dependencies.
+# Supports both text and JSON output modes.
 # ---------------------------------------------------------------------------
-python3 - "$GRAPH_FILE" <<'PYTHON'
+python3 - "$GRAPH_FILE" "$OUTPUT_FORMAT" <<'PYTHON'
 import sys
 import re
+import json
+from datetime import datetime
 
 def parse_graph(path):
     """
@@ -182,12 +222,34 @@ def paths_collide(a, b):
     return False
 
 
-def run_check(graph_path):
+def run_check(graph_path, output_format):
     graph = parse_graph(graph_path)
     contracts = graph.get("contracts") or {}
 
     if not contracts:
-        print("No contracts found in graph. Nothing to check.")
+        if output_format == "json":
+            result = {
+                "schema_version": "1.0",
+                "timestamp": datetime.utcnow().isoformat() + "Z",
+                "command": f"check-write-sets.sh {graph_path}",
+                "exit_code": 0,
+                "summary": {
+                    "verdict": "PASS",
+                    "total_items": 0,
+                    "passed": 0,
+                    "failed": 0,
+                    "warnings": 0
+                },
+                "items": [],
+                "errors": [],
+                "remediation": {
+                    "available": False,
+                    "suggestions": []
+                }
+            }
+            print(json.dumps(result, indent=2))
+        else:
+            print("No contracts found in graph. Nothing to check.")
         return 0
 
     active_states = {"approved", "in_progress"}
@@ -197,11 +259,12 @@ def run_check(graph_path):
         if str(data.get("status", "")).lower() in active_states
     }
 
-    print(f"Checking write-set collisions for {len(active)} active contract(s)...")
-    print()
+    if output_format == "text":
+        print(f"Checking write-set collisions for {len(active)} active contract(s)...")
+        print()
 
     ids = sorted(active.keys())
-    collisions = 0
+    collisions = []
 
     for i in range(len(ids)):
         for j in range(i + 1, len(ids)):
@@ -213,26 +276,84 @@ def run_check(graph_path):
             for pa in ws_a:
                 for pb in ws_b:
                     if paths_collide(pa, pb):
-                        collisions += 1
-                        print(f"[COLLISION] {id_a} <-> {id_b}")
-                        print(f"  {id_a} owns: {pa}")
-                        print(f"  {id_b} owns: {pb}")
-                        if pa.rstrip("/") == pb.rstrip("/"):
-                            print(f"  Reason: exact match")
-                        elif pb.startswith(pa.rstrip("/") + "/"):
-                            print(f"  Reason: {pa} is an ancestor of {pb}")
-                        else:
-                            print(f"  Reason: {pb} is an ancestor of {pa}")
-                        print()
+                        collision = {
+                            "contract_a": id_a,
+                            "contract_b": id_b,
+                            "path_a": pa,
+                            "path_b": pb,
+                            "reason": "exact match" if pa.rstrip("/") == pb.rstrip("/")
+                                      else (f"{pa} is an ancestor of {pb}" if pb.startswith(pa.rstrip("/") + "/")
+                                      else f"{pb} is an ancestor of {pa}")
+                        }
+                        collisions.append(collision)
 
-    if collisions == 0:
-        print("No collisions found. Safe to schedule parallel execution.")
-        return 0
+                        if output_format == "text":
+                            print(f"[COLLISION] {id_a} <-> {id_b}")
+                            print(f"  {id_a} owns: {pa}")
+                            print(f"  {id_b} owns: {pb}")
+                            print(f"  Reason: {collision['reason']}")
+                            print()
+
+    if output_format == "json":
+        result = {
+            "schema_version": "1.0",
+            "timestamp": datetime.utcnow().isoformat() + "Z",
+            "command": f"check-write-sets.sh {graph_path}",
+            "exit_code": 1 if collisions else 0,
+            "summary": {
+                "verdict": "FAIL" if collisions else "PASS",
+                "total_items": len(active),
+                "passed": 0 if collisions else len(active),
+                "failed": len(collisions),
+                "warnings": 0
+            },
+            "items": [
+                {
+                    "id": cid,
+                    "status": active[cid].get("status"),
+                    "write_set": active[cid].get("write_set") or [],
+                    "verdict": "PASS"
+                }
+                for cid in ids
+            ],
+            "errors": [
+                {
+                    "code": "WRITE_SET_COLLISION",
+                    "severity": "FAIL",
+                    "message": f"Write-set collision between {c['contract_a']} and {c['contract_b']}",
+                    "context": {
+                        "contract_a": c["contract_a"],
+                        "contract_b": c["contract_b"],
+                        "path_a": c["path_a"],
+                        "path_b": c["path_b"],
+                        "reason": c["reason"]
+                    },
+                    "remediation": {
+                        "action": "owner_resolution",
+                        "command": "Owner must resolve: defer one contract, merge them, or grant explicit parallel write permission",
+                        "documentation": ".agents/docs/work-contract-schema.md#parallel-execution-rules"
+                    }
+                }
+                for c in collisions
+            ],
+            "remediation": {
+                "available": False,
+                "suggestions": [
+                    "All write-set collisions require owner approval to resolve",
+                    "Options: defer one contract, merge contracts, or grant explicit parallel write permission"
+                ] if collisions else []
+            }
+        }
+        print(json.dumps(result, indent=2))
     else:
-        print(f"{collisions} collision(s) found. Resolve before scheduling parallel execution.")
-        print("Owner must approve all collision resolutions.")
-        return 1
+        if collisions:
+            print(f"{len(collisions)} collision(s) found. Resolve before scheduling parallel execution.")
+            print("Owner must approve all collision resolutions.")
+        else:
+            print("No collisions found. Safe to schedule parallel execution.")
+
+    return 1 if collisions else 0
 
 
-sys.exit(run_check(sys.argv[1]))
+sys.exit(run_check(sys.argv[1], sys.argv[2]))
 PYTHON
