@@ -1,9 +1,9 @@
 ---
 name: asset-spec
 description: "Generate per-asset visual specifications and AI generation prompts from GDDs, level docs, or character profiles. Produces structured spec files and updates the master asset manifest. Run after art bible and GDD/level design are approved, before production begins."
-argument-hint: "[system:<name> | level:<name> | character:<name>] [--review full|lean|solo]"
+argument-hint: "[system:<name> | level:<name> | character:<name>] [--review full|lean|solo] [--issues draft|create|skip]"
 user-invocable: true
-allowed-tools: Read, Glob, Grep, Write, Edit, Task, AskUserQuestion
+allowed-tools: Read, Glob, Grep, Write, Edit, Task, AskUserQuestion, Bash
 ---
 
 If no argument is provided, check whether `design/assets/asset-manifest.md` exists:
@@ -23,11 +23,17 @@ Extract:
 - **Target type**: `system`, `level`, or `character`
 - **Target name**: the name after the colon (normalize to kebab-case)
 - **Review mode**: `--review [full|lean|solo]` if present
+- **Issue mode**: `--issues [draft|create|skip]` if present
 
 **Mode behavior:**
 - `full` (default): spawn both `art-director` and `technical-artist` in parallel
 - `lean`: spawn `art-director` only — faster, skips technical constraint pass
 - `solo`: no agent spawning — main session writes specs from art bible rules alone. Use for simple asset categories or when speed matters more than depth.
+
+**Issue behavior:**
+- `draft` (default): produce issue bodies and a rollup preview in-chat (no GitHub issue creation).
+- `create`: produce issue bodies, ask for approval, then create/update GitHub issues idempotently.
+- `skip`: stop after spec + manifest updates; no issue generation.
 
 ---
 
@@ -40,7 +46,7 @@ Read all source material **before** asking the user anything.
   > "No art bible found. Run `/art-bible` first — asset specs are anchored to the art bible's visual rules and asset standards."
   Extract: Visual Identity Statement, Color System (semantic colors), Shape Language, Asset Standards (Section 8 — dimensions, formats, polycount budgets, texture resolution tiers).
 
-- **Technical preferences**: Read `.claude/docs/technical-preferences.md` — extract performance budgets and naming conventions.
+- **Technical preferences**: Read `.agents/docs/technical-preferences.md` — extract performance budgets and naming conventions.
 
 ### Source doc reads (by target type):
 - **system**: Read `design/gdd/[target-name].md`. Extract the **Visual/Audio Requirements** section. If it doesn't exist or reads `[To be designed]`:
@@ -52,11 +58,13 @@ Read all source material **before** asking the user anything.
 ### Optional reads:
 - **Existing manifest**: Read `design/assets/asset-manifest.md` if it exists — extract already-specced assets for this target to avoid duplicates.
 - **Related specs**: Glob `design/assets/specs/*.md` — scan for assets that could be shared (e.g., a common UI element specced for one system might apply here too).
+- **UX docs**: Glob `design/ux/*.md` — extract UI states, interaction notes, and accessibility constraints that affect UI asset issues.
 
 ### Present context summary:
 > **Asset Spec: [Target Type] — [Target Name]**
 > - Source doc: [path] — [N] asset types identified
 > - Art bible: found — Asset Standards at Section 8
+> - UX docs: [N files found / none]
 > - Existing specs for this target: [N already specced / none]
 > - Shared assets found in other specs: [list or "none"]
 
@@ -194,16 +202,126 @@ Ask: "May I update `design/assets/asset-manifest.md`?"
 
 ---
 
-## Phase 6: Close
+## Phase 6: Generate Asset Work Contract Issues
+
+Skip this phase only when `--issues skip` is selected.
+
+### 6.1 Required issue-generation inputs
+
+Before drafting issues, read:
+- `design/art/art-bible.md` (style constraints + section anchors)
+- `design/assets/asset-manifest.md` (asset IDs, statuses, spec path)
+- the source doc used in Phase 1 (`design/gdd/*`, `design/levels/*`, or `design/narrative/*`)
+- related UX docs (`design/ux/*.md`) when UI assets are present
+- the approved spec file from Phase 5 (`design/assets/specs/[target-name]-assets.md`)
+
+If any input is missing, surface a `CONCERNS` note and continue with available data.
+
+### 6.2 Track classification (must be separate)
+
+Create separate issue tracks for each relevant asset:
+- **Concept Art** — moodboards, silhouettes, style exploration before production asset build
+- **Production Asset** — final in-game visual asset (sprite, prop, environment art, mesh/material)
+- **UI Asset** — HUD/menu/input-state visual elements grounded in UX docs
+- **VFX** — particles, shader-driven feedback, hit/ambient effects
+- **Audio** — SFX/music/loops and implementation-ready metadata (no AI image prompt)
+- **Implementation Hookup** — engine import/wiring tasks that connect produced files to runtime usage
+
+Do not merge these tracks into one issue. One issue per `(asset_id, track)`.
+
+### 6.3 Issue body requirements
+
+Use `.github/ISSUE_TEMPLATE/asset-work-contract.md` as the structure.
+Each generated issue must include:
+- owner intent
+- style constraints (art bible anchors)
+- file targets (exact paths)
+- generation/authoring prompt reference (for audio: sonic direction reference)
+- acceptance criteria
+- validation criteria + evidence path
+- dependencies
+- idempotency key
+
+Issue titles should follow:
+- `[Asset][Concept] ASSET-### [Name]`
+- `[Asset][Production] ASSET-### [Name]`
+- `[Asset][UI] ASSET-### [Name]`
+- `[Asset][VFX] ASSET-### [Name]`
+- `[Asset][Audio] ASSET-### [Name]`
+- `[Asset][Hookup] ASSET-### [Name]`
+
+### 6.4 Dependency and idempotency rules
+
+- Idempotency key format:
+  - `asset-issue:[target-type]:[target-name]:[asset-id]:[track]`
+- Search existing open issues for this key before creating a new one:
+  - `gh issue list --search "repo:[owner]/[repo] in:body asset-issue:[...]" --state all`
+- If found: update the existing issue body (do not duplicate).
+- If not found: create new issue.
+
+Track dependency ordering:
+- `Concept Art` → no asset dependency
+- `Production Asset` depends on `Concept Art` (if concept track exists for that asset)
+- `UI Asset`, `VFX`, `Audio` depend on approved spec + related UX/GDD references
+- `Implementation Hookup` depends on all production tracks needed by runtime integration
+
+Also add dependency links to `production/dependency-graph.yml` contract IDs when those contracts already exist.
+
+### 6.5 YJackCore + Unity import and `.meta` rules
+
+For Unity-scoped projects and/or YJackCore usage, each relevant issue must include:
+- Asset authority classification:
+  - `host` for `Assets/**`
+  - `framework` for `Packages/YJackCore/**` or `Packages/com.ygamedev.yjack/**`
+- Package-boundary protection:
+  - Never target `Packages/YJackCore/**` or `Packages/com.ygamedev.yjack/**` unless owner explicitly approved.
+  - If targeted, mark `risk_tier: HIGH`, add `risk:yjackcore-boundary`, and require owner escalation.
+- `.meta` integrity:
+  - Every Unity asset file target in `Assets/**` must include its matching `.meta` file in `write_set`.
+  - Never regenerate/delete `.meta` manually; move/rename asset + `.meta` together.
+  - Validation must include "Unity importer reports no GUID regeneration for retained assets."
+
+### 6.6 Rollup view output
+
+After drafting/creating issues, present a rollup table grouped by track:
+
+| Track | Issues | Ready | Blocked (deps) | Validation Owner |
+|-------|--------|-------|----------------|------------------|
+| Concept Art | [N] | [N] | [N] | [agent/owner] |
+| Production Asset | [N] | [N] | [N] | [agent/owner] |
+| UI Asset | [N] | [N] | [N] | [agent/owner] |
+| VFX | [N] | [N] | [N] | [agent/owner] |
+| Audio | [N] | [N] | [N] | [agent/owner] |
+| Implementation Hookup | [N] | [N] | [N] | [agent/owner] |
+
+Ask: "May I write this rollup to `production/assets/asset-issue-rollup.md`?"
+
+### 6.7 Validation check (sample manifest required)
+
+Before closing, run a sample-manifest dry run:
+1. Use a sample target context containing at least one UI asset, one VFX asset, and one audio asset.
+2. Generate issue drafts (or create issues in a test scope).
+3. Confirm each issue contains:
+   - required label tokens (`priority:*`, `auto:*`, `effort:*`, `phase:*`, `domain:*`, `status:*`)
+   - explicit dependencies
+   - explicit validation criteria and evidence path
+4. Confirm no duplicate issue for the same idempotency key.
+
+If any check fails, surface `FAIL` with the offending asset IDs and stop before final issue creation.
+
+---
+
+## Phase 7: Close
 
 Use `AskUserQuestion`:
 - Prompt: "Asset specs complete for **[target]**. What's next?"
 - Options:
-  - `[A] Spec another system — /asset-spec system:[next-system]`
-  - `[B] Spec a level — /asset-spec level:[level-name]`
-  - `[C] Spec a character — /asset-spec character:[character-name]`
-  - `[D] Run /asset-audit — validate delivered assets against specs`
-  - `[E] Stop here`
+  - `[A] Generate/create asset issues now (if skipped) — /asset-spec [target] --issues create`
+  - `[B] Spec another system — /asset-spec system:[next-system]`
+  - `[C] Spec a level — /asset-spec level:[level-name]`
+  - `[D] Spec a character — /asset-spec character:[character-name]`
+  - `[E] Run /asset-audit — validate delivered assets against specs`
+  - `[F] Stop here`
 
 ---
 
@@ -248,17 +366,20 @@ If any spawned agent returns BLOCKED or cannot complete:
 
 ## Collaborative Protocol
 
-Every phase follows: **Identify → Confirm → Generate → Review → Approve → Write**
+Every phase follows: **Identify → Confirm → Generate → Review → Approve → Write → Issue**
 
 - Never spec assets without first confirming the asset list with the user
 - Always anchor specs to the art bible — a spec that contradicts the art bible is wrong
 - Surface all agent disagreements — do not silently pick one
 - Write the spec file only after explicit approval
 - Update the manifest immediately after writing the spec
+- Asset issues must reference approved specs; do not duplicate full spec content in issue bodies
+- Issue creation must be idempotent per `asset-issue:*` key
 
 ---
 
 ## Recommended Next Steps
 
 - Run `/asset-spec [next-context]` to continue speccing remaining systems, levels, or characters
+- Run `/asset-spec [same-context] --issues create` to publish GitHub asset work contracts after draft review
 - Run `/asset-audit` to validate delivered assets against the written specs and identify gaps or mismatches
