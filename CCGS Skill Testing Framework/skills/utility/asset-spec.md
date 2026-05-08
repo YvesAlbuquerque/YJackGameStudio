@@ -2,178 +2,128 @@
 
 ## Skill Summary
 
-`/asset-spec` generates per-asset visual specification documents from design
-requirements. It reads the relevant GDD, art bible, and design system to produce
-a structured asset spec sheet that defines: dimensions, animation states (if
-applicable), color palette reference, style notes, technical constraints
-(format, file size budget), and deliverable checklist.
+`/asset-spec` reads approved source context (GDD/level/character), art bible,
+asset manifest, and related UX docs to produce per-asset specs and then generate
+asset work-contract issues (draft or create mode) for autonomous production.
 
-Spec sheets are written to `assets/specs/[asset-name]-spec.md` after a "May I write"
-ask. If a spec already exists, the skill offers to update it. When multiple assets
-are requested in a single invocation, a "May I write" ask is made per asset. No
-director gates apply. The verdict is COMPLETE when all requested specs are written.
+Issue output must be track-separated (`concept-art`, `production-asset`,
+`ui-asset`, `vfx`, `audio`, `implementation-hookup`), idempotent by
+`asset-issue:*` key, and aligned to YJackCore/Unity package + `.meta` integrity
+rules when applicable.
 
 ---
 
 ## Static Assertions (Structural)
 
-Verified automatically by `/skill-test static` — no fixture needed.
+Verified automatically by `/skill-test static` (no fixture needed).
 
 - [ ] Has required frontmatter fields: `name`, `description`, `argument-hint`, `user-invocable`, `allowed-tools`
 - [ ] Has ≥2 phase headings
-- [ ] Contains verdict keyword: COMPLETE
-- [ ] Contains "May I write" collaborative protocol language (per asset)
-- [ ] Has a next-step handoff (e.g., assign to an artist, or `/asset-audit` later)
-
----
-
-## Director Gate Checks
-
-None. `/asset-spec` is a design documentation utility. Technical artists may
-review specs separately but this is not a gate within this skill.
+- [ ] Contains verdict keyword(s): `PASS`, `FAIL`, `CONCERNS`, `APPROVED`, `BLOCKED`, `COMPLETE`, `READY`, `COMPLIANT`, `NON-COMPLIANT`
+- [ ] Contains ask-before-write language (e.g., "May I write")
+- [ ] Has a next-step handoff section
+- [ ] Frontmatter includes `allowed-tools` with `Bash`
+- [ ] Argument hint includes `--issues draft|create|skip`
+- [ ] Skill includes a dedicated phase for asset issue generation
+- [ ] Skill includes explicit idempotency-key guidance
+- [ ] Skill includes YJackCore/Unity `.meta` handling guidance
+- [ ] Skill includes sample-manifest validation guidance
 
 ---
 
 ## Test Cases
 
-### Case 1: Happy Path — Enemy sprite spec with full GDD and art bible
+### Case 1: Happy Path — Spec + issue drafts for mixed asset set
 
 **Fixture:**
-- `design/gdd/enemies.md` exists with enemy variants defined
-- `design/art-bible.md` exists with color palette and style notes
-- No existing asset spec for "goblin-enemy"
+- `design/art/art-bible.md` exists
+- `design/assets/asset-manifest.md` exists
+- Source GDD exists for target system
+- `design/ux/*.md` exists
+- No existing issues with matching `asset-issue:*` keys
 
-**Input:** `/asset-spec goblin-enemy`
+**Input:** `/asset-spec system:tower-defense --review full --issues draft`
 
 **Expected behavior:**
-1. Skill reads enemies GDD and art bible
-2. Skill generates a spec for the goblin enemy sprite:
-   - Dimensions: inferred from engine defaults or explicitly from GDD
-   - Animation states: idle, walk, attack, hurt, death
-   - Color palette reference: links to art-bible palette section
-   - Style notes: from art bible character design rules
-   - Technical constraints: format (PNG), size budget
-   - Deliverable checklist
-3. Skill asks "May I write to `assets/specs/goblin-enemy-spec.md`?"
-4. File written on approval; verdict is COMPLETE
+1. Reads art bible, asset manifest, source doc, and UX docs.
+2. Produces approved asset specs and updates manifest.
+3. Produces per-track issue drafts with required fields:
+   owner intent, style constraints, file targets, prompt reference,
+   acceptance criteria, validation criteria, dependencies, idempotency key.
+4. Shows rollup grouped by track.
 
 **Assertions:**
-- [ ] All 6 spec components are present (dimensions, animations, palette, style, tech, checklist)
-- [ ] Color palette reference links to art bible (not duplicated)
-- [ ] Animation states are drawn from GDD (not invented)
-- [ ] "May I write" is asked with the correct path
-- [ ] Verdict is COMPLETE
+- [ ] All required source categories are read (art bible, manifest, source doc, UX docs)
+- [ ] Draft issues are separated by required tracks
+- [ ] Each issue includes idempotency key and validation packet path
+- [ ] Rollup table includes counts by track
 
 ---
 
-### Case 2: No Art Bible Found — Spec with Placeholder Style Notes, Dependency Flagged
+### Case 2: Idempotency — Existing issue is updated, not duplicated
 
 **Fixture:**
-- `design/gdd/player.md` exists
-- `design/art-bible.md` does NOT exist
+- Same as Case 1
+- Existing GitHub issue body already contains:
+  `idempotency_key: asset-issue:system:tower-defense:ASSET-021:production-asset`
 
-**Input:** `/asset-spec player-sprite`
+**Input:** `/asset-spec system:tower-defense --issues create`
 
 **Expected behavior:**
-1. Skill reads player GDD but cannot find the art bible
-2. Skill generates spec with placeholder style notes: "DEPENDENCY GAP: art bible
-   not found — style notes are placeholders"
-3. Color palette section uses: "TBD — see art bible when created"
-4. Skill asks "May I write to `assets/specs/player-sprite-spec.md`?"
-5. File written with placeholders and dependency flag; verdict is COMPLETE with advisory
+1. Searches existing issues by idempotency key before create.
+2. Updates existing issue for matching key.
+3. Creates only missing keys.
 
 **Assertions:**
-- [ ] DEPENDENCY GAP is flagged for the missing art bible
-- [ ] Spec is still generated (not blocked)
-- [ ] Style notes contain placeholder markers, not invented styles
-- [ ] Verdict is COMPLETE with advisory note
+- [ ] Matching key does not create duplicate issue
+- [ ] Existing issue is updated with current dependency/validation content
+- [ ] New issues are created only for missing keys
 
 ---
 
-### Case 3: Asset Spec Already Exists — Offers to Update
+### Case 3: YJackCore + Unity boundary handling
 
 **Fixture:**
-- `assets/specs/goblin-enemy-spec.md` already exists
-- GDD has been updated since the spec was written (new attack animation added)
+- Unity/YJackCore project context
+- At least one asset targets `Assets/UI/...`
+- At least one request attempts package-boundary target
 
-**Input:** `/asset-spec goblin-enemy`
+**Input:** `/asset-spec system:inventory --issues draft`
 
 **Expected behavior:**
-1. Skill detects existing spec file
-2. Skill reports: "Asset spec already exists for goblin-enemy — checking for updates"
-3. Skill diffs GDD against existing spec and identifies: new "charge-attack" animation
-   state added in GDD but not in spec
-4. Skill presents the diff: "1 new animation state found — offering to update spec"
-5. Skill asks "May I update `assets/specs/goblin-enemy-spec.md`?" (not overwrite)
-6. Spec is updated; verdict is COMPLETE
+1. Host assets include matching `.meta` entries in write targets.
+2. Package-boundary targets are flagged as HIGH risk with escalation.
+3. Issue text distinguishes host vs framework authority.
 
 **Assertions:**
-- [ ] Existing spec is detected and "update" path is offered
-- [ ] Diff between GDD and existing spec is shown
-- [ ] "May I update" language is used (not "May I write")
-- [ ] Existing spec content is preserved; only the diff is applied
-- [ ] Verdict is COMPLETE
+- [ ] Unity asset write targets include `.meta`
+- [ ] Package-boundary issue includes `risk:yjackcore-boundary` escalation
+- [ ] Host/framework classification is explicit
 
 ---
 
-### Case 4: Multiple Assets Requested — May-I-Write Per Asset
+### Case 4: Sample-manifest validation gate
 
 **Fixture:**
-- GDD and art bible exist
-- User requests specs for 3 assets: goblin-enemy, orc-enemy, treasure-chest
+- Sample manifest includes at least UI, VFX, and Audio assets.
 
-**Input:** `/asset-spec goblin-enemy orc-enemy treasure-chest`
-
-**Expected behavior:**
-1. Skill generates all 3 specs in sequence
-2. For each asset, skill shows the draft and asks "May I write to
-   `assets/specs/[name]-spec.md`?" individually
-3. User can approve all 3 or skip individual assets
-4. All approved specs are written; verdict is COMPLETE
-
-**Assertions:**
-- [ ] "May I write" is asked 3 times (once per asset), not once for all
-- [ ] User can decline one asset without blocking the others
-- [ ] All 3 spec files are written for approved assets
-- [ ] Verdict is COMPLETE when all approved specs are written
-
----
-
-### Case 5: Director Gate Check — No gate; asset-spec is a design utility
-
-**Fixture:**
-- GDD and art bible exist
-
-**Input:** `/asset-spec goblin-enemy`
+**Input:** `/asset-spec system:sample --issues create`
 
 **Expected behavior:**
-1. Skill generates and writes the asset spec
-2. No director agents are spawned
-3. No gate IDs appear in output
+1. Runs sample-manifest validation checks before final issue creation.
+2. Confirms label tokens, dependencies, and validation criteria in each issue.
+3. Stops with `FAIL` if checks fail.
 
 **Assertions:**
-- [ ] No director gate is invoked
-- [ ] No gate skip messages appear
-- [ ] Verdict is COMPLETE without any gate check
+- [ ] Validation checks inspect label tokens (`priority`, `auto`, `effort`, `phase`, `domain`, `status`)
+- [ ] Validation checks inspect dependencies and evidence path
+- [ ] Failure path is explicit and blocks final create
 
 ---
 
 ## Protocol Compliance
 
-- [ ] Reads GDD, art bible, and design system before generating spec
-- [ ] Includes all 6 spec components (dimensions, animations, palette, style, tech, checklist)
-- [ ] Flags missing dependencies (art bible, GDD) with DEPENDENCY GAP notes
-- [ ] Asks "May I write" (or "May I update") per asset
-- [ ] Handles multiple assets with individual write confirmations
-- [ ] Verdict is COMPLETE when all approved specs are written
-
----
-
-## Coverage Notes
-
-- Audio asset specs (sound effects, music) follow the same structure with
-  different fields (duration, sample rate, looping) and are not separately tested.
-- UI asset specs (icons, button states) follow the same flow with interaction
-  state requirements aligned to the UX spec.
-- The case where GDD is also missing (neither GDD nor art bible exists) is not
-  separately tested; spec would be generated with both dependency gaps flagged.
+- [ ] Uses ask-before-write before spec/manifest writes
+- [ ] Uses approval checkpoint before issue creation in `create` mode
+- [ ] Keeps issue content as references to approved specs (no full spec duplication)
+- [ ] Ends with next-step handoff options
