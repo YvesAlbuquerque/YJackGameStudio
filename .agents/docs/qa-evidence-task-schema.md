@@ -150,17 +150,32 @@ Use repository-standard labels and keep evidence metadata in the issue body/temp
 Issue body fields encode:
 - `task_type`, `status`, `gate`, `sprint`, `milestone`, `story_ref`, `result`
 
+Expected body format (YAML frontmatter or equivalent structured block from the issue template):
+
+```yaml
+task_type: unit-test
+status: assigned
+gate: story-done
+sprint: sprint-03
+milestone: mvp-alpha
+result: NOT_RUN
+```
+
 Query examples:
 
 ```bash
-# All QA validation tasks (filter assigned in body field)
+# All QA validation tasks
 gh issue list --label "domain:qa,type:validation"
 
+# Assumes issue body includes structured fields like `result: FAIL`
 # All failing evidence tasks (bugs to file)
-gh issue list --label "domain:qa,type:validation" --search "result: FAIL"
+gh issue list --label "domain:qa,type:validation" --json number,title,body | \
+  jq -r '.[] | select(.body | test("result:\\s*FAIL"; "i")) | "\(.number) \(.title)"'
 
+# Assumes issue body includes structured fields like `gate: smoke-check`
 # All evidence for smoke-check gate
-gh issue list --label "domain:qa,type:validation" --search "gate: smoke-check"
+gh issue list --label "domain:qa,type:validation" --json number,title,body | \
+  jq -r '.[] | select(.body | test("gate:\\s*smoke-check"; "i")) | "\(.number) \(.title)"'
 ```
 
 ### Option B: YAML in `production/qa/evidence-tasks/`
@@ -246,7 +261,7 @@ Required confirmations:
 
 Gate-level precedence is deterministic:
 1. `gate_level_override` (if present) decides effective level.
-2. Otherwise default level comes from `task_type` in the Task Types table.
+2. Otherwise default level comes from `task_type` in `./qa-evidence-task-schema.md` under **## Task Types by Story Type**.
 
 For Unity + YJackCore evidence tasks, set `gate_level_override: ADVISORY` by default.
 If a gate must block, owner/qa-lead explicitly sets `gate_level_override: BLOCKING`.

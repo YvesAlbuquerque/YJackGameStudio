@@ -221,6 +221,7 @@ For each generated evidence task:
     - Use `gh issue create --template qa_evidence_task` (when template exists)
     - Apply existing labels: `domain:qa`, `type:validation`, `status:in-progress`
     - Store `task_type`, `status`, `gate`, `sprint`, and `milestone` in issue body/frontmatter fields
+    - Status precedence rule: body `status` is authoritative for reads/aggregation; labels are informational and must be synchronized to body status at the next task-status update
     - If template does not exist, write YAML files instead and note template creation needed
 
 4. If YAML or Markdown:

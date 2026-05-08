@@ -255,7 +255,7 @@ sprint or milestone sign-off reports.
 2. **Evidence Assignment**: `/qa-evidence-assign sprint` generates QA evidence tasks for each story
 3. **Parallel Execution**: qa-tester agents execute evidence tasks independently (or use `/team-qa`)
 4. **Evidence Review**: `/test-evidence-review sprint` validates evidence quality before aggregation
-5. **Aggregation**: `/qa-evidence-aggregate sprint-03` (or `/qa-evidence-aggregate` and choose interactively) produces sign-off reports with BLOCKING/ADVISORY verdicts
+5. **Aggregation**: `/qa-evidence-aggregate sprint-03` (or omit the argument to choose scope interactively) produces a sign-off report with BLOCKING/ADVISORY verdicts
 6. **Gate Advancement**: `/gate-check` consumes aggregated evidence to approve phase transitions
 
 ### Evidence Task Types
@@ -276,7 +276,7 @@ sprint or milestone sign-off reports.
 # After sprint implementation is complete:
 /qa-evidence-assign sprint         # Generate evidence tasks for all stories
 /test-evidence-review sprint        # Review evidence quality (before aggregation)
-/qa-evidence-aggregate sprint-03    # Produce QA sign-off report (or omit arg to choose scope)
+/qa-evidence-aggregate sprint-03    # Produce QA sign-off report (or omit argument to choose scope interactively)
 
 # Check sign-off verdict in production/qa/qa-signoff-[sprint]-[date].md
 # Verdict: APPROVED / APPROVED WITH CONDITIONS / NOT APPROVED
