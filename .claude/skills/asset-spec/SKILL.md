@@ -216,6 +216,7 @@ Before drafting issues, read:
 - the approved spec file from Phase 5 (`design/assets/specs/[target-name]-assets.md`)
 
 If any input is missing, surface a `CONCERNS` note and continue with available data.
+If `--issues create` is selected, confirm GitHub CLI is available in the environment before issue creation commands.
 
 ### 6.2 Track classification (must be separate)
 
@@ -254,8 +255,13 @@ Issue titles should follow:
 
 - Idempotency key format:
   - `asset-issue:[target-type]:[target-name]:[asset-id]:[track]`
+- Resolve repository owner/name first (run this command):
+  - `gh repo view --json nameWithOwner -q .nameWithOwner`
 - Search existing open issues for this key before creating a new one:
-  - `gh issue list --search "repo:[owner]/[repo] in:body asset-issue:[...]" --state all`
+  - `gh issue list --search "repo:<owner>/<repo> in:body <idempotency-key>" --state open`
+  - Replace `<owner>/<repo>` with the value from `nameWithOwner`.
+  - Replace `<idempotency-key>` with the fully interpolated `asset-issue:...` key for the current `(target, asset_id, track)`.
+  - If search indexing is delayed, cross-check against the latest `production/assets/asset-issue-rollup.md` entries before creating a new issue.
 - If found: update the existing issue body (do not duplicate).
 - If not found: create new issue.
 
@@ -300,7 +306,7 @@ Ask: "May I write this rollup to `production/assets/asset-issue-rollup.md`?"
 
 Before closing, run a sample-manifest dry run:
 1. Use a sample target context containing at least one UI asset, one VFX asset, and one audio asset.
-2. Generate issue drafts (or create issues in a test scope).
+2. Generate issue drafts (or create issues in a dedicated test repository/sandbox project).
 3. Confirm each issue contains:
    - required label tokens (`priority:*`, `auto:*`, `effort:*`, `phase:*`, `domain:*`, `status:*`)
    - explicit dependencies

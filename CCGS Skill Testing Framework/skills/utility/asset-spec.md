@@ -9,13 +9,13 @@ asset work-contract issues (draft or create mode) for autonomous production.
 Issue output must be track-separated (`concept-art`, `production-asset`,
 `ui-asset`, `vfx`, `audio`, `implementation-hookup`), idempotent by
 `asset-issue:*` key, and aligned to YJackCore/Unity package + `.meta` integrity
-rules when relevant.
+rules when applicable.
 
 ---
 
 ## Static Assertions (Structural)
 
-Verified automatically by `/skill-test static`.
+Verified automatically by `/skill-test static` (no fixture needed).
 
 - [ ] Frontmatter includes `allowed-tools` with `Bash`
 - [ ] Argument hint includes `--issues draft|create|skip`

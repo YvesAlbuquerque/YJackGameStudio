@@ -12,8 +12,8 @@ Use this template for one `(asset_id, track)` issue. Reference approved specs; d
 
 ## Identity
 
-- contract_id: ASSET-CONTRACT-###
-- asset_id: ASSET-###
+- contract_id: ASSET-001-CONCEPT
+- asset_id: ASSET-001
 - track: concept-art | production-asset | ui-asset | vfx | audio | implementation-hookup
 - idempotency_key: asset-issue:[target-type]:[target-name]:[asset-id]:[track]
 - parent_issue: #22
@@ -64,6 +64,7 @@ Use this template for one `(asset_id, track)` issue. Reference approved specs; d
 
 ## YJackCore / Unity Alignment
 
+- note: use `host-only` (same canonical layer value used in `.github/ISSUE_TEMPLATE/agent_work_contract.yml`) for host-game-only asset work
 - authority: host | framework
 - yjackcore_layer: host-only | GameLayer | LevelLayer | PlayerLayer | ViewLayer | Shared | framework-change
 - package_boundary: none | Packages/YJackCore/** | Packages/com.ygamedev.yjack/**
