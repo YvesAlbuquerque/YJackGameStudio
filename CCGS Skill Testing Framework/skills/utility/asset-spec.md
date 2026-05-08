@@ -17,6 +17,11 @@ rules when applicable.
 
 Verified automatically by `/skill-test static` (no fixture needed).
 
+- [ ] Has required frontmatter fields: `name`, `description`, `argument-hint`, `user-invocable`, `allowed-tools`
+- [ ] Has ≥2 phase headings
+- [ ] Contains verdict keyword(s): `PASS`, `FAIL`, `CONCERNS`, `APPROVED`, `BLOCKED`, `COMPLETE`, `READY`, `COMPLIANT`, `NON-COMPLIANT`
+- [ ] Contains ask-before-write language (e.g., "May I write")
+- [ ] Has a next-step handoff section
 - [ ] Frontmatter includes `allowed-tools` with `Bash`
 - [ ] Argument hint includes `--issues draft|create|skip`
 - [ ] Skill includes a dedicated phase for asset issue generation

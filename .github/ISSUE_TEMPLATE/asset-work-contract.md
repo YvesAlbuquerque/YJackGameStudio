@@ -2,8 +2,8 @@
 name: Asset Work Contract
 about: Structured asset production issue generated from /asset-spec outputs.
 title: "[Asset] "
-labels: ["type:shard", "status:proposed", "phase:pre-production"]
-assignees: []
+labels: type:shard, status:proposed, phase:pre-production
+assignees: ''
 ---
 
 ## Asset Work Contract
@@ -74,17 +74,23 @@ Use this template for one `(asset_id, track)` issue. Reference approved specs; d
 
 ## Label Tokens (for automation)
 
+Set exactly one domain token by track:
+- concept-art / production-asset: `domain:art`
+- ui-asset / implementation-hookup: `domain:ui`
+- audio: `domain:audio`
+- vfx: `domain:art` (or `domain:implementation` when primarily engine-hookup work)
+
 priority:medium
 auto:medium
 effort:S
 phase:pre-production
-domain:art
 status:proposed
 
-- [ ] risk:architecture
-- [ ] risk:yjackcore-boundary
-- [ ] risk:unity-scene-prefab
-- [ ] risk:scope-creep
+Risk labels (optional; add only if applicable as explicit token lines):
+- risk:architecture
+- risk:yjackcore-boundary
+- risk:unity-scene-prefab
+- risk:scope-creep
 
 ## Handoff Criteria
 
