@@ -136,6 +136,28 @@ High-level paths:
 - For architecture docs, run or follow `/architecture-review`.
 - For game code, run the configured engine-specific build/test command after setup.
 
+## AI-Friendly Structured APIs
+
+All validation scripts support `--format=json` for machine-parseable output conforming to
+`.agents/schemas/validation-output.schema.json`. This enables autonomous agents to:
+
+- Parse validation results without regex text parsing
+- Understand error contracts and remediation paths programmatically
+- Chain validations and auto-correct from documented errors
+- Validate artifacts against schemas before committing
+
+**Example:**
+```bash
+# Human-readable output (default)
+.agents/scripts/validate-skill-static.sh brainstorm
+
+# Machine-parseable JSON
+.agents/scripts/validate-skill-static.sh brainstorm --format=json
+```
+
+See `.agents/docs/ai-friendly-apis.md` for complete agent integration guide, error codes,
+schemas, and remediation patterns.
+
 ## Skill Use
 
 If the tool supports project skills or slash commands, use the relevant skill
