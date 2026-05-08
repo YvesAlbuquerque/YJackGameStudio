@@ -1,0 +1,197 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Agent Error Code Registry",
+  "description": "Machine-readable error codes with severity, category, and remediation guidance for autonomous agents",
+  "version": "1.0.0",
+  "error_codes": {
+    "MISSING_REQUIRED_SECTION": {
+      "severity": "FAIL",
+      "category": "structure",
+      "description": "Required section not found in document",
+      "auto_fix_available": true,
+      "escalation_required": false,
+      "remediation_type": "add_section",
+      "documentation": ".agents/docs/autonomous-validation-evidence.md#required-packet-sections"
+    },
+    "MISSING_FRONTMATTER_FIELD": {
+      "severity": "FAIL",
+      "category": "structure",
+      "description": "Required frontmatter field missing from skill file",
+      "auto_fix_available": false,
+      "escalation_required": false,
+      "remediation_type": "edit_frontmatter",
+      "documentation": ".agents/docs/skills-reference.md#frontmatter-fields"
+    },
+    "INSUFFICIENT_PHASES": {
+      "severity": "FAIL",
+      "category": "structure",
+      "description": "Skill has fewer than required minimum phases",
+      "auto_fix_available": false,
+      "escalation_required": false,
+      "remediation_type": "add_phases",
+      "documentation": ".agents/docs/skills-reference.md#phase-structure"
+    },
+    "NO_VERDICT_KEYWORDS": {
+      "severity": "FAIL",
+      "category": "completeness",
+      "description": "No verdict keywords (PASS/FAIL/CONCERNS) found in document",
+      "auto_fix_available": false,
+      "escalation_required": false,
+      "remediation_type": "add_verdict",
+      "documentation": ".agents/docs/skills-reference.md#verdict-keywords"
+    },
+    "MISSING_COLLABORATIVE_PROTOCOL": {
+      "severity": "FAIL",
+      "category": "safety",
+      "description": "Skill uses Write/Edit tools but lacks ask-before-write language",
+      "auto_fix_available": false,
+      "escalation_required": false,
+      "remediation_type": "add_approval_language",
+      "documentation": ".agents/docs/skills-reference.md#collaborative-protocol"
+    },
+    "MISSING_NEXT_STEP_HANDOFF": {
+      "severity": "WARN",
+      "category": "completeness",
+      "description": "No follow-up or next-step section found",
+      "auto_fix_available": false,
+      "escalation_required": false,
+      "remediation_type": "add_handoff_section",
+      "documentation": ".agents/docs/skills-reference.md#next-step-handoff"
+    },
+    "FORK_COMPLEXITY_MISMATCH": {
+      "severity": "WARN",
+      "category": "structure",
+      "description": "context: fork set but insufficient phases for complexity",
+      "auto_fix_available": false,
+      "escalation_required": false,
+      "remediation_type": "add_phases_or_remove_fork",
+      "documentation": ".agents/docs/skills-reference.md#fork-context"
+    },
+    "EMPTY_ARGUMENT_HINT": {
+      "severity": "WARN",
+      "category": "completeness",
+      "description": "argument-hint frontmatter field is empty",
+      "auto_fix_available": false,
+      "escalation_required": false,
+      "remediation_type": "add_argument_hint",
+      "documentation": ".agents/docs/skills-reference.md#argument-hint"
+    },
+    "WRITE_SET_COLLISION": {
+      "severity": "FAIL",
+      "category": "parallel_execution",
+      "description": "Write-set paths overlap between active contracts",
+      "auto_fix_available": false,
+      "escalation_required": true,
+      "remediation_type": "owner_resolution",
+      "documentation": ".agents/docs/work-contract-schema.md#parallel-execution-rules"
+    },
+    "DEPENDENCY_NOT_VALIDATED": {
+      "severity": "FAIL",
+      "category": "dependency",
+      "description": "Contract dependency not yet validated or closed",
+      "auto_fix_available": false,
+      "escalation_required": false,
+      "remediation_type": "wait_for_dependency",
+      "documentation": ".agents/docs/work-contract-schema.md#dependency-ordering"
+    },
+    "CATALOG_COUNT_MISMATCH": {
+      "severity": "FAIL",
+      "category": "consistency",
+      "description": "Skill catalog count does not match actual skill count",
+      "auto_fix_available": true,
+      "escalation_required": false,
+      "remediation_type": "update_catalog_count",
+      "documentation": "CCGS Skill Testing Framework/README.md"
+    },
+    "SKILL_NOT_IN_CATALOG": {
+      "severity": "FAIL",
+      "category": "consistency",
+      "description": "Skill exists on disk but not listed in catalog",
+      "auto_fix_available": true,
+      "escalation_required": false,
+      "remediation_type": "add_to_catalog",
+      "documentation": "CCGS Skill Testing Framework/catalog.yaml"
+    },
+    "CATALOG_ENTRY_MISSING_SKILL": {
+      "severity": "FAIL",
+      "category": "consistency",
+      "description": "Catalog lists skill that does not exist on disk",
+      "auto_fix_available": true,
+      "escalation_required": false,
+      "remediation_type": "remove_from_catalog_or_create_skill",
+      "documentation": "CCGS Skill Testing Framework/catalog.yaml"
+    },
+    "MISSING_OVERALL_VERDICT": {
+      "severity": "FAIL",
+      "category": "structure",
+      "description": "Evidence packet lacks concrete overall verdict line",
+      "auto_fix_available": false,
+      "escalation_required": false,
+      "remediation_type": "add_verdict_line",
+      "documentation": ".agents/docs/autonomous-validation-evidence.md#overall-verdict"
+    },
+    "NO_COMPLETED_CHECKS": {
+      "severity": "FAIL",
+      "category": "completeness",
+      "description": "Evidence packet has no completed check rows",
+      "auto_fix_available": false,
+      "escalation_required": false,
+      "remediation_type": "complete_checks",
+      "documentation": ".agents/docs/autonomous-validation-evidence.md#checks-run-section"
+    },
+    "FILE_NOT_FOUND": {
+      "severity": "FAIL",
+      "category": "io",
+      "description": "Required file or directory not found",
+      "auto_fix_available": false,
+      "escalation_required": false,
+      "remediation_type": "verify_path",
+      "documentation": null
+    },
+    "INVALID_ARGUMENT": {
+      "severity": "FAIL",
+      "category": "usage",
+      "description": "Invalid command-line argument provided",
+      "auto_fix_available": false,
+      "escalation_required": false,
+      "remediation_type": "check_usage",
+      "documentation": null
+    },
+    "MISSING_DEPENDENCY": {
+      "severity": "FAIL",
+      "category": "environment",
+      "description": "Required tool or dependency not found in PATH",
+      "auto_fix_available": true,
+      "escalation_required": false,
+      "remediation_type": "install_dependency",
+      "documentation": ".agents/docs/setup-requirements.md"
+    },
+    "SCHEMA_VALIDATION_FAILED": {
+      "severity": "FAIL",
+      "category": "structure",
+      "description": "Document does not conform to required JSON schema",
+      "auto_fix_available": false,
+      "escalation_required": false,
+      "remediation_type": "fix_schema_violations",
+      "documentation": ".agents/schemas/README.md"
+    },
+    "VALIDATION_ERROR": {
+      "severity": "FAIL",
+      "category": "validation",
+      "description": "Validator failed while processing an input item",
+      "auto_fix_available": false,
+      "escalation_required": false,
+      "remediation_type": "inspect_input",
+      "documentation": ".agents/docs/ai-friendly-apis.md"
+    },
+    "UNKNOWN_ERROR": {
+      "severity": "FAIL",
+      "category": "validation",
+      "description": "Unexpected validator condition without a specific error mapping",
+      "auto_fix_available": false,
+      "escalation_required": false,
+      "remediation_type": "inspect_validator",
+      "documentation": ".agents/docs/ai-friendly-apis.md"
+    }
+  }
+}
