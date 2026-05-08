@@ -786,6 +786,28 @@ skills:
     priority: low
     category: utility
 
+  - name: qa-evidence-assign
+    spec: CCGS Skill Testing Framework/skills/utility/qa-evidence-assign.md
+    last_static: ""
+    last_static_result: ""
+    last_spec: ""
+    last_spec_result: ""
+    last_category: ""
+    last_category_result: ""
+    priority: low
+    category: utility
+
+  - name: qa-evidence-aggregate
+    spec: CCGS Skill Testing Framework/skills/utility/qa-evidence-aggregate.md
+    last_static: ""
+    last_static_result: ""
+    last_spec: ""
+    last_spec_result: ""
+    last_category: ""
+    last_category_result: ""
+    priority: low
+    category: utility
+
   - name: bug-triage
     spec: CCGS Skill Testing Framework/skills/utility/bug-triage.md
     last_static: ""

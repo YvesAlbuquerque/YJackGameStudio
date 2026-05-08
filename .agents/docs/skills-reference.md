@@ -1,6 +1,6 @@
 # Available Skills (Slash Commands)
 
-72 procedural skills organized by phase. In tools that support slash commands or
+76 procedural skills organized by phase. In tools that support slash commands or
 project skills, type `/` to access them. In tools that do not, read the matching
 `.agents/skills/<name>/SKILL.md` file and follow its phases.
 
@@ -74,6 +74,8 @@ project skills, type `/` to access them. In tools that do not, read the matching
 | Command | Purpose |
 |---------|---------|
 | `/qa-plan` | Generate a QA test plan for a sprint or feature |
+| `/qa-evidence-assign` | Generate and assign QA evidence tasks for parallel qa-tester execution |
+| `/qa-evidence-aggregate` | Aggregate QA evidence tasks into sprint or milestone sign-off reports |
 | `/smoke-check` | Run critical path smoke test gate before QA hand-off |
 | `/soak-test` | Generate a soak test protocol for extended play sessions |
 | `/regression-suite` | Map test coverage to GDD critical paths, identify fixed bugs without regression tests |
