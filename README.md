@@ -11,6 +11,8 @@
 > projects, this template becomes an autonomous AI production layer that orchestrates
 > planning, issue contracts, ownership, validation evidence, and YJackCore routing.
 > See [AGENTS.md](AGENTS.md) for the product thesis and authority boundaries.
+> See [Product Positioning](docs/market/positioning.md) and the
+> [Product Roadmap](docs/product/roadmap.md) for the current wedge.
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
@@ -20,6 +22,49 @@
   <a href=".agents/hooks"><img src="https://img.shields.io/badge/hooks-12-orange" alt="12 Hooks"></a>
   <a href="AGENTS.md"><img src="https://img.shields.io/badge/AI%20entrypoint-AGENTS.md-black" alt="AGENTS.md"></a>
 </p>
+
+---
+
+## Product Positioning
+
+**YJackGameStudio is an owner-directed autonomous game studio OS for
+maintainable, AI-native game development.**
+
+Its first product wedge is:
+
+> Idea -> production-ready YJackCore-aware vertical-slice plan.
+
+YJackGameStudio is the production/studio layer: it turns owner intent into
+structured plans, work contracts, dependency ownership, validation evidence, QA
+expectations, and owner decisions. It is not a prompt-to-game toy, Unity AI
+clone, UGC platform, asset generator, or claim of full autonomous game
+generation.
+
+| Name | Meaning |
+|------|---------|
+| **Claude Code Game Studios** | The original Claude Code template distribution: 49 agents, 72 skills, hooks, rules, and workflow docs. |
+| **Agentic Game Studios** | The broader product category/pattern: AI-assisted studio teams that plan, implement, review, and validate game work. |
+| **YJackGameStudio** | The owner-directed studio OS profile for maintainable AI-native game development, with provider-neutral contracts and first-class YJackCore routing. |
+| **YJackCore** | The optional but preferred Unity gameplay framework / low-code authoring substrate for YJack ecosystem projects. |
+
+When integrated with Unity, YJackGameStudio orchestrates production, planning,
+agents, issue contracts, validation, and owner decisions. YJackCore remains the
+Unity runtime/editor framework authority. Unity AI is tracked as a future
+engine-native execution layer and platform factor; this repo does not claim Unity
+AI integration today.
+
+Current product docs:
+
+- [Market positioning](docs/market/positioning.md)
+- [Competitive landscape](docs/market/competitive-landscape.md)
+- [Unity AI watch](docs/market/unity-ai-watch.md)
+- [Tracking watchlist](docs/market/tracking-watchlist.md)
+- [Target users](docs/product/target-users.md)
+- [First wedge](docs/product/first-wedge.md)
+- [Demo strategy](docs/product/demo-strategy.md)
+- [Packaging](docs/product/packaging.md)
+- [Monetization](docs/product/monetization.md)
+- [Product roadmap](docs/product/roadmap.md)
 
 ---
 
@@ -66,6 +111,11 @@ YJackGameStudio can operate in two configurations:
 | **YJackGameStudio** | Autonomous AI production/studio layer — planning, contracts, ownership, validation, routing |
 
 YJackCore is the authority for Unity package files, layer architecture, and the low-code authoring substrate. YJackGameStudio consumes YJackCore guidance. It does not modify YJackCore package files unless the owner explicitly authorizes a framework change.
+
+Unity AI is a separate engine-native AI surface. YJackGameStudio should monitor
+it as both a future execution layer and a platform threat, while continuing to
+own higher-level planning, contracts, validation evidence, and owner gates. No
+Unity AI integration is claimed here.
 
 ---
 
