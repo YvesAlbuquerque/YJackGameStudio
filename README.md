@@ -1,9 +1,11 @@
 <p align="center">
-  <h1 align="center">Agentic Game Studios</h1>
+  <h1 align="center">YJackGameStudio</h1>
   <p align="center">
-    A portable game-development studio architecture for Codex, GitHub Copilot, Gemini, Google Antigravity, and Claude Code.
+    <strong>Turn AI coding tools into coordinated game development teams.</strong>
     <br />
-    49 agents. 76 skills. One coordinated AI team.
+    49 specialized agents. 76 procedural workflows. Owner-directed autonomy.
+    <br />
+    <em>For Godot, Unity, and Unreal projects.</em>
   </p>
 </p>
 
@@ -18,18 +20,34 @@
 
 ---
 
-## Why This Exists
+## What Is This?
 
-A single AI coding chat is useful, but game development needs structure: design
-ownership, architecture decisions, content validation, QA, sprint planning, and
-release discipline. This repository packages those responsibilities as a studio
-model that agentic tools can follow.
+**YJackGameStudio** is an owner-directed autonomous game studio OS that transforms AI coding tools into coordinated game development teams. It provides 49 specialized agents (designers, programmers, QA, producers), 76 procedural skills (from brainstorming to release), and professional workflows for Godot, Unity, and Unreal projects.
 
-This fork is based on
-[Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios).
-The original project was Claude Code-centric; this fork adds a provider-neutral
-shared layer under `.agents/` plus native adapters for the major agentic coding
-systems.
+Unlike prompt-to-game toys, YJackGameStudio requires your direction at every stage. You approve concepts, review design docs, make architecture decisions, and control releases. The agents handle execution, documentation, and validation — but you remain the creative director.
+
+**Key Features:**
+- **Multi-Agent Coordination**: 49 specialists working in parallel, not one assistant
+- **Engine-Aware**: Native support for Godot, Unity, Unreal with version-pinned references
+- **Evidence-Based QA**: Structured validation with BLOCKING/ADVISORY verdicts
+- **Owner Control**: Three autonomy modes with hard gates on source code and releases
+- **Portable**: Works across Codex, Copilot, Gemini, Antigravity, Claude Code
+- **Customizable**: Fork and modify agents, skills, rules, and templates
+
+**What This Is NOT:**
+- ❌ Not a prompt-to-game toy (requires owner direction at every major gate)
+- ❌ Not full autonomous game generation (you control all major decisions)
+- ❌ Not Unity AI integration (separate tool, no integration exists or is claimed)
+- ❌ Not an asset generator (generates code and docs, not art/audio)
+
+**Learn More:**
+- 📖 [Public Messaging](docs/product/public-messaging.md) — Complete positioning and differentiation
+- 🎯 [Elevator Pitches](docs/product/elevator-pitches.md) — 10-second to 1-minute explanations
+- 🌐 [Website Copy](docs/product/website-copy.md) — Hero sections, comparisons, FAQ
+- 🚀 [Launch Narrative](docs/product/launch-narrative.md) — Story, strategy, community plan
+- 🗺️ [Product Roadmap](docs/product/roadmap.md) — Current status and upcoming milestones
+
+Based on [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios) with provider-neutral extensions.
 
 ## Supported Agent Systems
 
