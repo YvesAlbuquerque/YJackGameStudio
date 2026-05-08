@@ -3,14 +3,14 @@
   <p align="center">
     A portable game-development studio architecture for Codex, GitHub Copilot, Gemini, Google Antigravity, and Claude Code.
     <br />
-    49 agents. 72 skills. One coordinated AI team.
+    49 agents. 74 skills. One coordinated AI team.
   </p>
 </p>
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
   <a href=".agents/agents"><img src="https://img.shields.io/badge/agents-49-blueviolet" alt="49 Agents"></a>
-  <a href=".agents/skills"><img src="https://img.shields.io/badge/skills-72-green" alt="72 Skills"></a>
+  <a href=".agents/skills"><img src="https://img.shields.io/badge/skills-74-green" alt="74 Skills"></a>
   <a href=".agents/rules"><img src="https://img.shields.io/badge/rules-11-red" alt="11 Rules"></a>
   <a href=".agents/hooks"><img src="https://img.shields.io/badge/hooks-12-orange" alt="12 Hooks"></a>
   <a href="AGENTS.md"><img src="https://img.shields.io/badge/AI%20entrypoint-AGENTS.md-black" alt="AGENTS.md"></a>
@@ -151,7 +151,7 @@ Claude-specific source of truth:
 | Category | Count | Shared Location | Purpose |
 |----------|-------|-----------------|---------|
 | Agents | 49 | `.agents/agents/` | Studio roles across design, programming, art, audio, narrative, QA, and production |
-| Skills | 72 | `.agents/skills/` | Procedural workflows such as `/start`, `/design-system`, `/dev-story`, and `/story-done` |
+| Skills | 74 | `.agents/skills/` | Procedural workflows such as `/start`, `/design-system`, `/dev-story`, and `/story-done` |
 | Rules | 11 | `.agents/rules/` | Path/domain constraints for gameplay, engine, UI, AI, networking, tests, and docs |
 | Hooks | 12 | `.agents/hooks/` | Portable validation scripts; automatic wiring depends on the tool |
 | Templates | 38 | `.agents/docs/templates/` | GDDs, ADRs, sprint plans, UX specs, test plans, release docs, and more |
@@ -235,9 +235,69 @@ Common commands or procedural skill files:
 - `/dev-story` - story implementation
 - `/story-done` - acceptance review
 - `/qa-plan`, `/smoke-check`, `/release-checklist` - QA and release gates
+- `/qa-evidence-assign`, `/qa-evidence-aggregate` - multi-agent QA evidence workflow
+- `/test-evidence-review` - QA evidence quality review
 
 When a tool does not expose slash commands, treat `/skill-name` as shorthand for
 reading `.agents/skills/skill-name/SKILL.md`.
+
+---
+
+## Multi-Agent QA Evidence Workflow
+
+The studio supports parallel QA execution through evidence tasks. This workflow enables
+qa-tester agents to execute test verification independently and aggregate results into
+sprint or milestone sign-off reports.
+
+### How It Works
+
+1. **After Implementation**: Stories are implemented and unit/integration tests are written
+2. **Evidence Assignment**: `/qa-evidence-assign sprint` generates QA evidence tasks for each story
+3. **Parallel Execution**: qa-tester agents execute evidence tasks independently (or use `/team-qa`)
+4. **Evidence Review**: `/test-evidence-review sprint` validates evidence quality before aggregation
+5. **Aggregation**: `/qa-evidence-aggregate sprint` produces sign-off report with BLOCKING/ADVISORY verdicts
+6. **Gate Advancement**: `/gate-check` consumes aggregated evidence to approve phase transitions
+
+### Evidence Task Types
+
+| Story Type | Evidence Task | Artifact Location | Gate Level |
+|---|---|---|---|
+| Logic | `unit-test` | `tests/unit/[system]/` | BLOCKING |
+| Integration | `integration-test` | `tests/integration/[system]/` or playtest doc | BLOCKING |
+| Visual/Feel | `visual-evidence` | `production/qa/evidence/` | ADVISORY |
+| UI | `ui-evidence` | `production/qa/evidence/` | ADVISORY |
+| Config/Data | `smoke-check` | `production/qa/smoke-*.md` | ADVISORY |
+| Playtest | `playtest-session` | `production/qa/playtests/` | ADVISORY |
+
+### Quick Start
+
+```bash
+# After sprint implementation is complete:
+/qa-evidence-assign sprint         # Generate evidence tasks for all stories
+/test-evidence-review sprint        # Review evidence quality (before aggregation)
+/qa-evidence-aggregate sprint       # Produce QA sign-off report
+
+# Check sign-off verdict in production/qa/qa-signoff-[sprint]-[date].md
+# Verdict: APPROVED / APPROVED WITH CONDITIONS / NOT APPROVED
+```
+
+### Key Files
+
+- **Schema**: `.agents/docs/qa-evidence-task-schema.md`
+- **Templates**: `.agents/docs/templates/qa-evidence-task.{yml,md}`
+- **Skills**: `.agents/skills/qa-evidence-assign/`, `.agents/skills/qa-evidence-aggregate/`, `.agents/skills/test-evidence-review/`
+
+### Unverifiable Criteria
+
+When acceptance criteria cannot be verified autonomously (subjective qualities, Unity Play
+Mode requirements, platform-specific behavior), they are flagged as "unverifiable" and
+surfaced to the owner dashboard. BLOCKING unverifiable criteria require explicit owner
+confirmation before story completion.
+
+For Unity + YJackCore projects, manual validation requirements are documented in
+`.agents/docs/templates/yjackcore-unity-manual-validation.md` and included in evidence packets.
+
+---
 
 ## Project Structure
 

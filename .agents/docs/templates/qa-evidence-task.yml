@@ -1,0 +1,59 @@
+# QA Evidence Task Template
+# Template for creating standalone QA evidence task files in production/qa/evidence-tasks/
+# Schema: .agents/docs/qa-evidence-task-schema.md
+
+# Identity
+task_id: "QA-001"                    # Unique ID: QA-[NNN] or QA-[story-slug]-[type]
+task_type: "unit-test"               # unit-test | integration-test | visual-evidence | ui-evidence | smoke-check | playtest-session | release-check
+status: "assigned"                   # assigned | in_progress | pass | fail | blocked | deferred
+story_ref: "STORY-001"               # Story contract ID or file path this validates
+assigned_to: "qa-tester"             # Agent role or owner username
+
+# Test Scope
+acceptance_criteria:                 # AC IDs from the story this task covers
+  - "AC-1"
+  - "AC-2"
+test_description: |
+  One paragraph describing what behavior is being validated and what success looks like.
+preconditions:                       # Optional: requirements before test can run
+  - "Build must exist at commit abc123"
+  - "Test data seeded in tests/fixtures/"
+expected_result: "All damage calculations match formulas in GDD section 3.2"
+
+# Execution
+test_file: "tests/unit/combat/damage_calculator_test.gd"  # Path to automated test file (optional)
+evidence_artifact: ""                                      # Path to evidence doc for manual tasks (optional)
+validation_command: "godot --headless --script tests/gdunit4_runner.gd"  # Command to run automated test (optional)
+manual_steps:                        # Numbered steps for manual verification (optional)
+  - "Launch game in dev mode"
+  - "Trigger combat scenario X"
+  - "Verify damage values match expected_result"
+
+# Results (populated by qa-tester during execution)
+result: ""                           # PASS | FAIL | BLOCKED | NOT_RUN (required when status is pass/fail/blocked)
+actual_result: ""                    # What actually happened (required when result is FAIL)
+failure_reason: ""                   # Root cause (required when result is FAIL)
+bug_filed: ""                        # Bug ID if defect found (e.g., BUG-042)
+sign_offs:                           # Required approvals for manual evidence tasks
+  - role: "qa-lead"
+    name: ""
+    approved: false
+    date: ""
+
+# Aggregation
+sprint: "sprint-03"                  # Sprint ID for sprint-level aggregation
+milestone: "mvp-alpha"               # Milestone ID for milestone-level aggregation
+gate: "team-qa"                      # story-done | smoke-check | team-qa | gate-check | release
+aggregation_group: "sprint-03-logic-tests"  # Logical grouping key for batching
+
+# Notes
+notes: |
+  Any additional context, special setup instructions, or agent observations.
+
+# Status Log (append-only)
+status_log:
+  - timestamp: "2026-05-08T10:00:00Z"
+    from: "assigned"
+    to: "in_progress"
+    agent: "qa-tester"
+    note: "Starting test execution"
