@@ -1,0 +1,178 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://yjackgamestudio.dev/schemas/validation-output.schema.json",
+  "title": "Validation Output Schema",
+  "description": "Standard JSON output format for all validation scripts",
+  "version": "1.0.0",
+  "type": "object",
+  "required": ["schema_version", "timestamp", "command", "exit_code", "summary"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "Version of this output schema",
+      "pattern": "^\\d+\\.\\d+(\\.\\d+)?$"
+    },
+    "timestamp": {
+      "type": "string",
+      "description": "ISO 8601 timestamp when validation ran",
+      "format": "date-time"
+    },
+    "command": {
+      "type": "string",
+      "description": "Full command that was executed"
+    },
+    "exit_code": {
+      "type": "integer",
+      "description": "Exit code: 0=pass, 1=fail, 2=usage error",
+      "enum": [0, 1, 2]
+    },
+    "summary": {
+      "type": "object",
+      "description": "High-level validation summary",
+      "required": ["verdict"],
+      "properties": {
+        "verdict": {
+          "type": "string",
+          "enum": ["PASS", "FAIL", "WARNINGS", "ERROR"]
+        },
+        "total_items": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "passed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "failed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "warnings": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "description": "Individual items validated",
+      "items": {
+        "type": "object",
+        "required": ["id", "verdict"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Identifier for this item"
+          },
+          "path": {
+            "type": "string",
+            "description": "File path if applicable"
+          },
+          "verdict": {
+            "type": "string",
+            "enum": ["PASS", "FAIL", "WARN", "COMPLIANT", "NON-COMPLIANT", "WARNINGS"]
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["check_id", "name", "result"],
+              "properties": {
+                "check_id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "string",
+                  "enum": ["PASS", "FAIL", "WARN"]
+                },
+                "detail": {
+                  "type": "string"
+                },
+                "required": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "errors": {
+      "type": "array",
+      "description": "Errors encountered during validation",
+      "items": {
+        "type": "object",
+        "required": ["code", "severity", "message"],
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Error code from error-codes.json registry"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["FAIL", "WARN", "INFO"]
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable error message"
+          },
+          "context": {
+            "type": "object",
+            "description": "Contextual information about the error",
+            "properties": {
+              "file": {
+                "type": "string"
+              },
+              "line": {
+                "type": ["integer", "null"]
+              },
+              "section": {
+                "type": "string"
+              }
+            }
+          },
+          "remediation": {
+            "type": "object",
+            "description": "How to fix this error",
+            "properties": {
+              "action": {
+                "type": "string",
+                "description": "Type of fix required"
+              },
+              "command": {
+                "type": "string",
+                "description": "Executable command to fix"
+              },
+              "template": {
+                "type": "string",
+                "description": "Template file to use"
+              },
+              "documentation": {
+                "type": "string",
+                "description": "Documentation reference"
+              }
+            }
+          }
+        }
+      }
+    },
+    "remediation": {
+      "type": "object",
+      "description": "Overall remediation guidance",
+      "properties": {
+        "available": {
+          "type": "boolean"
+        },
+        "suggestions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
