@@ -44,6 +44,7 @@ sign_offs:                           # Required approvals for manual evidence ta
 sprint: "sprint-03"                  # Sprint ID for sprint-level aggregation
 milestone: "mvp-alpha"               # Milestone ID for milestone-level aggregation
 gate: "team-qa"                      # story-done | smoke-check | team-qa | gate-check | release
+gate_level_override: ""              # Optional: BLOCKING | ADVISORY (default derives from task_type)
 aggregation_group: "sprint-03-logic-tests"  # Logical grouping key for batching
 
 # Notes

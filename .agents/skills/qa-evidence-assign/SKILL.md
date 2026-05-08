@@ -45,7 +45,7 @@ For each story file in scope:
 
 1. Read the full file and extract:
    - Story ID and title
-   - **Story Type** field (Logic, Integration, Visual/Feel, UI, Config/Data)
+   - **Story Type** field (Logic, Integration, Visual/Feel, UI, Config/Data, Playtest, Release)
    - **Acceptance Criteria** — complete list with IDs
    - **Test Evidence** section — expected test file path or evidence document path
    - **GDD reference** — for context
@@ -146,6 +146,36 @@ gate: "smoke-check"
 
 **Gate level**: ADVISORY
 
+### Playtest Stories → playtest-session Evidence Task
+
+```yaml
+task_type: "playtest-session"
+test_description: "[Story title] — validate player-facing behavior in live play"
+expected_result: "Playtest report confirms AC outcomes and records observations"
+evidence_artifact: "production/qa/playtests/[story-slug]-playtest.md"
+manual_steps:
+  - "Run /playtest-report for this story scope"
+  - "Capture tester notes, issues, and sentiment"
+gate: "team-qa"
+```
+
+**Gate level**: ADVISORY
+
+### Release Stories → release-check Evidence Task
+
+```yaml
+task_type: "release-check"
+test_description: "[Story title] — verify release-readiness requirements"
+expected_result: "Release checklist items tied to AC are complete"
+evidence_artifact: "production/releases/release-checklist-[date].md"
+manual_steps:
+  - "Validate AC-linked release checklist entries"
+  - "Confirm rollout blockers are documented"
+gate: "release"
+```
+
+**Gate level**: BLOCKING
+
 ---
 
 ## Phase 4: Assign to QA Lanes
@@ -155,16 +185,16 @@ that can run in parallel.
 
 **Lane assignment strategy**:
 
-1. **unit-test** and **integration-test** tasks (BLOCKING) → high-priority lane
-2. **visual-evidence** and **ui-evidence** tasks (ADVISORY) → medium-priority lane
+1. **unit-test**, **integration-test**, and **release-check** tasks (BLOCKING) → high-priority lane
+2. **visual-evidence**, **ui-evidence**, and **playtest-session** tasks (ADVISORY) → medium-priority lane
 3. **smoke-check** tasks (ADVISORY) → low-priority lane (batched together)
 
 Present the lane assignment table:
 
 | Lane | Task Count | Task Type | Execution Mode |
 |------|-----------|-----------|----------------|
-| High Priority | [N] | unit-test, integration-test | Parallel (collision-checked) |
-| Medium Priority | [N] | visual-evidence, ui-evidence | Parallel (collision-checked) |
+| High Priority | [N] | unit-test, integration-test, release-check | Parallel (collision-checked) |
+| Medium Priority | [N] | visual-evidence, ui-evidence, playtest-session | Parallel (collision-checked) |
 | Low Priority | [N] | smoke-check | Batched (single agent) |
 
 ---
@@ -188,9 +218,10 @@ For each generated evidence task:
    ```
 
 3. If GitHub issues:
-   - Use `gh issue create --template qa_evidence_task` (when template exists)
-   - Apply labels: `qa-evidence`, `type:[task_type]`, `status:assigned`, `gate:[gate]`
-   - If template does not exist, write YAML files instead and note template creation needed
+    - Use `gh issue create --template qa_evidence_task` (when template exists)
+    - Apply existing labels: `domain:qa`, `type:validation`, `status:in-progress`
+    - Store `task_type`, `status`, `gate`, `sprint`, and `milestone` in issue body/frontmatter fields
+    - If template does not exist, write YAML files instead and note template creation needed
 
 4. If YAML or Markdown:
    - Write all files to `production/qa/evidence-tasks/`
@@ -223,6 +254,8 @@ Produce a master evidence tracker that qa-lead and owner use to monitor QA progr
 | visual-evidence | [N] | | ✅ | [N] | [N] | [N] | [N] | [N] |
 | ui-evidence | [N] | | ✅ | [N] | [N] | [N] | [N] | [N] |
 | smoke-check | [N] | | ✅ | [N] | [N] | [N] | [N] | [N] |
+| playtest-session | [N] | | ✅ | [N] | [N] | [N] | [N] | [N] |
+| release-check | [N] | ✅ | | [N] | [N] | [N] | [N] | [N] |
 
 **BLOCKING tasks must all PASS before sprint can close.**
 **ADVISORY tasks contribute to sign-off verdict but do not block.**
@@ -255,7 +288,7 @@ Stories with acceptance criteria that cannot be verified autonomously:
 
 ## Next Steps
 
-1. **Parallel Execution**: Distribute tasks to qa-tester agents (use `/qa-execute [task-id]` or equivalent)
+1. **Parallel Execution**: Distribute tasks to qa-tester agents (each agent picks a task and updates its YAML/issue status directly)
 2. **Progress Tracking**: Update this document as tasks transition to `pass`, `fail`, or `blocked`
 3. **Aggregation**: Run `/qa-evidence-aggregate` when all BLOCKING tasks are `pass` to produce sign-off report
 4. **Owner Dashboard**: Unverifiable criteria feed `/owner-dashboard` for visibility
@@ -309,5 +342,5 @@ Master tracker written to `production/qa/evidence-tracking-[scope]-[date].md`.
 
 Next steps:
 - Distribute BLOCKING tasks to qa-tester lanes for parallel execution
-- Run `/qa-execute [task-id]` to execute individual tasks (or use team-qa orchestration)
+- Have qa-tester lanes execute assigned tasks and update task status/results in-place (or use team-qa orchestration)
 - Run `/qa-evidence-aggregate [scope]` when all BLOCKING tasks complete to produce sign-off report"

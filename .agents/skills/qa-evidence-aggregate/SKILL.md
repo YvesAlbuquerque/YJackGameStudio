@@ -1,7 +1,7 @@
 ---
 name: qa-evidence-aggregate
 description: "Aggregate QA evidence tasks into sprint or milestone sign-off reports. Reads all evidence task results, groups by sprint or milestone, applies verdict rules (BLOCKING vs ADVISORY), and produces a structured sign-off document. Feeds /gate-check and owner dashboard."
-argument-hint: "[sprint-id | milestone-id | gate: gate-name]"
+argument-hint: "[sprint-[id] | milestone-[id] | gate: gate-name]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, AskUserQuestion
 agent: qa-lead
@@ -46,11 +46,11 @@ After resolving scope, report: "Aggregating QA evidence for [scope]. Loading evi
 If evidence tasks are stored as GitHub issues:
 
 ```bash
-gh issue list --label "qa-evidence,sprint:[id]" --json number,title,labels,body --state all
+gh issue list --label "domain:qa,type:validation" --json number,title,labels,body --state all
 ```
 
 Parse each issue:
-- Extract `task_id`, `task_type`, `status`, `result` from labels and body
+- Extract `task_id`, `task_type`, `status`, `result`, `sprint`, `milestone`, and `gate` from issue body/frontmatter
 - Extract `acceptance_criteria`, `story_ref`, `bug_filed` from body
 - Group by `task_type` and `status`
 
@@ -103,7 +103,7 @@ For each task type, count results:
 ### Sprint-Level Verdict (for `/team-qa` sign-off)
 
 **APPROVED** if ALL of:
-- All BLOCKING tasks (unit-test, integration-test, release-check) are `pass`
+- All BLOCKING tasks (unit-test, integration-test, and release-check when present) are `pass`
 - No S1 or S2 bugs filed from evidence tasks
 - All `assigned` and `in_progress` BLOCKING tasks are zero (all complete)
 

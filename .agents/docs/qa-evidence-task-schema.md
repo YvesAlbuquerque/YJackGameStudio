@@ -81,7 +81,14 @@ Every story type has a corresponding evidence task type with specific artifact r
 | `sprint` | string | — | Sprint ID this task belongs to (for sprint-level aggregation) |
 | `milestone` | string | — | Milestone ID (for milestone-level aggregation) |
 | `gate` | enum | — | Which gate this evidence feeds: `story-done`, `smoke-check`, `team-qa`, `gate-check`, `release` |
+| `gate_level_override` | enum | — | Optional override for effective gate level: `BLOCKING` or `ADVISORY` (defaults from `task_type`) |
 | `aggregation_group` | string | — | Logical grouping key for batching related evidence (e.g., `sprint-03-logic-tests`) |
+
+### Audit Trail (Optional)
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `status_log` | list | — | Append-only transition history entries: `{timestamp, from, to, agent, note}` |
 
 ---
 
@@ -131,27 +138,29 @@ ASSIGNED → IN_PROGRESS → PASS / FAIL / BLOCKED
 
 ## Storage Formats
 
-### Option A: GitHub Issue with `qa-evidence` Label
+### Option A: GitHub Issue with existing label taxonomy
 
 Use `.github/ISSUE_TEMPLATE/qa_evidence_task.yml` (to be created).
 
-Labels encode:
-- `qa-evidence` — base label for all evidence tasks
-- `type:[task_type]` — evidence type
-- `status:[status]` — current state
-- `gate:[gate]` — which validation gate this feeds
+Use repository-standard labels and keep evidence metadata in the issue body/template:
+- `domain:qa` — base QA scope
+- `type:validation` — validation artifact classification
+- `status:in-progress` / `status:blocked` / `status:deferred` — coarse workflow state
+
+Issue body fields encode:
+- `task_type`, `status`, `gate`, `sprint`, `milestone`, `story_ref`, `result`
 
 Query examples:
 
 ```bash
-# All assigned evidence tasks ready for qa-tester pickup
-gh issue list --label "qa-evidence,status:assigned"
+# All QA validation tasks (filter assigned in body field)
+gh issue list --label "domain:qa,type:validation"
 
 # All failing evidence tasks (bugs to file)
-gh issue list --label "qa-evidence,status:fail"
+gh issue list --label "domain:qa,type:validation" --search "result: FAIL"
 
 # All evidence for smoke-check gate
-gh issue list --label "qa-evidence,gate:smoke-check"
+gh issue list --label "domain:qa,type:validation" --search "gate: smoke-check"
 ```
 
 ### Option B: YAML in `production/qa/evidence-tasks/`
@@ -235,8 +244,12 @@ Required confirmations:
 - `.meta` file integrity — risk of Unity re-importing
 - Asset database refresh — requires Editor asset import pipeline
 
-Any Unity + YJackCore evidence task is ADVISORY (not BLOCKING) by default unless the
-owner explicitly marks it BLOCKING for a specific gate.
+Gate-level precedence is deterministic:
+1. `gate_level_override` (if present) decides effective level.
+2. Otherwise default level comes from `task_type` in the Task Types table.
+
+For Unity + YJackCore evidence tasks, set `gate_level_override: ADVISORY` by default.
+If a gate must block, owner/qa-lead explicitly sets `gate_level_override: BLOCKING`.
 
 ---
 

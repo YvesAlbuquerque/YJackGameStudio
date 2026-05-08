@@ -3,14 +3,14 @@
   <p align="center">
     A portable game-development studio architecture for Codex, GitHub Copilot, Gemini, Google Antigravity, and Claude Code.
     <br />
-    49 agents. 74 skills. One coordinated AI team.
+    49 agents. 76 skills. One coordinated AI team.
   </p>
 </p>
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
   <a href=".agents/agents"><img src="https://img.shields.io/badge/agents-49-blueviolet" alt="49 Agents"></a>
-  <a href=".agents/skills"><img src="https://img.shields.io/badge/skills-74-green" alt="74 Skills"></a>
+  <a href=".agents/skills"><img src="https://img.shields.io/badge/skills-76-green" alt="76 Skills"></a>
   <a href=".agents/rules"><img src="https://img.shields.io/badge/rules-11-red" alt="11 Rules"></a>
   <a href=".agents/hooks"><img src="https://img.shields.io/badge/hooks-12-orange" alt="12 Hooks"></a>
   <a href="AGENTS.md"><img src="https://img.shields.io/badge/AI%20entrypoint-AGENTS.md-black" alt="AGENTS.md"></a>
@@ -151,7 +151,7 @@ Claude-specific source of truth:
 | Category | Count | Shared Location | Purpose |
 |----------|-------|-----------------|---------|
 | Agents | 49 | `.agents/agents/` | Studio roles across design, programming, art, audio, narrative, QA, and production |
-| Skills | 74 | `.agents/skills/` | Procedural workflows such as `/start`, `/design-system`, `/dev-story`, and `/story-done` |
+| Skills | 76 | `.agents/skills/` | Procedural workflows such as `/start`, `/design-system`, `/dev-story`, and `/story-done` |
 | Rules | 11 | `.agents/rules/` | Path/domain constraints for gameplay, engine, UI, AI, networking, tests, and docs |
 | Hooks | 12 | `.agents/hooks/` | Portable validation scripts; automatic wiring depends on the tool |
 | Templates | 38 | `.agents/docs/templates/` | GDDs, ADRs, sprint plans, UX specs, test plans, release docs, and more |
@@ -255,7 +255,7 @@ sprint or milestone sign-off reports.
 2. **Evidence Assignment**: `/qa-evidence-assign sprint` generates QA evidence tasks for each story
 3. **Parallel Execution**: qa-tester agents execute evidence tasks independently (or use `/team-qa`)
 4. **Evidence Review**: `/test-evidence-review sprint` validates evidence quality before aggregation
-5. **Aggregation**: `/qa-evidence-aggregate sprint` produces sign-off report with BLOCKING/ADVISORY verdicts
+5. **Aggregation**: `/qa-evidence-aggregate sprint-03` (or `/qa-evidence-aggregate` and choose interactively) produces sign-off reports with BLOCKING/ADVISORY verdicts
 6. **Gate Advancement**: `/gate-check` consumes aggregated evidence to approve phase transitions
 
 ### Evidence Task Types
@@ -268,6 +268,7 @@ sprint or milestone sign-off reports.
 | UI | `ui-evidence` | `production/qa/evidence/` | ADVISORY |
 | Config/Data | `smoke-check` | `production/qa/smoke-*.md` | ADVISORY |
 | Playtest | `playtest-session` | `production/qa/playtests/` | ADVISORY |
+| Release | `release-check` | `production/releases/` | BLOCKING |
 
 ### Quick Start
 
@@ -275,7 +276,7 @@ sprint or milestone sign-off reports.
 # After sprint implementation is complete:
 /qa-evidence-assign sprint         # Generate evidence tasks for all stories
 /test-evidence-review sprint        # Review evidence quality (before aggregation)
-/qa-evidence-aggregate sprint       # Produce QA sign-off report
+/qa-evidence-aggregate sprint-03    # Produce QA sign-off report (or omit arg to choose scope)
 
 # Check sign-off verdict in production/qa/qa-signoff-[sprint]-[date].md
 # Verdict: APPROVED / APPROVED WITH CONDITIONS / NOT APPROVED

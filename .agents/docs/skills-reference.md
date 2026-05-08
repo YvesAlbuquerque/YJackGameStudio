@@ -1,6 +1,6 @@
 # Available Skills (Slash Commands)
 
-74 procedural skills organized by phase. In tools that support slash commands or
+76 procedural skills organized by phase. In tools that support slash commands or
 project skills, type `/` to access them. In tools that do not, read the matching
 `.agents/skills/<name>/SKILL.md` file and follow its phases.
 
