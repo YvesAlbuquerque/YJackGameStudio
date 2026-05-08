@@ -138,8 +138,9 @@ High-level paths:
 
 ## AI-Friendly Structured APIs
 
-All validation scripts support `--format=json` for machine-parseable output conforming to
-`.agents/schemas/validation-output.schema.json`. This enables autonomous agents to:
+Selected validation scripts support `--format=json` for machine-parseable output conforming to
+`.agents/schemas/validation-output.schema.json` (currently: `validate-skill-static.sh` and
+`check-write-sets.sh`). This enables autonomous agents to:
 
 - Parse validation results without regex text parsing
 - Understand error contracts and remediation paths programmatically

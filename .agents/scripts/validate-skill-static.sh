@@ -39,6 +39,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+ORIGINAL_ARGS=("$@")
 
 usage() {
   echo "Usage: $0 [OPTIONS] [all | <skill-name> | <path/to/SKILL.md>]" >&2
@@ -58,6 +59,43 @@ usage() {
   echo "  2 — Usage error or file not found" >&2
 }
 
+emit_json_usage_error() {
+  local code="$1"
+  local message="$2"
+  local command="validate-skill-static.sh"
+  if [[ ${#ORIGINAL_ARGS[@]} -gt 0 ]]; then
+    command+=" ${ORIGINAL_ARGS[*]}"
+  fi
+  JSON_ERROR_CODE="$code" JSON_ERROR_MESSAGE="$message" JSON_ERROR_COMMAND="$command" python3 - <<'PYTHON'
+import json
+import os
+from datetime import datetime
+print(json.dumps({
+  "schema_version": "1.0",
+  "timestamp": datetime.utcnow().isoformat() + "Z",
+  "command": os.environ.get("JSON_ERROR_COMMAND", "validate-skill-static.sh"),
+  "exit_code": 2,
+  "summary": {
+    "verdict": "ERROR",
+    "total_items": 0,
+    "passed": 0,
+    "failed": 1,
+    "warnings": 0
+  },
+  "items": [],
+  "errors": [{
+    "code": os.environ.get("JSON_ERROR_CODE", "INVALID_ARGUMENT"),
+    "severity": "FAIL",
+    "message": os.environ.get("JSON_ERROR_MESSAGE", "usage error")
+  }],
+  "remediation": {
+    "available": False,
+    "suggestions": ["Run with --format=text to see usage details"]
+  }
+}, indent=2))
+PYTHON
+}
+
 # Parse options
 OUTPUT_FORMAT="text"
 POSITIONAL_ARGS=()
@@ -73,12 +111,20 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     --format)
-      echo "Error: --format requires a value (--format=text or --format=json)" >&2
+      if [[ "$OUTPUT_FORMAT" == "json" ]]; then
+        emit_json_usage_error "INVALID_ARGUMENT" "--format requires a value (--format=text or --format=json)"
+      else
+        echo "Error: --format requires a value (--format=text or --format=json)" >&2
+      fi
       exit 2
       ;;
     -*)
-      echo "Error: unknown option '$1'" >&2
-      usage
+      if [[ "$OUTPUT_FORMAT" == "json" ]]; then
+        emit_json_usage_error "INVALID_ARGUMENT" "unknown option '$1'"
+      else
+        echo "Error: unknown option '$1'" >&2
+        usage
+      fi
       exit 2
       ;;
     *)
@@ -92,8 +138,12 @@ done
 set -- "${POSITIONAL_ARGS[@]}"
 
 if [[ $# -gt 1 ]]; then
-  echo "Error: too many arguments." >&2
-  usage
+  if [[ "$OUTPUT_FORMAT" == "json" ]]; then
+    emit_json_usage_error "INVALID_ARGUMENT" "too many arguments"
+  else
+    echo "Error: too many arguments." >&2
+    usage
+  fi
   exit 2
 fi
 
@@ -115,7 +165,11 @@ elif [[ "$ARG" == *.md || "$ARG" == */SKILL.md ]]; then
   elif [[ -f "$REPO_ROOT/$ARG" ]]; then
     SKILL_FILES+=("$REPO_ROOT/$ARG")
   else
-    echo "Error: file not found: $ARG" >&2
+    if [[ "$OUTPUT_FORMAT" == "json" ]]; then
+      emit_json_usage_error "FILE_NOT_FOUND" "file not found: $ARG"
+    else
+      echo "Error: file not found: $ARG" >&2
+    fi
     exit 2
   fi
 else
@@ -124,13 +178,21 @@ else
   if [[ -f "$CANDIDATE" ]]; then
     SKILL_FILES+=("$CANDIDATE")
   else
-    echo "Error: skill not found: $ARG (tried $CANDIDATE)" >&2
+    if [[ "$OUTPUT_FORMAT" == "json" ]]; then
+      emit_json_usage_error "FILE_NOT_FOUND" "skill not found: $ARG (tried $CANDIDATE)"
+    else
+      echo "Error: skill not found: $ARG (tried $CANDIDATE)" >&2
+    fi
     exit 2
   fi
 fi
 
 if [[ ${#SKILL_FILES[@]} -eq 0 ]]; then
-  echo "Error: no SKILL.md files found under $REPO_ROOT/.agents/skills/" >&2
+  if [[ "$OUTPUT_FORMAT" == "json" ]]; then
+    emit_json_usage_error "FILE_NOT_FOUND" "no SKILL.md files found under $REPO_ROOT/.agents/skills/"
+  else
+    echo "Error: no SKILL.md files found under $REPO_ROOT/.agents/skills/" >&2
+  fi
   exit 2
 fi
 
@@ -138,7 +200,11 @@ fi
 # Python validator — all 7 checks, inline so the script has no external deps
 # Supports both text and JSON output modes
 # ---------------------------------------------------------------------------
-python3 - "${SKILL_FILES[@]}" "$OUTPUT_FORMAT" <<'PYTHON'
+VALIDATION_COMMAND="validate-skill-static.sh"
+if [[ ${#ORIGINAL_ARGS[@]} -gt 0 ]]; then
+  VALIDATION_COMMAND+=" ${ORIGINAL_ARGS[*]}"
+fi
+VALIDATION_COMMAND="$VALIDATION_COMMAND" python3 - "${SKILL_FILES[@]}" "$OUTPUT_FORMAT" <<'PYTHON'
 import sys
 import re
 import os
@@ -387,7 +453,36 @@ def run(paths, output_format):
                     6: "FORK_COMPLEXITY_MISMATCH",
                     7: "EMPTY_ARGUMENT_HINT"
                 }.get(r[0], "UNKNOWN_ERROR")
-
+                remediation = {
+                    "MISSING_FRONTMATTER_FIELD": {
+                        "action": "edit_frontmatter",
+                        "documentation": ".agents/docs/skills-reference.md#frontmatter-fields"
+                    },
+                    "INSUFFICIENT_PHASES": {
+                        "action": "add_phases",
+                        "documentation": ".agents/docs/skills-reference.md#phase-structure"
+                    },
+                    "NO_VERDICT_KEYWORDS": {
+                        "action": "add_verdict",
+                        "documentation": ".agents/docs/skills-reference.md#verdict-keywords"
+                    },
+                    "MISSING_COLLABORATIVE_PROTOCOL": {
+                        "action": "add_approval_language",
+                        "documentation": ".agents/docs/skills-reference.md#collaborative-protocol"
+                    },
+                    "MISSING_NEXT_STEP_HANDOFF": {
+                        "action": "add_handoff_section",
+                        "documentation": ".agents/docs/skills-reference.md#next-step-handoff"
+                    },
+                    "FORK_COMPLEXITY_MISMATCH": {
+                        "action": "add_phases_or_remove_fork",
+                        "documentation": ".agents/docs/skills-reference.md#fork-context"
+                    },
+                    "EMPTY_ARGUMENT_HINT": {
+                        "action": "add_argument_hint",
+                        "documentation": ".agents/docs/skills-reference.md#argument-hint"
+                    }
+                }.get(error_code)
                 all_errors.append({
                     "code": error_code,
                     "severity": r[2],
@@ -396,7 +491,8 @@ def run(paths, output_format):
                         "file": path,
                         "check_id": r[0],
                         "check_name": r[1]
-                    }
+                    },
+                    **({"remediation": remediation} if remediation else {})
                 })
 
         if single and output_format == "text":
@@ -412,7 +508,7 @@ def run(paths, output_format):
         result = {
             "schema_version": "1.0",
             "timestamp": datetime.utcnow().isoformat() + "Z",
-            "command": "validate-skill-static.sh " + " ".join(sys.argv[1:-1]),
+            "command": os.environ.get("VALIDATION_COMMAND", "validate-skill-static.sh " + " ".join(sys.argv[1:-1])),
             "exit_code": 1 if non_compliant else 0,
             "summary": {
                 "verdict": "FAIL" if non_compliant else ("WARNINGS" if warnings_only else "PASS"),

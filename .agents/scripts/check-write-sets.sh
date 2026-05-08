@@ -43,6 +43,44 @@ set -euo pipefail
 # Parse options
 OUTPUT_FORMAT="text"
 POSITIONAL_ARGS=()
+ORIGINAL_ARGS=("$@")
+
+emit_json_usage_error() {
+  local code="$1"
+  local message="$2"
+  local command="check-write-sets.sh"
+  if [[ ${#ORIGINAL_ARGS[@]} -gt 0 ]]; then
+    command+=" ${ORIGINAL_ARGS[*]}"
+  fi
+  JSON_ERROR_CODE="$code" JSON_ERROR_MESSAGE="$message" JSON_ERROR_COMMAND="$command" python3 - <<'PYTHON'
+import json
+import os
+from datetime import datetime
+print(json.dumps({
+  "schema_version": "1.0",
+  "timestamp": datetime.utcnow().isoformat() + "Z",
+  "command": os.environ.get("JSON_ERROR_COMMAND", "check-write-sets.sh"),
+  "exit_code": 2,
+  "summary": {
+    "verdict": "ERROR",
+    "total_items": 0,
+    "passed": 0,
+    "failed": 1,
+    "warnings": 0
+  },
+  "items": [],
+  "errors": [{
+    "code": os.environ.get("JSON_ERROR_CODE", "INVALID_ARGUMENT"),
+    "severity": "FAIL",
+    "message": os.environ.get("JSON_ERROR_MESSAGE", "usage error")
+  }],
+  "remediation": {
+    "available": False,
+    "suggestions": ["Run with --format=text to see usage details"]
+  }
+}, indent=2))
+PYTHON
+}
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -55,12 +93,20 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     --format)
-      echo "Error: --format requires a value (--format=text or --format=json)" >&2
+      if [[ "$OUTPUT_FORMAT" == "json" ]]; then
+        emit_json_usage_error "INVALID_ARGUMENT" "--format requires a value (--format=text or --format=json)"
+      else
+        echo "Error: --format requires a value (--format=text or --format=json)" >&2
+      fi
       exit 2
       ;;
     -*)
-      echo "Error: unknown option '$1'" >&2
-      echo "Usage: $0 [--format=text|json] [production/dependency-graph.yml]" >&2
+      if [[ "$OUTPUT_FORMAT" == "json" ]]; then
+        emit_json_usage_error "INVALID_ARGUMENT" "unknown option '$1'"
+      else
+        echo "Error: unknown option '$1'" >&2
+        echo "Usage: $0 [--format=text|json] [production/dependency-graph.yml]" >&2
+      fi
       exit 2
       ;;
     *)
@@ -75,22 +121,34 @@ set -- "${POSITIONAL_ARGS[@]}"
 
 # Validate argument count (extra arguments are not accepted).
 if [[ $# -gt 1 ]]; then
-  echo "Error: too many arguments." >&2
-  echo "Usage: $0 [--format=text|json] [production/dependency-graph.yml]" >&2
+  if [[ "$OUTPUT_FORMAT" == "json" ]]; then
+    emit_json_usage_error "INVALID_ARGUMENT" "too many arguments"
+  else
+    echo "Error: too many arguments." >&2
+    echo "Usage: $0 [--format=text|json] [production/dependency-graph.yml]" >&2
+  fi
   exit 2
 fi
 
 # Require python3.
 if ! command -v python3 >/dev/null 2>&1; then
-  echo "Error: python3 is required but was not found in PATH." >&2
+  if [[ "$OUTPUT_FORMAT" == "json" ]]; then
+    emit_json_usage_error "MISSING_DEPENDENCY" "python3 is required but was not found in PATH"
+  else
+    echo "Error: python3 is required but was not found in PATH." >&2
+  fi
   exit 2
 fi
 
 GRAPH_FILE="${1:-production/dependency-graph.yml}"
 
 if [[ ! -f "$GRAPH_FILE" ]]; then
-  echo "Error: graph file not found: $GRAPH_FILE" >&2
-  echo "Usage: $0 [production/dependency-graph.yml]" >&2
+  if [[ "$OUTPUT_FORMAT" == "json" ]]; then
+    emit_json_usage_error "FILE_NOT_FOUND" "graph file not found: $GRAPH_FILE"
+  else
+    echo "Error: graph file not found: $GRAPH_FILE" >&2
+    echo "Usage: $0 [production/dependency-graph.yml]" >&2
+  fi
   exit 2
 fi
 
@@ -99,10 +157,15 @@ fi
 # Written inline so the script has no external file dependencies.
 # Supports both text and JSON output modes.
 # ---------------------------------------------------------------------------
-python3 - "$GRAPH_FILE" "$OUTPUT_FORMAT" <<'PYTHON'
+VALIDATION_COMMAND="check-write-sets.sh"
+if [[ ${#ORIGINAL_ARGS[@]} -gt 0 ]]; then
+  VALIDATION_COMMAND+=" ${ORIGINAL_ARGS[*]}"
+fi
+VALIDATION_COMMAND="$VALIDATION_COMMAND" python3 - "$GRAPH_FILE" "$OUTPUT_FORMAT" <<'PYTHON'
 import sys
 import re
 import json
+import os
 from datetime import datetime
 
 def parse_graph(path):
@@ -231,7 +294,7 @@ def run_check(graph_path, output_format):
             result = {
                 "schema_version": "1.0",
                 "timestamp": datetime.utcnow().isoformat() + "Z",
-                "command": f"check-write-sets.sh {graph_path}",
+                "command": os.environ.get("VALIDATION_COMMAND", f"check-write-sets.sh {graph_path}"),
                 "exit_code": 0,
                 "summary": {
                     "verdict": "PASS",
@@ -298,7 +361,7 @@ def run_check(graph_path, output_format):
         result = {
             "schema_version": "1.0",
             "timestamp": datetime.utcnow().isoformat() + "Z",
-            "command": f"check-write-sets.sh {graph_path}",
+            "command": os.environ.get("VALIDATION_COMMAND", f"check-write-sets.sh {graph_path}"),
             "exit_code": 1 if collisions else 0,
             "summary": {
                 "verdict": "FAIL" if collisions else "PASS",

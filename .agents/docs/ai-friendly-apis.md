@@ -4,14 +4,14 @@ This guide explains how autonomous agents should interact with the game studio t
 
 ## Overview
 
-All validation scripts now support `--format=json` to output structured, schema-validated results that agents can parse programmatically without regex text parsing.
+Selected validation scripts support `--format=json` (currently `validate-skill-static.sh` and `check-write-sets.sh`) to output structured, schema-validated results that agents can parse programmatically without regex text parsing.
 
 ## Core Principle
 
 **The file is the contract, not the conversation.**
 
 Agents should:
-1. Call validation scripts with `--format=json`
+1. Call JSON-enabled validation scripts with `--format=json`
 2. Parse the JSON output against the published schema
 3. Read error codes from the error registry
 4. Execute remediation commands programmatically
@@ -51,7 +51,7 @@ $ .agents/scripts/validate-skill-static.sh brainstorm --format=json | jq '.items
 **Agent Workflow:**
 ```bash
 # 1. Validate skill
-RESULT=$(./agents/scripts/validate-skill-static.sh my-skill --format=json)
+RESULT=$(.agents/scripts/validate-skill-static.sh my-skill --format=json)
 
 # 2. Check exit code programmatically
 EXIT_CODE=$(echo "$RESULT" | jq -r '.exit_code')
@@ -61,7 +61,7 @@ if [[ "$EXIT_CODE" != "0" ]]; then
   ERRORS=$(echo "$RESULT" | jq -r '.errors[] | "\(.code): \(.message)"')
 
   # 4. Get remediation for first error
-  REMEDIATION=$(echo "$RESULT" | jq -r '.errors[0].remediation.command')
+  REMEDIATION=$(echo "$RESULT" | jq -r '.remediation.suggestions[0]')
 
   # 5. Execute or escalate
   echo "Remediation: $REMEDIATION"
@@ -92,7 +92,7 @@ $ .agents/scripts/check-write-sets.sh --format=json | jq '.errors[] | select(.co
 **Agent Workflow:**
 ```bash
 # 1. Check for collisions before advancing contract to IN_PROGRESS
-RESULT=$(./agents/scripts/check-write-sets.sh --format=json)
+RESULT=$(.agents/scripts/check-write-sets.sh --format=json)
 
 # 2. Parse verdict
 VERDICT=$(echo "$RESULT" | jq -r '.summary.verdict')
@@ -111,14 +111,16 @@ fi
 echo "No collisions. Safe to advance contract to IN_PROGRESS"
 ```
 
-### 3. Evidence Packet Validation
+### 3. Evidence Packet Validation (Current: Text Mode)
 
-**Command:**
+`validate-evidence-packet.sh` currently outputs text only and does **not** support `--format=json` yet.
+
+**Current Command:**
 ```bash
-.agents/scripts/validate-evidence-packet.sh <packet-file> --format=json
+.agents/scripts/validate-evidence-packet.sh <packet-file>
 ```
 
-**Output Schema:** `.agents/schemas/validation-output.schema.json`
+**Planned Output Schema (future):** `.agents/schemas/validation-output.schema.json`
 
 **Error Codes:**
 - `MISSING_OVERALL_VERDICT` - No concrete verdict line
@@ -128,30 +130,26 @@ echo "No collisions. Safe to advance contract to IN_PROGRESS"
 **Agent Workflow:**
 ```bash
 # 1. Validate evidence packet
-RESULT=$(./agents/scripts/validate-evidence-packet.sh production/qa/validation-packets/my-packet.md --format=json)
+RESULT=$(.agents/scripts/validate-evidence-packet.sh production/qa/validation-packets/my-packet.md)
 
 # 2. Check if valid
-if [[ $(echo "$RESULT" | jq -r '.exit_code') == "0" ]]; then
+if echo "$RESULT" | grep -q '^PASS:'; then
   echo "Evidence packet valid. Ready to commit."
 else
-  # 3. Get missing sections
-  MISSING=$(echo "$RESULT" | jq -r '.errors[] | select(.code == "MISSING_REQUIRED_SECTION") | .context.section')
-  echo "Missing sections: $MISSING"
-
-  # 4. Get remediation
-  TEMPLATE=$(echo "$RESULT" | jq -r '.errors[0].remediation.template')
-  echo "Use template: $TEMPLATE"
+  echo "$RESULT"
 fi
 ```
 
-### 4. Catalog Consistency Check
+### 4. Catalog Consistency Check (Current: Text Mode)
 
-**Command:**
+`check-catalog-consistency.sh` currently outputs text only and does **not** support `--format=json` yet.
+
+**Current Command:**
 ```bash
-.agents/scripts/check-catalog-consistency.sh --format=json
+.agents/scripts/check-catalog-consistency.sh
 ```
 
-**Output Schema:** `.agents/schemas/validation-output.schema.json`
+**Planned Output Schema (future):** `.agents/schemas/validation-output.schema.json`
 
 **Error Codes:**
 - `CATALOG_COUNT_MISMATCH` - Catalog count doesn't match disk
@@ -246,10 +244,10 @@ validate_and_commit() {
 
   case "$type" in
     skill)
-      RESULT=$(./agents/scripts/validate-skill-static.sh "$file" --format=json)
+      RESULT=$(.agents/scripts/validate-skill-static.sh "$file" --format=json)
       ;;
     evidence)
-      RESULT=$(./agents/scripts/validate-evidence-packet.sh "$file" --format=json)
+      RESULT=$(.agents/scripts/validate-evidence-packet.sh "$file")
       ;;
   esac
 
@@ -274,9 +272,8 @@ validate_chain() {
   local results=()
 
   # Run all validations
-  results+=($(./agents/scripts/validate-skill-static.sh all --format=json))
-  results+=($(./agents/scripts/check-write-sets.sh --format=json))
-  results+=($(./agents/scripts/check-catalog-consistency.sh --format=json))
+  results+=("$(.agents/scripts/validate-skill-static.sh all --format=json)")
+  results+=("$(.agents/scripts/check-write-sets.sh --format=json)")
 
   # Aggregate exit codes
   for result in "${results[@]}"; do
@@ -300,15 +297,15 @@ validate_chain() {
 auto_fix() {
   local file="$1"
 
-  RESULT=$(./agents/scripts/validate-skill-static.sh "$file" --format=json)
+  RESULT=$(.agents/scripts/validate-skill-static.sh "$file" --format=json)
 
-  # Get auto-fixable errors
-  AUTO_FIX=$(echo "$RESULT" | jq -r '.errors[] | select(.remediation.action == "add_section") | .remediation.command')
+  # Get recommended remediation actions
+  ACTIONS=$(echo "$RESULT" | jq -r '.errors[] | .remediation.action // empty')
 
-  if [[ -n "$AUTO_FIX" ]]; then
-    echo "Applying auto-fixes:"
-    echo "$AUTO_FIX"
-    # Execute fixes here
+  if [[ -n "$ACTIONS" ]]; then
+    echo "Recommended remediation actions:"
+    echo "$ACTIONS"
+    # Execute approved fixes here
     # Then re-validate
   fi
 }
@@ -316,7 +313,7 @@ auto_fix() {
 
 ## Exit Code Contracts
 
-All validation scripts follow this contract:
+JSON-enabled validation scripts follow this contract:
 
 - **0**: All checks passed or warnings only
 - **1**: At least one check failed
@@ -325,7 +322,7 @@ All validation scripts follow this contract:
 Agents can rely on these codes programmatically:
 
 ```bash
-if ./agents/scripts/validate-skill-static.sh my-skill --format=json; then
+if .agents/scripts/validate-skill-static.sh my-skill --format=json; then
   echo "PASS"
 else
   case $? in

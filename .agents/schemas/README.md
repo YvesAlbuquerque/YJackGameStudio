@@ -17,9 +17,9 @@ This directory contains JSON Schema files that define the structure of all data 
 
 | Schema File | Purpose | Used By |
 |-------------|---------|---------|
-| `validation-output.schema.json` | Standard JSON output for all validation scripts | All validation scripts with `--format=json` |
+| `validation-output.schema.json` | Standard JSON output for validation scripts that support JSON mode | `.agents/scripts/validate-skill-static.sh`, `.agents/scripts/check-write-sets.sh` |
 | `error-codes.json` | Error code registry with remediation guidance | All scripts, error handling |
-| `validation-evidence-packet.schema.json` | Evidence packet structure | `validate-evidence-packet.sh`, QA workflows |
+| `validation-evidence-packet.schema.json` | Evidence packet structure | QA workflows, future evidence-packet JSON tooling |
 
 ### Validation
 
@@ -36,7 +36,7 @@ ajv validate -s .agents/schemas/validation-output.schema.json -d output.json
 
 ## JSON Output Format
 
-All validation scripts support the `--format=json` flag to output machine-parseable results:
+The following scripts currently support the `--format=json` flag to output machine-parseable results:
 
 ```bash
 # Human-readable (default)
@@ -51,7 +51,7 @@ All validation scripts support the `--format=json` flag to output machine-parsea
 
 ### JSON Output Structure
 
-All scripts follow the `validation-output.schema.json` structure:
+JSON-enabled scripts follow the `validation-output.schema.json` structure:
 
 ```json
 {
