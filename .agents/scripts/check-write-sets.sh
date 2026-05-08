@@ -44,6 +44,13 @@ set -euo pipefail
 OUTPUT_FORMAT="text"
 POSITIONAL_ARGS=()
 ORIGINAL_ARGS=("$@")
+REQUESTED_JSON=0
+for arg in "${ORIGINAL_ARGS[@]}"; do
+  if [[ "$arg" == "--format=json" ]]; then
+    REQUESTED_JSON=1
+    break
+  fi
+done
 
 emit_json_usage_error() {
   local code="$1"
@@ -55,10 +62,10 @@ emit_json_usage_error() {
   JSON_ERROR_CODE="$code" JSON_ERROR_MESSAGE="$message" JSON_ERROR_COMMAND="$command" python3 - <<'PYTHON'
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 print(json.dumps({
   "schema_version": "1.0",
-  "timestamp": datetime.utcnow().isoformat() + "Z",
+  "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
   "command": os.environ.get("JSON_ERROR_COMMAND", "check-write-sets.sh"),
   "exit_code": 2,
   "summary": {
@@ -93,7 +100,7 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     --format)
-      if [[ "$OUTPUT_FORMAT" == "json" ]]; then
+      if [[ "$OUTPUT_FORMAT" == "json" || "$REQUESTED_JSON" -eq 1 ]]; then
         emit_json_usage_error "INVALID_ARGUMENT" "--format requires a value (--format=text or --format=json)"
       else
         echo "Error: --format requires a value (--format=text or --format=json)" >&2
@@ -101,7 +108,7 @@ while [[ $# -gt 0 ]]; do
       exit 2
       ;;
     -*)
-      if [[ "$OUTPUT_FORMAT" == "json" ]]; then
+      if [[ "$OUTPUT_FORMAT" == "json" || "$REQUESTED_JSON" -eq 1 ]]; then
         emit_json_usage_error "INVALID_ARGUMENT" "unknown option '$1'"
       else
         echo "Error: unknown option '$1'" >&2
@@ -121,7 +128,7 @@ set -- "${POSITIONAL_ARGS[@]}"
 
 # Validate argument count (extra arguments are not accepted).
 if [[ $# -gt 1 ]]; then
-  if [[ "$OUTPUT_FORMAT" == "json" ]]; then
+  if [[ "$OUTPUT_FORMAT" == "json" || "$REQUESTED_JSON" -eq 1 ]]; then
     emit_json_usage_error "INVALID_ARGUMENT" "too many arguments"
   else
     echo "Error: too many arguments." >&2
@@ -166,7 +173,7 @@ import sys
 import re
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 
 def parse_graph(path):
     """
@@ -293,7 +300,7 @@ def run_check(graph_path, output_format):
         if output_format == "json":
             result = {
                 "schema_version": "1.0",
-                "timestamp": datetime.utcnow().isoformat() + "Z",
+                "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
                 "command": os.environ.get("VALIDATION_COMMAND", f"check-write-sets.sh {graph_path}"),
                 "exit_code": 0,
                 "summary": {
@@ -360,7 +367,7 @@ def run_check(graph_path, output_format):
     if output_format == "json":
         result = {
             "schema_version": "1.0",
-            "timestamp": datetime.utcnow().isoformat() + "Z",
+            "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
             "command": os.environ.get("VALIDATION_COMMAND", f"check-write-sets.sh {graph_path}"),
             "exit_code": 1 if collisions else 0,
             "summary": {

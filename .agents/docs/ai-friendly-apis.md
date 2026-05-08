@@ -240,14 +240,18 @@ ajv validate -s .agents/schemas/validation-evidence-packet.schema.json -d packet
 
 validate_and_commit() {
   local file="$1"
-  local type="$2"  # skill | evidence | contract
+  local type="$2"  # currently supported: skill | write-set
 
   case "$type" in
     skill)
       RESULT=$(.agents/scripts/validate-skill-static.sh "$file" --format=json)
       ;;
-    evidence)
-      RESULT=$(.agents/scripts/validate-evidence-packet.sh "$file")
+    write-set)
+      RESULT=$(.agents/scripts/check-write-sets.sh --format=json "$file")
+      ;;
+    *)
+      echo "Unsupported validation type: $type"
+      return 2
       ;;
   esac
 
@@ -269,19 +273,19 @@ validate_and_commit() {
 # Chain multiple validations
 
 validate_chain() {
-  local results=()
+  local result
 
-  # Run all validations
-  results+=("$(.agents/scripts/validate-skill-static.sh all --format=json)")
-  results+=("$(.agents/scripts/check-write-sets.sh --format=json)")
+  result=$(.agents/scripts/validate-skill-static.sh all --format=json)
+  if [[ $(echo "$result" | jq -r '.exit_code') != "0" ]]; then
+    echo "validate-skill-static failed"
+    return 1
+  fi
 
-  # Aggregate exit codes
-  for result in "${results[@]}"; do
-    if [[ $(echo "$result" | jq -r '.exit_code') != "0" ]]; then
-      echo "Validation chain failed"
-      return 1
-    fi
-  done
+  result=$(.agents/scripts/check-write-sets.sh --format=json)
+  if [[ $(echo "$result" | jq -r '.exit_code') != "0" ]]; then
+    echo "check-write-sets failed"
+    return 1
+  fi
 
   echo "All validations passed"
   return 0

@@ -69,10 +69,10 @@ emit_json_usage_error() {
   JSON_ERROR_CODE="$code" JSON_ERROR_MESSAGE="$message" JSON_ERROR_COMMAND="$command" python3 - <<'PYTHON'
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 print(json.dumps({
   "schema_version": "1.0",
-  "timestamp": datetime.utcnow().isoformat() + "Z",
+  "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
   "command": os.environ.get("JSON_ERROR_COMMAND", "validate-skill-static.sh"),
   "exit_code": 2,
   "summary": {
@@ -99,6 +99,13 @@ PYTHON
 # Parse options
 OUTPUT_FORMAT="text"
 POSITIONAL_ARGS=()
+REQUESTED_JSON=0
+for arg in "${ORIGINAL_ARGS[@]}"; do
+  if [[ "$arg" == "--format=json" ]]; then
+    REQUESTED_JSON=1
+    break
+  fi
+done
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -111,7 +118,7 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     --format)
-      if [[ "$OUTPUT_FORMAT" == "json" ]]; then
+      if [[ "$OUTPUT_FORMAT" == "json" || "$REQUESTED_JSON" -eq 1 ]]; then
         emit_json_usage_error "INVALID_ARGUMENT" "--format requires a value (--format=text or --format=json)"
       else
         echo "Error: --format requires a value (--format=text or --format=json)" >&2
@@ -119,7 +126,7 @@ while [[ $# -gt 0 ]]; do
       exit 2
       ;;
     -*)
-      if [[ "$OUTPUT_FORMAT" == "json" ]]; then
+      if [[ "$OUTPUT_FORMAT" == "json" || "$REQUESTED_JSON" -eq 1 ]]; then
         emit_json_usage_error "INVALID_ARGUMENT" "unknown option '$1'"
       else
         echo "Error: unknown option '$1'" >&2
@@ -138,7 +145,7 @@ done
 set -- "${POSITIONAL_ARGS[@]}"
 
 if [[ $# -gt 1 ]]; then
-  if [[ "$OUTPUT_FORMAT" == "json" ]]; then
+  if [[ "$OUTPUT_FORMAT" == "json" || "$REQUESTED_JSON" -eq 1 ]]; then
     emit_json_usage_error "INVALID_ARGUMENT" "too many arguments"
   else
     echo "Error: too many arguments." >&2
@@ -209,7 +216,7 @@ import sys
 import re
 import os
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 
 VERDICT_KEYWORDS = re.compile(
     r'\b(PASS|FAIL|CONCERNS|APPROVED|BLOCKED|COMPLETE|READY|COMPLIANT|NON-COMPLIANT'
@@ -242,6 +249,37 @@ HANDOFF_PATTERNS = [
 REQUIRED_FM_FIELDS = ['name', 'description', 'argument-hint', 'user-invocable', 'allowed-tools']
 
 WRITE_TOOLS = re.compile(r'\b(Write|Edit)\b')
+
+ERROR_REMEDIATIONS = {
+    "MISSING_FRONTMATTER_FIELD": {
+        "action": "edit_frontmatter",
+        "documentation": ".agents/docs/skills-reference.md#frontmatter-fields"
+    },
+    "INSUFFICIENT_PHASES": {
+        "action": "add_phases",
+        "documentation": ".agents/docs/skills-reference.md#phase-structure"
+    },
+    "NO_VERDICT_KEYWORDS": {
+        "action": "add_verdict",
+        "documentation": ".agents/docs/skills-reference.md#verdict-keywords"
+    },
+    "MISSING_COLLABORATIVE_PROTOCOL": {
+        "action": "add_approval_language",
+        "documentation": ".agents/docs/skills-reference.md#collaborative-protocol"
+    },
+    "MISSING_NEXT_STEP_HANDOFF": {
+        "action": "add_handoff_section",
+        "documentation": ".agents/docs/skills-reference.md#next-step-handoff"
+    },
+    "FORK_COMPLEXITY_MISMATCH": {
+        "action": "add_phases_or_remove_fork",
+        "documentation": ".agents/docs/skills-reference.md#fork-context"
+    },
+    "EMPTY_ARGUMENT_HINT": {
+        "action": "add_argument_hint",
+        "documentation": ".agents/docs/skills-reference.md#argument-hint"
+    }
+}
 
 
 def fm_has_field(fm, key):
@@ -453,36 +491,7 @@ def run(paths, output_format):
                     6: "FORK_COMPLEXITY_MISMATCH",
                     7: "EMPTY_ARGUMENT_HINT"
                 }.get(r[0], "UNKNOWN_ERROR")
-                remediation = {
-                    "MISSING_FRONTMATTER_FIELD": {
-                        "action": "edit_frontmatter",
-                        "documentation": ".agents/docs/skills-reference.md#frontmatter-fields"
-                    },
-                    "INSUFFICIENT_PHASES": {
-                        "action": "add_phases",
-                        "documentation": ".agents/docs/skills-reference.md#phase-structure"
-                    },
-                    "NO_VERDICT_KEYWORDS": {
-                        "action": "add_verdict",
-                        "documentation": ".agents/docs/skills-reference.md#verdict-keywords"
-                    },
-                    "MISSING_COLLABORATIVE_PROTOCOL": {
-                        "action": "add_approval_language",
-                        "documentation": ".agents/docs/skills-reference.md#collaborative-protocol"
-                    },
-                    "MISSING_NEXT_STEP_HANDOFF": {
-                        "action": "add_handoff_section",
-                        "documentation": ".agents/docs/skills-reference.md#next-step-handoff"
-                    },
-                    "FORK_COMPLEXITY_MISMATCH": {
-                        "action": "add_phases_or_remove_fork",
-                        "documentation": ".agents/docs/skills-reference.md#fork-context"
-                    },
-                    "EMPTY_ARGUMENT_HINT": {
-                        "action": "add_argument_hint",
-                        "documentation": ".agents/docs/skills-reference.md#argument-hint"
-                    }
-                }.get(error_code)
+                remediation = ERROR_REMEDIATIONS.get(error_code)
                 all_errors.append({
                     "code": error_code,
                     "severity": r[2],
@@ -507,7 +516,7 @@ def run(paths, output_format):
     if output_format == "json":
         result = {
             "schema_version": "1.0",
-            "timestamp": datetime.utcnow().isoformat() + "Z",
+            "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
             "command": os.environ.get("VALIDATION_COMMAND", "validate-skill-static.sh " + " ".join(sys.argv[1:-1])),
             "exit_code": 1 if non_compliant else 0,
             "summary": {
