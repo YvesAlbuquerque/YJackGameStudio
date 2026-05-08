@@ -1,4 +1,4 @@
-# Hud Design Template
+# HUD Design Template
 
 **Canonical source**: [`.agents/docs/templates/hud-design.md`](../../../.agents/docs/templates/hud-design.md)
 

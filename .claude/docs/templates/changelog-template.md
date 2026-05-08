@@ -1,4 +1,4 @@
-# Changelog Template Template
+# Changelog Template
 
 **Canonical source**: [`.agents/docs/templates/changelog-template.md`](../../../.agents/docs/templates/changelog-template.md)
 

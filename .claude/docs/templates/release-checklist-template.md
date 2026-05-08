@@ -1,4 +1,4 @@
-# Release Checklist Template Template
+# Release Checklist Template
 
 **Canonical source**: [`.agents/docs/templates/release-checklist-template.md`](../../../.agents/docs/templates/release-checklist-template.md)
 

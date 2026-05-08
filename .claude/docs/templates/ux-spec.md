@@ -1,4 +1,4 @@
-# Ux Spec Template
+# UX Spec Template
 
 **Canonical source**: [`.agents/docs/templates/ux-spec.md`](../../../.agents/docs/templates/ux-spec.md)
 
