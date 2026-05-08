@@ -170,11 +170,11 @@ Session crashes don't lose progress — handoff files persist in Git.
 #### Customizable & Forkable
 Don't like our game-designer agent? Rewrite it. Want a skill for your studio's workflow? Add it.
 
-Everything is `.md` files in `.agents/`:
-- `agents/` — role definitions
-- `skills/` — procedural workflows
-- `rules/` — domain constraints
-- `docs/templates/` — GDD, ADR, sprint plan templates
+Everything lives in `.agents/`:
+- `.agents/agents/` — role definitions (Markdown)
+- `.agents/skills/` — procedural workflows (Markdown)
+- `.agents/rules/` — domain constraints (Markdown)
+- `.agents/docs/templates/` — GDD, ADR, sprint plan templates (Markdown, YAML, JSON)
 
 Fork it, customize it, make it yours. MIT license.
 
@@ -294,7 +294,7 @@ For assets, use traditional tools (Blender, Photoshop) or AI asset generators (D
 - **49 Agents**: Designers, programmers, artists, QA, producers
 - **76 Skills**: Full lifecycle workflows from brainstorming to release
 - **11 Workspace Rules**: Domain-specific constraints (gameplay, engine, UI, AI, networking, tests, docs)
-- **38 Templates**: GDDs, ADRs, sprint plans, test plans, UX specs, release docs
+- **Dozens of Templates**: GDDs, ADRs, sprint plans, test plans, UX specs, release docs
 - **3 Engines**: Godot, Unity, Unreal with version-pinned references
 - **5 AI Tools**: Codex, Copilot, Gemini, Antigravity, Claude Code
 - **MIT License**: Open-source, permissive, forkable

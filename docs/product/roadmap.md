@@ -175,7 +175,7 @@ This phase establishes the foundation: messaging, positioning, demo strategy, an
 
 ## Notes
 
-- **PRODUCT-001 through PRODUCT-008**: These items were completed as internal work. Their deliverables are implicit in PRODUCT-009's messaging artifacts.
+- **PRODUCT-001 through PRODUCT-008**: These items were completed as internal work. Their deliverables informed the PRODUCT-009 messaging artifacts. The referenced market and positioning docs (`docs/market/`, `docs/product/first-wedge.md`, etc.) are not yet present in this repository; they exist as internal artifacts and will be added in a future pass.
 - **PRODUCT-010**: First Unity demo with YJackCore integration. Requires actual Unity project setup, scenes, prefabs, and playable build.
 - **Autonomy Mode**: All PRODUCT 1 work is LOW-risk docs-only (no source code, no Unity, no builds). SUPERVISED mode applies.
 - **No Unity AI Claims**: All messaging explicitly states no Unity AI integration exists or is claimed.

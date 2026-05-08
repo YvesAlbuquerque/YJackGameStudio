@@ -43,7 +43,7 @@ YJackGameStudio is a **game development studio as code**:
 - **49 specialized agents** with role definitions, expertise areas, and delegation hierarchies
 - **76 procedural workflows** covering concept → design → architecture → implementation → QA → release
 - **11 workspace rules** for domain-specific constraints (gameplay, engine, UI, networking, tests)
-- **38 templates** for professional artifacts (GDDs, ADRs, sprint plans, test plans, UX specs)
+- **Dozens of templates** for professional artifacts (GDDs, ADRs, sprint plans, test plans, UX specs)
 
 It's not a plugin, not a service, not a SaaS product. It's a **template** — a collection of instructions, workflows, and patterns that AI coding tools can follow.
 
