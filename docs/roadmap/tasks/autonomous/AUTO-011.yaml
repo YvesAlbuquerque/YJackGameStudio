@@ -1,0 +1,33 @@
+id: "AUTO-011"
+type: autonomous
+title: "Skill-Test Executable CI"
+subsystem: ci
+priority: P2
+effort: M
+status: PROPOSED
+github_issue: null
+labels:
+  - autonomous
+  - roadmap
+  - validation
+description: >
+  Make /skill-test executable as a CI job so that skill changes are validated
+  automatically on every PR. Define a CI workflow (.github/workflows/) that runs
+  the /skill-test suite against changed skills. /skill-test must produce a
+  machine-readable report that CI can parse for pass/fail. Define the minimum
+  test coverage required for a skill to be CI-ready. Integrate with the PR
+  workflow: skill changes that do not pass /skill-test CI must not be merged
+  without owner override. CI must not require paid services beyond GitHub Actions.
+acceptance_criteria:
+  - ".github/workflows/ contains a skill-test CI workflow"
+  - "CI runs /skill-test against changed skills only (not the full suite)"
+  - "/skill-test produces a machine-readable pass/fail report"
+  - "CI reports are visible in PR check results"
+  - "Existing skills continue to work even before they have CI coverage"
+  - "No paid services required beyond GitHub Actions"
+artifacts:
+  - ".github/workflows/skill-test.yml"
+  - "Updated /skill-test report schema"
+notes: >
+  CI must remain lightweight and not require paid services.
+  Existing skills must remain functional before CI coverage is added.

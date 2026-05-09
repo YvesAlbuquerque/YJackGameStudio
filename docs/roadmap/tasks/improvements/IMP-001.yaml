@@ -1,0 +1,26 @@
+id: "IMP-001"
+type: improvement
+title: "Add --status filter flag to generate-issues.py"
+subsystem: roadmap-os
+priority: P2
+effort: S
+status: PROPOSED
+github_issue: null
+labels:
+  - enhancement
+  - roadmap-os
+description: >
+  The generate-issues.py script currently creates GitHub issues for all APPROVED
+  tasks that lack a github_issue value. Add a --status flag so that the caller
+  can filter by any lifecycle status (e.g., --status PROPOSED to preview
+  upcoming work, or --status VALIDATED to audit recently completed items).
+  This is useful for dry-run previews during planning sessions.
+acceptance_criteria:
+  - "generate-issues.py accepts a --status flag with a valid lifecycle state value"
+  - "When --status is given, only tasks matching that status are processed"
+  - "Invalid status values produce a clear error message and exit code 1"
+  - "Existing behavior (defaulting to APPROVED) is preserved when --status is omitted"
+  - "Help text (-h) documents the new flag"
+notes: >
+  Currently agents must manually filter the task list before running the script.
+  This improvement removes that friction during planning sessions and dry runs.

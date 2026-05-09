@@ -1,0 +1,63 @@
+# Work Contract — Example Story for Sprint Scheduler Testing
+
+contract_id: "STORY-EXAMPLE-001"
+type: story
+status: approved
+owner: "@YvesAlbuquerque"
+specialist_agent: "copilot"
+
+owner_goal: >
+  Demonstrate the sprint scheduler's ability to schedule a simple LOW-risk story
+  with no dependencies.
+
+success_criteria:
+  - "[ ] Story is correctly prioritized as Must Have"
+  - "[ ] Story is scheduled in the first available sprint"
+  - "[ ] No write-set collisions are detected"
+  - "[ ] Story appears in the `lanes` section, not `deferred` or `blocked`"
+
+non_goals:
+  - "Implementing actual game code (this is a test contract)"
+
+dependencies: []
+
+write_set:
+  - "design/examples/example-gdd.md"
+
+read_context:
+  - path: ".agents/docs/work-contract-schema.md"
+
+risk_tier: LOW
+
+approval_boundary: >
+  SUPERVISED mode: LOW risk actions execute autonomously.
+  This contract should auto-approve in SUPERVISED or AUTONOMOUS modes.
+
+escalation_conditions:
+  - "Write-set collision detected with another contract"
+
+validation:
+  automated: []
+  agent_review: false
+  owner_review: false
+  evidence_path: ""
+
+manual_checks: []
+
+doc_impact: []
+
+outputs:
+  - path: "design/examples/example-gdd.md"
+    type: file
+
+handoff:
+  - All success_criteria checked off
+  - All write_set files committed with no uncommitted changes
+  - status_log updated with VALIDATED entry
+
+status_log:
+  - timestamp: "2026-05-05T09:05:00Z"
+    from: proposed
+    to: approved
+    agent: "owner"
+    note: "Approved for testing sprint-scheduler dependency and collision logic"

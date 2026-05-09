@@ -1,0 +1,107 @@
+name: Apply Issue Labels From Form Body
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  apply-labels:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      - name: Apply labels from structured form fields
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.issue.body || '';
+            const currentLabels = context.payload.issue.labels.map(l => l.name);
+            const currentLabelsLower = new Set(currentLabels.map(l => l.toLowerCase()));
+
+            // Keep in sync with `.github/LABELS.md` taxonomy sections.
+            // Match only structured label lines from issue forms:
+            //   priority:high
+            //   effort:XL — > 5 days
+            //   - [x] risk:architecture
+            // Includes em dash, en dash, and hyphen-minus because issue-form rendered
+            // lines may contain any of these separators after the label token.
+            // Hyphen-minus is also allowed inside label values (e.g. risk:legal-release).
+            const LABEL_LINE_PATTERN = /^(?:- \[[ xX]\]\s*)?((?:priority|auto|effort|phase|domain|status|risk):[a-zA-Z0-9-]+)(?:\s+[—–-].*)?$/;
+
+            // Groups that are mutually exclusive — only one label per group should be present.
+            const EXCLUSIVE_GROUPS = {
+              'priority:': /^priority:/,
+              'auto:':     /^auto:/,
+              'effort:':   /^effort:/,
+              'phase:':    /^phase:/,
+              'domain:':   /^domain:/,
+              'status:':   /^status:/,
+            };
+
+            const labelsToAdd = [];
+            const labelsToAddLower = new Set();
+
+            for (const line of body.split('\n')) {
+              const trimmed = line.trim();
+              const match = trimmed.match(LABEL_LINE_PATTERN);
+              if (!match) continue;
+
+              // Preserve casing from structured form values (e.g., effort:XL).
+              // `match[1]` captures only the label token (without checkbox prefix or
+              // trailing description), and deduping remains case-insensitive.
+              const candidate = match[1];
+              const normalized = candidate.toLowerCase();
+              if (!currentLabelsLower.has(normalized) && !labelsToAddLower.has(normalized)) {
+                labelsToAdd.push(candidate);
+                labelsToAddLower.add(normalized);
+              }
+            }
+
+            if (labelsToAdd.length === 0) {
+              console.log('No new labels to apply.');
+              return;
+            }
+
+            // Collect labels to remove (stale labels in the same exclusive group as a new label)
+            const labelsToRemove = [];
+            for (const newLabel of labelsToAdd) {
+              for (const [prefix, pattern] of Object.entries(EXCLUSIVE_GROUPS)) {
+                if (newLabel.startsWith(prefix)) {
+                  for (const existing of currentLabels) {
+                    if (
+                      pattern.test(existing) &&
+                      existing.toLowerCase() !== newLabel.toLowerCase() &&
+                      !labelsToRemove.includes(existing)
+                    ) {
+                      labelsToRemove.push(existing);
+                    }
+                  }
+                }
+              }
+            }
+
+            // Remove stale exclusive labels first
+            for (const label of labelsToRemove) {
+              try {
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  name: label,
+                });
+                console.log('Removed stale label:', label);
+              } catch (err) {
+                console.log('Could not remove label (may not exist):', label, err.message);
+              }
+            }
+
+            // Add new labels (GitHub silently ignores labels that don't exist in the repo,
+            // so run `github-label-sync` or the bootstrap script first — see .github/LABELS.md)
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: labelsToAdd,
+            });
+            console.log('Applied labels:', labelsToAdd);

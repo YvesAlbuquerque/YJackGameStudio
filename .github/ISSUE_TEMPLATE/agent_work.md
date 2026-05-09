@@ -15,7 +15,7 @@ assignees: ''
 ## Success Criteria
 
 <!-- Measurable conditions that define completion for this contract. -->
-- 
+-
 
 ## Scope
 
@@ -50,22 +50,22 @@ assignees: ''
 ## File Ownership
 
 **Read set** (files this agent will read for context):
-- 
+-
 
 **Write set** (files this agent has exclusive write permission for):
-- 
+-
 
 ## Expected Outputs
 
 <!-- Concrete artifacts this contract produces. -->
-- 
+-
 
 ## Validation Plan
 
 <!-- Checks the agent will run. Be honest — only list checks that can actually be run. -->
 - [ ] `git diff --check`
 - [ ] Static doc review
-- [ ] 
+- [ ]
 
 ## Manual Validation Still Required
 
@@ -90,15 +90,15 @@ assignees: ''
 
 <!-- Filled in by the agent when closing the contract. -->
 
-- **checks_run**: 
-- **checks_unavailable**: 
-- **static_inspection**: 
-- **docs_review**: 
-- **script_validation**: 
+- **checks_run**:
+- **checks_unavailable**:
+- **static_inspection**:
+- **docs_review**:
+- **script_validation**:
 - **engine_validation**: <!-- not-run | n/a | result -->
 - **unity_editor_validation**: <!-- not-run | n/a | result -->
-- **manual_validation_still_required**: 
-- **known_risks**: 
+- **manual_validation_still_required**:
+- **known_risks**:
 - **confidence**: <!-- HIGH | MEDIUM | LOW -->
 
 ---

@@ -1,108 +1,178 @@
-# YJackCore Authority
+# YJackCore Consumer Authority and Workspace Routing
 
-This document defines which repository owns what when both YJackGameStudio and
-YJackCore are active. All agents must read this before designing, reviewing, or
-implementing Unity + YJackCore work.
+This document defines the authority hierarchy, task routing rules, workspace
+manifest contract, and manual validation expectations for Unity projects that
+consume YJackCore (`com.ygamedev.yjack`, version 1.6.0, Unity 6000.0).
 
-## The Authority Split
+Read this document alongside `.agents/docs/yjackcore-support.md` and
+`.agents/rules/yjackcore-unity.md` for the full YJackCore guidance set.
 
-| Question | Authority |
-|---------|-----------|
-| Unity runtime behavior, layer architecture, package API | **YJackCore repo** |
-| Game-specific prefabs, scenes, scripts, assets | **Game repo** |
-| Studio orchestration, planning, issue contracts, validation | **YJackGameStudio** |
+---
 
-## Override Priority
+## Authority Hierarchy
 
-When YJackCore repo docs exist locally, they override generic Game Studio Unity
-guidance in this order:
+When a task touches a YJackCore-backed project, agents must apply guidance in
+this order. A higher-authority source overrides a lower one on any point that
+conflicts.
 
-1. YJackCore `AGENTS.md` — package-level agent rules
-2. YJackCore `package.json` — version and dependency truth
-3. YJackCore `ARCHITECTURE.md` — layer architecture authority
-4. YJackCore `Docs/Workflow/framework-vision.md` — design intent
-5. YJackCore `Docs/index.md` — entry point to all other docs
-6. The nearest YJackCore layer doc for the specific task
+1. **YJackCore's own repository guidance** (highest authority)
+   - YJackCore `AGENTS.md`
+   - `.ai/AI_ARCHITECTURE.md`
+   - `package.json`, `ARCHITECTURE.md`
+   - `Docs/Workflow/framework-vision.md`, `Docs/index.md`
+   - Nearest subtree `AGENTS.md` and closest `.agents/skills/*/SKILL.md`
+   - Relevant `.ai/contexts/*` or `.ai/commands/*` workflows
 
-**These override** `.claude/docs/yjackcore-support.md` and generic Unity guidance
-whenever they conflict.
+2. **Game Studio YJackCore guidance** (framework-consumer fallback)
+   - `.agents/docs/yjackcore-authority.md` ← this file
+   - `.agents/docs/yjackcore-support.md`
+   - `.agents/rules/yjackcore-unity.md`
 
-## Package File Authority
+3. **Game Studio generic Unity specialist** (engine fallback)
+   - `.agents/agents/unity-specialist.md`
+   - Generic Unity engine/API behavior, subsystem choices, profiling,
+     rendering, input, UI, Addressables, and host-project integration
 
-YJackCore package files are **read-only by default** for game-repo agents.
+**Rule:** The YJackCore repository knows more about its own framework than this
+Game Studio template. When its docs and these docs conflict, its docs win.
+Use the Game Studio layer only when YJackCore-specific assets are absent.
 
-| Path Pattern | Default Permission | Override Required |
-|-------------|-------------------|------------------|
-| `Packages/com.ygamedev.yjack/**` | Read-only | Owner explicit authorization |
-| `Packages/YJackCore/**` | Read-only | Owner explicit authorization |
-| `src/**` | Read/write | Within domain delegation |
-| `Assets/**` (game assets) | Read/write | Within domain delegation |
-| `Packages/manifest.json` | Read (detect); write only for package version bumps | Owner approval |
+---
 
-## Work Classification (Required)
+## Framework-vs-Product Boundary
 
-Every work contract must classify its work:
+| Concern | Owner |
+| ------- | ----- |
+| Framework layer design (GameLayer, LevelLayer, PlayerLayer, ViewLayer, Shared) | YJackCore |
+| Package structure, `.asmdef` wiring, compile symbols | YJackCore |
+| Inspector-first authoring model, Odin ergonomics, ScriptableObject patterns | YJackCore |
+| Editor tooling, package manager integration | YJackCore |
+| Host-game scene composition using YJackCore surfaces | Game (host) |
+| Host-game gameplay logic that calls YJackCore entry points | Game (host) |
+| Game-specific GDDs, systems, balance, narrative | Game (host) |
+| Generic Unity engine API, rendering, input, physics, Addressables | Unity specialist |
 
-- `game-repo-work` — changes only in the host game repository
-- `framework-work` — changes in the YJackCore package (requires framework authorization)
-- `both` — hybrid; the framework portion requires its own separate authorization
+Agents must not blur these boundaries. A host-game story should use YJackCore
+surfaces; it must not rewrite or bypass them. If a needed YJackCore surface
+does not exist, propose a framework change rather than duplicating framework
+behavior in `src/`.
 
-Do not mix game-repo work and framework-work in the same work contract unless
-the owner has explicitly pre-approved the framework portion.
+---
 
-## Framework vs. Game Change Decision
+## Workspace Routing
 
-Ask these questions before writing any code:
+### Path-Based Routing
 
-1. Does this behavior belong to every game built on YJackCore, or only this game?
-   → If every game: it belongs in YJackCore. Propose a framework change.
-2. Would this glue grow into reusable framework behavior?
-   → If yes: propose a separate YJackCore change rather than burying it in `src/`.
-3. Is this a new host-game entry point that calls existing YJackCore APIs?
-   → If yes: it belongs in the game repo. Keep glue small and explicit.
+When an agent task touches a file in any of the paths below, it must load
+YJackCore guidance before acting:
 
-## Manual Unity Validation Debt
+| Path Pattern | Routing |
+| ------------ | ------- |
+| `Packages/YJackCore/**` | Read YJackCore repo guidance first; this file as fallback |
+| `Packages/com.ygamedev.yjack/**` | Same as above |
+| `src/**` (YJackCore project) | Read YJackCore layer map; use unity-specialist for engine API |
+| `design/**` (YJackCore project) | Call out owning YJackCore layer in every GDD |
 
-YJackCore work **always** accumulates Unity manual validation debt. Agents must
-report this honestly. Do not claim the following are done unless actually run:
+A project is considered YJackCore-backed when any of these are true:
+- `Packages/manifest.json` contains `com.ygamedev.yjack` or `YJackCore`
+- A local package exists at `Packages/YJackCore/package.json`
+- A git submodule path points to `YJackCore`
+- `.agents/docs/technical-preferences.md` contains `- **Framework**: YJackCore`
+- `.yjack-workspace.json` is present at the project root
 
-- Unity Editor import (package resolution, `.meta` regeneration)
-- Domain reload (no compile errors)
-- Play Mode (runtime behavior)
-- Scene/prefab wiring (component references valid)
-- Build verification
-
-Report all outstanding manual validation in the work contract's
-`manual_validation_still_required` field and the validation evidence packet.
-
-## Low-Code Preference
-
-Before writing custom C# code for a YJackCore-backed feature:
-
-1. Check if a YJackCore prefab, ScriptableObject, or UnityEvent surface covers it.
-2. Check if Visual Scripting can wire it without custom code.
-3. Check if inspector-first setup (serialized fields, Odin Inspector) is sufficient.
-
-Custom code is appropriate only when the low-code path is insufficient or
-the team has explicitly decided to extend with code.
-
-## YJackCore Layer Map
-
-| Need | Prefer |
-|------|--------|
-| Global startup, save/load, scene transitions, settings, platform services | GameLayer |
-| Level flow, win/loss, quests, inventory, scene-owned systems | LevelLayer / SceneLayer |
-| Input, controller activation, camera, player-facing runtime behavior | PlayerLayer / CoreLayer |
-| HUD, popups, menus, loading screens, minimap, presentation | ViewLayer |
-| Reusable state, events, pools, utilities, command/behavior-tree primitives | Shared |
-
-## YJackCore Repo Reading Order (When Available Locally)
+### Task Routing Decision Tree
 
 ```
-YJackCore/AGENTS.md
-YJackCore/package.json
-YJackCore/ARCHITECTURE.md
-YJackCore/Docs/Workflow/framework-vision.md
-YJackCore/Docs/index.md
-YJackCore/Runtime/<Layer>/  (nearest layer for the task)
+Is the task YJackCore-related?
+├── No  → Use the standard Game Studio Unity specialist path
+└── Yes → Is there a local YJackCore package or checkout?
+          ├── Yes → Read YJackCore repo guidance first (authority level 1)
+          │         Fall back to this file only for gaps
+          └── No  → Use this file + yjackcore-support.md (authority level 2)
+                    Fall back to the generic Unity specialist for engine API
 ```
+
+### Workspace Manifest
+
+A `.yjack-workspace.json` file at the project root tells agents where YJackCore
+lives in this workspace, how it was installed, and what version is in use. This
+removes guesswork about package layout.
+
+See `.agents/docs/templates/yjack-workspace.json` for annotated layout examples
+covering UPM, sibling checkout, submodule, vendor, and inline layouts.
+
+**Manifest fields:**
+
+| Field | Required | Description |
+| ----- | -------- | ----------- |
+| `layout` | Yes | Installation layout: `upm`, `sibling`, `submodule`, `vendor`, `inline` |
+| `packageName` | Yes | UPM package name: `com.ygamedev.yjack` |
+| `version` | Yes | Installed version, e.g. `1.6.0` |
+| `unityVersion` | Yes | Host project Unity version, e.g. `6000.0` |
+| `packagePath` | No | Relative path to the `package.json` root (omit for pure UPM) |
+| `sourcePath` | No | Relative path to source root when doing a sibling/submodule checkout |
+| `upmUrl` | No | UPM git URL when `layout` is `upm` |
+| `agentsPath` | No | Relative path to YJackCore `.agents/` when available locally |
+| `modules` | No | Array of active compile-symbol modules, e.g. `["GameLayer", "ViewLayer"]` |
+| `notes` | No | Free-text notes for human readers |
+
+Agents must read `.yjack-workspace.json` before reading `Packages/manifest.json`
+when both are available. The manifest always wins on layout and path resolution.
+
+---
+
+## Manual Unity Validation Expectations
+
+Agents cannot run the Unity Editor. The following validations always require
+manual owner confirmation before a story can be marked Done:
+
+| Validation Type | Why Autonomous Confirmation Is Impossible |
+| --------------- | ----------------------------------------- |
+| Domain reload (script compilation) | Requires Unity Editor with project loaded |
+| Play Mode behavior and scene wiring | Requires Unity Play Mode execution |
+| Package Manager resolution | Requires UPM resolver inside the Editor |
+| Compile symbol branches | Requires Editor build with module flags |
+| Odin Inspector rendering | Requires Editor with Odin installed |
+| `.meta` file integrity | Risk of Unity re-importing and breaking references |
+| Asset database refresh | Requires Editor asset import pipeline |
+| Build (Development / Release) | Requires Unity Cloud Build or local Editor build |
+
+When reporting on architecture-sensitive YJackCore work, always include:
+
+- **Architecture impact**: host-only wiring, YJackCore package change, or both
+- **Doc impact**: game docs only, YJackCore docs, or none
+- **Manual validation still required**: list the specific validations from the
+  table above that apply to this change
+
+Agents must never claim Unity-side validation has passed unless the owner has
+confirmed it explicitly.
+
+---
+
+## Package Boundary Integrity
+
+YJackCore package files (`Packages/YJackCore/**` and
+`Packages/com.ygamedev.yjack/**`) are framework-owner territory. Agents:
+
+- **Must not** edit package files from a host-game task without explicit owner
+  authorization.
+- **Must not** add, remove, or modify `.asmdef`, `.meta`, or `package.json`
+  files without reading the package's own `AGENTS.md` first.
+- **Must not** bypass package boundaries by copying framework code into `src/`.
+- **Should** propose YJackCore package changes as separate work items with their
+  own owner approval gate.
+
+---
+
+## Low-Code Authoring Model Preservation
+
+Every routing decision must preserve YJackCore's inspector-first authoring model:
+
+- Prefer serialized `UnityEvent`, `ScriptableObject` assets, prefabs, and
+  Visual Scripting-friendly call-throughs over new C# bootstrap code.
+- If a feature can be composed in the Inspector using existing YJackCore
+  surfaces, do not write code.
+- When writing host-game glue code, keep it minimal and explicitly separate
+  from framework code.
+- Any routing decision that forces consumers to write engine-level C# where
+  the low-code path suffices is wrong.

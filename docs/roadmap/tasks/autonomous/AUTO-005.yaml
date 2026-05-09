@@ -1,0 +1,38 @@
+id: "AUTO-005"
+type: autonomous
+title: "Agent Work Contract Schema"
+subsystem: contracts
+priority: P1
+effort: M
+status: PROPOSED
+github_issue: null
+labels:
+  - autonomous
+  - roadmap
+  - infrastructure
+dependencies:
+  - "AUTO-003"
+description: >
+  Define the structured schema that governs every autonomous agent work unit.
+  A work contract is the unit of autonomous delegation. Required fields:
+  contract_id, owner, specialist_agent, scope, inputs, outputs, risk_tier,
+  approval_boundary, validation_criteria, escalation_conditions.
+  Define the contract lifecycle: PROPOSED → APPROVED → IN_PROGRESS → BLOCKED →
+  VALIDATED → CLOSED. Specify storage format (GitHub issues with structured
+  front-matter or YAML files in production/). Define inter-contract dependency
+  referencing for AUTO-006 compatibility.
+acceptance_criteria:
+  - "Work contract schema documented in .agents/docs/work-contract-schema.md"
+  - "All required fields defined with types and constraints"
+  - "Contract lifecycle states and transitions documented"
+  - "Contract template YAML file exists"
+  - "Schema is forward-compatible with AUTO-006 (dependency graph)"
+  - "Schema is forward-compatible with AUTO-007 (scheduler)"
+  - "No custom tooling required beyond standard Markdown and YAML"
+artifacts:
+  - ".agents/docs/work-contract-schema.md"
+  - ".agents/docs/templates/work-contract.yaml"
+notes: >
+  Must not require tooling beyond standard Markdown and YAML.
+  The Roadmap OS task schema (AUTO-003) is a simplified subset of this
+  work contract schema — they should be aligned but are separate concerns.

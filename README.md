@@ -1,23 +1,18 @@
 <p align="center">
-  <h1 align="center">Agentic Game Studios</h1>
+  <h1 align="center">YJackGameStudio</h1>
   <p align="center">
-    A portable game-development studio architecture for Codex, GitHub Copilot, Gemini, Google Antigravity, and Claude Code.
+    <strong>Turn AI coding tools into coordinated game development teams.</strong>
     <br />
-    49 agents. 72 skills. One coordinated AI team.
+    49 specialized agents. 76 procedural workflows. Owner-directed autonomy.
+    <br />
+    <em>For Godot, Unity, and Unreal projects.</em>
   </p>
 </p>
-
-> **YJackGameStudio** — When used as the owner-directed studio OS for YJack + YJackCore
-> projects, this template becomes an autonomous AI production layer that orchestrates
-> planning, issue contracts, ownership, validation evidence, and YJackCore routing.
-> See [AGENTS.md](AGENTS.md) for the product thesis and authority boundaries.
-> See [Product Positioning](docs/market/positioning.md) and the
-> [Product Roadmap](docs/product/roadmap.md) for the current wedge.
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
   <a href=".agents/agents"><img src="https://img.shields.io/badge/agents-49-blueviolet" alt="49 Agents"></a>
-  <a href=".agents/skills"><img src="https://img.shields.io/badge/skills-72-green" alt="72 Skills"></a>
+  <a href=".agents/skills"><img src="https://img.shields.io/badge/skills-76-green" alt="76 Skills"></a>
   <a href=".agents/rules"><img src="https://img.shields.io/badge/rules-11-red" alt="11 Rules"></a>
   <a href=".agents/hooks"><img src="https://img.shields.io/badge/hooks-12-orange" alt="12 Hooks"></a>
   <a href="AGENTS.md"><img src="https://img.shields.io/badge/AI%20entrypoint-AGENTS.md-black" alt="AGENTS.md"></a>
@@ -25,99 +20,36 @@
 
 ---
 
-## Product Positioning
+## What Is This?
 
-**YJackGameStudio is an owner-directed autonomous game studio OS for
-maintainable, AI-native game development.**
+**YJackGameStudio** is an owner-directed autonomous game studio OS that transforms AI coding tools into coordinated game development teams. It provides 49 specialized agents (designers, programmers, QA, producers), 76 procedural skills (from brainstorming to release), and professional workflows for Godot, Unity, and Unreal projects.
 
-Its first product wedge is:
+Unlike prompt-to-game toys, YJackGameStudio requires your direction at every stage. You approve concepts, review design docs, make architecture decisions, and control releases. The agents handle execution, documentation, and validation — but you remain the creative director.
 
-> Idea -> production-ready YJackCore-aware vertical-slice plan.
+**Key Features:**
+- **Multi-Agent Coordination**: 49 specialists working in parallel, not one assistant
+- **Engine-Aware**: Native support for Godot, Unity, Unreal with version-pinned references
+- **Evidence-Based QA**: Structured validation with BLOCKING/ADVISORY verdicts
+- **Owner Control**: Three autonomy modes with hard gates on source code and releases
+- **Portable**: Works across Codex, Copilot, Gemini, Antigravity, Claude Code
+- **Customizable**: Fork and modify agents, skills, rules, and templates
 
-YJackGameStudio is the production/studio layer: it turns owner intent into
-structured plans, work contracts, dependency ownership, validation evidence, QA
-expectations, and owner decisions. It is not a prompt-to-game toy, Unity AI
-clone, UGC platform, asset generator, or claim of full autonomous game
-generation.
+**What This Is NOT:**
+- ❌ Not a prompt-to-game toy (requires owner direction at every major gate)
+- ❌ Not full autonomous game generation (you control all major decisions)
+- ❌ Not Unity AI integration (separate tool, no integration exists or is claimed)
+- ❌ Not an asset generator (generates code and docs, not art/audio)
 
-| Name | Meaning |
-|------|---------|
-| **Claude Code Game Studios** | The original Claude Code template distribution: 49 agents, 72 skills, hooks, rules, and workflow docs. |
-| **Agentic Game Studios** | The broader product category/pattern: AI-assisted studio teams that plan, implement, review, and validate game work. |
-| **YJackGameStudio** | The owner-directed studio OS profile for maintainable AI-native game development, with provider-neutral contracts and first-class YJackCore routing. |
-| **YJackCore** | The optional but preferred Unity gameplay framework / low-code authoring substrate for YJack ecosystem projects. |
+**Learn More:**
+- 📖 [Public Messaging](docs/product/public-messaging.md) — Complete positioning and differentiation
+- 🎯 [Elevator Pitches](docs/product/elevator-pitches.md) — 10-second to 1-minute explanations
+- 🌐 [Website Copy](docs/product/website-copy.md) — Hero sections, comparisons, FAQ
+- 🚀 [Launch Narrative](docs/product/launch-narrative.md) — Story, strategy, community plan
+- 🗺️ [Product Roadmap](docs/product/roadmap.md) — Current status and upcoming milestones
 
-When integrated with Unity, YJackGameStudio orchestrates production, planning,
-agents, issue contracts, validation, and owner decisions. YJackCore remains the
-Unity runtime/editor framework authority. Unity AI is tracked as a future
-engine-native execution layer and platform factor; this repo does not claim Unity
-AI integration today.
-
-Current product docs:
-
-- [Market positioning](docs/market/positioning.md)
-- [Competitive landscape](docs/market/competitive-landscape.md)
-- [Unity AI watch](docs/market/unity-ai-watch.md)
-- [Tracking watchlist](docs/market/tracking-watchlist.md)
-- [Target users](docs/product/target-users.md)
-- [First wedge](docs/product/first-wedge.md)
-- [Demo strategy](docs/product/demo-strategy.md)
-- [Packaging](docs/product/packaging.md)
-- [Monetization](docs/product/monetization.md)
-- [Product roadmap](docs/product/roadmap.md)
-
----
-
-## Why This Exists
-
-A single AI coding chat is useful, but game development needs structure: design
-ownership, architecture decisions, content validation, QA, sprint planning, and
-release discipline. This repository packages those responsibilities as a studio
-model that agentic tools can follow.
-
-This fork is based on
-[Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios).
-The original project was Claude Code-centric; this fork adds a provider-neutral
-shared layer under `.agents/` plus native adapters for the major agentic coding
-systems.
+Based on [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios) with provider-neutral extensions.
 
 ## Supported Agent Systems
-
-### YJackGameStudio: Owner-Directed Autonomous Studio OS
-
-> **YJackGameStudio is an owner-directed autonomous game studio OS for agentic game development.**
-
-When used as YJackGameStudio, this system goes beyond a collaborative assistant template:
-
-- The owner states a game goal, selects an autonomy mode, and the studio creates
-  structured, dependency-aware, validation-aware issues with routing to the right
-  specialist agents.
-- Work is tracked as explicit **work contracts** — not chat history.
-- Agents operate within owner-set boundaries: they do not claim unlimited autonomy.
-  HIGH-risk decisions always require owner approval.
-
-YJackGameStudio can operate in two configurations:
-
-| Configuration | Description |
-|--------------|-------------|
-| **Standalone** | Generic multi-agent game studio for any engine |
-| **Integrated with YJackCore** | Full studio OS for games built on the YJackCore Unity framework |
-
-**The split when integrated:**
-
-| Layer | Role |
-|-------|------|
-| **YJackCore** | Unity runtime/editor authoring framework (`com.ygamedev.yjack`) |
-| **YJackGameStudio** | Autonomous AI production/studio layer — planning, contracts, ownership, validation, routing |
-
-YJackCore is the authority for Unity package files, layer architecture, and the low-code authoring substrate. YJackGameStudio consumes YJackCore guidance. It does not modify YJackCore package files unless the owner explicitly authorizes a framework change.
-
-Unity AI is a separate engine-native AI surface. YJackGameStudio should monitor
-it as both a future execution layer and a platform threat, while continuing to
-own higher-level planning, contracts, validation evidence, and owner gates. No
-Unity AI integration is claimed here.
-
----
 
 | System | Entrypoint | Notes |
 |--------|------------|-------|
@@ -237,7 +169,7 @@ Claude-specific source of truth:
 | Category | Count | Shared Location | Purpose |
 |----------|-------|-----------------|---------|
 | Agents | 49 | `.agents/agents/` | Studio roles across design, programming, art, audio, narrative, QA, and production |
-| Skills | 72 | `.agents/skills/` | Procedural workflows such as `/start`, `/design-system`, `/dev-story`, and `/story-done` |
+| Skills | 76 | `.agents/skills/` | Procedural workflows such as `/start`, `/design-system`, `/dev-story`, and `/story-done` |
 | Rules | 11 | `.agents/rules/` | Path/domain constraints for gameplay, engine, UI, AI, networking, tests, and docs |
 | Hooks | 12 | `.agents/hooks/` | Portable validation scripts; automatic wiring depends on the tool |
 | Templates | 38 | `.agents/docs/templates/` | GDDs, ADRs, sprint plans, UX specs, test plans, release docs, and more |
@@ -274,6 +206,25 @@ Tier 3 - Specialists
 
 Engine specialist sets are included for Godot, Unity, and Unreal.
 
+### YJackCore Framework
+
+For Unity projects, an optional framework-aware agent path exists for
+[YJackCore](https://github.com/YvesAlbuquerque/YJackCore), a low-code,
+inspector-first Unity package for gameplay systems.
+
+**YJackCore is entirely optional.** The generic Unity specialist path works for
+all Unity projects. When YJackCore is detected (via `Packages/manifest.json`,
+`.yjack-workspace.json`, or technical preferences), agents route through
+YJackCore-specific guidance for:
+
+- Framework layer boundaries (GameLayer, LevelLayer, PlayerLayer/CoreLayer, ViewLayer, Shared)
+- Package integrity and assembly definition structure
+- Low-code authoring model preservation
+- ScriptableObject patterns and UnityEvent surfaces
+
+See `.agents/docs/yjackcore-support.md` and
+`.agents/docs/yjackcore-authority.md` for the full framework-aware routing model.
+
 ## Getting Started
 
 1. Install the AI coding tool you want to use.
@@ -302,9 +253,70 @@ Common commands or procedural skill files:
 - `/dev-story` - story implementation
 - `/story-done` - acceptance review
 - `/qa-plan`, `/smoke-check`, `/release-checklist` - QA and release gates
+- `/qa-evidence-assign`, `/qa-evidence-aggregate` - multi-agent QA evidence workflow
+- `/test-evidence-review` - QA evidence quality review
 
 When a tool does not expose slash commands, treat `/skill-name` as shorthand for
 reading `.agents/skills/skill-name/SKILL.md`.
+
+---
+
+## Multi-Agent QA Evidence Workflow
+
+The studio supports parallel QA execution through evidence tasks. This workflow enables
+qa-tester agents to execute test verification independently and aggregate results into
+sprint or milestone sign-off reports.
+
+### How It Works
+
+1. **After Implementation**: Stories are implemented and unit/integration tests are written
+2. **Evidence Assignment**: `/qa-evidence-assign sprint` generates QA evidence tasks for each story
+3. **Parallel Execution**: qa-tester agents execute evidence tasks independently (or use `/team-qa`)
+4. **Evidence Review**: `/test-evidence-review sprint` validates evidence quality before aggregation
+5. **Aggregation**: `/qa-evidence-aggregate sprint-03` (or omit the argument to choose scope interactively) produces a sign-off report with BLOCKING/ADVISORY verdicts
+6. **Gate Advancement**: `/gate-check` consumes aggregated evidence to approve phase transitions
+
+### Evidence Task Types
+
+| Story Type | Evidence Task | Artifact Location | Gate Level |
+|---|---|---|---|
+| Logic | `unit-test` | `tests/unit/[system]/` | BLOCKING |
+| Integration | `integration-test` | `tests/integration/[system]/` or playtest doc | BLOCKING |
+| Visual/Feel | `visual-evidence` | `production/qa/evidence/` | ADVISORY |
+| UI | `ui-evidence` | `production/qa/evidence/` | ADVISORY |
+| Config/Data | `smoke-check` | `production/qa/smoke-*.md` | ADVISORY |
+| Playtest | `playtest-session` | `production/qa/playtests/` | ADVISORY |
+| Release | `release-check` | `production/releases/` | BLOCKING |
+
+### Quick Start
+
+```bash
+# After sprint implementation is complete:
+/qa-evidence-assign sprint         # Generate evidence tasks for all stories
+/test-evidence-review sprint        # Review evidence quality (before aggregation)
+/qa-evidence-aggregate sprint-03    # Produce QA sign-off report (or omit argument to choose scope interactively)
+
+# Check sign-off verdict in production/qa/qa-signoff-[sprint]-[date].md
+# Verdict: APPROVED / APPROVED WITH CONDITIONS / NOT APPROVED
+```
+
+### Key Files
+
+- **Schema**: `.agents/docs/qa-evidence-task-schema.md`
+- **Templates**: `.agents/docs/templates/qa-evidence-task.{yml,md}`
+- **Skills**: `.agents/skills/qa-evidence-assign/`, `.agents/skills/qa-evidence-aggregate/`, `.agents/skills/test-evidence-review/`
+
+### Unverifiable Criteria
+
+When acceptance criteria cannot be verified autonomously (subjective qualities, Unity Play
+Mode requirements, platform-specific behavior), they are flagged as "unverifiable" and
+surfaced to the owner dashboard. BLOCKING unverifiable criteria require explicit owner
+confirmation before story completion.
+
+For Unity + YJackCore projects, manual validation requirements are documented in
+`.agents/docs/templates/yjackcore-unity-manual-validation.md` and included in evidence packets.
+
+---
 
 ## Project Structure
 
@@ -343,61 +355,32 @@ Validation is workflow-specific:
 
 Do not claim runtime, build, hook, or test validation unless it actually happened.
 
-### Autonomy Modes
+## Owner-Directed Autonomy
 
-The system supports three modes. The default is **collaborative**.
+The owner sets the level of agent autonomy in `production/autonomy-config.md`.
+Under all modes, the owner remains the creative director and final arbiter.
 
-| Mode | Owner Touchpoints | When to Use |
-|------|-------------------|-------------|
-| **Collaborative** (default) | Every step — Ask → Options → Decide → Draft → Approve | All new projects; any time you want full visibility |
-| **Supervised Autonomous** | Sprint start, sprint end, HIGH-risk gates | When you've pre-approved a sprint scope and trust the agents to execute |
-| **Trusted Autonomous** | HIGH-risk gates + async status reports | Standing mandate; owner reviews milestones and escalations only |
+The studio operates in one of three modes:
 
-**HIGH-risk actions are owner-gated in every mode.** This includes architecture changes, framework package edits, scope expansion, and release actions.
+| Mode | Agent autonomy |
+|------|---------------|
+| `GUIDED` (default) | Every decision surfaced to the owner. Classic collaborative loop. |
+| `SUPERVISED` | LOW-risk actions (analysis, planning, status) execute automatically. MEDIUM and HIGH require owner approval. |
+| `AUTONOMOUS` | LOW and MEDIUM actions execute automatically. HIGH always requires owner approval. |
 
-Set the mode in your work contract (`autonomy_mode` field). When in doubt, default to collaborative.
+**Regardless of mode**, the following always require explicit owner approval:
 
-See [`.agents/docs/autonomy-modes.md`](.agents/docs/autonomy-modes.md) for full definitions.
+- Starting a new game or brainstorm session
+- Advancing through any production phase gate
+- Writing game source files (`src/`)
+- Opening or merging a pull request
+- Creating a release
+- Modifying YJackCore package files
 
-You stay in control. Agents provide structure, decompose work, and surface options — they do not operate without boundaries.
+Full specification: `.agents/docs/autonomy-modes.md`
 
-### Automated Safety
-
-**Hooks** run automatically on every session:
-
-| Hook | Trigger | What It Does |
-|------|---------|--------------|
-| `validate-commit.sh` | PreToolUse (Bash) | Checks for hardcoded values, TODO format, JSON validity, design doc sections — exits early if the command is not `git commit` |
-| `validate-push.sh` | PreToolUse (Bash) | Warns on pushes to protected branches — exits early if the command is not `git push` |
-| `validate-assets.sh` | PostToolUse (Write/Edit) | Validates naming conventions and JSON structure — exits early if the file is not in `assets/` |
-| `session-start.sh` | Session open | Shows current branch and recent commits for orientation |
-| `detect-gaps.sh` | Session open | Detects fresh projects (suggests `/start`) and missing design docs when code or prototypes exist |
-| `pre-compact.sh` | Before compaction | Preserves session progress notes |
-| `post-compact.sh` | After compaction | Reminds Claude to restore session state from `active.md` |
-| `notify.sh` | Notification event | Shows Windows toast notification via PowerShell |
-| `session-stop.sh` | Session close | Archives `active.md` to session log and records git activity |
-| `log-agent.sh` | Agent spawned | Audit trail start — logs subagent invocation |
-| `log-agent-stop.sh` | Agent stops | Audit trail stop — completes subagent record |
-| `validate-skill-change.sh` | PostToolUse (Write/Edit) | Advises running `/skill-test` after any `.claude/skills/` change |
-
-> **Note**: `validate-commit.sh`, `validate-assets.sh`, and `validate-skill-change.sh` fire on every Bash/Write tool call and exit immediately (exit 0) when the command or file path is not relevant. This is normal hook behavior — not a performance concern.
-
-**Permission rules** in `settings.json` auto-allow safe operations (git status, test runs) and block dangerous ones (force push, `rm -rf`, reading `.env` files).
-
-### Path-Scoped Rules
-
-Coding standards are automatically enforced based on file location:
-
-| Path | Enforces |
-|------|----------|
-| `src/gameplay/**` | Data-driven values, delta time usage, no UI references |
-| `src/core/**` | Zero allocations in hot paths, thread safety, API stability |
-| `src/ai/**` | Performance budgets, debuggability, data-driven parameters |
-| `src/networking/**` | Server-authoritative, versioned messages, security |
-| `src/ui/**` | No game state ownership, localization-ready, accessibility |
-| `design/gdd/**` | Required 8 sections, formula format, edge cases |
-| `tests/**` | Test naming, coverage requirements, fixture patterns |
-| `prototypes/**` | Relaxed standards, README required, hypothesis documented |
+For the roadmap toward increased autonomous capabilities while maintaining
+owner direction and control, see: `docs/AUTONOMOUS_GAME_STUDIO_ROADMAP.md`
 
 ## Design Philosophy
 

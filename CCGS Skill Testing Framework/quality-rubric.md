@@ -128,15 +128,19 @@ analysis and must ask before recommending any file writes.
 team-release, team-polish, team-live-ops
 
 Team skills orchestrate multiple specialist agents for a department. They must
-spawn the right agents, run independent ones in parallel, and surface blocks immediately.
+produce issue-backed execution plans, preserve owner decision gates, run
+independent work in parallel, and surface blocks immediately.
 
 | Metric | PASS criteria |
 |---|---|
-| **T1 — Named agent list** | Skill explicitly names which agents it spawns and in what order |
-| **T2 — Parallel where independent** | Agents whose inputs don't depend on each other are spawned in parallel (single message, multiple Task calls) |
-| **T3 — BLOCKED surfacing** | If any spawned agent returns BLOCKED or fails, skill surfaces it immediately and halts dependent work — never silently skips |
-| **T4 — Collect all verdicts before proceeding** | Dependent phases wait for all parallel agents to complete before proceeding |
-| **T5 — Usage error on no argument** | If required argument (e.g., feature name) is missing, skill outputs usage hint and stops without spawning agents |
+| **T1 — Planning/docs-first child issue** | Team flow starts by creating/updating a planning/docs-first child issue before execution shards |
+| **T2 — Required child issue shards** | Skill defines idempotent child issues for design, architecture, implementation, tests, discipline track (art/audio/UX as applicable), and QA |
+| **T3 — Owner decision gates preserved** | Creative and high-risk tradeoffs still require explicit owner decisions (`AskUserQuestion` or equivalent gate) |
+| **T4 — Parallel where independent** | Child issues whose inputs don't depend on each other are explicitly parallelizable |
+| **T5 — BLOCKED surfacing** | If any spawned agent or child issue returns BLOCKED/fails, skill surfaces it immediately and halts dependent work |
+| **T6 — Collect all verdicts before proceeding** | Dependent phases wait for all parallel shards/agents to complete before proceeding |
+| **T7 — Usage error on no argument** | If required argument (e.g., feature name) is missing, skill outputs usage hint and stops without spawning agents |
+| **T8 — Unity YJackCore routing** | Unity-scoped work includes framework-vs-host classification and YJackCore metadata (`yjackcore.layer`, `yjackcore.package_boundary`) |
 
 ---
 

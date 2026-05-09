@@ -1,0 +1,35 @@
+id: "AUTO-009"
+type: autonomous
+title: "YJackCore-Backed Unity Project Bootstrap Templates"
+subsystem: yjackcore
+priority: P2
+effort: L
+status: PROPOSED
+github_issue: null
+labels:
+  - autonomous
+  - roadmap
+  - execution
+  - yjackcore
+dependencies:
+  - "AUTO-002"
+description: >
+  Provide ready-to-use bootstrap templates for Unity projects that use YJackCore
+  as their framework package. Includes: template project structure with correct
+  Packages/YJackCore/ layout and assembly definitions, pre-wired
+  .agents/docs/technical-preferences.md for Unity + YJackCore, bootstrap script
+  or instructions that initialize the project directory and configure workspace
+  routing rules from AUTO-002, and integration with /setup-engine so that
+  selecting Unity + YJackCore automatically applies the template.
+acceptance_criteria:
+  - "Bootstrap template files documented in .agents/docs/templates/"
+  - "/setup-engine skill updated to detect Unity + YJackCore selection"
+  - "Templates reference YJackCore by path or registry entry, not by embedding source"
+  - "YJackCore package boundaries respected in all template files"
+artifacts:
+  - ".agents/docs/templates/unity-yjackcore-bootstrap/"
+  - ".agents/skills/setup-engine/SKILL.md (updated)"
+notes: >
+  This is an L effort task and must be decomposed before implementation.
+  Templates must not embed proprietary YJackCore source; reference only.
+  Requires AUTO-002 to be VALIDATED before starting.

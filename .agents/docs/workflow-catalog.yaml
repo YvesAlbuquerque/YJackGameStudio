@@ -13,6 +13,9 @@
 #
 # Phase gates (/gate-check): verdicts are ADVISORY — they guide the decision
 # but never hard-block advancement. The user always decides whether to proceed.
+# Gate outputs must include a validation packet in
+# production/qa/validation-packets/ using
+# .agents/docs/templates/validation-evidence-packet.md.
 
 phases:
 
@@ -224,6 +227,14 @@ phases:
           min_count: 1
         description: "Plan the first sprint with prioritized stories from epics"
 
+      - id: sprint-scheduler
+        name: "Autonomous Sprint Scheduler"
+        command: /sprint-scheduler
+        required: false
+        artifact:
+          glob: "production/sprints/schedule-sprint-*.yml"
+        description: "Autonomous alternative to /sprint-plan. Reads work contracts and dependency graph to schedule sprint work based on dependencies, effort, and parallel execution safety."
+
       - id: vertical-slice
         name: "Vertical Slice (playtested)"
         command: /playtest-report
@@ -246,6 +257,15 @@ phases:
         artifact:
           glob: "production/sprints/sprint-*.md"
         description: "Plan the current sprint with prioritized, ready stories"
+
+      - id: sprint-scheduler
+        name: "Sprint Scheduler (Autonomous)"
+        command: /sprint-scheduler
+        required: false
+        repeatable: true
+        artifact:
+          glob: "production/sprints/schedule-sprint-*.yml"
+        description: "Autonomous sprint planner and issue scheduler. Reads the dependency graph and work contracts to propose a sprint schedule based on priority, dependencies, effort, and parallel execution safety. Respects autonomy mode boundaries and YJackCore manual validation requirements. Run instead of /sprint-plan for autonomous scheduling."
 
       - id: story-readiness
         name: "Story Readiness Check"
@@ -318,6 +338,14 @@ phases:
         command: /sprint-status
         required: false
         description: "Quick 30-line snapshot of sprint progress without a full report"
+
+      - id: owner-dashboard
+        name: "Owner Dashboard"
+        command: /owner-dashboard
+        required: false
+        artifact:
+          glob: "production/dashboard.md"
+        description: "Generate concise owner status showing active issues, blocked items, validation debt, decisions needed, and risks. Separates facts from recommendations and autonomous next actions from owner decisions. Regenerates after significant state changes."
 
   polish:
     label: "Polish"

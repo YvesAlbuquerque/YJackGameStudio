@@ -1,0 +1,27 @@
+id: "FEAT-001"
+type: feature
+title: "Roadmap status badge generation for README"
+subsystem: roadmap-os
+priority: P3
+effort: S
+status: PROPOSED
+github_issue: null
+labels:
+  - feature
+  - roadmap-os
+description: >
+  Add a script (or extend validate.py) to generate a Markdown summary table of
+  roadmap item statuses suitable for embedding in README.md or a separate
+  ROADMAP-STATUS.md file. The table should show each AUTO item with its current
+  status, priority, effort, and a link to its GitHub issue if one exists.
+  This gives visitors a quick visual overview of roadmap progress without
+  requiring them to navigate to individual task files.
+acceptance_criteria:
+  - "Script produces a Markdown table with columns: ID, Title, Status, Priority, Effort, Issue"
+  - "Rows are sorted by ID"
+  - "Rows with a github_issue number include a hyperlink to the GitHub issue"
+  - "The generated table can be embedded directly in README.md or ROADMAP-STATUS.md"
+  - "Script runs without GitHub API access (reads only local YAML files)"
+notes: >
+  This is a read-only, low-risk feature that helps communicating project health.
+  It should not require any API credentials to run.

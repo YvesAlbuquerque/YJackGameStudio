@@ -14,6 +14,18 @@ the user with the subagent's proposals as selectable options. Write the agent's
 full analysis in conversation, then capture the decision with concise labels.
 The user must approve before moving to the next phase.
 
+## Issue-Backed Planning and Execution (required)
+
+Before entering the domain phases below, apply the shared protocol in `.agents/docs/team-issue-orchestration.md`.
+
+Minimum requirements for this skill:
+- Start by creating/updating a **planning/docs-first child issue** for the requested scope.
+- Generate idempotent child issues for: design, architecture, implementation, tests, discipline track (Art/Audio/UX only if needed by scope; otherwise mark N/A), and QA.
+- Keep explicit owner decision gates via `AskUserQuestion` for creative and high-risk tradeoffs.
+- Execute independent child issues in parallel only after dependencies/gates are satisfied; surface BLOCKED shards immediately.
+- Maintain conversational summaries/options while tracking execution against issue shards (support both modes).
+- For Unity work, annotate child issues with YJackCore routing (`framework` vs `host`), `yjackcore.layer`, and `yjackcore.package_boundary` when applicable.
+
 ## Team Composition
 
 - **qa-lead** — QA strategy, test plan generation, story classification, sign-off report
@@ -195,6 +207,24 @@ Next step guidance by verdict:
 Ask: "May I write this QA sign-off report to `production/qa/qa-signoff-[sprint]-[date].md`?"
 
 Write only after receiving approval.
+
+### Validation Evidence Packet (required)
+
+After sign-off (or BLOCKED partial run), create a validation evidence packet:
+
+- Standard: `.agents/docs/autonomous-validation-evidence.md`
+- Template: `.agents/docs/templates/validation-evidence-packet.md`
+- Path: `production/qa/validation-packets/validation-team-qa-[scope]-[date].md`
+
+The packet must record:
+
+- checks run
+- checks unavailable
+- manual validation still required
+
+For Unity + YJackCore QA scopes, include the manual checklist from:
+
+- `.agents/docs/templates/yjackcore-unity-manual-validation.md`
 
 ## Error Recovery Protocol
 

@@ -1,0 +1,34 @@
+id: "AUTO-010"
+type: autonomous
+title: "Autonomous Validation Gates"
+subsystem: validation
+priority: P2
+effort: L
+status: PROPOSED
+github_issue: null
+labels:
+  - autonomous
+  - roadmap
+  - validation
+dependencies:
+  - "AUTO-005"
+description: >
+  Make validation gates (/gate-check) executable autonomously rather than
+  advisory-only. Define machine-readable pass/fail criteria for each gate in
+  .agents/docs/workflow-catalog.yaml. Implement an autonomous gate runner that
+  evaluates criteria, produces a structured verdict, and either advances the
+  phase or escalates to the owner. Gates requiring human judgment must escalate
+  with a clear description of the decision required. Integrate gate results into
+  work contract lifecycle (AUTO-005): a contract cannot close until its gate passes.
+acceptance_criteria:
+  - ".agents/docs/workflow-catalog.yaml updated with machine-readable pass/fail criteria"
+  - "Autonomous gate runner specification documented"
+  - "Gate verdicts are auditable with evidence for each pass/fail recorded"
+  - "Owner can override gate verdicts with an explicit decision record"
+  - "Work contracts cannot close without passing their associated gate"
+artifacts:
+  - ".agents/docs/workflow-catalog.yaml (updated)"
+  - ".agents/docs/gate-runner-spec.md"
+notes: >
+  This is an L effort task and must be decomposed before implementation.
+  Gate verdicts must always be auditable. The owner can always override.

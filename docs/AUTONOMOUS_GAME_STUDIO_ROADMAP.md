@@ -1,472 +1,485 @@
 # Autonomous Game Studio Roadmap
 
-Date: 2026-05-04
-Repo: current repository (see `README.md` for canonical links)
-Target state: owner-directed autonomous game studio, aligned with YJackCore.
-
-## Conclusion
-
-The project is a strong collaborative game-studio scaffold, not yet an autonomous studio operating system.
-
-The core shift needed is from:
-
-`user approves every workflow step`
-
-to:
-
-`owner sets strategy, budgets, risk tolerance, and approval boundaries; agents decompose, schedule, execute, validate, and report in parallel within those boundaries`.
-
-YJackCore alignment should be explicit, not incidental. The Game Studio framework should treat YJackCore-backed Unity projects as a first-class product path with framework-aware routing, package boundaries, low-code authoring expectations, and manual Unity validation gates.
-
-## Evidence From Repo Dive
-
-Facts:
-
-- The repo contains 49 agents, 72 skills, 12 hooks, 11 rules, and 39 docs templates.
-- `README.md` positions the system as "collaborative, not autonomous."
-- `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md` requires Question -> Options -> Decision -> Draft -> Approval before writes.
-- `.claude/docs/coordination-rules.md` documents subagent parallelism and experimental agent teams, but says agent teams are "not yet used in this project."
-- `.claude/docs/workflow-catalog.yaml` defines a mature 7-phase game production pipeline.
-- `.claude/skills/dev-story`, `story-readiness`, `story-done`, `create-epics`, and `create-stories` create a traceable story lifecycle, but remain conversation-first and approval-heavy.
-- `CCGS Skill Testing Framework` exists and tracks 72 skill specs plus 49 agent specs, but recorded test result fields are empty.
-- GitHub Issues were disabled on this repo at audit time and had to be enabled before creating this backlog.
-- `.claude/docs/technical-preferences.md` has a Framework Integration section for YJackCore, but it is still unconfigured.
-- `.claude/docs/yjackcore-support.md` correctly describes YJackCore detection and layer mapping.
-- An audit-time local YJackCore checkout used for comparison showed package name `com.ygamedev.yjack`, version `1.6.0`, Unity `6000.0`, and dependencies on TextMeshPro, Cinemachine, Visual Scripting, Mathematics, and Input System; treat these as an external snapshot, not a repo-verifiable fact.
-- External YJackCore documentation describes a low-code, inspector-first, ScriptableObject, UnityEvent, and Visual Scripting-friendly framework direction.
-- External YJackCore materials reviewed during the audit indicate a Roadmap OS with structured tasks, priority, effort, generated roadmaps, GitHub Issues integration, L/XL decomposition rules, and planning-routing rules.
-
-Inferences:
-
-- The fastest path to "state of the art" is not more agents. It is an issue-native operating model that lets existing agents work from structured contracts.
-- YJackCore's Roadmap OS is the strongest local pattern to reuse for autonomous backlog, decomposition, labels, and issue lifecycle.
-- The biggest architecture risk is letting "autonomy" bypass the design, ADR, manifest, and validation contracts that already make this repo useful.
-- The biggest product risk is keeping the system file-approval-bound while calling it autonomous. That will not scale to parallel execution.
-
-Open questions:
-
-- Whether autonomous runs should be supported inside Claude Code only, across Codex/GitHub/Copilot/etc., or through a vendor-neutral file contract first.
-- Whether issue creation should remain manual/CLI-driven in this repo or be automated like YJackCore's Roadmap OS.
-- Whether the current "collaborative protocol" remains the default mode, with "autonomous mode" opt-in, or whether the product positioning changes globally.
-
-## Product Principles
-
-1. Owner owns intent, risk, scope, budget, and final creative/product tradeoffs.
-2. Agents own decomposition, execution planning, implementation, validation, and reporting inside explicit boundaries.
-3. Issues become the work contract, not chat history.
-4. Parallel work requires file ownership, dependency order, validation evidence, and handoff notes.
-5. YJackCore-backed Unity projects must default to framework-aware routing before custom architecture.
-6. Autonomy must be bounded by proof: tests, static checks, review gates, playtest evidence, or manual Unity validation notes.
-7. Large work is decomposed before implementation. `L` and `XL` issues are parent coordination surfaces.
-
-## MVP 1: Owner-Directed Issue-Backed Planning
-
-The first milestone is intentionally narrow. It does not require autonomous execution.
-It requires the infrastructure that makes autonomous execution safe.
-
-**Goal**: An owner can state a game goal, select an autonomy mode, and YJackGameStudio
-can create structured, dependency-aware, validation-aware issues with YJackCore-aware routing.
-
-**MVP 1 is complete when all of the following are true:**
-
-| Criterion | Artefact |
-|-----------|----------|
-| Autonomy mode is explicit | `.agents/docs/autonomy-modes.md` exists and is referenced from `AGENTS.md` |
-| YJackCore routing is explicit | `.agents/docs/yjackcore-authority.md` and `.agents/docs/yjack-workspace-manifest.md` exist |
-| Work contract schema exists | `.agents/docs/work-contract-schema.md` defines all required fields and lifecycle states |
-| Issue templates can represent agent work | `.github/ISSUE_TEMPLATE/agent_work.md` captures owner intent, scope, non-goals, dependencies, write set, risk tier, validation evidence, and YJackCore fields |
-| File ownership and dependency rules exist | Work contract schema defines write-set exclusivity and dependency ordering |
-| Validation evidence is defined before scheduling | `.agents/docs/validation-evidence.md` defines the evidence packet and honesty rules |
-
-MVP 1 does **not** require:
-- Autonomous sprint scheduling (AUTO-007)
-- Parallel agent execution (AUTO-006)
-- Executable CI (AUTO-011)
-- Owner dashboard (AUTO-013)
-
-Those belong to MVP 2 and beyond.
+**Last Updated:** 2026-05-04
 
 ---
 
-## Roadmap
+## 🎯 Vision
+
+This roadmap moves Claude Code Game Studios from a **collaborative assistant framework** toward an **owner-directed autonomous studio operating system**.
+
+Under this model:
+
+- The **owner** sets intent and approval boundaries.
+- **Agents** decompose, execute, validate, and report in parallel through issue-backed contracts.
+- Work is driven by structured GitHub issues with defined schemas, dependencies, and ownership.
+- Validation gates are autonomous and auditable, not just advisory.
+
+This is not a shift toward fully unconstrained AI autonomy. The owner remains the director. What changes is the _surface area of delegation_: agents handle decomposition, scheduling, execution, and status reporting without requiring step-by-step instruction for every action.
+
+---
+
+## 🗂 Table of Contents
+
+1. [Operating Model Shift](#1-operating-model-shift)
+2. [Execution Order](#2-execution-order)
+3. [Work Items](#3-work-items)
+   - [AUTO-001: Owner-Directed Autonomy Modes and Approval Boundaries](#auto-001-owner-directed-autonomy-modes-and-approval-boundaries)
+   - [AUTO-002: YJackCore Consumer Authority and Workspace Routing](#auto-002-yjackcore-consumer-authority-and-workspace-routing)
+   - [AUTO-003: Game Studio Roadmap OS](#auto-003-game-studio-roadmap-os)
+   - [AUTO-004: GitHub Issue Templates and Label Taxonomy](#auto-004-github-issue-templates-and-label-taxonomy)
+   - [AUTO-005: Agent Work Contract Schema](#auto-005-agent-work-contract-schema)
+   - [AUTO-006: Dependency Graph and File Ownership Protocol](#auto-006-dependency-graph-and-file-ownership-protocol)
+   - [AUTO-007: Autonomous Sprint Planner and Issue Scheduler](#auto-007-autonomous-sprint-planner-and-issue-scheduler)
+   - [AUTO-008: Team Skills as Issue-Driven Execution Planners](#auto-008-team-skills-as-issue-driven-execution-planners)
+   - [AUTO-009: YJackCore-Backed Unity Project Bootstrap Templates](#auto-009-yjackcore-backed-unity-project-bootstrap-templates)
+   - [AUTO-010: Autonomous Validation Gates](#auto-010-autonomous-validation-gates)
+   - [AUTO-011: Skill-Test Executable CI](#auto-011-skill-test-executable-ci)
+   - [AUTO-012: Autonomous Run Memory and Handoff Model](#auto-012-autonomous-run-memory-and-handoff-model)
+   - [AUTO-013: Owner Dashboard and Autonomous Status Report](#auto-013-owner-dashboard-and-autonomous-status-report)
+   - [AUTO-014: Risk Register and Escalation Policy](#auto-014-risk-register-and-escalation-policy)
+   - [AUTO-015: Autonomous Brownfield Adoption for YJackCore-Backed Unity Projects](#auto-015-autonomous-brownfield-adoption-for-yjackcore-backed-unity-projects)
+   - [AUTO-016: Documentation and Product-Positioning Drift](#auto-016-documentation-and-product-positioning-drift)
+   - [AUTO-017: Autonomous Asset Pipeline Issue Generation](#auto-017-autonomous-asset-pipeline-issue-generation)
+   - [AUTO-018: Multi-Agent QA and Playtest Evidence Workflow](#auto-018-multi-agent-qa-and-playtest-evidence-workflow)
+4. [Architecture Impact](#4-architecture-impact)
+5. [YJackCore Alignment](#5-yjackcore-alignment)
+6. [Constraints and Non-Goals](#6-constraints-and-non-goals)
 
-### Phase 0: Product Alignment and Authority
+---
 
-Goal: define what autonomous means without breaking the current safety model.
+## 1. Operating Model Shift
 
-Deliverables:
+### Current Model (Collaborative Assistant)
 
-- Owner-directed autonomy model.
-- Approval boundary matrix.
-- YJackCore framework-vs-product authority model.
-- Documentation cleanup where the repo says conflicting counts or outdated claims.
+```
+Owner: "Design a crafting system."
+Agent: Asks questions → presents options → drafts → awaits approval → writes file.
+```
 
-Exit criteria:
+Every step requires active owner participation. The agent is a consultant that waits for direction at each decision point.
 
-- A user can choose collaborative, supervised autonomous, or trusted autonomous mode.
-- A YJackCore-backed Unity project has an explicit routing path and framework authority boundary.
+### Target Model (Owner-Directed Autonomous Studio OS)
 
-### Phase 1: Issue-Native Studio OS
+```
+Owner: "Ship the crafting system MVP by sprint end. Auto-approve LOW risk decisions."
+Agent: Reads intent → decomposes into issues → assigns to specialist agents →
+       executes → validates → escalates MEDIUM/HIGH risk decisions → reports status.
+```
 
-Goal: make GitHub Issues and roadmap files the canonical work queue.
+The owner sets the approval boundary once. Agents handle the full decomposition-to-validation loop within that boundary. Only items outside the boundary surface for owner review.
 
-Deliverables:
+### What Stays the Same
 
-- Labels, priority, effort, phase, domain, and YJackCore tags.
-- Roadmap OS adapted from YJackCore.
-- Issue templates for epics, stories, bugs, agent work shards, validation tasks, and planning tasks.
-- Dependency and ownership fields.
+- The owner is always the creative director and final arbiter.
+- All work is tracked in auditable GitHub issues with structured schemas.
+- YJackCore package boundaries, low-code authoring model, and Unity manual validation requirements are preserved.
+- Agents never bypass the owner on risk-classified decisions.
 
-Exit criteria:
+---
 
-- Agents can pick independent issues and understand scope, dependencies, write ownership, validation, and handoff expectations without re-reading the whole project.
+## 2. Execution Order
 
-### Phase 2: Parallel Agent Execution
+Work items must be implemented in the order below. Later items depend on contracts, schemas, and authority models established by earlier ones.
 
-Goal: let agents safely work in parallel.
+```
+AUTO-001  Owner-directed autonomy modes and approval boundaries          [FOUNDATION]
+AUTO-002  YJackCore consumer authority and workspace routing             [FOUNDATION]
+AUTO-016  Documentation and product-positioning drift                    [FOUNDATION]
+AUTO-003  Game Studio Roadmap OS                                         [INFRASTRUCTURE]
+AUTO-004  GitHub Issue templates and label taxonomy                      [INFRASTRUCTURE]
+AUTO-005  Agent work contract schema                                     [INFRASTRUCTURE]
+AUTO-006  Dependency graph and file ownership protocol                   [INFRASTRUCTURE]
+AUTO-007  Autonomous sprint planner and issue scheduler                  [EXECUTION]
+AUTO-009  YJackCore-backed Unity project bootstrap templates             [EXECUTION]
+AUTO-015  Autonomous brownfield adoption for YJackCore-backed Unity      [EXECUTION]
+AUTO-008  Team skills as issue-driven execution planners                 [EXECUTION]
+AUTO-010  Autonomous validation gates                                    [VALIDATION]
+AUTO-011  Skill-test executable CI                                       [VALIDATION]
+AUTO-012  Autonomous run memory and handoff model                        [VALIDATION]
+AUTO-014  Risk register and escalation policy                            [GOVERNANCE]
+AUTO-018  Multi-agent QA and playtest evidence workflow                  [QUALITY]
+AUTO-013  Owner dashboard and autonomous status report                   [REPORTING]
+AUTO-017  Autonomous asset pipeline issue generation                     [REPORTING]
+```
 
-Deliverables:
+---
 
-- Agent work contract schema.
-- File ownership and lock protocol.
-- Parallel shard planning skill.
-- Team skill refactor from conversation-first orchestration to issue-driven execution plans.
-- YJackCore-specific Unity templates and technical preferences.
+## 3. Work Items
 
-Exit criteria:
+### AUTO-001: Owner-Directed Autonomy Modes and Approval Boundaries
 
-- A feature can be split into independent implementation, docs, tests, UX, art, and QA shards with clear non-overlapping write scopes.
+**Goal:** Define the owner-facing control model that governs all autonomous agent behavior in the studio.
 
-### Phase 3: Autonomous Validation and Evidence
+**Scope:**
+- Define autonomy modes (e.g., `GUIDED`, `SUPERVISED`, `AUTONOMOUS`) that the owner selects per session or per project.
+- Define approval boundary tiers (LOW / MEDIUM / HIGH risk) and what categories of decision fall into each.
+- Document the escalation trigger: any action classified above the current autonomy mode boundary must pause and surface to the owner before proceeding.
+- Establish where these settings are stored (likely `.agents/docs/technical-preferences.md` or a dedicated `production/autonomy-config.md`).
 
-Goal: agents prove completion without relying on vague summaries.
+**Constraints:**
+- Must not remove the owner from any HIGH risk decision regardless of mode.
+- Modes must be reversible at any time without breaking in-flight work.
 
-Deliverables:
+**Artifacts:** Autonomy mode specification in `.agents/docs/` and updated `AGENTS.md` collaboration protocol section.
 
-- Executable skill-test CI.
-- Autonomous validation gates.
-- QA evidence workflow.
-- Manual Unity validation templates for YJackCore.
-- Owner dashboard/reporting surface.
+---
 
-Exit criteria:
+### AUTO-002: YJackCore Consumer Authority and Workspace Routing
 
-- Every autonomous run closes with evidence: checks run, files changed, acceptance criteria mapped, unresolved risk, and manual validation still required.
+**Goal:** Clarify which authority governs YJackCore decisions and how agents route YJackCore-related work to the correct specialist.
 
-### Phase 4: Studio Operations
+**Scope:**
+- Document the authority hierarchy: YJackCore's own `AGENTS.md` and `.agents/skills/` take precedence over the Game Studio generic Unity specialist.
+- Define workspace routing rules: when a task touches `Packages/YJackCore/**` or `Packages/com.ygamedev.yjack/**`, it routes to the YJackCore-aware agent path.
+- Update `.agents/rules/yjackcore-unity.md` if routing rules require clarification.
+- Ensure the generic Unity fallback is used only when YJackCore-specific assets are absent.
 
-Goal: support full production flow beyond code.
+**Constraints:**
+- YJackCore package boundaries must remain intact; agents must not modify `Packages/YJackCore/**` without explicit owner authorization.
+- Low-code authoring model must be preserved in all routing decisions.
 
-Deliverables:
+**Artifacts:** Updated routing rules and authority documentation.
 
-- Asset pipeline issue generation.
-- Release/live-ops issue workflows.
-- Memory and handoff model compatible with YJackCore Sleep/Note.
-- Metrics for cycle time, blocked issues, validation debt, and agent throughput.
+---
 
-Exit criteria:
+### AUTO-003: Game Studio Roadmap OS
 
-- The owner can operate the studio from the issue board and periodic status reports rather than from a single chat session.
+**Goal:** Implement the operating-system layer that maintains the roadmap as a live, machine-readable artifact that agents can query and update.
 
-## Issue Backlog
+**Scope:**
+- Define how this roadmap document is kept in sync with GitHub issue state.
+- Establish a schema or convention for roadmap entries that agents can parse.
+- Define how new AUTO work items are registered and how completed items are marked.
+- Provide a mechanism for agents to propose new roadmap items for owner review.
 
-### AUTO-001: Define owner-directed autonomy modes and approval boundaries
+**Constraints:**
+- The roadmap must remain readable by humans as a primary concern.
+- Machine-readable sections must not degrade the human-readable experience.
 
-Labels: `roadmap`, `type: epic`, `priority: p0`, `effort: l`, `domain: owner-experience`, `phase: 0-product-alignment`, `autonomy`
+**Artifacts:** Roadmap schema convention, update protocol documentation.
 
-Create the product contract for collaborative, supervised autonomous, and trusted autonomous operation.
+---
 
-Acceptance criteria:
+### AUTO-004: GitHub Issue Templates and Label Taxonomy
 
-- Defines what agents may do without asking in each mode.
-- Defines what always requires owner approval.
-- Explains how file writes, GitHub issues, branches, commits, PRs, and releases are gated per mode.
-- Updates README and collaborative docs without losing the existing safety model.
-- Includes rollback/escalation language for autonomous mistakes.
+**Goal:** Standardize GitHub issue templates and labels to support structured autonomous work contracts.
 
-### AUTO-002: Add YJackCore consumer authority and workspace routing
+**Scope:**
+- Design issue templates for: agent work contracts, bug reports (autonomous), validation reports, escalation requests, and owner decisions.
+- Define the label taxonomy: autonomy tier labels (`auto:low`, `auto:medium`, `auto:high`), domain labels (design, architecture, implementation, QA), and status labels.
+- Templates must include all fields required by the agent work contract schema (AUTO-005).
+- Update `.github/ISSUE_TEMPLATE/` with new templates.
 
-Labels: `roadmap`, `type: feature`, `priority: p0`, `effort: m`, `domain: yjackcore`, `phase: 0-product-alignment`, `yjackcore`
+**Constraints:**
+- Existing `bug_report.md` and `feature_request.md` templates must remain functional.
+- Labels must be consistent with the approval boundary model from AUTO-001.
 
-Make YJackCore-backed Unity projects first-class in Game Studio.
+**Artifacts:** New issue templates in `.github/ISSUE_TEMPLATE/`, label taxonomy document.
 
-Acceptance criteria:
+---
 
-- Documents framework-vs-product authority for YJackCore consumers.
-- Adds or adapts a `.yjack-workspace.json` style manifest for path resolution.
-- Updates `.claude/docs/technical-preferences.md` setup guidance for YJackCore.
-- Routes Unity + YJackCore tasks to YJackCore layer rules before generic Unity advice.
-- Includes manual Unity validation expectations.
+### AUTO-005: Agent Work Contract Schema
 
-### AUTO-003: Build a Game Studio Roadmap OS modeled on YJackCore
+**Goal:** Define the structured schema that governs every autonomous agent work unit.
 
-Labels: `roadmap`, `type: epic`, `priority: p0`, `effort: l`, `domain: production`, `phase: 1-issue-os`, `automation`
+**Scope:**
+- A work contract is the unit of autonomous delegation. Define its required fields: `contract_id`, `owner`, `specialist_agent`, `scope`, `inputs`, `outputs`, `risk_tier`, `approval_boundary`, `validation_criteria`, `escalation_conditions`.
+- Define the contract lifecycle: `PROPOSED` → `APPROVED` → `IN_PROGRESS` → `BLOCKED` → `VALIDATED` → `CLOSED`.
+- Document how contracts are stored (GitHub issues with structured front-matter, or YAML files in `production/`).
+- Define how contracts reference each other for dependency tracking.
 
-Adapt the YJackCore Roadmap OS pattern to this repo.
+**Constraints:**
+- Schema must be forward-compatible with AUTO-006 (dependency graph) and AUTO-007 (scheduler).
+- Must not require custom tooling beyond standard Markdown and YAML.
 
-Acceptance criteria:
+**Artifacts:** Work contract schema specification in `.agents/docs/`, contract template.
 
-- Adds structured task files for bugs, improvements, features, and autonomous work.
-- Defines ID, subsystem, priority, effort, status, description, notes fields.
-- Adds validation and generation scripts.
-- Adds duplicate-safe GitHub Issue creation.
-- Documents L/XL decomposition rules and planning-first Phase 1 behavior.
+---
 
-### AUTO-004: Create GitHub Issue templates and label taxonomy for autonomous work
+### AUTO-006: Dependency Graph and File Ownership Protocol
 
-Labels: `roadmap`, `type: feature`, `priority: p0`, `effort: s`, `domain: production`, `phase: 1-issue-os`, `github`
+**Goal:** Establish a machine-readable dependency graph for agent work contracts and a file ownership protocol to prevent conflicts.
 
-Make issues usable as agent work contracts.
+**Scope:**
+- Define how contracts declare file ownership (which files a contract reads, which it writes).
+- Define conflict detection: two contracts with overlapping write scope cannot execute in parallel without explicit resolution.
+- Establish the dependency graph format (e.g., YAML adjacency list in `production/`) and how agents read it before scheduling work.
+- Define ownership transfer protocol: when a contract closes, how ownership is released or transferred.
 
-Acceptance criteria:
+**Constraints:**
+- The graph must be human-readable and auditable.
+- Conflict resolution must always escalate to the owner; agents cannot unilaterally resolve ownership conflicts.
 
-- Adds templates for epic, story, agent shard, validation, bug, and product decision.
-- Adds labels for priority, effort, phase, domain, type, autonomy, and YJackCore.
-- Documents label meanings.
-- Ensures every autonomous issue can state owner intent, scope, dependencies, write set, validation, and handoff.
+**Artifacts:** Dependency graph schema, file ownership protocol documentation.
 
-### AUTO-005: Define the agent work contract schema
+---
 
-Labels: `roadmap`, `type: feature`, `priority: p0`, `effort: m`, `domain: orchestration`, `phase: 1-issue-os`, `autonomy`
+### AUTO-007: Autonomous Sprint Planner and Issue Scheduler
 
-Define the machine-readable contract agents use before starting work.
+**Goal:** Upgrade the `/sprint-plan` skill to operate autonomously within owner-set constraints.
 
-Acceptance criteria:
+**Scope:**
+- Given a set of approved work contracts, the sprint planner selects, sequences, and assigns contracts to specialist agents.
+- Respects the dependency graph (AUTO-006) and approval boundary model (AUTO-001).
+- Produces a machine-readable sprint schedule that agents can consume.
+- Surfaces any unresolvable conflicts or boundary violations to the owner before execution begins.
+- Integrates with the existing `production/sprints/` artifact format.
 
-- Defines required fields: owner goal, success criteria, non-goals, dependencies, write ownership, read context, validation, manual checks, doc impact, YJackCore layer.
-- Provides a markdown issue form and optional YAML/JSON representation.
-- Documents how agents update status and hand off partial work.
-- Supports parallel execution without shared-file collisions.
+**Constraints:**
+- The planner must not move `MEDIUM` or `HIGH` risk contracts to `IN_PROGRESS` without explicit owner approval.
+- Sprint scope must remain bounded by the owner's stated sprint goal.
 
-### AUTO-006: Add dependency graph and file ownership protocol for parallel agents
+**Artifacts:** Updated `/sprint-plan` skill, sprint schedule schema.
 
-Labels: `roadmap`, `type: feature`, `priority: p0`, `effort: l`, `domain: orchestration`, `phase: 2-parallel-execution`, `autonomy`
+---
 
-Prevent parallel agents from conflicting.
+### AUTO-008: Team Skills as Issue-Driven Execution Planners
 
-Acceptance criteria:
+**Goal:** Upgrade team coordination skills (`/team-combat`, `/team-narrative`, `/team-ui`, etc.) to generate and track GitHub issues as their execution plan.
 
-- Defines issue dependencies and blocked/unblocked states.
-- Defines file ownership and read-only consultation rules.
-- Defines conflict handling when two agents need the same file.
-- Adds checks or scripts that can detect overlapping write sets before work starts.
-- Includes guidance for Unity `.meta` files and YJackCore package boundaries.
+**Scope:**
+- Each team skill currently produces a coordination plan in Markdown. Extend this to also produce a set of agent work contracts (AUTO-005) as GitHub issues.
+- Define how team skills decompose a feature into individual contracts and assign them to specialist agents.
+- Ensure each contract has a `validation_criteria` that the team skill checks on completion.
+- Provide a rollup report that the team skill posts back to the parent issue.
 
-### AUTO-007: Add autonomous sprint planner and issue scheduler
+**Constraints:**
+- Team skills must still produce human-readable coordination plans as a primary output.
+- Issue generation must be idempotent: running a team skill twice on the same feature must not create duplicate contracts.
 
-Labels: `roadmap`, `type: feature`, `priority: p1`, `effort: l`, `domain: production`, `phase: 2-parallel-execution`, `automation`
+**Artifacts:** Updated team skill specifications, issue generation protocol.
 
-Turn backlog into parallelizable sprint work.
+---
 
-Acceptance criteria:
+### AUTO-009: YJackCore-Backed Unity Project Bootstrap Templates
 
-- Reads roadmap/issues and proposes a sprint based on priority, dependencies, effort, and available agent lanes.
-- Separates sequential blockers from parallel sidecar tasks.
-- Produces a sprint plan with owner approval required only at sprint boundary.
-- Marks issue readiness before scheduling.
-- Integrates with `production/sprint-status.yaml`.
+**Goal:** Provide ready-to-use bootstrap templates for Unity projects that use YJackCore as their framework package.
 
-### AUTO-008: Refactor team skills into issue-driven execution planners
+**Scope:**
+- Template project structure with correct `Packages/YJackCore/` layout and assembly definitions.
+- Pre-wired `.agents/docs/technical-preferences.md` for Unity + YJackCore.
+- Bootstrap script or instructions that initialize the project directory, configure the engine reference, and set up the workspace routing rules from AUTO-002.
+- Integration with `/setup-engine` skill so that selecting Unity + YJackCore automatically applies the bootstrap template.
 
-Labels: `roadmap`, `type: epic`, `priority: p1`, `effort: xl`, `domain: skills`, `phase: 2-parallel-execution`, `autonomy`
+**Constraints:**
+- Templates must respect YJackCore package boundaries.
+- Must not embed proprietary YJackCore source; templates reference the package by path or registry entry only.
 
-Convert `team-*` skills from conversational coordination into issue-backed plans.
+**Artifacts:** Bootstrap template files, `/setup-engine` skill update.
 
-Acceptance criteria:
+---
 
-- Starts with a planning/docs-first child issue.
-- Defines a common team orchestration pattern for all `team-*` skills.
-- Produces child issues for design, architecture, implementation, tests, art/audio/UX, and QA.
-- Preserves explicit owner decision points for creative and high-risk tradeoffs.
-- Allows agents to execute independent child issues in parallel.
+### AUTO-010: Autonomous Validation Gates
 
-### AUTO-009: Add YJackCore-backed Unity project bootstrap templates
+**Goal:** Make validation gates (`/gate-check`) executable autonomously rather than advisory-only.
 
-Labels: `roadmap`, `type: feature`, `priority: p1`, `effort: m`, `domain: yjackcore`, `phase: 2-parallel-execution`, `yjackcore`
+**Scope:**
+- Define machine-readable pass/fail criteria for each gate in `.agents/docs/workflow-catalog.yaml`.
+- Implement an autonomous gate runner that evaluates criteria, produces a structured verdict, and either advances the phase or escalates to the owner.
+- Gates that cannot be evaluated without human judgment must escalate with a clear description of what the owner needs to decide.
+- Integrate gate results into work contract lifecycle (AUTO-005): a contract cannot close until its gate passes.
 
-Create a first-class setup path for Unity + YJackCore games.
+**Constraints:**
+- Gate verdicts must always be auditable; the evidence for each pass/fail must be recorded.
+- The owner can always override a gate verdict with an explicit decision record.
 
-Acceptance criteria:
+**Artifacts:** Updated `.agents/docs/workflow-catalog.yaml` with machine-readable criteria, gate runner specification.
 
-- Provides templates for `AGENTS.md`, `ARCHITECTURE.md`, technical preferences, and framework docs.
-- Supports UPM, sibling checkout, submodule, vendor, and inline framework layouts.
-- Records YJackCore version, source, package path, and layer routing.
-- Includes YJackCore low-code authoring defaults: ScriptableObjects, UnityEvents, Visual Scripting, inspector-first setup.
-- Clearly separates game repo changes from YJackCore package changes.
+---
 
-### AUTO-010: Build autonomous validation gates
+### AUTO-011: Skill-Test Executable CI
 
-Labels: `roadmap`, `type: feature`, `priority: p1`, `effort: l`, `domain: validation`, `phase: 3-validation-evidence`, `automation`
+**Goal:** Make `/skill-test` executable as a CI job so that skill changes are validated automatically on every PR.
 
-Let agents verify work without implying unrun tests.
+**Scope:**
+- Define a CI workflow (`.github/workflows/`) that runs the `/skill-test` suite against changed skills.
+- `/skill-test` must produce a machine-readable report that CI can parse for pass/fail.
+- Define the minimum test coverage required for a skill to be considered CI-ready.
+- Integrate with the PR workflow: skill changes that do not pass `/skill-test` CI must not be merged without owner override.
 
-Acceptance criteria:
+**Constraints:**
+- CI must not require any proprietary or paid services beyond what GitHub Actions provides.
+- Existing skills must continue to work even before they have CI coverage.
 
-- Defines standard validation evidence for docs, skills, hooks, Unity/YJackCore work, and issue lifecycle work.
-- Adds scripts or checklists for static validation.
-- Records checks run, checks unavailable, and manual validation still required.
-- Integrates with `/story-done`, `/gate-check`, and `/team-qa`.
-- Provides YJackCore-specific manual validation templates for Unity scene/prefab/package checks.
+**Artifacts:** CI workflow file, `/skill-test` report schema update.
 
-### AUTO-011: Turn skill-test framework into executable CI
+---
 
-Labels: `roadmap`, `type: feature`, `priority: p1`, `effort: m`, `domain: validation`, `phase: 3-validation-evidence`, `ci`
+### AUTO-012: Autonomous Run Memory and Handoff Model
 
-Move skill quality from documented intent to automated enforcement.
+**Goal:** Define how agents persist memory across sessions and hand off state to the next agent or session.
 
-Acceptance criteria:
+**Scope:**
+- Extend the `production/session-state/` model to support structured handoff records.
+- A handoff record captures: active contracts, pending decisions, last validated state, next scheduled action, and risk items requiring owner attention.
+- Define when a handoff record is written (end of session, before escalation, after sprint completion).
+- Agents starting a new session must read the handoff record and resume from the last validated state.
 
-- Adds a scriptable validator for static skill checks.
-- Adds CI workflow for skill and agent catalog consistency.
-- Records test results back to the catalog only through an explicit update step.
-- Flags count drift between README, workflow docs, and actual files.
-- Produces a concise report usable in PR review.
+**Constraints:**
+- Handoff records must not contain secrets or credentials.
+- `production/session-state/` is a **tracked** directory (it holds a `.gitkeep`); working files written during a session (e.g., `active.md`) are not gitignored by default. `production/session-logs/` is gitignored. The implementation of this item must decide and document which path owns persistent handoff records and whether `production/session-state/active.md` should be gitignored, so that all agents and tooling handle ephemeral vs. persistent state consistently.
 
-### AUTO-012: Create autonomous run memory and handoff model
+**Artifacts:** Handoff record schema, session-state lifecycle documentation update.
 
-Labels: `roadmap`, `type: feature`, `priority: p1`, `effort: m`, `domain: memory`, `phase: 3-validation-evidence`, `autonomy`
+---
 
-Make long-running parallel work resumable.
+### AUTO-013: Owner Dashboard and Autonomous Status Report
 
-Acceptance criteria:
+**Goal:** Provide the owner with a concise, always-current view of autonomous studio activity.
 
-- Defines short-term run notes, handoff summaries, and durable lessons.
-- Aligns with YJackCore Sleep/Note separation.
-- Avoids making chat history the only source of truth.
-- Adds retention rules so memory does not become unbounded.
-- Supports per-issue handoff notes for agents joining active work.
+**Scope:**
+- Define a dashboard artifact (`production/dashboard.md` or equivalent) that summarizes: active contracts, pending owner decisions, completed work since last review, next scheduled actions, and open risk items.
+- The dashboard is regenerated by agents after each significant state change.
+- Provide a `/studio-status` skill (or extend `/sprint-status`) that produces the dashboard on demand.
+- Define what "significant state change" means in terms of the contract lifecycle (AUTO-005).
 
-### AUTO-013: Add owner dashboard and autonomous status report
+**Constraints:**
+- The dashboard must be readable at a glance; no scrolling required for the summary section.
+- Owner decisions must be clearly distinguished from agent status items.
 
-Labels: `roadmap`, `type: feature`, `priority: p2`, `effort: m`, `domain: owner-experience`, `phase: 3-validation-evidence`, `reporting`
+**Artifacts:** Dashboard schema, `/studio-status` skill (or `/sprint-status` extension).
 
-Give the owner a concise view of the studio.
+---
 
-Acceptance criteria:
+### AUTO-014: Risk Register and Escalation Policy
 
-- Shows active issues, blocked issues, validation debt, decisions needed, and risks.
-- Separates facts from recommendations.
-- Includes "what agents can do next without me" and "what needs owner decision."
-- Can be generated from issues and production state.
-- Does not require reading every agent transcript.
+**Goal:** Define how risks are identified, classified, tracked, and escalated throughout the autonomous studio workflow.
 
-### AUTO-014: Add risk register and escalation policy
+**Scope:**
+- Define a risk register schema: `risk_id`, `description`, `likelihood`, `impact`, `risk_tier`, `owner`, `mitigation`, `status`.
+- Define the escalation policy: which risk tiers trigger automatic escalation, what information is included in an escalation request, and what constitutes a valid owner response.
+- Integrate the risk register with the work contract lifecycle (AUTO-005): contracts with unresolved HIGH risks cannot advance to `IN_PROGRESS`.
+- Provide a `/risk-register` command or extend `/gate-check` to surface open risks at phase transitions.
 
-Labels: `roadmap`, `type: feature`, `priority: p1`, `effort: s`, `domain: production`, `phase: 3-validation-evidence`, `autonomy`
+**Constraints:**
+- Risk classification must be deterministic for common scenarios; agents should not re-classify known risk patterns differently across sessions.
+- The risk register must be auditable over the full project lifetime.
 
-Define when autonomous agents must stop and escalate.
+**Artifacts:** Risk register schema, escalation policy documentation, risk register template.
 
-Acceptance criteria:
+---
 
-- Defines risk classes: architecture, data loss, YJackCore package boundary, Unity scene/prefab wiring, scope creep, legal/release, monetization, player safety.
-- Defines stop conditions and owner approval triggers.
-- Adds issue labels for blocked, needs-owner, and risk categories.
-- Integrates with agent work contract and validation reports.
+### AUTO-015: Autonomous Brownfield Adoption for YJackCore-Backed Unity Projects
 
-### AUTO-015: Add autonomous brownfield adoption for YJackCore-backed Unity projects
+**Goal:** Extend the `/adopt` skill to handle brownfield Unity projects that already use YJackCore.
 
-Labels: `roadmap`, `type: feature`, `priority: p1`, `effort: l`, `domain: yjackcore`, `phase: 2-parallel-execution`, `yjackcore`
+**Scope:**
+- Detect YJackCore package presence and version during the `/adopt` audit.
+- Apply YJackCore-specific compliance checks: package boundary integrity, assembly definition structure, low-code authoring conventions.
+- Produce a migration plan that respects YJackCore package authority (AUTO-002).
+- Integrate with the bootstrap templates from AUTO-009 to provide a clear upgrade path.
 
-Upgrade `/adopt` for existing Unity projects that already consume YJackCore.
+**Constraints:**
+- The `/adopt` skill must not modify files inside `Packages/YJackCore/**` without explicit owner authorization.
+- The migration plan must be phased; agents cannot perform a big-bang migration autonomously.
 
-Acceptance criteria:
+**Artifacts:** Updated `/adopt` skill, YJackCore compliance check specification.
 
-- Detects YJackCore by package manifest, submodule, local package path, or explicit technical preferences.
-- Audits game artifacts without modifying YJackCore package files.
-- Produces a migration plan split into parallelizable issues.
-- Maps game systems to YJackCore GameLayer, LevelLayer, PlayerLayer/CoreLayer, ViewLayer, and Shared.
-- Flags what requires manual Unity validation.
+---
 
-### AUTO-016: Fix documentation and product-positioning drift
+### AUTO-016: Documentation and Product-Positioning Drift
 
-Labels: `roadmap`, `type: docs`, `priority: p1`, `effort: s`, `domain: docs`, `phase: 0-product-alignment`, `documentation`
+**Goal:** Correct positioning drift in existing documentation so that it accurately reflects the autonomous studio model rather than the collaborative assistant model.
 
-Clean up inconsistencies found during the repo dive.
+**Scope:**
+- Audit `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md`, `docs/WORKFLOW-GUIDE.md`, `AGENTS.md`, and the README for language that positions the studio as purely assistant-driven.
+- Update documentation to reflect the owner-directed autonomous model while preserving the owner-as-director principle.
+- Ensure the updated docs clearly communicate what changes under the autonomous model and what stays the same.
+- Update `README.md` product description to reflect the new positioning.
 
-Acceptance criteria:
+**Constraints:**
+- Documentation updates must not contradict the collaborative design principles that still apply (owner is always the creative director).
+- Changes must be reviewed by the owner before merge.
 
-- Aligns README, WORKFLOW-GUIDE, and CCGS testing docs on agent/skill/template counts.
-- Updates old "48 agents / 68 skills / 66 commands" references where incorrect.
-- Explains collaborative vs autonomous modes consistently.
-- Links the new roadmap and issue operating model.
-- Keeps existing collaborative protocol available as a safe default.
+**Artifacts:** Updated `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md`, `docs/WORKFLOW-GUIDE.md`, `AGENTS.md`, and `README.md`.
 
-### AUTO-017: Create autonomous asset pipeline issue generation
+---
 
-Labels: `roadmap`, `type: feature`, `priority: p2`, `effort: m`, `domain: assets`, `phase: 4-studio-operations`, `automation`
+### AUTO-017: Autonomous Asset Pipeline Issue Generation
 
-Turn art bible and asset specs into production-ready asset issues.
+**Goal:** Upgrade `/asset-spec` to generate structured GitHub issues for each required asset, enabling autonomous tracking and delegation.
 
-Acceptance criteria:
+**Scope:**
+- Extend `/asset-spec` output to produce agent work contracts (AUTO-005) as GitHub issues for each asset specification.
+- Each asset issue captures: asset ID, spec reference, assignee agent, format requirements, size budget, and validation criteria.
+- Define how asset issues link to the sprint plan and dependency graph (AUTO-006).
+- Provide a rollup view of asset pipeline status that the owner can review at a glance.
 
-- Reads art bible, asset manifest, GDDs, and UX docs.
-- Creates asset issues with owner intent, style constraints, file targets, generation/authoring prompts, acceptance criteria, and validation.
-- Separates concept art, production assets, UI assets, VFX, audio, and implementation hookup.
-- Includes YJackCore/Unity import and `.meta` handling rules where relevant.
+**Constraints:**
+- Issue generation must remain idempotent.
+- Asset issues must reference the approved asset specification; they must not duplicate spec content.
 
-### AUTO-018: Add multi-agent QA and playtest evidence workflow
+**Artifacts:** Updated `/asset-spec` skill, asset issue template.
 
-Labels: `roadmap`, `type: feature`, `priority: p1`, `effort: l`, `domain: qa`, `phase: 3-validation-evidence`, `automation`
+---
 
-Make QA evidence scalable across parallel agents.
+### AUTO-018: Multi-Agent QA and Playtest Evidence Workflow
 
-Acceptance criteria:
+**Goal:** Define how multiple agents coordinate to execute a QA plan and collect playtest evidence autonomously.
 
-- Defines evidence artifacts for unit, integration, UI, visual/feel, playtest, and release checks.
-- Allows `qa-tester` lanes to run independent story evidence tasks.
-- Aggregates evidence into sprint and milestone sign-off.
-- Flags unverifiable criteria and manual checks without overclaiming.
-- Feeds `/gate-check` and owner dashboard.
+**Scope:**
+- Extend `/qa-plan` to produce a set of agent work contracts (AUTO-005) that can be distributed across specialist QA agents.
+- Define how QA agents collect, record, and validate test evidence against the acceptance criteria.
+- Integrate with the `/playtest-report` skill to produce structured evidence that gates phase advancement (AUTO-010).
+- Define how conflicting QA findings are escalated to the owner.
 
-## Recommended Implementation Order
+**Constraints:**
+- QA evidence must be traceable to the GDD requirements they validate.
+- No QA gate may be marked passed without evidence that satisfies the defined criteria.
 
-Contracts, validation, and ownership come before autonomous scheduling.
-The order below reflects that dependency.
+**Artifacts:** Updated `/qa-plan` skill, QA evidence schema, `/playtest-report` integration specification.
 
-| Step | Issues | Rationale |
-|------|--------|-----------|
-| 1 | AUTO-001 | Define what autonomous means — gate on this before everything else |
-| 2 | AUTO-002 | YJackCore routing must be explicit before any Unity work is scheduled |
-| 3 | AUTO-016 | Fix doc/positioning drift so later docs are grounded in consistent facts |
-| 4 | AUTO-005 | Work contract schema is the contract layer — needed before issues or scheduling |
-| 5 | AUTO-004 | Issue templates and label taxonomy encode the contract in GitHub |
-| 6 | AUTO-006 | File ownership and dependency rules prevent parallel conflicts |
-| 7 | AUTO-010 | Validation evidence must be defined before autonomous runs claim completion |
-| 8 | AUTO-003 | Roadmap OS can now be built on top of the contract + validation layer |
-| 9 | AUTO-007 | Sprint scheduler only makes sense once contracts and labels exist |
-| 10 | AUTO-009 | YJackCore Unity bootstrap builds on the routing + contract layer |
-| 11 | AUTO-015 | Brownfield adoption requires the manifest spec and bootstrap templates |
-| 12 | AUTO-008 | Team skill refactor is safest after contract schema and ownership rules exist |
-| 13 | AUTO-011 | CI for skills — builds on the validation evidence framework |
-| 14 | AUTO-012 | Memory and handoff model — builds on validation and contract output |
-| 15 | AUTO-014 | Risk register and escalation policy — informed by real contract experience |
-| 16 | AUTO-018 | Multi-agent QA workflow — builds on validation + parallel execution |
-| 17 | AUTO-013 | Owner dashboard — synthesizes issue and validation state |
-| 18 | AUTO-017 | Asset pipeline issue generation — studio ops, last phase |
+---
 
-## Architecture Impact
+## 4. Architecture Impact
 
-This roadmap changes the Game Studio operating model and AI infrastructure. It does not change game runtime code directly.
+This roadmap affects only the **AI operating model and repository workflow layer**. No game runtime code, engine bindings, or gameplay systems are modified by this roadmap.
 
-YJackCore impact is integration-facing only: Game Studio should consume YJackCore guidance, package boundaries, layer rules, and low-code authoring priorities. It should not modify the YJackCore package unless a future issue explicitly targets that repo.
+Specifically:
 
-## Doc Impact
+| Layer | Impact |
+|-------|--------|
+| `.agents/` skills and docs | Updated and extended |
+| `.github/` issue templates and workflows | New templates and CI workflow added |
+| `docs/` workflow and design docs | Repositioning updates |
+| `production/` schemas | New contract, dashboard, and risk register schemas |
+| `src/` game source code | **No changes** |
+| `design/` GDDs | **No changes** |
+| Engine bindings | **No changes** |
+| YJackCore package internals | **No changes** |
 
-Expected docs affected:
+---
 
-- `README.md`
-- `CLAUDE.md`
-- `.claude/docs/coordination-rules.md`
-- `.claude/docs/yjackcore-support.md`
-- `.claude/docs/workflow-catalog.yaml`
-- `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md`
-- `docs/WORKFLOW-GUIDE.md`
-- new roadmap and issue operating docs under `docs/`
-- possible updates under `CCGS Skill Testing Framework/`
+## 5. YJackCore Alignment
 
-## Manual Validation Still Required
+YJackCore-backed Unity projects are first-class targets of this roadmap. All work items must preserve the following YJackCore constraints:
 
-- Confirm the owner wants GitHub Issues to remain enabled for this public repo.
-- Confirm the preferred autonomy default: collaborative, supervised autonomous, or trusted autonomous.
-- Validate YJackCore bootstrap behavior against at least one real Unity project consuming `com.ygamedev.yjack`.
-- Validate any Unity/YJackCore generated guidance in Unity Editor, including package resolution, scene/prefab wiring, and manual Play Mode flows.
+1. **Package boundary integrity** — Agents must never modify files inside `Packages/YJackCore/**` or `Packages/com.ygamedev.yjack/**` without explicit owner authorization.
+
+2. **Low-code authoring model** — Workflow and skill changes must not require YJackCore consumers to write engine-level C# code where the low-code path suffices.
+
+3. **Unity manual validation requirements** — Gates that require Unity Editor validation (domain reload, Play Mode tests, build) must escalate to the owner. These cannot be autonomously confirmed.
+
+4. **Framework-vs-product authority** — YJackCore's own `AGENTS.md` and `.agents/skills/` take precedence over the Game Studio generic Unity specialist for all YJackCore-specific decisions.
+
+5. **Routing correctness** — Work touching YJackCore paths must route to the YJackCore-aware agent path as defined in AUTO-002, not the generic Unity fallback.
+
+---
+
+## 6. Constraints and Non-Goals
+
+### Constraints
+
+- The owner is always the creative director and final decision maker.
+- No autonomous action may be taken above the owner's declared approval boundary for the session.
+- All autonomous decisions must be auditable via GitHub issue history or session logs.
+- The roadmap does not assume any specific game concept, genre, or engine beyond what is configured in `.agents/docs/technical-preferences.md`.
+
+### Non-Goals
+
+- This roadmap does not make agents fully autonomous without owner oversight.
+- This roadmap does not modify any shipped game runtime code.
+- This roadmap does not change the fundamental skill-based workflow — it extends it.
+- This roadmap does not require agents to operate without a GitHub-backed issue contract.
+- Removing the collaborative design principle for human-creative work (GDDs, art direction, narrative) is explicitly out of scope.

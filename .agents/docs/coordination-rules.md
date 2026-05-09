@@ -68,3 +68,57 @@ When an orchestration skill spawns multiple independent agents:
 2. Collect all results before proceeding to dependent phases
 3. If any agent is BLOCKED, surface it immediately — do not silently skip
 4. Always produce a partial report if some agents complete and others block
+
+### Write-Set Collision Rule
+
+Before scheduling two contracts to run in parallel, verify that their
+`write_set` entries do not overlap. Two contracts whose write sets share a
+file or a directory ancestry must not execute concurrently.
+
+**Pre-flight check**: Run `.agents/scripts/check-write-sets.sh production/dependency-graph.yml`
+before advancing any contract to `IN_PROGRESS`. Exit code 1 means collisions were
+found; do not proceed without owner resolution.
+
+Full collision-detection algorithm and the four-shard simulation proving it:
+[dependency-graph.md](dependency-graph.md)  
+File ownership, read-only consultation, Unity `.meta` handling, and YJackCore
+package boundary rules: [file-ownership-protocol.md](file-ownership-protocol.md)
+
+### Dependency Pre-flight
+
+Before a contract advances to `IN_PROGRESS`, all contracts it lists in
+`dependencies` must have `status: validated` or `status: closed` in
+`production/dependency-graph.yml`. The agent re-checks dependency status at
+pickup time, not just at scheduling time.
+
+## Work Contracts
+
+Every unit of autonomous agent work must be backed by a **work contract** that
+declares its write scope, success criteria, validation requirements, and
+escalation conditions. This prevents silent scope creep, parallel file
+collisions, and incomplete handoffs.
+
+Schema and lifecycle: [`.agents/docs/work-contract-schema.md`](work-contract-schema.md)
+Dependency graph and collision detection: [`.agents/docs/dependency-graph.md`](dependency-graph.md)
+File ownership protocol: [`.agents/docs/file-ownership-protocol.md`](file-ownership-protocol.md)
+YAML template: [`.agents/docs/templates/work-contract.yml`](templates/work-contract.yml)
+GitHub issue form: [`.github/ISSUE_TEMPLATE/agent_work_contract.yml`](../../.github/ISSUE_TEMPLATE/agent_work_contract.yml)
+Pre-flight check script: [`.agents/scripts/check-write-sets.sh`](../../.agents/scripts/check-write-sets.sh)
+
+### Handoff Protocol
+
+When work on a contract begins, the agent creates a handoff file:
+`production/session-state/handoff-{issue-id}.md`
+
+Handoff files enable context transfer between agents and sessions without
+requiring chat history. They are tracked in git and persist until the issue closes.
+
+Update the handoff file when:
+- Contract status changes
+- Milestone is reached
+- Blocker is encountered
+- Session ends
+
+See [autonomous-memory-model.md](autonomous-memory-model.md) for the full
+memory architecture and [handoff-record-schema.md](handoff-record-schema.md)
+for the handoff file schema and update protocol.

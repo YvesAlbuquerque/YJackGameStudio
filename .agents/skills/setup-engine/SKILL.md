@@ -159,6 +159,19 @@ Update the Technology Stack section, replacing the `[CHOOSE]` placeholders with 
 - **Asset Pipeline**: Unity Asset Import Pipeline + Addressables
 ```
 
+**For Unity + YJackCore:**
+Use the Unity template above, then also record in the Technology Stack notes or
+Technical Preferences that the project consumes YJackCore. YJackCore is a Unity
+package/framework, not the engine:
+
+```markdown
+- **Engine**: Unity [version]
+- **Language**: C#
+- **Framework**: YJackCore (`com.ygamedev.yjack`)
+- **Build System**: Unity Build Pipeline
+- **Asset Pipeline**: Unity Asset Import Pipeline + Addressables
+```
+
 **For Unreal:**
 ```markdown
 - **Engine**: Unreal Engine [version]
@@ -176,6 +189,53 @@ engine-appropriate defaults. Read the existing template first, then fill in:
 
 ### Engine & Language Section
 - Fill from the engine choice made in step 4
+
+### Framework Integration Section
+
+If YJackCore was selected or detected, apply the bootstrap defaults from
+`.agents/docs/templates/yjackcore-unity-bootstrap.md` and then populate
+`## Framework Integration`:
+
+```markdown
+## Framework Integration
+- **Framework**: YJackCore
+- **Framework Source**: [UPM URL, local sibling path, git submodule path, vendor path, or inline path]
+- **Framework Version**: [package version, tag, or "Pinned by UPM source"]
+- **Framework Docs**: .agents/docs/yjackcore-support.md
+- **Framework Rules**: .agents/rules/yjackcore-unity.md
+- **Framework Routing Notes**: Read `.agents/docs/yjackcore-authority.md` first, then `.agents/docs/yjackcore-support.md`, then use `unity-specialist` for generic Unity engine/API behavior.
+- **Workspace Manifest**: .yjack-workspace.json
+```
+
+Then choose one workspace layout (`upm`, `sibling`, `submodule`, `vendor`,
+`inline`) and create `.yjack-workspace.json` from
+`.agents/docs/templates/yjack-workspace.json`.
+
+Always record:
+- framework version
+- framework source
+- package path (or explicit `N/A` for pure UPM)
+- layer routing notes (GameLayer, LevelLayer/SceneLayer, PlayerLayer/CoreLayer, ViewLayer, Shared)
+
+Low-code defaults to preserve in docs and implementation plans:
+- ScriptableObjects for reusable state/events
+- serialized UnityEvents and inspector-first wiring
+- Visual Scripting-friendly entry points
+- prefab/scene composition before new custom bootstrap managers
+
+When documenting architecture, keep host-game repo changes separate from
+YJackCore package changes.
+
+Also add YJackCore to **Allowed Libraries / Addons** only when the project is
+actually configured to consume it:
+
+```markdown
+- YJackCore (`com.ygamedev.yjack`) — Unity low-code framework package
+- Odin Inspector — required YJackCore authoring dependency
+```
+
+Do not add optional YJackCore-related Unity packages speculatively. Use the
+package manifest or local `package.json` as the source of truth.
 
 ### Naming Conventions (engine defaults)
 

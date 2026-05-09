@@ -20,13 +20,13 @@ fi
 # Normalize path separators (Windows backslash to forward slash)
 FILE_PATH=$(echo "$FILE_PATH" | sed 's|\\|/|g')
 
-# Only act on files inside .agents/skills/
-if ! echo "$FILE_PATH" | grep -qE '(^|/)\.agents/skills/'; then
+# Only act on files inside .agents/skills/ or .claude/skills/
+if ! echo "$FILE_PATH" | grep -qE '(^|/)(\.agents|\.claude)/skills/'; then
     exit 0
 fi
 
-# Extract skill name from path (.agents/skills/[skill-name]/SKILL.md)
-SKILL_NAME=$(echo "$FILE_PATH" | grep -oE '\.agents/skills/[^/]+' | sed 's|\.agents/skills/||')
+# Extract skill name from path (.agents/skills/[skill-name]/... or .claude/skills/[skill-name]/...)
+SKILL_NAME=$(echo "$FILE_PATH" | grep -oE '(\.agents|\.claude)/skills/[^/]+' | sed 's|.*/skills/||')
 
 if [ -z "$SKILL_NAME" ]; then
     exit 0

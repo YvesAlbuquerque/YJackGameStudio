@@ -1,0 +1,38 @@
+id: "AUTO-004"
+type: autonomous
+title: "GitHub Issue Templates and Label Taxonomy"
+subsystem: github
+priority: P1
+effort: M
+status: PROPOSED
+github_issue: null
+labels:
+  - autonomous
+  - roadmap
+  - infrastructure
+dependencies:
+  - "AUTO-003"
+  - "AUTO-005"
+description: >
+  Standardize GitHub issue templates and labels to support structured autonomous
+  work contracts. Design issue templates for: agent work contracts, autonomous bug
+  reports, validation reports, escalation requests, and owner decisions. Define a
+  label taxonomy: autonomy tier labels (auto:low, auto:medium, auto:high), domain
+  labels, and status labels. Existing bug_report.md and feature_request.md templates
+  must remain functional.
+acceptance_criteria:
+  - ".github/ISSUE_TEMPLATE/ contains templates for agent work contracts"
+  - ".github/ISSUE_TEMPLATE/ contains templates for autonomous bug reports"
+  - ".github/ISSUE_TEMPLATE/ contains templates for validation reports and escalation requests"
+  - "Label taxonomy document exists in .agents/docs/"
+  - "Labels are consistent with the approval boundary model from AUTO-001"
+  - "Existing bug_report.md and feature_request.md templates remain functional"
+artifacts:
+  - ".github/ISSUE_TEMPLATE/agent-work-contract.md"
+  - ".github/ISSUE_TEMPLATE/autonomous-bug-report.md"
+  - ".github/ISSUE_TEMPLATE/validation-report.md"
+  - ".github/ISSUE_TEMPLATE/escalation-request.md"
+  - ".agents/docs/label-taxonomy.md"
+notes: >
+  Depends on AUTO-003 (this Roadmap OS) for consistent ID/label conventions
+  and on AUTO-005 for the work contract field set.

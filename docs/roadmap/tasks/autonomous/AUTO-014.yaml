@@ -1,0 +1,39 @@
+id: "AUTO-014"
+type: autonomous
+title: "Risk Register and Escalation Policy"
+subsystem: governance
+priority: P2
+effort: M
+status: PROPOSED
+github_issue: null
+labels:
+  - autonomous
+  - roadmap
+  - governance
+dependencies:
+  - "AUTO-001"
+  - "AUTO-005"
+description: >
+  Define how risks are identified, classified, tracked, and escalated throughout
+  the autonomous studio workflow. Define a risk register schema: risk_id,
+  description, likelihood, impact, risk_tier, owner, mitigation, status.
+  Define the escalation policy: which risk tiers trigger automatic escalation,
+  what information is included in an escalation request, and what constitutes
+  a valid owner response. Integrate the risk register with the work contract
+  lifecycle (AUTO-005): contracts with unresolved HIGH risks cannot advance to
+  IN_PROGRESS. Provide a /risk-register command or extend /gate-check to surface
+  open risks at phase transitions.
+acceptance_criteria:
+  - "Risk register schema documented in .agents/docs/"
+  - "Risk template file exists in .agents/docs/templates/"
+  - "Escalation policy documented"
+  - "Risk classification is deterministic for common scenarios"
+  - "Contracts with unresolved HIGH risks cannot advance to IN_PROGRESS"
+  - "Risk register is auditable over full project lifetime"
+artifacts:
+  - ".agents/docs/risk-register-schema.md"
+  - ".agents/docs/templates/risk-register-entry.md"
+  - "Updated /gate-check or new /risk-register skill"
+notes: >
+  Risk classification must be deterministic for common scenarios.
+  Agents must not re-classify known risk patterns differently across sessions.

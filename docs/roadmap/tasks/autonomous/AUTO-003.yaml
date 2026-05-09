@@ -1,0 +1,45 @@
+id: "AUTO-003"
+type: autonomous
+title: "Game Studio Roadmap OS"
+subsystem: roadmap-os
+priority: P1
+effort: M
+status: IN_PROGRESS
+github_issue: null
+labels:
+  - autonomous
+  - roadmap
+  - infrastructure
+dependencies:
+  - "AUTO-001"
+  - "AUTO-002"
+  - "AUTO-016"
+description: >
+  Implement the operating-system layer that maintains
+  docs/AUTONOMOUS_GAME_STUDIO_ROADMAP.md as a live, machine-readable artifact
+  that agents can query and update. Provides structured task files for all task
+  types, a YAML schema with validated fields (ID, subsystem, priority, effort,
+  status, description, notes), validation and generation scripts, duplicate-safe
+  GitHub Issue creation, and documentation of L/XL decomposition rules and the
+  planning-first Phase 1 protocol.
+acceptance_criteria:
+  - "docs/roadmap/task-schema.yaml exists and defines all field constraints"
+  - "docs/roadmap/tasks/autonomous/ contains YAML files for AUTO-001 through AUTO-018"
+  - "docs/roadmap/tasks/bugs/, improvements/, features/ each contain at least one example"
+  - "docs/roadmap/scripts/validate.py exits 0 on the full task set"
+  - "docs/roadmap/scripts/generate-issues.py --dry-run produces a preview without hitting GitHub"
+  - "docs/roadmap/ROADMAP-OS.md documents L/XL rules, Phase 1 behavior, and the sync protocol"
+artifacts:
+  - "docs/roadmap/ROADMAP-OS.md"
+  - "docs/roadmap/task-schema.yaml"
+  - "docs/roadmap/tasks/autonomous/AUTO-001.yaml through AUTO-018.yaml"
+  - "docs/roadmap/tasks/bugs/BUG-001.yaml"
+  - "docs/roadmap/tasks/improvements/IMP-001.yaml"
+  - "docs/roadmap/tasks/features/FEAT-001.yaml"
+  - "docs/roadmap/scripts/validate.py"
+  - "docs/roadmap/scripts/generate-issues.py"
+notes: >
+  Parent roadmap issue: YvesAlbuquerque/Claude-Code-Game-Studios#22.
+  This task is the infrastructure foundation for AUTO-004 through AUTO-018.
+  The roadmap document must remain human-readable as the primary concern;
+  machine-readable sections must not degrade the human experience.

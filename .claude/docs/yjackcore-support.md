@@ -3,26 +3,20 @@
 Use this document when a Unity project consumes the YJackCore package or when
 the user asks this template to adapt to YJackCore rules.
 
-> **Provider-neutral version**: `.agents/docs/yjackcore-support.md`
-> **Authority rules**: `.agents/docs/yjackcore-authority.md`
-> **Workspace manifest**: `.agents/docs/yjack-workspace-manifest.md`
->
-> When there is a conflict between this file and `.agents/docs/yjackcore-authority.md`,
-> the `.agents/` doc takes precedence for policy and authority rules.
+For authority hierarchy, workspace routing, and manual validation expectations,
+read `.claude/docs/yjackcore-authority.md` first.
 
 ## Detection
 
 Treat a project as YJackCore-backed if any of these are true:
 
-- `.yjack-workspace.json` exists in the repo root **(read this first)**
+- `.yjack-workspace.json` is present at the project root
 - `Packages/manifest.json` contains `com.ygamedev.yjack` or `YJackCore`
 - a local package exists at `Packages/YJackCore/package.json`
 - a git submodule path points to `YJackCore`
 - `.claude/docs/technical-preferences.md` contains `- **Framework**: YJackCore` in the Framework Integration section
 - technical preferences name a YJackCore package source, local path, or submodule
 - the user explicitly says the game uses YJackCore
-
-**If `.yjack-workspace.json` exists, read it before `Packages/manifest.json`.**
 
 A sibling checkout such as `../YJackCore` may be used as reference material only
 after confirming it is the intended framework source or the closest available
@@ -103,29 +97,19 @@ metadata wins.
 
 When YJackCore is active:
 
-- **YJackCore repo docs and AGENTS.md override generic Game Studio Unity guidance.**
-  Read them in this order: `AGENTS.md` → `package.json` → `ARCHITECTURE.md` →
-  `Docs/Workflow/framework-vision.md` → nearest layer doc for the task.
-- **YJackCore package files are read-only by default.** Do not modify
-  `Packages/com.ygamedev.yjack/**` or `Packages/YJackCore/**` unless the owner
-  explicitly authorizes a framework change.
-- **Classify work before starting.** Every work contract must declare whether
-  work is `game-repo-work`, `framework-work`, or `both`. Do not mix the two
-  without separate owner authorization for the framework portion.
-- **Low-code authoring paths are preferred before custom code.** Check YJackCore
-  prefabs, ScriptableObjects, UnityEvents, and Visual Scripting surfaces before
-  inventing new host-game abstractions.
-- Use Unity specialists for engine behavior, but apply YJackCore layer boundaries
-  before inventing new architecture.
+- Prefer YJackCore prefabs, ScriptableObjects, UnityEvents, and existing manager
+  entry points over custom bootstrap code.
+- Map work to the closest YJackCore layer before inventing a host-game system.
+- Do not modify YJackCore package files from a host-game task unless the user is
+  intentionally changing the framework package.
+- If framework changes are required, switch context to the YJackCore repository
+  or package path and follow its instructions, package boundaries, asmdefs, and
+  validation rules.
 - Keep host-game glue small and explicit. If glue grows into reusable framework
   behavior, propose a separate YJackCore change rather than burying it in the game.
 - Preserve Unity `.meta` files and package/submodule integrity.
 - Treat Unity-module-backed paths as primary when YJackCore uses compile symbols;
   bare fallback paths exist for hosts without that module.
-- **Report Unity manual validation debt honestly.** Do not claim Unity Editor,
-  domain reload, Play Mode, or build validation unless actually run. List all
-  outstanding manual validation in the work contract and evidence packet.
-  See `.agents/docs/validation-evidence.md`.
 
 ## YJackCore Layer Map
 
@@ -163,16 +147,30 @@ For architecture-sensitive YJackCore work, include:
 - **Manual validation still required**: Unity scene/prefab wiring, Play Mode
   behavior, package resolution, compile symbols, and any package manager steps
 
+## Workspace Manifest
+
+For workspace path resolution, create a `.yjack-workspace.json` file at the
+project root. Agents read this file first to determine the YJackCore layout
+(UPM, sibling checkout, submodule, vendor, or inline) before falling back to
+`Packages/manifest.json`.
+
+Copy the relevant layout example from
+`.claude/docs/templates/yjack-workspace.json` and remove the `_comment`,
+`_layouts`, and `_CHOOSE_ONE_LAYOUT_BELOW_AND_DELETE_THE_REST` keys, plus any
+unused layout blocks, before committing.
+
 ## Setup Checklist
 
 When configuring a project for YJackCore:
 
 - Set engine to Unity and language to C#
+- Start from `.claude/docs/templates/yjackcore-unity-bootstrap.md` for CLAUDE, ARCHITECTURE, technical preferences, and framework notes templates
 - Record YJackCore in `.claude/docs/technical-preferences.md`
 - Record the package source: UPM git URL, local path, or submodule path
-- Create or update `.yjack-workspace.json` in the repo root
+- Record the package path (or explicit `N/A` for pure UPM) and selected layer routing notes
+- Create `.yjack-workspace.json` at the project root using the layout template
 - Add YJackCore and Odin Inspector to allowed libraries only when actually used
 - Route framework architecture questions through YJackCore guidance plus the
   Unity specialist, in that order
+- Keep host-game repo changes separate from YJackCore package changes unless framework edits are explicitly authorized
 - Keep engine reference docs pinned to the Unity version used by the host project
-- Record outstanding manual Unity validation in every work contract and evidence packet

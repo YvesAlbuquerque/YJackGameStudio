@@ -180,6 +180,17 @@ skills:
     priority: medium
     category: sprint
 
+  - name: sprint-scheduler
+    spec: CCGS Skill Testing Framework/skills/sprint/sprint-scheduler.md
+    last_static: ""
+    last_static_result: ""
+    last_spec: ""
+    last_spec_result: ""
+    last_category: ""
+    last_category_result: ""
+    priority: medium
+    category: sprint
+
   - name: sprint-status
     spec: CCGS Skill Testing Framework/skills/sprint/sprint-status.md
     last_static: ""
@@ -610,6 +621,17 @@ skills:
     priority: low
     category: sprint
 
+  - name: owner-dashboard
+    spec: CCGS Skill Testing Framework/skills/sprint/owner-dashboard.md
+    last_static: ""
+    last_static_result: ""
+    last_spec: ""
+    last_spec_result: ""
+    last_category: ""
+    last_category_result: ""
+    priority: low
+    category: sprint
+
   - name: retrospective
     spec: CCGS Skill Testing Framework/skills/sprint/retrospective.md
     last_static: ""
@@ -755,6 +777,28 @@ skills:
 
   - name: qa-plan
     spec: CCGS Skill Testing Framework/skills/utility/qa-plan.md
+    last_static: ""
+    last_static_result: ""
+    last_spec: ""
+    last_spec_result: ""
+    last_category: ""
+    last_category_result: ""
+    priority: low
+    category: utility
+
+  - name: qa-evidence-assign
+    spec: CCGS Skill Testing Framework/skills/utility/qa-evidence-assign.md
+    last_static: ""
+    last_static_result: ""
+    last_spec: ""
+    last_spec_result: ""
+    last_category: ""
+    last_category_result: ""
+    priority: low
+    category: utility
+
+  - name: qa-evidence-aggregate
+    spec: CCGS Skill Testing Framework/skills/utility/qa-evidence-aggregate.md
     last_static: ""
     last_static_result: ""
     last_spec: ""

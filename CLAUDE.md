@@ -27,6 +27,7 @@ For example, include `@.claude/docs/yjackcore-support.md` only after
 
 If `.claude/docs/technical-preferences.md` contains `- **Framework**: YJackCore` in the Framework Integration section, read:
 
+@.claude/docs/yjackcore-authority.md
 @.claude/docs/yjackcore-support.md
 
 ## Coordination Rules

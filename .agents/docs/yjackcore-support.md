@@ -1,36 +1,26 @@
-# YJackCore Support (Provider-Neutral)
-
-This is the provider-neutral reference for YJackCore support.
-Claude Code agents: also read `.claude/docs/yjackcore-support.md` for
-Claude-specific configuration details.
-
-For full authority rules, read `.agents/docs/yjackcore-authority.md`.
-For workspace detection, read `.agents/docs/yjack-workspace-manifest.md`.
+# YJackCore Support
 
 Use this document when a Unity project consumes the YJackCore package or when
 the user asks this template to adapt to YJackCore rules.
+
+For authority hierarchy, workspace routing, and manual validation expectations,
+read `.agents/docs/yjackcore-authority.md` first.
 
 ## Detection
 
 Treat a project as YJackCore-backed if any of these are true:
 
-- `.yjack-workspace.json` exists in the repo root *(highest confidence — read this first)*
+- `.yjack-workspace.json` is present at the project root
 - `Packages/manifest.json` contains `com.ygamedev.yjack` or `YJackCore`
-- A local package exists at `Packages/YJackCore/package.json`
-- A git submodule path points to `YJackCore`
-- `technical-preferences.md` lists `Framework: YJackCore`
-- The owner explicitly states the game uses YJackCore
-
-**When `.yjack-workspace.json` exists, read it before `Packages/manifest.json`.**
+- a local package exists at `Packages/YJackCore/package.json`
+- a git submodule path points to `YJackCore`
+- `.agents/docs/technical-preferences.md` contains `- **Framework**: YJackCore`
+- technical preferences name a YJackCore package source, local path, or submodule
+- the user explicitly says the game uses YJackCore
 
 A sibling checkout such as `../YJackCore` may be used as reference material only
 after confirming it is the intended framework source or the closest available
 local YJackCore repo.
-
-## Override Priority
-
-YJackCore repo docs override generic Game Studio Unity guidance. See
-`.agents/docs/yjackcore-authority.md` for the full override priority list.
 
 ## Specialist Precedence
 
@@ -83,12 +73,6 @@ Useful YJackCore skill families include:
 - `yjack-testing-and-validation`: honest automated/manual Unity validation split
 - `yjack-doc-impact`: selective doc-review and update decisions
 
-## Package File Permission
-
-YJackCore package files are **read-only by default** for all agents, regardless
-of provider. Framework changes require explicit owner authorization. See
-`.agents/docs/yjackcore-authority.md`.
-
 ## Package Assumptions
 
 YJackCore is a Unity package, not a complete Unity project. Host projects should
@@ -97,14 +81,14 @@ consume it through Unity Package Manager or as a git submodule/package under
 
 Known baseline assumptions from YJackCore:
 
-- Package name: `com.ygamedev.yjack`
+- Unity package name: `com.ygamedev.yjack`
 - Primary language: C#
-- Authoring model: low-code, inspector-first
-- Preferred surfaces: serialized `UnityEvent`, Visual Scripting,
-  ScriptableObject state/events, prefabs, scene-level composition
+- Authoring model: low-code, inspector-first setup
+- Preferred surfaces: serialized `UnityEvent`, Unity Visual Scripting,
+  ScriptableObject state/events, prefabs, and scene-level composition
 - Odin Inspector is a baseline authoring dependency
-- Dependencies include TextMeshPro, Cinemachine, Visual Scripting,
-  Mathematics, and Input System
+- Unity package dependencies may include TextMeshPro, Cinemachine, Visual
+  Scripting, Mathematics, and Input System
 
 If the installed package version differs from these notes, the local package
 metadata wins.
@@ -129,13 +113,15 @@ When YJackCore is active:
 
 ## YJackCore Layer Map
 
+Map game work to the closest YJackCore layer:
+
 | Need | Prefer |
-|------|--------|
-| Global startup, save/load, scene transitions, settings, platform | GameLayer |
-| Level flow, win/loss, quests, inventory, scene-owned systems | LevelLayer / SceneLayer |
-| Input, camera, player-facing runtime | PlayerLayer / CoreLayer |
-| HUD, popups, menus, loading screens, presentation | ViewLayer |
-| Reusable state, events, pools, utilities, primitives | Shared |
+| ---- | ---- |
+| global startup, save/load, scene transitions, settings, platform services | GameLayer |
+| level flow, win/loss, quests, inventory, scene-owned systems | LevelLayer / SceneLayer |
+| input, controller activation, camera, player-facing runtime behavior | PlayerLayer / CoreLayer |
+| HUD, popups, menus, loading screens, minimap, presentation | ViewLayer |
+| reusable state, event, pools, utilities, command/behavior-tree primitives | Shared |
 
 ## Design Guidance
 
@@ -161,20 +147,30 @@ For architecture-sensitive YJackCore work, include:
 - **Manual validation still required**: Unity scene/prefab wiring, Play Mode
   behavior, package resolution, compile symbols, and any package manager steps
 
-## Manual Validation Debt
+## Workspace Manifest
 
-All YJackCore work carries Unity manual validation debt. Always list outstanding
-manual validation in the work contract and validation evidence packet. See
-`.agents/docs/validation-evidence.md`.
+For workspace path resolution, create a `.yjack-workspace.json` file at the
+project root. Agents read this file first to determine the YJackCore layout
+(UPM, sibling checkout, submodule, vendor, or inline) before falling back to
+`Packages/manifest.json`.
+
+Copy the relevant layout example from
+`.agents/docs/templates/yjack-workspace.json` and remove the `_comment`,
+`_layouts`, and `_CHOOSE_ONE_LAYOUT_BELOW_AND_DELETE_THE_REST` keys, plus any
+unused layout blocks, before committing.
 
 ## Setup Checklist
 
 When configuring a project for YJackCore:
 
 - Set engine to Unity and language to C#
+- Start from `.agents/docs/templates/yjackcore-unity-bootstrap.md` for AGENTS, ARCHITECTURE, technical preferences, and framework notes templates
 - Record YJackCore in `.agents/docs/technical-preferences.md`
 - Record the package source: UPM git URL, local path, or submodule path
+- Record the package path (or explicit `N/A` for pure UPM) and selected layer routing notes
+- Create `.yjack-workspace.json` at the project root using the layout template
 - Add YJackCore and Odin Inspector to allowed libraries only when actually used
 - Route framework architecture questions through YJackCore guidance plus the
   Unity specialist, in that order
+- Keep host-game repo changes separate from YJackCore package changes unless framework edits are explicitly authorized
 - Keep engine reference docs pinned to the Unity version used by the host project

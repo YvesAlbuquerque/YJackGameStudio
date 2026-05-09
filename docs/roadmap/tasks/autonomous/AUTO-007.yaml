@@ -1,0 +1,38 @@
+id: "AUTO-007"
+type: autonomous
+title: "Autonomous Sprint Planner and Issue Scheduler"
+subsystem: sprint
+priority: P2
+effort: L
+status: PROPOSED
+github_issue: null
+labels:
+  - autonomous
+  - roadmap
+  - execution
+dependencies:
+  - "AUTO-001"
+  - "AUTO-005"
+  - "AUTO-006"
+description: >
+  Upgrade the /sprint-plan skill to operate autonomously within owner-set
+  constraints. Given a set of approved work contracts, the planner selects,
+  sequences, and assigns contracts to specialist agents. Respects the dependency
+  graph (AUTO-006) and approval boundary model (AUTO-001). Produces a
+  machine-readable sprint schedule. Surfaces unresolvable conflicts or boundary
+  violations to the owner before execution begins. Integrates with the existing
+  production/sprints/ artifact format.
+acceptance_criteria:
+  - "/sprint-plan skill updated to read work contracts and dependency graph"
+  - "Machine-readable sprint schedule format defined and documented"
+  - "MEDIUM and HIGH risk contracts are not started without owner approval"
+  - "Sprint scope remains bounded by owner's stated sprint goal"
+  - "Conflict and boundary violations surface to owner before execution"
+  - "Sprint schedule integrates with production/sprints/ artifact format"
+artifacts:
+  - ".agents/skills/sprint-plan/SKILL.md (updated)"
+  - ".agents/docs/sprint-schedule-schema.md"
+notes: >
+  This is an L effort task and must be decomposed into 2-4 subtasks before
+  implementation begins. Requires AUTO-005 and AUTO-006 to be VALIDATED first.
+  MEDIUM/HIGH risk contracts must never advance to IN_PROGRESS autonomously.

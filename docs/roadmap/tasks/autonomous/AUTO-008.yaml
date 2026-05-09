@@ -1,0 +1,36 @@
+id: "AUTO-008"
+type: autonomous
+title: "Team Skills as Issue-Driven Execution Planners"
+subsystem: skills
+priority: P2
+effort: L
+status: PROPOSED
+github_issue: null
+labels:
+  - autonomous
+  - roadmap
+  - execution
+dependencies:
+  - "AUTO-005"
+  - "AUTO-007"
+description: >
+  Upgrade team coordination skills (/team-combat, /team-narrative, /team-ui,
+  etc.) to generate and track GitHub issues as their execution plan. Each team
+  skill currently produces a coordination plan in Markdown; extend this to also
+  produce a set of agent work contracts (AUTO-005) as GitHub issues. Define how
+  team skills decompose a feature into individual contracts and assign them to
+  specialist agents. Ensure each contract has validation_criteria that the team
+  skill checks on completion. Provide a rollup report posted back to the parent
+  issue. Issue generation must be idempotent.
+acceptance_criteria:
+  - "All team skills updated to generate work contract issues alongside Markdown plans"
+  - "Idempotency verified: running the same team skill twice produces no duplicate issues"
+  - "Each generated contract has validation_criteria"
+  - "Rollup report posted to parent issue after all child contracts close"
+  - "Human-readable Markdown plans remain the primary output"
+artifacts:
+  - ".agents/skills/team-*/SKILL.md (updated, all team skills)"
+  - ".agents/docs/team-skill-issue-protocol.md"
+notes: >
+  This is an L effort task and must be decomposed before implementation.
+  Idempotency is a hard constraint — duplicate issue creation is not acceptable.
