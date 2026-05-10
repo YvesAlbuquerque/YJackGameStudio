@@ -77,7 +77,8 @@ Evaluate each contribution against these questions:
 1. Does it improve the public operating model?
 2. Does it remain useful without Loomlight Studio?
 3. Does it remain useful without YJackCore?
-4. Does it remain useful outside Unity?
+4. If it is engine-specific, is it scoped as an optional adapter, specialist,
+   reference pipeline, or example rather than a repo-wide default?
 5. Does it avoid dependency on a specific AI provider?
 6. Are engine, provider, and framework assumptions stated clearly?
 7. Does it preserve owner-directed autonomy and hard approval gates?
@@ -88,7 +89,9 @@ Evaluate each contribution against these questions:
 
 If the answer to any of questions 2 through 5 is "no", the contribution should
 either be moved to a better repo, redesigned as an optional adapter, or clearly
-scoped as a non-default example.
+scoped as a non-default example. Engine-specific contributions are welcome when
+they improve a Godot, Unity, Unreal, or custom-engine path without making that
+engine mandatory for the whole repository.
 
 ## Scope boundary examples
 
