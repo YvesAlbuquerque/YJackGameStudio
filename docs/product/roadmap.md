@@ -1,187 +1,209 @@
-# YJackGameStudio Product Roadmap
+# YJackGameStudio Reference Roadmap
 
-## Current Status: PRODUCT 1 Phase
+## Current Role
 
-**YJackGameStudio** is in the PRODUCT 1 phase, focusing on **idea-to-production-ready YJackCore-aware vertical-slice planning**.
+YJackGameStudio is the public open-source reference architecture and reusable
+template for AI-native game studios. It defines a provider-neutral agentic game
+studio template, an engine-neutral workflow standard, and a set of maintainable
+production practices that can be adapted across tools and engines.
 
-This phase establishes the foundation: messaging, positioning, demo strategy, and the first public-facing artifacts.
+This repo remains useful without Loomlight Studio, without YJackCore, without
+Unity, and without any specific AI provider.
 
----
-
-## PRODUCT 1: Idea → Production-Ready Planning
-
-### Completed Items
-
-#### PRODUCT-001: Market Research & Positioning ✅
-**Status**: Complete
-**Date**: 2026-05-08
-**Deliverables**: N/A (implied by subsequent work)
-**Notes**: Market research and positioning established as foundation for public messaging.
-
-#### PRODUCT-002: Competitive Landscape Analysis ✅
-**Status**: Complete
-**Date**: 2026-05-08
-**Deliverables**: N/A (implied by subsequent work)
-**Notes**: Analysis of SEELE-like tools, Unity AI, and raw AI coding tools completed.
-
-#### PRODUCT-003: Unity AI Watch ✅
-**Status**: Complete
-**Date**: 2026-05-08
-**Deliverables**: N/A (implied by subsequent work)
-**Notes**: Unity AI monitoring established; no integration claims.
-
-#### PRODUCT-004: First Wedge Definition ✅
-**Status**: Complete
-**Date**: 2026-05-08
-**Deliverables**: N/A (implied by subsequent work)
-**Notes**: Product wedge defined: "Idea → production-ready YJackCore-aware vertical-slice plan."
-
-#### PRODUCT-005: Demo Strategy ✅
-**Status**: Complete
-**Date**: 2026-05-08
-**Deliverables**: N/A (implied by subsequent work)
-**Notes**: Demo strategy defined for launch and community building.
-
-#### PRODUCT-006: Target Users ✅
-**Status**: Complete
-**Date**: 2026-05-08
-**Deliverables**: N/A (implied by subsequent work)
-**Notes**: Target users identified: solo indie devs, small studios, technical designers, educators.
-
-#### PRODUCT-007: Positioning Refinement ✅
-**Status**: Complete
-**Date**: 2026-05-08
-**Deliverables**: N/A (implied by subsequent work)
-**Notes**: Positioning refined: owner-directed, not prompt-to-game, not Unity AI integration.
-
-#### PRODUCT-008: Internal Product Boundaries ✅
-**Status**: Complete
-**Date**: 2026-05-08
-**Deliverables**: N/A (implied by subsequent work)
-**Notes**: Clear boundaries established: what YJackGameStudio is and is NOT.
-
-#### PRODUCT-009: Create Public Messaging ✅
-**Status**: Complete
-**Date**: 2026-05-08
-**Deliverables**:
-- `docs/product/public-messaging.md`
-- `docs/product/elevator-pitches.md`
-- `docs/product/website-copy.md`
-- `docs/product/launch-narrative.md`
-- Updated `README.md`
-- This roadmap file
-
-**Notes**: Public-facing messaging artifacts created for README, GitHub About, demo intros, and future website/launch use.
-
-### Upcoming Items
-
-#### PRODUCT-010: Create Demo Artifacts
-**Status**: Planned
-**Target**: Next milestone
-**Scope**:
-- Unity demo project setup
-- YJackCore integration
-- Small vertical slice (e.g., simple roguelike or platformer mechanic)
-- GDD, architecture doc, sprint plan, test evidence
-- Playable build + GitHub repo
-
-**Dependencies**: PRODUCT-009
-**Risk**: MEDIUM (Unity setup, YJackCore package, asset creation)
-**Validation**: Play Mode validation, build validation, manual QA
-
-#### PRODUCT-011: Launch Preparation
-**Status**: Planned
-**Target**: After PRODUCT-010
-**Scope**:
-- Record demo walkthrough video (15 min)
-- Create GitHub Discussions categories
-- Draft launch posts (GitHub, Reddit, Twitter/X, Hacker News)
-- Set up community showcase workflow
-- Finalize README links and badges
-
-**Dependencies**: PRODUCT-010
-**Risk**: LOW (documentation and messaging)
-
-#### PRODUCT-012: Community Building
-**Status**: Planned
-**Target**: Ongoing after launch
-**Scope**:
-- Tutorial series (YouTube + blog posts)
-- Case studies from early adopters
-- Feature showcases (Twitter shoutouts, pinned discussions)
-- Regular engagement in GitHub Discussions, Reddit, Discord
-
-**Dependencies**: PRODUCT-011
-**Risk**: LOW (time commitment)
+Loomlight Studio is the separate commercial/productized autonomous AI game
+studio platform. YJackCore is an optional Unity gameplay framework and low-code
+authoring substrate. YJackGameStudio may document optional compatibility paths
+for both, but this roadmap is for the public reference layer.
 
 ---
 
-## PRODUCT 2: Production Tooling (Future)
+## Maintenance Priorities
 
-**Goal**: Enhance the studio OS for production use at scale.
+The roadmap prioritizes maintenance and reference quality over commercial
+product launch work.
 
-**Potential Items**:
-- Live-ops designer skills and templates
-- Post-launch content planning workflows
-- Analytics integration (telemetry, A/B testing)
-- Release automation (CI/CD, store submission)
-- Multi-platform build support (console, mobile)
-- Team-scale collaboration (multi-developer workflows)
-
-**Status**: Not yet scoped. Will be defined after PRODUCT 1 is validated in production use.
-
----
-
-## PRODUCT 3: Enterprise & Education (Future)
-
-**Goal**: Adapt YJackGameStudio for enterprise game teams and educational institutions.
-
-**Potential Items**:
-- Compliance and audit trail workflows
-- IP management and licensing integration
-- Custom engine integrations beyond Godot/Unity/Unreal
-- Curriculum integration for game dev courses
-- Multi-semester project planning
-- Student onboarding and assessment workflows
-
-**Status**: Not yet scoped. Will be defined based on market demand and feedback.
+- **Compatibility with AI tools**: Keep Codex, GitHub Copilot, Gemini CLI,
+  Google Antigravity, Claude Code, and future tool adapters aligned with the
+  provider-neutral `.agents/` source of truth.
+- **Workflow reliability**: Keep skills, role boundaries, handoffs, and
+  approval gates coherent and repeatable.
+- **Documentation quality**: Keep README, product docs, engine references, and
+  contributor-facing docs accurate and internally consistent.
+- **Schemas and contracts**: Harden work contracts, dependency expectations,
+  write-set rules, and validation schemas.
+- **Validation evidence**: Improve standards for automated checks, agent review,
+  owner review, and manual validation debt.
+- **Portability**: Preserve usefulness across Godot, Unity, Unreal, custom
+  engines, and multiple AI tooling stacks.
+- **Examples**: Provide small reference examples that demonstrate workflows
+  without turning this repo into a game project.
+- **Engine adapters**: Maintain optional engine-specific guidance without making
+  any engine the default product direction.
 
 ---
 
-## Versioning & Milestones
+## Roadmap Themes
 
-### Current Version: PRODUCT-009 (Public Messaging)
-- Public-facing copy ready for README, GitHub About, website, launch posts
-- Next: PRODUCT-010 demo artifacts
+### REF-001 Repo Positioning and Ecosystem Split
 
-### Milestone 1: Public Launch (Target: Q2 2026)
-- Complete PRODUCT-001 through PRODUCT-012
-- Demo artifacts published
-- Launch posts live on GitHub, Reddit, Twitter/X, Hacker News
-- Community engagement initiated
+Clarify that YJackGameStudio is the public open-source reference architecture,
+Loomlight Studio is the productized platform, and YJackCore is an optional Unity
+framework path.
 
-### Milestone 2: Production Validation (Target: Q3 2026)
-- 3+ shipped games using YJackGameStudio
-- 5+ community showcases
-- 10+ contributors
-- 1,000+ GitHub stars
+Expected outputs:
 
-### Milestone 3: PRODUCT 2 Planning (Target: Q4 2026)
-- Collect feedback from production users
-- Define PRODUCT 2 scope based on real needs
-- Begin live-ops and post-launch tooling
+- README positioning update.
+- Product positioning doc.
+- Ecosystem map.
+- Consistent language across public messaging.
+
+### REF-002 Maintenance and Scope Policy
+
+Define what belongs in this repository and what belongs elsewhere.
+
+Expected outputs:
+
+- Scope policy for YJackGameStudio.
+- Boundary guidance for Loomlight Studio, YJackCore, downstream games, and
+  provider adapters.
+- Contribution acceptance checklist.
+
+### REF-003 Provider/Tool Compatibility Upkeep
+
+Keep tool-specific entrypoints aligned with the provider-neutral workflow layer.
+
+Expected outputs:
+
+- Updated compatibility notes for supported AI tools.
+- Adapter guidance for new tools.
+- Clear rules for when provider-specific files may diverge from `.agents/`.
+
+### REF-004 Workflow/Schema Hardening
+
+Improve the reliability of agent workflows and machine-readable contracts.
+
+Expected outputs:
+
+- Stronger work-contract examples.
+- Clearer dependency and write-set rules.
+- Better workflow phase definitions.
+- More explicit escalation conditions.
+
+### REF-005 Validation Evidence Standards
+
+Make validation evidence harder to overstate and easier to audit.
+
+Expected outputs:
+
+- Improved evidence templates.
+- Clear distinction between automated checks, agent review, owner review, and
+  manual engine/editor checks.
+- Validation output examples that tools can parse.
+
+### REF-006 Engine-Neutral Example Pipelines
+
+Add small examples that show how the reference architecture can be adapted
+without creating a demo game inside this repo.
+
+Expected outputs:
+
+- Idea -> scoped production plan example.
+- Brownfield adoption -> gap report example.
+- GDD -> architecture -> work contract example.
+- QA evidence aggregation example.
+- Engine assumptions stated explicitly.
+
+### REF-007 Optional YJackCore Integration Maintenance
+
+Maintain YJackCore-aware routing as an optional Unity acceleration path.
+
+Expected outputs:
+
+- Clear detection and routing docs.
+- Manual Unity validation expectations.
+- Package-boundary protection rules.
+- Generic Unity fallback guidance when YJackCore is absent.
+
+### REF-008 Community Contribution Guidelines
+
+Make contribution boundaries clear enough for outside maintainers.
+
+Expected outputs:
+
+- Good-fit and not-good-fit examples.
+- Contributor checklist.
+- Guidance for optional engine/provider/framework adapters.
+- Documentation review expectations.
+
+### REF-009 Reference Release/Versioning Policy
+
+Define how this public reference layer communicates changes over time.
+
+Expected outputs:
+
+- Versioning guidance for templates, skills, and compatibility docs.
+- Changelog expectations.
+- Migration notes for breaking workflow changes.
+
+### REF-010 Template Quality Audit
+
+Audit templates, rules, skills, and docs for consistency with the open reference
+architecture role.
+
+Expected outputs:
+
+- Stale wording report.
+- Broken-link fixes.
+- Template consistency pass.
+- Validation command inventory.
 
 ---
 
-## Notes
+## What Belongs Elsewhere
 
-- **PRODUCT-001 through PRODUCT-008**: These items were completed as internal work. Their deliverables informed the PRODUCT-009 messaging artifacts. The referenced market and positioning docs (`docs/market/`, `docs/product/first-wedge.md`, etc.) are not yet present in this repository; they exist as internal artifacts and will be added in a future pass.
-- **PRODUCT-010**: First Unity demo with YJackCore integration. Requires actual Unity project setup, scenes, prefabs, and playable build.
-- **Autonomy Mode**: All PRODUCT 1 work is LOW-risk docs-only (no source code, no Unity, no builds). SUPERVISED mode applies.
-- **No Unity AI Claims**: All messaging explicitly states no Unity AI integration exists or is claimed.
+- Loomlight-specific visual UI belongs in Loomlight Studio.
+- Hosted orchestration belongs in Loomlight Studio.
+- Billing, accounts, private analytics, and commercial product workflows belong
+  in Loomlight Studio.
+- Unity gameplay framework features belong in YJackCore.
+- YJackCore demos belong in Loomlight Studio or YJackCore demo repositories, not
+  this roadmap.
+- Downstream game content, scenes, builds, and project-specific implementation
+  belong in downstream game repositories.
 
 ---
 
-**Last Updated**: 2026-05-08
-**Current Phase**: PRODUCT 1 (Idea → Production-Ready Planning)
-**Next Milestone**: PRODUCT-010 (Demo Artifacts)
+## Non-Goals
+
+- No commercial dashboard in this repository.
+- No hosted services in this repository.
+- No mandatory YJackCore dependency.
+- No Unity AI support claims.
+- No prompt-to-game promises.
+- No Loomlight-specific implementation.
+- No Unity project setup or game demo milestone in this roadmap.
+- No runtime, build, editor, or provider validation claims unless those checks
+  actually ran and produced evidence.
+
+---
+
+## Contributor Direction
+
+Useful next contributions are those that improve the public reference layer:
+
+- Better docs.
+- More precise schemas.
+- More robust validation standards.
+- Clearer work-contract examples.
+- Optional provider/tool adapters.
+- Optional engine-specific adapters that do not make an engine mandatory.
+- Small reference pipelines that explain inputs, outputs, gates, and validation.
+
+Contributors should keep changes small, explicit about assumptions, and honest
+about what was not validated.
+
+---
+
+**Last Updated**: 2026-05-10
+**Current Phase**: Public Reference Architecture Maintenance
+**Next Milestone**: Repo positioning and template quality hardening
