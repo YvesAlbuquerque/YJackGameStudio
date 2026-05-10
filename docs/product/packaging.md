@@ -2,50 +2,55 @@
 
 ## Conclusion
 
-Package YJackGameStudio in stages. Start with repo/template distribution because
-the first wedge is contract and documentation heavy. Move toward CLI, Unity
-Editor, and hosted orchestration only after the wedge proves repeatable value.
+Package YJackGameStudio as an open-source reference architecture and reusable
+template ecosystem. Commercial product packaging belongs to Loomlight Studio or
+another separate product surface, not this repo.
 
 ## Stage 1: GitHub template / repo distribution
 
 Purpose:
 
 - Make the system usable by cloning or templating the repo.
-- Keep the product transparent and easy to inspect.
+- Keep the operating model transparent and easy to inspect.
 - Support provider-neutral agent workflows.
+- Preserve engine neutrality.
 
 Best fit:
 
 - Early adopters.
-- Solo Unity developers.
+- Solo developers and small studios.
 - Technical designers.
-- Existing YJackCore users.
+- Educators.
+- AI workflow researchers.
 
 Requirements:
 
 - Clear README positioning.
-- Product and market docs.
+- Repo positioning, scope, and ecosystem-map docs.
 - Work contract examples.
-- YJackCore routing docs.
-- Demo scripts.
+- Provider/tool adapter guidance.
+- Optional YJackCore routing docs.
+- Demo scripts and reference pipelines.
 
 Risk:
 
 - Setup friction remains high.
 
-## Stage 2: CLI bootstrap for existing projects
+## Stage 2: Local bootstrap scripts
 
 Purpose:
 
-- Install YJackGameStudio contracts, docs, and routing into an existing game repo.
-- Detect Unity, YJackCore, and project structure.
-- Generate initial product/production plan scaffolding.
+- Help users install or copy YJackGameStudio contracts, docs, and routing into an
+  existing game repo.
+- Detect project structure without assuming engine, provider, YJackCore, or
+  Loomlight Studio.
+- Produce a dry-run report before writing files.
 
 Best fit:
 
-- Existing Unity projects.
-- Brownfield YJackCore projects.
-- Users who will not start from a template.
+- Brownfield projects.
+- Teams adapting the template into their own workflow.
+- Educators creating class project scaffolds.
 
 Requirements:
 
@@ -53,82 +58,72 @@ Requirements:
 - Dry-run mode.
 - No YJackCore package edits unless explicitly authorized.
 - Output report listing files created or changed.
+- Clear manual follow-up steps.
 
 Risk:
 
 - Incorrect detection can create bad routing assumptions.
 
-## Stage 3: Unity Editor dashboard/window
+## Stage 3: Reference pipelines
 
 Purpose:
 
-- Bring owner dashboard, work contracts, YJackCore routing, and validation debt
-  into the Unity Editor.
+- Provide small, inspectable examples of the operating model in action.
 
 Best fit:
 
-- Unity/YJackCore users.
-- Technical designers.
-- Teams that need authoring visibility inside Unity.
+- Users evaluating whether the repo fits their workflow.
+- Contributors adding new engines, providers, or validation patterns.
 
 Requirements:
 
-- Read-only dashboard first.
-- Explicit owner actions for high-risk edits.
-- Clear manual validation states.
-- YJackCore layer awareness.
+- Engine/provider assumptions stated upfront.
+- Work contracts and validation evidence included.
+- Manual validation debt documented.
+- Optional framework adapters isolated from generic paths.
 
 Risk:
 
-- Editor integration increases architecture and validation complexity.
+- Examples can accidentally look like endorsed product promises if validation is
+  not documented honestly.
 
-## Stage 4: GitHub app or hosted orchestration
+## Stage 4: Optional adapters
 
 Purpose:
 
-- Manage issues, contracts, status reports, dashboards, and agent execution from
-  a service layer.
+- Add clearly scoped compatibility layers for specific AI tools, engines, or
+  frameworks.
 
 Best fit:
 
-- Small teams.
-- Long-running autonomous workflows.
-- Multi-provider agent routing.
+- Codex, Copilot, Gemini, Antigravity, Claude Code, and future AI coding tools.
+- Godot, Unity, Unreal, and custom engine users.
+- Optional YJackCore Unity users.
 
 Requirements:
 
-- GitHub Issues integration.
-- Contract state machine.
-- Permission and audit model.
-- Provider-neutral execution logs.
-- Owner approval gates.
+- Adapter docs explain what is generic vs. tool-specific.
+- Shared workflow changes happen in `.agents/` first.
+- Provider-specific files remain compatibility layers, not new sources of truth.
 
 Risk:
 
-- Operational complexity and trust requirements increase sharply.
+- Adapter drift can fragment the public operating model.
 
-## Stage 5: commercial autonomous studio product
+## Out of scope for this repo
 
-Purpose:
+The following belong to Loomlight Studio or separate product repos:
 
-- Offer a polished autonomous game studio OS with hosted orchestration,
-  dashboards, integrations, and premium workflows.
+- Commercial dashboard UI.
+- Hosted orchestration.
+- Billing and account management.
+- Proprietary scheduler services.
+- Private platform analytics.
+- Productized support workflows.
+- Loomlight-specific implementation code.
 
-Best fit:
+## Packaging recommendation
 
-- Indie studios.
-- Advanced solo developers.
-- Teams adopting AI-native production workflows.
-
-Requirements:
-
-- Proven first wedge.
-- Proven plan -> prototype path.
-- Strong validation evidence UX.
-- Clear monetization model.
-- Reliable support and onboarding.
-
-Risk:
-
-- Premature commercialization before the wedge proves value would distort the
-  product around packaging instead of outcomes.
+Optimize this repo for trust, clarity, portability, and adaptation. When a
+feature needs a commercial product shell, implement it outside YJackGameStudio
+and link back only to reusable public standards when appropriate.

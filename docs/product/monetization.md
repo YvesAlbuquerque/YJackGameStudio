@@ -2,125 +2,70 @@
 
 ## Conclusion
 
-Monetization should wait until the first wedge is demonstrably valuable. The
-near-term priority is proving that YJackGameStudio can turn owner intent into a
-production-ready, YJackCore-aware vertical-slice plan that real Unity users trust.
+YJackGameStudio should not be monetized as the commercial product. This repo is
+the open-source operating model and standards layer. Monetization, hosted
+services, commercial dashboard UX, billing, and proprietary orchestration belong
+to Loomlight Studio or another separate product surface.
 
 ## Principle
 
-Do not monetize the promise of autonomy before proving the product creates
-maintainable production leverage.
+Do not distort the open ecosystem layer around monetization. The repo should
+optimize for portability, trust, contribution quality, documentation clarity,
+and reusable standards.
 
-The value test:
+## What remains open here
 
-- A solo Unity developer or technical designer uses the generated plan to start a
-  real vertical slice.
-- The work contracts are clear enough to execute.
-- The YJackCore mapping is useful.
-- Validation debt is honest.
-- The owner dashboard reduces coordination overhead.
+YJackGameStudio should keep the following open and inspectable:
 
-## Hypothesis: open-source core
+- Agent role definitions.
+- Procedural skills.
+- Workflow schemas.
+- Work contract examples.
+- Validation standards.
+- Owner-gate and autonomy rules.
+- Provider/tool adapter guidance.
+- Engine-reference scaffolding.
+- Optional framework-routing guidance.
+- Reference pipelines and examples.
 
-Offer:
+## What belongs outside this repo
 
-- Core docs, contracts, templates, and provider-neutral workflows as open source.
+Commercial product surfaces belong elsewhere:
 
-Why:
+- Hosted owner dashboards.
+- Proprietary orchestration services.
+- Billing, subscriptions, account management, and licensing.
+- Enterprise tenancy and permissions.
+- Private analytics.
+- Commercial onboarding workflows.
+- Loomlight-specific automation.
 
-- Builds trust.
-- Makes the operating model inspectable.
-- Helps early adopters adapt the system.
-- Keeps the ecosystem compatible with multiple agent providers.
+## Acceptable funding-adjacent activity
 
-Risk:
+The open repo may include:
 
-- Open-source distribution alone does not create a business.
+- Sponsorship links, if added transparently.
+- Documentation that explains the difference between YJackGameStudio and
+  Loomlight Studio.
+- Public case studies and examples.
+- Contribution guidelines and support boundaries.
 
-## Hypothesis: paid pro workflows
+The open repo should not include:
 
-Offer:
-
-- Advanced workflows for vertical-slice planning, YJackCore mapping, validation
-  evidence, sprint scheduling, brownfield adoption, and demo generation.
-
-Why:
-
-- Monetizes workflow depth instead of locking up the basic operating model.
-
-Risk:
-
-- Paid workflows must be substantially better than editable markdown templates.
-
-## Hypothesis: hosted dashboard
-
-Offer:
-
-- Hosted owner dashboard, issue state, validation evidence, dependency graph,
-  risk register, and multi-agent status reports.
-
-Why:
-
-- Teams may pay for visibility, auditability, and lower setup overhead.
-
-Risk:
-
-- Requires trust, security, permissions, and reliable integrations.
-
-## Hypothesis: Unity package integration
-
-Offer:
-
-- Unity Editor dashboard/window for YJackGameStudio work contracts, YJackCore
-  routing, validation debt, and owner decisions.
-
-Why:
-
-- Strong fit for Unity/YJackCore users and technical designers.
-
-Risk:
-
-- Requires real Unity validation, ongoing Unity version support, and careful
-  separation from YJackCore framework authority.
-
-## Hypothesis: consulting / studio automation setup
-
-Offer:
-
-- Paid setup for indie teams or studios adopting AI-native production workflows.
-
-Why:
-
-- Captures value while the product is still evolving.
-- Produces high-quality feedback and real usage evidence.
-
-Risk:
-
-- Consulting can distract from productizing repeatable workflows.
-
-## Hypothesis: marketplace templates
-
-Offer:
-
-- Paid templates for genres, YJackCore vertical slices, issue packs, validation
-  packs, demo scripts, and production workflows.
-
-Why:
-
-- Templates can reduce blank-page friction and make the first wedge faster.
-
-Risk:
-
-- Marketplace incentives can push quantity over quality.
+- Paywalled workflow definitions.
+- Product telemetry.
+- Hosted-service dependencies.
+- Locked provider integrations.
+- Commercial feature flags.
 
 ## Timing recommendation
 
-Monetization should begin only after:
+Near-term work should focus on:
 
-- Demo 1 proves idea -> production plan.
-- Demo 2 proves YJackCore system mapping.
-- Demo 3 proves validation evidence and owner dashboard.
-- At least one real user confirms the plan was good enough to start a vertical
-  slice.
+- Stabilizing public positioning.
+- Improving compatibility and validation standards.
+- Adding reference pipelines.
+- Clarifying contribution scope.
+- Keeping YJackCore and Loomlight Studio optional/separate.
 
-Until then, optimize for proof, clarity, and adoption.
+Commercial experimentation should not determine the structure of this repo.

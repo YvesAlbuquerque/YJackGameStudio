@@ -5,7 +5,7 @@
 Unity AI should be treated as a future engine-native execution layer and
 platform threat. YJackGameStudio should orchestrate above it, not replicate it.
 
-No Unity AI integration is claimed in YJackGameStudio today.
+YJackGameStudio does not currently integrate with Unity AI.
 
 Last checked: 2026-05-08.
 
@@ -40,17 +40,17 @@ Unity owns:
   settings.
 - Generated-asset metadata and Unity's app-store declaration guidance.
 
-## YJack-owned surface
+## YJackGameStudio-owned surface
 
 YJackGameStudio should own:
 
 - Product thesis and owner intent.
-- Target users, wedge, roadmap, and demo strategy.
+- Target users, open-source roadmap, and demo strategy.
 - Autonomy mode selection.
 - Work contracts and issue lifecycle.
 - Dependency graph and file ownership.
 - Agent assignment and provider-neutral orchestration.
-- YJackCore routing and framework authority boundaries.
+- Optional YJackCore routing and framework authority boundaries.
 - Risk gates and owner approvals.
 - Validation evidence, including manual Unity validation debt.
 - Owner dashboard and status reporting.
@@ -125,19 +125,19 @@ Unity AI threats:
 - Unity-native generated assets may become the default expectation for Unity
   creators.
 - If Unity AI adds robust planning and validation, it can compete directly with
-  part of YJackGameStudio's product surface.
+  part of YJackGameStudio's workflow surface.
 
 ## Strategic response
 
 YJackGameStudio should:
 
 - Stay above engine-native execution.
-- Own planning, contracts, validation evidence, owner gates, and YJackCore
-  routing.
+- Own planning, contracts, validation evidence, owner gates, and optional
+  framework routing.
 - Treat Unity AI as an optional execution backend when available.
 - Avoid cloning Unity's editor-native assistant, generators, MCP server, or AI
   Gateway.
-- Keep YJackCore optional but preferred for Unity/YJack ecosystem use.
+- Keep YJackCore optional but recommended for Unity/YJack ecosystem use.
 - Preserve provider-neutral orchestration so work can route to Codex, Claude,
   Copilot, Gemini, Cursor, Windsurf, or Unity AI depending on the task.
 

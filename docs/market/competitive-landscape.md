@@ -3,7 +3,7 @@
 ## Conclusion
 
 YJackGameStudio should compete on production structure, owner-directed autonomy,
-maintainability, validation evidence, and YJackCore-aware Unity planning. It
+maintainability, validation evidence, and engine/provider-neutral workflows. It
 should learn onboarding and feedback loops from UGC and prompt-to-game products,
 but avoid competing as a consumer creation platform, asset generator, or
 one-prompt game maker.
@@ -75,7 +75,7 @@ Suno and Udio.
 | What YJackGameStudio should avoid | Treating generated assets as production-ready without licensing review, technical import checks, optimization, naming, ownership, and art direction. |
 | Threat level | Low to Medium. They are suppliers more than direct competitors for the first wedge. |
 | Opportunity level | High. Asset tools can become producer lanes inside asset issue generation. |
-| Strategic response | Track them as pipeline integrations. Use work contracts to define prompt inputs, output targets, review criteria, import validation, and manual Unity checks. |
+| Strategic response | Track them as optional pipeline integrations. Use work contracts to define prompt inputs, output targets, review criteria, import validation, and manual engine checks. |
 
 ## AI world models / simulation tools
 

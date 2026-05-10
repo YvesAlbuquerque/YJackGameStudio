@@ -30,7 +30,8 @@ Not "AI generates a game for you" (that's a toy, not a tool).
 
 Instead: "AI agents take on specialist roles (designer, programmer, QA lead), follow professional workflows (GDD authoring, architecture decisions, evidence-based validation), and coordinate like a real studio — with the developer as creative director."
 
-That became YJackGameStudio.
+That became YJackGameStudio: the open-source reference architecture and public
+operating model for AI-native game studios.
 
 ---
 
@@ -45,7 +46,11 @@ YJackGameStudio is a **game development studio as code**:
 - **11 workspace rules** for domain-specific constraints (gameplay, engine, UI, networking, tests)
 - **Dozens of templates** for professional artifacts (GDDs, ADRs, sprint plans, test plans, UX specs)
 
-It's not a plugin, not a service, not a SaaS product. It's a **template** — a collection of instructions, workflows, and patterns that AI coding tools can follow.
+It's not a plugin, not a service, and not a SaaS product. It's the **open
+ecosystem layer**: a collection of instructions, workflows, standards, and
+patterns that AI coding tools can follow. Loomlight Studio is the separate
+commercial/productized platform; YJackGameStudio remains product-neutral and
+forkable.
 
 ### Multi-Tool, Multi-Engine
 
@@ -183,7 +188,7 @@ These agents:
 
 ### Never Say
 1. "AI will build your game for you"
-2. "Fully autonomous game generation"
+2. "One prompt creates a complete production-ready game"
 3. "Integrated with Unity AI" (no such integration exists)
 4. "Replace game developers"
 5. "One prompt, done"
@@ -275,22 +280,29 @@ These agents:
 
 ## Messaging Evolution
 
-### Version 1 (Now): "AI-Assisted Game Dev Studio"
-Positioning: Owner-directed, multi-agent, evidence-based, portable, customizable.
+### Version 1 (Now): "Open AI-Native Studio Architecture"
+Positioning: Owner-directed, multi-agent, evidence-based, portable,
+customizable, and open-source.
 
-Target: Solo/small teams who want structure without losing control.
+Target: Developers, educators, and tool builders who want structure without
+losing control.
 
-### Version 2 (6 Months): "Production-Ready Game Dev OS"
-Positioning: Add live-ops, post-launch support, analytics integration, release automation.
+### Version 2 (6 Months): "Reusable Production Workflow Standards"
+Positioning: Stronger reference pipelines, validation schemas, compatibility
+guides, and optional framework adapters.
 
-Target: Small studios shipping live-service or early-access games.
+Target: Small studios, educators, researchers, and contributors adapting the
+model to real projects.
 
-### Version 3 (12 Months): "Enterprise Game Dev Platform" (Maybe)
-Positioning: Team-scale collaboration, compliance/audit trails, IP management, custom engine integrations.
+### Version 3 (12 Months): "Public Ecosystem Layer"
+Positioning: Community-maintained standards for agentic game production across
+engines, tools, and studio workflows.
 
-Target: Mid-size studios, educators, enterprise game teams.
+Target: Broader open-source contributors, engine communities, AI-tool vendors,
+and teams adopting provider-neutral operating models.
 
-**But for now**: Focus on v1. Nail the solo/small-team use case. Build community. Prove production viability.
+**But for now**: Focus on the public operating model. Keep Loomlight Studio,
+commercial platform UX, and hosted orchestration out of this repo.
 
 ---
 
@@ -310,5 +322,5 @@ Target: Mid-size studios, educators, enterprise game teams.
 
 ---
 
-**Last Updated**: 2026-05-08
-**Version**: PRODUCT-009 (initial public messaging)
+**Last Updated**: 2026-05-10
+**Version**: Public operating model positioning
