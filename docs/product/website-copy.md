@@ -13,7 +13,10 @@
 - **Secondary**: "View on GitHub" → Links to repository
 
 ### Hero Description
-YJackGameStudio transforms Claude Code, Copilot, Gemini, and other AI coding tools into coordinated game development teams. Designers, programmers, QA leads, and producers work in parallel on your project — while you maintain full creative control.
+YJackGameStudio is the open-source reference architecture that transforms Codex,
+Claude Code, Copilot, Gemini, and other AI coding tools into coordinated game
+development teams. Designers, programmers, QA leads, and producers work in
+parallel on your project while you maintain full creative control.
 
 ---
 
@@ -39,6 +42,10 @@ AI coding assistants work great for single files, but game dev spans dozens of s
 
 ### Headline
 **A Studio Architecture for AI-Assisted Game Development**
+
+YJackGameStudio is the public ecosystem layer: forkable agents, workflows,
+rules, templates, and validation standards for AI-native game production. It is
+not Loomlight Studio, not a hosted service, and not tied to one AI provider.
 
 ### Solution Points
 
@@ -195,6 +202,11 @@ Switch tools without rewriting your studio.
 ### Headline
 **Honest Positioning — What We Don't Claim**
 
+### NOT Loomlight Studio
+YJackGameStudio is the open-source reference architecture. Loomlight Studio is
+the separate commercial/productized platform. Hosted services, commercial
+dashboard UX, billing, and proprietary orchestration belong outside this repo.
+
 ### NOT Prompt-to-Game
 You don't type "make me a platformer" and get a finished game. YJackGameStudio requires:
 - Owner approval at every major gate (concept, GDDs, architecture, stories, PRs, releases)
@@ -337,6 +349,10 @@ For assets, use traditional tools (Blender, Photoshop) or AI asset generators (D
 #### Q: Does it integrate with Unity AI?
 **A:** No. Unity AI (formerly Unity Muse) is a separate tool. No integration exists or is claimed. YJackGameStudio works with any AI coding tool and any engine independently.
 
+#### Q: Is this Loomlight Studio?
+**A:** No. YJackGameStudio is the open-source ecosystem layer. Loomlight Studio
+is the separate commercial/productized platform.
+
 #### Q: Is it safe to use AI-generated code in my game?
 **A:** IP status of AI-generated code varies by tool and jurisdiction. YJackGameStudio doesn't change those terms — check with your AI tool vendor. We recommend reviewing all generated code and treating it like code from a junior dev who needs supervision.
 
@@ -373,5 +389,5 @@ Based on [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claud
 
 ---
 
-**Last Updated**: 2026-05-08
-**Version**: PRODUCT-009 (initial public messaging)
+**Last Updated**: 2026-05-10
+**Version**: Public operating model positioning

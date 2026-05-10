@@ -2,37 +2,39 @@
 
 ## Conclusion
 
-The initial target should be solo Unity developers and technical designers using
-AI-assisted workflows. They can understand production plans, evaluate architecture
-tradeoffs, inspect generated work, and benefit immediately from YJackCore-aware
-planning without requiring full no-code game generation.
+The initial target should be developers, educators, and tool builders who want a
+maintainable open operating model for AI-assisted game production. Unity and
+YJackCore users remain important, but they are one optional acceleration path,
+not the whole audience.
 
 ## Priority order
 
-1. Solo Unity developer / technical designer using AI-assisted workflows.
-2. Existing YJackCore user.
-3. Small indie team.
-4. AI-native prototyper.
-5. Non-technical dream-game creator, later.
+1. Solo developers and small studios using AI-assisted workflows.
+2. Technical designers who want structured production and authoring clarity.
+3. Game-development educators.
+4. AI-native workflow researchers and tool builders.
+5. Existing YJackCore users who want optional Unity framework-aware routing.
+6. Larger teams adapting the model internally.
+7. Non-technical dream-game creators, later.
 
-## Solo Unity developer
+## Solo developer or small studio
 
 Profile:
 
-- Builds games mostly alone or with lightweight contractor help.
-- Uses Unity and AI coding tools but needs better production structure.
+- Builds games with limited production staff.
+- Uses AI coding tools but needs better structure.
 - Cares about maintainability, scope control, and not painting the project into
   an architecture corner.
 
 Primary need:
 
-- Convert a game idea into a scoped, realistic, YJackCore-aware vertical-slice
-  plan with clear issues, risks, dependencies, and validation.
+- Convert a game idea into scoped work contracts, risks, dependencies, validation
+  plans, and owner-approved next steps.
 
 Why now:
 
-- This user can judge whether the plan is useful and can execute or supervise
-  the next steps.
+- This user can judge whether the open operating model is useful and can execute
+  or supervise the next steps.
 
 ## Technical designer
 
@@ -40,8 +42,8 @@ Profile:
 
 - Understands systems, player experience, authoring UX, and tool workflows.
 - May not want to write all gameplay code directly.
-- Values inspector-first, low-code, ScriptableObject, UnityEvent, and Visual
-  Scripting-friendly workflows.
+- Values explicit design intent, tuning surfaces, validation, and handoff
+  quality.
 
 Primary need:
 
@@ -50,63 +52,79 @@ Primary need:
 
 Why now:
 
-- YJackCore's low-code direction aligns with this persona, and
-  YJackGameStudio can translate design intent into production contracts.
+- YJackGameStudio can translate design intent into production contracts without
+  requiring a specific engine or framework.
 
-## Small indie team
+## Game-development educator
 
 Profile:
 
-- Two to ten people with mixed design, engineering, art, audio, and production
-  responsibilities.
-- Uses AI tools but lacks formal production overhead.
-- Needs clear ownership and fewer coordination failures.
+- Teaches design docs, architecture, QA, iteration, and production discipline.
+- Needs examples students can inspect and adapt.
 
 Primary need:
 
-- Decompose work into owner-approved contracts with dependencies, file
-  ownership, validation evidence, and status reporting.
+- A visible model for how AI-assisted production can remain structured,
+  reviewable, and evidence-based.
 
-Why next:
+Why now:
 
-- The autonomous foundation supports this, but the first wedge should prove value
-  for a smaller user before packaging team workflows.
+- The repo is open-source, Markdown-first, and suitable for teaching workflows
+  before committing to a runtime implementation.
+
+## Researcher or tool builder
+
+Profile:
+
+- Studies multi-agent software workflows, AI coding systems, or production
+  automation.
+- Needs real artifacts beyond toy examples.
+
+Primary need:
+
+- A provider-neutral test bed for agent roles, work contracts, validation
+  evidence, handoffs, risk gates, and compatibility adapters.
+
+Why now:
+
+- The repo exposes the operating model directly instead of hiding it behind a
+  hosted platform.
 
 ## Existing YJackCore user
 
 Profile:
 
-- Already builds Unity games with YJackCore or wants the YJack ecosystem path.
+- Builds Unity games with YJackCore or wants to evaluate the YJack ecosystem
+  path.
 - Values low-code Unity authoring and framework-aware routing.
-- Needs help planning a vertical slice without violating framework boundaries.
 
 Primary need:
 
-- A YJackCore-aware plan that maps systems to GameLayer, LevelLayer, PlayerLayer,
-  ViewLayer, and Shared surfaces, while separating game-repo work from framework
-  work.
+- An optional Unity plan that maps systems to GameLayer, LevelLayer,
+  PlayerLayer, ViewLayer, and Shared surfaces while separating game-repo work
+  from framework work.
 
 Why important:
 
-- This is the most differentiated Unity path for YJackGameStudio.
+- This is a differentiated Unity path, but it must remain optional so
+  YJackGameStudio stays useful without YJackCore.
 
-## AI-native prototyper
+## Larger team
 
 Profile:
 
-- Comfortable using Codex, Claude Code, Copilot, Cursor, Windsurf, Gemini CLI,
-  asset generators, and prompt-first workflows.
-- Wants speed but can tolerate rough edges.
-- May not yet have strong production discipline.
+- Has existing process, toolchain, and approval boundaries.
+- Wants to adapt agentic workflows without adopting a closed platform.
 
 Primary need:
 
-- A way to keep rapid AI output from becoming unmaintainable.
+- Standards and examples that can be mapped into internal issue trackers,
+  review gates, and validation practices.
 
 Why later:
 
-- This persona is likely to appreciate the product but may over-index on speed
-  unless the first wedge demonstrates concrete value.
+- Larger teams need stronger governance examples and compatibility guidance
+  before adoption is low-risk.
 
 ## Non-technical dream-game creator, later
 
@@ -114,7 +132,6 @@ Profile:
 
 - Has game ideas but limited engine, programming, or production experience.
 - Expects natural-language creation and immediate visual feedback.
-- Is attracted to prompt-to-game products.
 
 Primary need:
 
@@ -122,12 +139,12 @@ Primary need:
 
 Why not first:
 
-- This persona needs a much more constrained UX, stronger templates, and safer
-  execution surfaces. Serving this user too early would pressure
-  YJackGameStudio toward prompt-to-game claims it should avoid.
+- This persona needs a more constrained UX, stronger templates, and safer
+  execution surfaces. Serving this user too early would pressure the repo toward
+  prompt-to-game claims it should avoid.
 
 ## Initial target statement
 
-YJackGameStudio is initially for solo Unity developers and technical designers
-who already use AI-assisted workflows and want a maintainable, owner-directed
-path from game idea to production-ready vertical-slice plan.
+YJackGameStudio is initially for developers, educators, and tool builders who
+want a provider-neutral, engine-neutral, open-source operating model for
+AI-native game production.

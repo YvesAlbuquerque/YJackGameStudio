@@ -2,20 +2,22 @@
 
 ## Conclusion
 
-The demo sequence should prove that YJackGameStudio turns owner intent into
-maintainable production work. Do not demo it as a one-prompt full-game generator.
+The demo sequence should prove that YJackGameStudio is a reusable, open-source
+operating model for AI-native game production. Do not demo it as Loomlight
+Studio, as a Unity-only tool, as a YJackCore requirement, or as one-prompt game
+creation.
 
-## Demo 1: idea to production plan
+## Demo 1: idea to portable production plan
 
 Goal:
 
-- Show the core wedge: idea -> production-ready vertical-slice plan.
+- Show the core wedge: owner intent -> scoped, provider-neutral production plan.
 
 Input:
 
 - One game idea from the owner.
-- Target engine: Unity.
-- Preference: YJackCore if it fits.
+- Engine undecided, or engine selected explicitly.
+- AI tool selected by the user.
 - Autonomy mode: collaborative or supervised.
 
 Expected output:
@@ -26,17 +28,37 @@ Expected output:
 - Dependencies and write ownership.
 - Risk gates.
 - Validation plan.
+- Engine/provider assumptions.
 
 What this proves:
 
 - YJackGameStudio can turn vague intent into production structure without
-  pretending a game already exists.
+  pretending a game already exists or forcing one engine/framework path.
 
-## Demo 2: YJackCore system mapping
+## Demo 2: compatibility and adapter routing
 
 Goal:
 
-- Show why the Unity/YJack ecosystem path is differentiated.
+- Show that the shared `.agents/` layer can be consumed through multiple AI
+  tools and engine paths.
+
+Expected output:
+
+- Tool entrypoint map for Codex, Copilot, Gemini, Antigravity, and Claude Code.
+- Capability translation notes.
+- Engine setup assumptions.
+- Adapter-specific limits.
+
+What this proves:
+
+- YJackGameStudio is a provider-neutral reference architecture, not a prompt
+  pack for one assistant.
+
+## Demo 3: optional Unity/YJackCore routing
+
+Goal:
+
+- Show that YJackCore is an optional Unity acceleration path, not a dependency.
 
 Expected output:
 
@@ -45,13 +67,14 @@ Expected output:
 - Game-repo vs framework-work classification.
 - Low-code authoring opportunities.
 - Manual Unity validation debt.
+- Generic Unity fallback path when YJackCore is absent.
 
 What this proves:
 
-- YJackGameStudio understands that YJackCore is the Unity framework authority and
-  should not be modified casually.
+- YJackGameStudio can support the YJack ecosystem while preserving engine and
+  framework neutrality.
 
-## Demo 3: QA/validation evidence and owner dashboard
+## Demo 4: QA/validation evidence and owner dashboard
 
 Goal:
 
@@ -72,19 +95,20 @@ What this proves:
 - YJackGameStudio preserves trust by separating facts, inferences, and remaining
   validation debt.
 
-## Later demo: first playable Unity/YJackCore vertical slice
+## Later demo: engine-specific reference pipeline
 
 Goal:
 
-- Show plan -> first playable prototype after the planning wedge is proven.
+- Show plan -> first playable prototype after the operating-model demos are
+  stable.
 
 Expected output:
 
-- Unity project or host game repo changes.
-- YJackCore-aware implementation contracts.
+- Godot, Unity, or Unreal host project changes.
+- Implementation contracts.
+- Engine-specific validation checklist.
 - Playable vertical-slice scene.
-- Scene/prefab validation checklist.
-- Unity Editor and Play Mode evidence if actually run.
+- Editor, Play Mode, build, or runtime evidence only if actually run.
 
 What this proves:
 
@@ -95,8 +119,9 @@ What this proves:
 
 Do not demo:
 
-- Full autonomous game generation from one prompt.
-- Unity AI integration unless it actually exists.
+- One-prompt complete game creation.
+- Loomlight Studio features inside this repo.
+- Unity AI support unless a real integration exists and is validated.
 - YJackCore package edits without explicit owner authorization.
 - Asset generation as the core value proposition.
 - UGC publishing or creator marketplace features.
@@ -105,9 +130,11 @@ Do not demo:
 
 Recommended order:
 
-1. Idea to production plan.
-2. YJackCore system mapping.
-3. QA/validation evidence and owner dashboard.
-4. First playable Unity/YJackCore vertical slice.
+1. Idea to portable production plan.
+2. Compatibility and adapter routing.
+3. Optional Unity/YJackCore routing.
+4. QA/validation evidence and owner dashboard.
+5. Engine-specific reference pipeline.
 
-The first three demos can be docs-first. The fourth requires Unity validation.
+The first four demos can be docs-first. The fifth requires engine-specific
+validation.

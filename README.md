@@ -1,11 +1,11 @@
 <p align="center">
   <h1 align="center">YJackGameStudio</h1>
   <p align="center">
-    <strong>Turn AI coding tools into coordinated game development teams.</strong>
+    <strong>Open-source reference architecture for AI-native game studios.</strong>
     <br />
     49 specialized agents. 76 procedural workflows. Owner-directed autonomy.
     <br />
-    <em>For Godot, Unity, and Unreal projects.</em>
+    <em>Engine-neutral. Provider-neutral. Actively maintained.</em>
   </p>
 </p>
 
@@ -22,11 +22,26 @@
 
 ## What Is This?
 
-**YJackGameStudio** is an owner-directed autonomous game studio OS that transforms AI coding tools into coordinated game development teams. It provides 49 specialized agents (designers, programmers, QA, producers), 76 procedural skills (from brainstorming to release), and professional workflows for Godot, Unity, and Unreal projects.
+**YJackGameStudio** is the open-source ecosystem layer for AI-native game
+production workflows. It is a provider-neutral reference architecture and
+reusable template that turns AI coding tools into coordinated game development
+teams: 49 specialized agents, 76 procedural skills, owner-directed autonomy,
+evidence-based validation, and professional workflows for Godot, Unity, and
+Unreal projects.
 
-Unlike prompt-to-game toys, YJackGameStudio requires your direction at every stage. You approve concepts, review design docs, make architecture decisions, and control releases. The agents handle execution, documentation, and validation — but you remain the creative director.
+This repository is not the commercial product, not a closed ecosystem, and not
+an engine or AI-provider lock-in layer. It remains actively maintained as the
+public operating model, standards layer, and experimentation space for agentic
+game production. It is suitable for education, research, studio customization,
+workflow extension, and adaptation into project-specific templates.
+
+Unlike prompt-to-game tools, YJackGameStudio requires your direction at every
+major stage. You approve concepts, review design docs, make architecture
+decisions, and control releases. The agents handle execution, documentation,
+and validation, but you remain the creative director.
 
 **Key Features:**
+- **Open Ecosystem Layer**: Public, MIT-licensed reference architecture for AI-native game studios
 - **Multi-Agent Coordination**: 49 specialists working in parallel, not one assistant
 - **Engine-Aware**: Native support for Godot, Unity, Unreal with version-pinned references
 - **Evidence-Based QA**: Structured validation with BLOCKING/ADVISORY verdicts
@@ -35,12 +50,18 @@ Unlike prompt-to-game toys, YJackGameStudio requires your direction at every sta
 - **Customizable**: Fork and modify agents, skills, rules, and templates
 
 **What This Is NOT:**
-- ❌ Not a prompt-to-game toy (requires owner direction at every major gate)
-- ❌ Not full autonomous game generation (you control all major decisions)
-- ❌ Not Unity AI integration (separate tool, no integration exists or is claimed)
-- ❌ Not an asset generator (generates code and docs, not art/audio)
+- Not Loomlight Studio, the commercial/productized autonomous game studio platform
+- Not tightly coupled to YJackCore; YJackCore is an optional Unity acceleration path
+- Not tied to Unity, Godot, Unreal, or any single engine
+- Not tied to any AI provider or coding assistant
+- Not a one-prompt complete game creator
+- Not Unity AI integration; Unity AI is separate and no integration is claimed
+- Not an asset generator; it generates workflow structure, code, docs, and validation plans
 
 **Learn More:**
+- [Repo Positioning](docs/product/repo-positioning.md) - Strategic role, non-goals, and future direction
+- [Ecosystem Map](docs/product/ecosystem-map.md) - Relationship between YJackGameStudio, Loomlight Studio, YJackCore, engines, and AI tools
+- [Maintenance & Scope](docs/product/maintenance-and-scope.md) - What belongs here vs. Loomlight Studio or YJackCore
 - 📖 [Public Messaging](docs/product/public-messaging.md) — Complete positioning and differentiation
 - 🎯 [Elevator Pitches](docs/product/elevator-pitches.md) — 10-second to 1-minute explanations
 - 🌐 [Website Copy](docs/product/website-copy.md) — Hero sections, comparisons, FAQ
@@ -48,6 +69,32 @@ Unlike prompt-to-game toys, YJackGameStudio requires your direction at every sta
 - 🗺️ [Product Roadmap](docs/product/roadmap.md) — Current status and upcoming milestones
 
 Based on [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios) with provider-neutral extensions.
+
+## Ecosystem Positioning
+
+**YJackGameStudio** is the open-source operating model: agent roles, procedural
+skills, workflow standards, validation expectations, templates, and
+provider-neutral adapters for AI-native game production.
+
+**Loomlight Studio** is the separate commercial/productized evolution: a
+platform may build on YJackGameStudio concepts, but Loomlight-specific hosted
+services, proprietary orchestration, commercial dashboard UX, and monetization
+features do not belong in this repository.
+
+**YJackCore** is an optional but recommended Unity acceleration path for teams
+that want a low-code, inspector-first gameplay framework. YJackGameStudio must
+remain useful without YJackCore. Generic Unity, Godot, and Unreal workflows stay
+first-class.
+
+**Unity AI** is Unity's engine-native AI surface. This repo has no Unity AI
+integration and claims none. Future compatibility should treat Unity AI as a
+possible execution layer only if owner approval gates, work contracts, and
+validation evidence remain intact.
+
+**External AI tooling** includes Codex, GitHub Copilot, Gemini, Google
+Antigravity, Claude Code, and future coding agents. YJackGameStudio defines
+portable workflows and adapters; it does not own or depend on any provider's
+model stack.
 
 ## Supported Agent Systems
 
@@ -206,14 +253,16 @@ Tier 3 - Specialists
 
 Engine specialist sets are included for Godot, Unity, and Unreal.
 
-### YJackCore Framework
+### Optional YJackCore Acceleration Path
 
-For Unity projects, an optional framework-aware agent path exists for
+For Unity projects, an optional but recommended framework-aware acceleration
+path exists for
 [YJackCore](https://github.com/YvesAlbuquerque/YJackCore), a low-code,
 inspector-first Unity package for gameplay systems.
 
 **YJackCore is entirely optional.** The generic Unity specialist path works for
-all Unity projects. When YJackCore is detected (via `Packages/manifest.json`,
+all Unity projects, and Godot and Unreal workflows do not depend on YJackCore.
+When YJackCore is detected (via `Packages/manifest.json`,
 `.yjack-workspace.json`, or technical preferences), agents route through
 YJackCore-specific guidance for:
 
@@ -379,8 +428,9 @@ The studio operates in one of three modes:
 
 Full specification: `.agents/docs/autonomy-modes.md`
 
-For the roadmap toward increased autonomous capabilities while maintaining
-owner direction and control, see: `docs/AUTONOMOUS_GAME_STUDIO_ROADMAP.md`
+For the current public operating-model roadmap, see:
+`docs/product/roadmap.md`. The historical autonomy roadmap remains available at
+`docs/AUTONOMOUS_GAME_STUDIO_ROADMAP.md`.
 
 ## Design Philosophy
 

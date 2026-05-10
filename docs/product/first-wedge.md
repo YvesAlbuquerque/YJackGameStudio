@@ -2,22 +2,25 @@
 
 ## Conclusion
 
-The first product wedge is:
+The first public wedge is:
 
-"Idea -> production-ready YJackCore-aware vertical-slice plan."
+"Open operating model -> adaptable project workflow."
 
-This is the right wedge because it uses the completed autonomy foundation without
-claiming full autonomous game generation or Unity Editor execution.
+This is the right wedge because YJackGameStudio is the open-source reference
+architecture, not the commercial product and not a Unity/YJackCore-only
+offering. The wedge should prove that the repo can turn owner intent into
+structured, provider-neutral production artifacts without claiming automated
+game delivery or engine/editor execution.
 
 ## Input example
 
 Owner input:
 
 ```text
-I want a cozy tactical gardening roguelite in Unity. The player grows plants
-that become squad units, explores small grid-based biomes, and chooses between
-short runs with permanent garden upgrades. I want this built with YJackCore if
-it fits, and I care more about maintainable systems than a flashy demo.
+I want to explore a cozy tactical gardening roguelite. I have not chosen an
+engine yet. I want a maintainable plan, clear risks, and a workflow I can run
+with my AI coding tool. If I choose Unity later, I may evaluate YJackCore, but I
+do not want the plan to depend on it.
 ```
 
 ## Output artifacts
@@ -26,18 +29,17 @@ The wedge should produce:
 
 - Product brief: target fantasy, player promise, constraints, and non-goals.
 - Target user and platform assumptions.
+- Engine selection assumptions and open questions.
 - Core loop and vertical-slice definition.
 - Systems map: gameplay, UI, progression, content, input, save/load, QA.
-- YJackCore fit assessment.
-- YJackCore layer map: GameLayer, LevelLayer, PlayerLayer, ViewLayer, Shared, or
-  n/a for each system.
-- Game-repo vs framework-work classification.
 - Work contract set with owner goal, success criteria, non-goals, dependencies,
   read set, write set, risk tier, and validation plan.
+- Provider/tool assumptions and adapter notes.
 - Production roadmap for the slice.
-- Validation evidence plan, including manual Unity validation still required.
+- Validation evidence plan, including manual engine validation still required.
 - Owner decision log and high-risk approval gates.
-- Demo script for showing the plan.
+- Optional framework fit notes, including YJackCore only when Unity is selected
+  or explicitly being evaluated.
 
 ## Why this wedge is credible
 
@@ -49,25 +51,26 @@ The repo already has the foundation needed for this wedge:
 - Validation evidence rules.
 - Owner dashboard direction.
 - Risk gates.
-- YJackCore authority and workspace routing.
+- Optional YJackCore authority and workspace routing.
 - Brownfield adoption direction.
 - QA evidence expectations.
+- Provider-neutral `.agents/` source of truth.
 
 This wedge is planning-heavy, so it can be validated through docs review,
 contract completeness, link checks, and consistency with existing authority
-rules. It does not require claiming Unity Editor, Play Mode, or build validation.
+rules. It does not require claiming Unity Editor, Play Mode, build, or Unity AI
+validation.
 
-## Why not one-prompt full game yet
+## Why not one-prompt game creation
 
-One-prompt full-game generation is the wrong first wedge because:
+One-prompt game creation is the wrong first wedge because:
 
-- It pushes the product toward prompt-to-game positioning.
+- It pushes the repo toward prompt-to-game positioning.
 - It hides architecture, validation, ownership, and scope decisions.
-- It risks creating unmaintainable Unity projects.
-- It would require strong Unity Editor and asset validation that the current
-  product does not yet prove.
-- It competes directly with tools optimized for spectacle instead of production
-  reliability.
+- It risks creating unmaintainable game projects.
+- It would require strong editor, asset, and build validation that this repo does
+  not claim.
+- It competes on spectacle instead of production reliability.
 - It weakens the owner-directed autonomy model by implying the owner can skip
   high-risk decisions.
 
@@ -75,27 +78,28 @@ One-prompt full-game generation is the wrong first wedge because:
 
 The next wedge should be:
 
-"Plan -> first playable Unity/YJackCore prototype."
+"Reference workflow -> engine-specific example pipeline."
 
-That wedge should only begin after the planning demo proves that the generated
-contracts, system map, validation plan, and owner decision points are useful.
+That wedge should only begin after the open operating model is clear and stable.
 
 Expected next outputs:
 
-- Unity/YJackCore project setup plan.
+- Godot, Unity, or Unreal project setup plan.
 - First playable implementation contracts.
-- Scene/prefab/manual validation checklist.
+- Engine-specific manual validation checklist.
 - QA evidence packet template.
 - Owner dashboard report for prototype progress.
+- Optional Unity/YJackCore layer map when YJackCore is deliberately in scope.
 
 ## Success criteria
 
-This wedge succeeds when a solo Unity developer or technical designer can read
-the generated plan and say:
+This wedge succeeds when a solo developer, small studio, educator, or tool
+builder can read the generated plan and say:
 
 - The game is scoped enough to start.
-- The YJackCore fit is clear.
-- The risky decisions are visible.
-- The work can be split safely.
-- The validation debt is honest.
+- Engine and provider assumptions are clear.
+- YJackCore is optional, not mandatory.
+- Risky decisions are visible.
+- Work can be split safely.
+- Validation debt is honest.
 - The next implementation step is obvious.

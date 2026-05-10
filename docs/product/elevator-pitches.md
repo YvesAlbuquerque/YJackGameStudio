@@ -1,10 +1,10 @@
 # Elevator Pitches for YJackGameStudio
 
 ## 10-Second Pitch
-**"AI coding tools become a coordinated game dev team — 49 agents, full lifecycle, owner-directed."**
+**"Open-source operating model for AI-native game studios — 49 agents, 76 workflows, owner-directed."**
 
 ## 30-Second Pitch
-**"YJackGameStudio turns Claude Code, Copilot, or Gemini into a 49-agent game development studio. Designers, programmers, QA, and producers work in parallel on your Godot, Unity, or Unreal project — but you approve every major decision. It's not prompt-to-game magic; it's systematic AI assistance with professional workflows."**
+**"YJackGameStudio turns Codex, Claude Code, Copilot, Gemini, and other AI coding tools into a 49-agent game development studio. Designers, programmers, QA, and producers work in parallel on your Godot, Unity, or Unreal project — but you approve every major decision. It's not Loomlight Studio and not prompt-to-game magic; it's the open-source reference architecture for systematic AI-assisted production."**
 
 ## 1-Minute Pitch
 **"Building a game solo or with a small team means you're juggling design, code, art, QA, and production all at once. YJackGameStudio gives you structure without hiring a team.**
@@ -103,12 +103,12 @@
 **"Join the Discussions on GitHub. Share your customizations, ask questions, show off what you built. We're a community of AI-assisted devs building better tools together."**
 
 ### For Contributors
-**"PRs welcome. Add an agent for your specialty, write a skill for your workflow, contribute a template for your docs. This is a studio **template**, not a product — make it yours."**
+**"PRs welcome. Add an agent for your specialty, write a skill for your workflow, contribute a template for your docs. This is the open ecosystem layer — make it yours."**
 
 ## One-Liner Variants (for different contexts)
 
 ### GitHub About
-**"Portable game-dev studio architecture with 49 AI agents, 76 workflows, and owner-directed autonomy for Godot, Unity, and Unreal."**
+**"Open-source AI-native game studio architecture with 49 agents, 76 workflows, and owner-directed autonomy for Godot, Unity, and Unreal."**
 
 ### Twitter/X Bio
 **"Turn AI coding tools into game dev studios. 49 agents, 76 workflows, full lifecycle. Owner-directed, not autonomous. MIT license."**
@@ -138,5 +138,5 @@
 
 ---
 
-**Last Updated**: 2026-05-08
-**Version**: PRODUCT-009 (initial public messaging)
+**Last Updated**: 2026-05-10
+**Version**: Public operating model positioning
