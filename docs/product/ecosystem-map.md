@@ -1,6 +1,6 @@
 # Ecosystem Map
 
-## Conclusion
+## Summary
 
 YJackGameStudio is the public reference architecture and reusable template.
 Loomlight Studio, YJackCore, engines, AI tools, asset/content tools, downstream
