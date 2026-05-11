@@ -128,10 +128,11 @@ covering UPM, sibling checkout, submodule, vendor, and inline layouts.
 | `modules` | No | Array of active compile-symbol modules, e.g. `["GameLayer", "ViewLayer"]` |
 | `notes` | No | Free-text notes for human readers |
 
-When .yjack-workspace.json exists, agents must read it before
-Packages/manifest.json. The workspace manifest wins on YJackCore layout and path
-resolution. Absence of this file does not imply an error; fall back to package
-metadata and technical preferences.
+When `.yjack-workspace.json` exists, agents must read it before both
+`Packages/manifest.json` and `Packages/com.ygamedev.yjack/package.json` when
+present. The workspace manifest wins on YJackCore layout and path resolution.
+Absence of this file does not imply an error; fall back to package metadata
+and technical preferences.
 
 ---
 
