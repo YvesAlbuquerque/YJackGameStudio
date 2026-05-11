@@ -18,7 +18,7 @@ flowchart LR
   Unity["Unity\nengine/editor/runtime"]
   Unreal["Unreal Engine\nengine/editor/runtime"]
   Godot["Godot\nengine/editor/runtime"]
-  CodingAgents["Coding agents\nCodex, Copilot, Gemini, Antigravity, Claude Code"]
+  CodingAgents["Coding agents\nCodex, GitHub Copilot, Gemini, Google Antigravity, Claude Code"]
   ExternalAI["External AI tools\nmodel providers, review agents, automation tools"]
   AssetTools["Asset/content generation tools\nart, audio, text, 3D, video"]
   Games["Downstream game repos\nsource, assets, builds, releases"]
