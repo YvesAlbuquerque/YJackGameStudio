@@ -1,11 +1,11 @@
 <p align="center">
   <h1 align="center">YJackGameStudio</h1>
   <p align="center">
-    <strong>Turn AI coding tools into coordinated game development teams.</strong>
+    <strong>Open-source reference architecture for AI-native game studios.</strong>
     <br />
     49 specialized agents. 76 procedural workflows. Owner-directed autonomy.
     <br />
-    <em>For Godot, Unity, and Unreal projects.</em>
+    <em>Provider-neutral template for Godot, Unity, and Unreal projects.</em>
   </p>
 </p>
 
@@ -22,22 +22,37 @@
 
 ## What Is This?
 
-**YJackGameStudio** is an owner-directed autonomous game studio OS that transforms AI coding tools into coordinated game development teams. It provides 49 specialized agents (designers, programmers, QA, producers), 76 procedural skills (from brainstorming to release), and professional workflows for Godot, Unity, and Unreal projects.
+**YJackGameStudio** is a public, open-source, provider-neutral reference
+architecture and template for AI-native game studios. It turns AI coding tools
+into coordinated game development teams through 49 specialized agents
+(designers, programmers, QA, producers), 76 procedural skills (from
+brainstorming to release), and professional workflows for Godot, Unity, and
+Unreal projects.
+
+This repository is the reusable ecosystem layer: roles, workflows, rules,
+templates, validation expectations, and tool adapters that teams can fork,
+study, extend, and adapt. It is not the commercial product and it is not a
+closed platform. **Loomlight Studio** is the separate commercial/productized
+autonomous AI game studio platform that may build on these concepts.
 
 Unlike prompt-to-game toys, YJackGameStudio requires your direction at every stage. You approve concepts, review design docs, make architecture decisions, and control releases. The agents handle execution, documentation, and validation — but you remain the creative director.
 
 **Key Features:**
+- **Open Reference Architecture**: MIT-licensed studio template for AI-native game production
 - **Multi-Agent Coordination**: 49 specialists working in parallel, not one assistant
 - **Engine-Aware**: Native support for Godot, Unity, Unreal with version-pinned references
 - **Evidence-Based QA**: Structured validation with BLOCKING/ADVISORY verdicts
 - **Owner Control**: Three autonomy modes with hard gates on source code and releases
-- **Portable**: Works across Codex, Copilot, Gemini, Antigravity, Claude Code
+- **Portable**: Works across Codex, GitHub Copilot, Gemini CLI, Google Antigravity, Claude Code
 - **Customizable**: Fork and modify agents, skills, rules, and templates
 
 **What This Is NOT:**
 - ❌ Not a prompt-to-game toy (requires owner direction at every major gate)
-- ❌ Not full autonomous game generation (you control all major decisions)
-- ❌ Not Unity AI integration (separate tool, no integration exists or is claimed)
+- ❌ Not a one-prompt autonomous game creator (you control all major decisions)
+- ❌ Not Loomlight Studio or the commercial productized platform
+- ❌ Not tied to YJackCore; YJackCore is optional
+- ❌ Not tied to one engine, AI provider, or coding assistant
+- ❌ Not connected to Unity AI (separate tool, no support is claimed)
 - ❌ Not an asset generator (generates code and docs, not art/audio)
 
 **Learn More:**
@@ -48,6 +63,27 @@ Unlike prompt-to-game toys, YJackGameStudio requires your direction at every sta
 - 🗺️ [Product Roadmap](docs/product/roadmap.md) — Current status and upcoming milestones
 
 Based on [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios) with provider-neutral extensions.
+
+## Ecosystem Positioning
+
+**YJackGameStudio** is the open-source reference architecture and reusable
+template for AI-native game studios. It owns the public ecosystem layer:
+provider-neutral agent roles, procedural workflows, rules, templates, validation
+expectations, and compatibility guidance.
+
+**Loomlight Studio** is the commercial/productized visual autonomous AI game
+studio platform. Loomlight-specific product UI, hosted orchestration,
+commercial workflows, and implementation code belong outside this repository.
+
+**YJackCore** is an optional Unity gameplay framework and low-code authoring
+substrate. YJackGameStudio supports YJackCore-aware routing for Unity projects
+that choose it, but generic Unity, Godot, and Unreal workflows remain
+first-class.
+
+**Unity AI and external AI tools** are possible external execution or content
+tools. No Unity AI support is claimed here. YJackGameStudio stays useful across
+Codex, GitHub Copilot, Gemini CLI, Google Antigravity, Claude Code, and future
+AI tooling stacks.
 
 ## Supported Agent Systems
 
@@ -90,18 +126,18 @@ Codex-specific source of truth:
 
 ### GitHub Copilot
 
-Copilot uses repository instructions and optional path-specific instructions.
+GitHub Copilot uses repository instructions and optional path-specific instructions.
 
 Use it like this:
 
-1. Open the repository in VS Code or GitHub with Copilot enabled.
-2. Copilot should load `.github/copilot-instructions.md`.
-3. When editing `design/`, `docs/`, `src/`, or agent config files, Copilot also has matching `.github/instructions/*.instructions.md` files.
-4. Ask Copilot to follow the specific workflow file, for example:
+1. Open the repository in VS Code or GitHub with GitHub Copilot enabled.
+2. GitHub Copilot should load `.github/copilot-instructions.md`.
+3. When editing `design/`, `docs/`, `src/`, or agent config files, GitHub Copilot also has matching `.github/instructions/*.instructions.md` files.
+4. Ask GitHub Copilot to follow the specific workflow file, for example:
    `Use .agents/skills/design-system/SKILL.md to draft a GDD for movement`.
-5. If Copilot cannot execute a slash command, keep the skill file open or referenced in the prompt.
+5. If GitHub Copilot cannot execute a slash command, keep the skill file open or referenced in the prompt.
 
-Copilot-specific source of truth:
+GitHub Copilot-specific source of truth:
 
 - `.github/copilot-instructions.md`
 - `.github/instructions/*.instructions.md`
@@ -117,11 +153,11 @@ Use it like this:
 1. Open Gemini CLI from the repository root.
 2. Run `/memory show` to confirm `AGENTS.md` and `GEMINI.md` are loaded.
 3. If you edit instructions, run `/memory refresh`.
-4. Ask Gemini to follow a skill file directly, for example:
+4. Ask Gemini CLI to follow a skill file directly, for example:
    `Read .agents/skills/project-stage-detect/SKILL.md and apply it to this repo`.
 5. For subagent/team instructions, either perform the role locally or split the work into separate approved sessions.
 
-Gemini-specific source of truth:
+Gemini CLI-specific source of truth:
 
 - `GEMINI.md`
 - `.gemini/settings.json`
@@ -129,18 +165,18 @@ Gemini-specific source of truth:
 
 ### Google Antigravity
 
-Antigravity should use the shared `AGENTS.md` / `GEMINI.md` instructions and the
+Google Antigravity should use the shared `AGENTS.md` / `GEMINI.md` instructions and the
 workspace rule files.
 
 Use it like this:
 
-1. Open the repository in Antigravity.
+1. Open the repository in Google Antigravity.
 2. Confirm the workspace instructions include `AGENTS.md` and `GEMINI.md`.
 3. Confirm rules are visible from `.agents/rules/`; `.agent/rules/game-studio.md` points back to the canonical shared rules for clients that inspect the older singular path.
 4. Use Agent Manager or the equivalent task workflow for skills that request `Task` or subagent delegation.
 5. If delegation is not available, read the referenced role file in `.agents/agents/<role>.md` and perform that role in the current thread.
 
-Antigravity-specific source of truth:
+Google Antigravity-specific source of truth:
 
 - `AGENTS.md`
 - `GEMINI.md`
@@ -178,7 +214,7 @@ Claude Code-native copies remain in `.claude/` so existing Claude workflows keep
 working while new shared changes can be made in `.agents/` first.
 
 See `.agents/docs/tool-compatibility.md` for how shared skill capability names
-map onto Codex, Copilot, Gemini, Antigravity, and Claude Code.
+map onto Codex, GitHub Copilot, Gemini CLI, Google Antigravity, and Claude Code.
 
 ## Studio Hierarchy
 
@@ -206,16 +242,16 @@ Tier 3 - Specialists
 
 Engine specialist sets are included for Godot, Unity, and Unreal.
 
-### YJackCore Framework
+### Optional YJackCore Framework
 
 For Unity projects, an optional framework-aware agent path exists for
 [YJackCore](https://github.com/YvesAlbuquerque/YJackCore), a low-code,
 inspector-first Unity package for gameplay systems.
 
 **YJackCore is entirely optional.** The generic Unity specialist path works for
-all Unity projects. When YJackCore is detected (via `Packages/manifest.json`,
-`.yjack-workspace.json`, or technical preferences), agents route through
-YJackCore-specific guidance for:
+all Unity projects, and Godot and Unreal workflows do not depend on YJackCore.
+When YJackCore is detected (via `Packages/manifest.json`, `.yjack-workspace.json`,
+or technical preferences), agents route through YJackCore-specific guidance for:
 
 - Framework layer boundaries (GameLayer, LevelLayer, PlayerLayer/CoreLayer, ViewLayer, Shared)
 - Package integrity and assembly definition structure
