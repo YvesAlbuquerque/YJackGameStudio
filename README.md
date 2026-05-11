@@ -60,7 +60,7 @@ Unlike prompt-to-game toys, YJackGameStudio requires your direction at every sta
 - 🎯 [Elevator Pitches](docs/product/elevator-pitches.md) — 10-second to 1-minute explanations
 - 🌐 [Website Copy](docs/product/website-copy.md) — Hero sections, comparisons, FAQ
 - 🚀 [Launch Narrative](docs/product/launch-narrative.md) — Story, strategy, community plan
-- 🗺️ [Product Roadmap](docs/product/roadmap.md) — Current status and upcoming milestones
+- 🗺️ [Reference Roadmap](docs/product/roadmap.md) — Public reference architecture maintenance and evolution
 
 Based on [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios) with provider-neutral extensions.
 
