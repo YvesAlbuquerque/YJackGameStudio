@@ -1,8 +1,13 @@
 # YJackCore Consumer Authority and Workspace Routing
 
-This document defines the authority hierarchy, task routing rules, workspace
-manifest contract, and manual validation expectations for Unity projects that
-consume YJackCore (`com.ygamedev.yjack`, version 1.6.0, Unity 6000.0).
+This document defines the authority hierarchy, task routing rules, optional
+workspace manifest contract, and manual validation expectations for Unity
+projects that choose to consume YJackCore (`com.ygamedev.yjack`, version 1.6.0,
+Unity 6000.0).
+
+YJackCore is an optional Unity acceleration path for YJackGameStudio. Generic
+Unity workflows remain first-class when YJackCore is absent, and Godot and
+Unreal workflows do not depend on YJackCore.
 
 Read this document alongside `.agents/docs/yjackcore-support.md` and
 `.agents/rules/yjackcore-unity.md` for the full YJackCore guidance set.
@@ -36,6 +41,8 @@ conflicts.
 **Rule:** The YJackCore repository knows more about its own framework than this
 Game Studio template. When its docs and these docs conflict, its docs win.
 Use the Game Studio layer only when YJackCore-specific assets are absent.
+Do not apply this authority hierarchy to generic Unity, Godot, or Unreal
+projects that do not use YJackCore.
 
 ---
 
@@ -57,14 +64,17 @@ surfaces; it must not rewrite or bypass them. If a needed YJackCore surface
 does not exist, propose a framework change rather than duplicating framework
 behavior in `src/`.
 
+YJackCore support exists to improve Unity projects that choose the framework.
+It does not make YJackGameStudio a YJackCore product.
+
 ---
 
 ## Workspace Routing
 
 ### Path-Based Routing
 
-When an agent task touches a file in any of the paths below, it must load
-YJackCore guidance before acting:
+When an agent task touches a YJackCore-backed project in any of the paths below,
+it must load YJackCore guidance before acting:
 
 | Path Pattern | Routing |
 | ------------ | ------- |
@@ -73,7 +83,8 @@ YJackCore guidance before acting:
 | `src/**` (YJackCore project) | Read YJackCore layer map; use unity-specialist for engine API |
 | `design/**` (YJackCore project) | Call out owning YJackCore layer in every GDD |
 
-A project is considered YJackCore-backed when any of these are true:
+A project is considered YJackCore-backed for optional routing when any of these
+are true:
 - `Packages/manifest.json` contains `com.ygamedev.yjack` or `YJackCore`
 - A local package exists at `Packages/YJackCore/package.json`
 - A git submodule path points to `YJackCore`
@@ -94,9 +105,10 @@ Is the task YJackCore-related?
 
 ### Workspace Manifest
 
-A `.yjack-workspace.json` file at the project root tells agents where YJackCore
-lives in this workspace, how it was installed, and what version is in use. This
-removes guesswork about package layout.
+A `.yjack-workspace.json` file at the project root can tell agents where
+YJackCore lives in this workspace, how it was installed, and what version is in
+use. This removes guesswork about package layout for projects that choose
+YJackCore. It is not required for projects that do not use YJackCore.
 
 See `.agents/docs/templates/yjack-workspace.json` for annotated layout examples
 covering UPM, sibling checkout, submodule, vendor, and inline layouts.
@@ -116,8 +128,11 @@ covering UPM, sibling checkout, submodule, vendor, and inline layouts.
 | `modules` | No | Array of active compile-symbol modules, e.g. `["GameLayer", "ViewLayer"]` |
 | `notes` | No | Free-text notes for human readers |
 
-Agents must read `.yjack-workspace.json` before reading `Packages/manifest.json`
-when both are available. The manifest always wins on layout and path resolution.
+When `.yjack-workspace.json` exists, agents must read it before both
+`Packages/manifest.json` and `Packages/com.ygamedev.yjack/package.json` when
+present. The workspace manifest wins on YJackCore layout and path resolution.
+Absence of this file does not imply an error; fall back to package metadata
+and technical preferences.
 
 ---
 
@@ -161,6 +176,9 @@ YJackCore package files (`Packages/YJackCore/**` and
 - **Must not** bypass package boundaries by copying framework code into `src/`.
 - **Should** propose YJackCore package changes as separate work items with their
   own owner approval gate.
+
+These package edits are framework changes, not ordinary YJackGameStudio template
+maintenance and not downstream game work.
 
 ---
 
