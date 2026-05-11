@@ -16,6 +16,10 @@ The repo should be understood as a public reference layer. It is not a hosted
 commercial platform, a game engine, a model provider, a runtime, or a
 one-prompt game creator.
 
+Terminology note: this document uses direct similar projects, adjacent similar
+tools, complementary tools, and non-overlapping categories so the landscape is
+auditable without framing these projects as adversaries.
+
 ## Direct similar projects
 
 ### Donchitos/Claude-Code-Game-Studios
