@@ -13,7 +13,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
   <a href=".agents/agents"><img src="https://img.shields.io/badge/agents-49-blueviolet" alt="49 Agents"></a>
   <a href=".agents/skills"><img src="https://img.shields.io/badge/skills-76-green" alt="76 Skills"></a>
-  <a href=".agents/rules"><img src="https://img.shields.io/badge/rules-11-red" alt="11 Rules"></a>
+  <a href=".agents/rules"><img src="https://img.shields.io/badge/rules-12-red" alt="12 Rules"></a>
   <a href=".agents/hooks"><img src="https://img.shields.io/badge/hooks-12-orange" alt="12 Hooks"></a>
   <a href="AGENTS.md"><img src="https://img.shields.io/badge/AI%20entrypoint-AGENTS.md-black" alt="AGENTS.md"></a>
 </p>
@@ -217,9 +217,9 @@ Claude-specific source of truth:
 |----------|-------|-----------------|---------|
 | Agents | 49 | `.agents/agents/` | Studio roles across design, programming, art, audio, narrative, QA, and production |
 | Skills | 76 | `.agents/skills/` | Procedural workflows such as `/start`, `/design-system`, `/dev-story`, and `/story-done` |
-| Rules | 11 | `.agents/rules/` | Path/domain constraints for gameplay, engine, UI, AI, networking, tests, and docs |
+| Rules | 12 | `.agents/rules/` | Path/domain constraints for gameplay, engine, UI, AI, networking, tests, and docs |
 | Hooks | 12 | `.agents/hooks/` | Portable validation scripts; automatic wiring depends on the tool |
-| Templates | 38 | `.agents/docs/templates/` | GDDs, ADRs, sprint plans, UX specs, test plans, release docs, and more |
+| Templates | 47 | `.agents/docs/templates/` | GDDs, ADRs, sprint plans, UX specs, test plans, release docs, and more |
 
 Claude Code-native copies remain in `.claude/` so existing Claude workflows keep
 working while new shared changes can be made in `.agents/` first.
