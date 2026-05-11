@@ -123,7 +123,7 @@ YJackGameStudio should not be described as:
 - An asset generator.
 - A model provider.
 - A game engine or runtime.
-- A one-prompt or full-autonomous game-generation system.
+- A one-prompt or fully autonomous game-generation system.
 
 These boundaries matter because the repo's durable value is portability,
 inspectability, and owner-directed production discipline.
