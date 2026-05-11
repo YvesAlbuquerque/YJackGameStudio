@@ -43,7 +43,7 @@ Unlike prompt-to-game toys, YJackGameStudio requires your direction at every sta
 - **Engine-Aware**: Native support for Godot, Unity, Unreal with version-pinned references
 - **Evidence-Based QA**: Structured validation with BLOCKING/ADVISORY verdicts
 - **Owner Control**: Three autonomy modes with hard gates on source code and releases
-- **Portable**: Works across Codex, Copilot, Gemini, Antigravity, Claude Code
+- **Portable**: Works across Codex, GitHub Copilot, Gemini CLI, Google Antigravity, Claude Code
 - **Customizable**: Fork and modify agents, skills, rules, and templates
 
 **What This Is NOT:**
@@ -126,18 +126,18 @@ Codex-specific source of truth:
 
 ### GitHub Copilot
 
-Copilot uses repository instructions and optional path-specific instructions.
+GitHub Copilot uses repository instructions and optional path-specific instructions.
 
 Use it like this:
 
-1. Open the repository in VS Code or GitHub with Copilot enabled.
-2. Copilot should load `.github/copilot-instructions.md`.
-3. When editing `design/`, `docs/`, `src/`, or agent config files, Copilot also has matching `.github/instructions/*.instructions.md` files.
-4. Ask Copilot to follow the specific workflow file, for example:
+1. Open the repository in VS Code or GitHub with GitHub Copilot enabled.
+2. GitHub Copilot should load `.github/copilot-instructions.md`.
+3. When editing `design/`, `docs/`, `src/`, or agent config files, GitHub Copilot also has matching `.github/instructions/*.instructions.md` files.
+4. Ask GitHub Copilot to follow the specific workflow file, for example:
    `Use .agents/skills/design-system/SKILL.md to draft a GDD for movement`.
-5. If Copilot cannot execute a slash command, keep the skill file open or referenced in the prompt.
+5. If GitHub Copilot cannot execute a slash command, keep the skill file open or referenced in the prompt.
 
-Copilot-specific source of truth:
+GitHub Copilot-specific source of truth:
 
 - `.github/copilot-instructions.md`
 - `.github/instructions/*.instructions.md`
@@ -153,11 +153,11 @@ Use it like this:
 1. Open Gemini CLI from the repository root.
 2. Run `/memory show` to confirm `AGENTS.md` and `GEMINI.md` are loaded.
 3. If you edit instructions, run `/memory refresh`.
-4. Ask Gemini to follow a skill file directly, for example:
+4. Ask Gemini CLI to follow a skill file directly, for example:
    `Read .agents/skills/project-stage-detect/SKILL.md and apply it to this repo`.
 5. For subagent/team instructions, either perform the role locally or split the work into separate approved sessions.
 
-Gemini-specific source of truth:
+Gemini CLI-specific source of truth:
 
 - `GEMINI.md`
 - `.gemini/settings.json`
@@ -165,18 +165,18 @@ Gemini-specific source of truth:
 
 ### Google Antigravity
 
-Antigravity should use the shared `AGENTS.md` / `GEMINI.md` instructions and the
+Google Antigravity should use the shared `AGENTS.md` / `GEMINI.md` instructions and the
 workspace rule files.
 
 Use it like this:
 
-1. Open the repository in Antigravity.
+1. Open the repository in Google Antigravity.
 2. Confirm the workspace instructions include `AGENTS.md` and `GEMINI.md`.
 3. Confirm rules are visible from `.agents/rules/`; `.agent/rules/game-studio.md` points back to the canonical shared rules for clients that inspect the older singular path.
 4. Use Agent Manager or the equivalent task workflow for skills that request `Task` or subagent delegation.
 5. If delegation is not available, read the referenced role file in `.agents/agents/<role>.md` and perform that role in the current thread.
 
-Antigravity-specific source of truth:
+Google Antigravity-specific source of truth:
 
 - `AGENTS.md`
 - `GEMINI.md`
@@ -214,7 +214,7 @@ Claude Code-native copies remain in `.claude/` so existing Claude workflows keep
 working while new shared changes can be made in `.agents/` first.
 
 See `.agents/docs/tool-compatibility.md` for how shared skill capability names
-map onto Codex, Copilot, Gemini, Antigravity, and Claude Code.
+map onto Codex, GitHub Copilot, Gemini CLI, Google Antigravity, and Claude Code.
 
 ## Studio Hierarchy
 
