@@ -27,7 +27,7 @@ product launch work.
   provider-neutral `.agents/` source of truth.
 - **Workflow reliability**: Keep skills, role boundaries, handoffs, and
   approval gates coherent and repeatable.
-- **Documentation quality**: Keep README, product docs, engine references, and
+- **Documentation quality**: Keep README, reference docs, engine references, and
   contributor-facing docs accurate and internally consistent.
 - **Schemas and contracts**: Harden work contracts, dependency expectations,
   write-set rules, and validation schemas.
@@ -38,7 +38,7 @@ product launch work.
 - **Examples**: Provide small reference examples that demonstrate workflows
   without turning this repo into a game project.
 - **Engine adapters**: Maintain optional engine-specific guidance without making
-  any engine the default product direction.
+  any engine the default reference direction.
 
 ---
 
@@ -53,7 +53,7 @@ framework path.
 Expected outputs:
 
 - README positioning update.
-- Product positioning doc.
+- Reference positioning doc.
 - Ecosystem map.
 - Consistent language across public messaging.
 
