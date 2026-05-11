@@ -188,7 +188,7 @@ Unclear positioning creates avoidable product risk:
 - Unity users may assume YJackCore is required.
 - Godot and Unreal users may assume they are secondary.
 - Claude Code users may assume the repo is only for Claude.
-- Codex, Copilot, Gemini, and Antigravity users may miss the provider-neutral
+- Codex, Copilot, Gemini, Antigravity, and Claude Code users may miss the provider-neutral
   `.agents/` layer.
 - Loomlight Studio may be confused with the open-source reference repo.
 - Engine-specific integrations may be interpreted as validated even when no
