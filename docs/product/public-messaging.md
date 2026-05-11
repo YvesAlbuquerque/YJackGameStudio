@@ -219,9 +219,9 @@ low-code authoring surfaces, and separate game-repo work from framework changes.
 - **49 agents** across design, programming, art, audio, narrative, QA, and
   production.
 - **76 procedural skills** covering the development lifecycle.
-- **11 workspace rules** for domain-specific constraints.
+- **12 workspace rules** for domain-specific constraints.
 - **12 portable hooks** with tool-specific wiring where available.
-- **38 templates** for GDDs, ADRs, sprint plans, test plans, release docs, and
+- **47 templates** for GDDs, ADRs, sprint plans, test plans, release docs, and
   more.
 - **Multi-engine support**: Godot, Unity, Unreal with version-pinned references.
 - **Multi-tool support**: Codex, Copilot, Gemini, Antigravity, Claude Code.
