@@ -50,6 +50,7 @@ domain lead) should delegate to specialists.
 | `accessibility-specialist` | Accessibility | Haiku | WCAG compliance, colorblind modes, remapping, text scaling |
 | `live-ops-designer` | Live operations | Sonnet | Seasons, events, battle passes, retention, live economy |
 | `community-manager` | Community | Haiku | Patch notes, player feedback, crisis comms, community health |
+| `ai-neurologist` | AI framework improvement | Sonnet | Improve agents, skills, rules, routing, validation, memory, and cross-tool AI results |
 
 ## Engine-Specific Agents (use the set matching your engine)
 
