@@ -171,6 +171,7 @@ Common entry points:
 - `/start` - first-time onboarding
 - `/setup-engine` - configure engine and technical preferences
 - `/project-stage-detect` - detect current project stage
+- `/ai-improvement` - improve agentic AI routing, skills, rules, validation, memory, and adapters
 - `/adopt` - audit existing project artifacts
 - `/design-system` - author a GDD
 - `/create-architecture` - create master architecture

@@ -29,6 +29,7 @@
     accessibility-specialist -- WCAG, colorblind, remapping, text scaling
     live-ops-designer       -- Seasons, events, battle passes, retention, live economy
     community-manager       -- Patch notes, player feedback, crisis comms
+    ai-neurologist          -- Agentic AI framework quality, routing, validation, memory
 
   Engine Specialists (use the SET matching your engine):
     unreal-specialist  -- UE5 lead: Blueprint/C++, GAS overview, UE subsystems
@@ -86,6 +87,7 @@ art-dir = art-director
 | [engine] sub-specialists | (advises all programmers on engine subsystem patterns and optimization) |
 | live-ops-designer | economy-designer (live economy), community-manager (event comms), analytics-engineer (engagement metrics) |
 | community-manager | (works with producer for approval, release-manager for patch note timing) |
+| ai-neurologist | technical-director (framework architecture), producer (workflow impact), qa-lead (validation integrity), domain leads (agent/skill behavior) |
 
 ### Escalation Paths
 
@@ -96,6 +98,7 @@ art-dir = art-director
 | Game design vs technical feasibility | producer (facilitates), then creative-director + technical-director |
 | Art vs audio tonal conflict | creative-director |
 | Code architecture disagreement | technical-director |
+| Agentic AI output/routing/validation repeatedly fails | ai-neurologist, then technical-director or producer |
 | Cross-system code conflict | lead-programmer, then technical-director |
 | Schedule conflict between departments | producer |
 | Scope exceeds capacity | producer, then creative-director for cuts |
