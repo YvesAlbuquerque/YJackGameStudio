@@ -20,6 +20,60 @@
 
 ---
 
+## Why YJackGameStudio?
+
+### Raw AI Tools Give You an Assistant. YJackGameStudio Gives You a Studio.
+
+Using Claude Code, GitHub Copilot, or Gemini alone means working with a single AI assistant that does everything — design, code, docs, QA — without specialization, coordination, or workflow structure. You get helpful suggestions, but you're still juggling all the roles yourself.
+
+**YJackGameStudio transforms that single assistant into a coordinated studio team:**
+
+- **49 specialized agents** with domain expertise (game designers, programmers, technical artists, QA leads, producers)
+- **76 procedural workflows** for systematic development (from `/brainstorm` to `/release-checklist`)
+- **Studio hierarchy** that mirrors real game studios (directors → leads → specialists)
+- **Parallel execution** where multiple agents work on independent tasks simultaneously
+- **Structured validation** with evidence-based QA and aggregated sign-off reports
+
+It's the difference between **one helpful assistant** and **a coordinated team with roles, workflows, and accountability**.
+
+### Provider-Neutral: Works With Your Tools, Not Against Them
+
+Most AI-assisted dev templates lock you into one AI provider's ecosystem. YJackGameStudio is **deliberately provider-neutral**:
+
+- Works across **Codex, GitHub Copilot, Gemini CLI, Google Antigravity, and Claude Code**
+- Agent instructions written in provider-neutral format (`.agents/` layer)
+- Tool-specific adapters (`CLAUDE.md`, `GEMINI.md`, `.github/copilot-instructions.md`) without vendor lock-in
+- Future AI tools can adopt the same agent model without migration cost
+
+**Why this matters:** When a better AI tool arrives next year, you keep your studio architecture and workflows. The agents adapt; you don't rebuild from scratch.
+
+### Engine-Neutral: Godot, Unity, Unreal — All First-Class
+
+Game engines evolve constantly. YJackGameStudio doesn't pick winners:
+
+- **Native specialist sets** for Godot, Unity, and Unreal Engine
+- **Version-pinned engine references** so agents stay accurate across engine updates
+- **Optional framework support** (like YJackCore for Unity) without making it mandatory
+- **Engine-agnostic workflows** for design, architecture, production, and QA
+
+**Why this matters:** Your design docs, architecture decisions, sprint plans, and QA processes remain valuable even if you switch engines mid-project or across projects.
+
+### Owner-Directed, Not Autonomous Black-Box
+
+Prompt-to-game tools promise "describe your game, get a finished product." They rarely deliver production-quality results, and when they do, you have no control over the creative decisions made along the way.
+
+**YJackGameStudio keeps you in control at every stage:**
+
+- You approve the game concept after brainstorming
+- You review and approve every GDD section before it's finalized
+- You make architecture decisions through explicit ADRs
+- You control when to advance through production phase gates
+- Source code changes, PRs, and releases **always** require owner approval
+
+The studio handles **execution** (writing code, running tests, generating docs), but you remain the **creative director** and final decision-maker.
+
+---
+
 ## What Is This?
 
 **YJackGameStudio** is a public, open-source, provider-neutral reference
@@ -34,8 +88,6 @@ templates, validation expectations, and tool adapters that teams can fork,
 study, extend, and adapt. It is not the commercial product and it is not a
 closed platform. **Loomlight Studio** is the separate commercial/productized
 autonomous AI game studio platform that may build on these concepts.
-
-Unlike prompt-to-game toys, YJackGameStudio requires your direction at every stage. You approve concepts, review design docs, make architecture decisions, and control releases. The agents handle execution, documentation, and validation — but you remain the creative director.
 
 **Key Features:**
 - **Open Reference Architecture**: MIT-licensed studio template for AI-native game production
@@ -56,6 +108,7 @@ Unlike prompt-to-game toys, YJackGameStudio requires your direction at every sta
 - ❌ Not an asset generator (generates code and docs, not art/audio)
 
 **Learn More:**
+- 📖 [Repo Positioning](docs/product/repo-positioning.md) — Why this exists, what it is/isn't, relationships to Loomlight Studio and YJackCore
 - 📖 [Public Messaging](docs/product/public-messaging.md) — Complete positioning and differentiation
 - 🎯 [Elevator Pitches](docs/product/elevator-pitches.md) — 10-second to 1-minute explanations
 - 🌐 [Website Copy](docs/product/website-copy.md) — Hero sections, comparisons, FAQ
