@@ -269,7 +269,7 @@ See **"What This Is"** and **"What This Is NOT"** sections above.
 
 - **49 agents** across design, programming, art, audio, narrative, QA, production
 - **76 procedural skills** covering full development lifecycle
-- **11 workspace rules** for domain-specific constraints
+- **12 workspace rules** for domain-specific constraints
 - **Dozens of templates** for GDDs, ADRs, sprint plans, test plans, release docs
 - **Multi-engine support**: Godot, Unity, Unreal with version-pinned engine references
 - **Evidence-based QA**: Structured validation packets with aggregated sign-off reports
