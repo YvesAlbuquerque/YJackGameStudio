@@ -101,7 +101,7 @@ autonomous AI game studio platform that may build on these concepts.
 - ❌ Not a prompt-to-game toy (requires owner direction at every major gate)
 - ❌ Not a one-prompt autonomous game creator (you control all major decisions)
 - ❌ Not a commercial productized platform
-- ❌ Not tied to Loomlight Flux (former YJackCore); Loomlight Flux is optional
+- ❌ Not tied to YJackCore; YJackCore is optional
 - ❌ Not tied to one engine, AI provider, or coding assistant
 - ❌ Not connected to Unity AI (separate tool, no support is claimed)
 - ❌ Not an asset generator (generates code and docs, not art/audio)
@@ -127,7 +127,7 @@ expectations, and compatibility guidance.
 studio platform. Loomlight-specific product UI, hosted orchestration,
 commercial workflows, and implementation code belong outside this repository.
 
-**Loomlight Flux (former YJackCore)** is an optional Unity gameplay framework and low-code authoring
+**YJackCore** is an optional Unity gameplay framework and low-code authoring
 substrate. YJackGameStudio supports YJackCore-aware routing for Unity projects
 that choose it, but generic Unity, Godot, and Unreal workflows remain
 first-class.
