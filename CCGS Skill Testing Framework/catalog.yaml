@@ -302,6 +302,16 @@ skills:
     category: team
 
   # Low — analysis, reporting, utility skills
+  - name: ai-improvement
+    spec: CCGS Skill Testing Framework/skills/utility/ai-improvement.md
+    last_static: ""
+    last_static_result: ""
+    last_spec: ""
+    last_spec_result: ""
+    last_category: ""
+    last_category_result: ""
+    priority: low
+    category: utility
   - name: skill-test
     spec: CCGS Skill Testing Framework/skills/utility/skill-test.md
     last_static: ""
@@ -925,6 +935,12 @@ agents:
 
   - name: technical-artist
     spec: CCGS Skill Testing Framework/agents/specialists/technical-artist.md
+    last_spec: ""
+    last_spec_result: ""
+    category: specialist
+
+  - name: ai-neurologist
+    spec: CCGS Skill Testing Framework/agents/specialists/ai-neurologist.md
     last_spec: ""
     last_spec_result: ""
     category: specialist

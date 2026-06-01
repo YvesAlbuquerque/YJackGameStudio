@@ -1,14 +1,18 @@
 # YJackCore Support
 
-Use this document when a Unity project consumes the YJackCore package or when
-the user asks this template to adapt to YJackCore rules.
+Use this document only when a Unity project consumes the YJackCore package or
+when the user asks this template to adapt to YJackCore rules.
+
+YJackCore is optional. Generic Unity guidance remains valid when YJackCore is
+absent, and Godot and Unreal projects should ignore this document.
 
 For authority hierarchy, workspace routing, and manual validation expectations,
 read `.agents/docs/yjackcore-authority.md` first.
 
 ## Detection
 
-Treat a project as YJackCore-backed if any of these are true:
+Treat a project as YJackCore-backed for optional routing if any of these are
+true:
 
 - `.yjack-workspace.json` is present at the project root
 - `Packages/manifest.json` contains `com.ygamedev.yjack` or `YJackCore`
@@ -43,6 +47,9 @@ Use this order:
    Unity specialist as a safe fallback.
 6. If the project is not YJackCore-backed, ignore this file and use normal Unity
    guidance.
+
+Do not use this document to make YJackCore the default future of
+YJackGameStudio. It is an optional Unity integration path.
 
 Do not copy YJackCore implementation details blindly. Local package metadata,
 nearest docs, asmdefs, and subtree instructions win over this summary.
@@ -161,14 +168,14 @@ unused layout blocks, before committing.
 
 ## Setup Checklist
 
-When configuring a project for YJackCore:
+When configuring a Unity project that chooses YJackCore:
 
 - Set engine to Unity and language to C#
 - Start from `.agents/docs/templates/yjackcore-unity-bootstrap.md` for AGENTS, ARCHITECTURE, technical preferences, and framework notes templates
-- Record YJackCore in `.agents/docs/technical-preferences.md`
+- Record YJackCore in `.agents/docs/technical-preferences.md` only when the project actually uses it
 - Record the package source: UPM git URL, local path, or submodule path
 - Record the package path (or explicit `N/A` for pure UPM) and selected layer routing notes
-- Create `.yjack-workspace.json` at the project root using the layout template
+- Create `.yjack-workspace.json` at the project root when path resolution is needed for a local, sibling, submodule, vendor, or inline package layout
 - Add YJackCore and Odin Inspector to allowed libraries only when actually used
 - Route framework architecture questions through YJackCore guidance plus the
   Unity specialist, in that order

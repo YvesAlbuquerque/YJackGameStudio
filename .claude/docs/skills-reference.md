@@ -1,6 +1,6 @@
 # Available Skills (Slash Commands)
 
-73 slash commands organized by phase. Type `/` in Claude Code to access any of them.
+77 slash commands organized by phase. Type `/` in Claude Code to access any of them.
 
 ## Onboarding & Navigation
 
@@ -56,6 +56,7 @@
 
 | Command | Purpose |
 |---------|---------|
+| `/ai-improvement` | Diagnose and improve agentic AI framework quality: agents, skills, rules, routing, validation, memory, and adapters |
 | `/design-review` | Review a game design document for completeness and consistency |
 | `/code-review` | Architectural code review for a file or changeset |
 | `/balance-check` | Analyze game balance data, formulas, and config — flag outliers |

@@ -1,6 +1,6 @@
 # Available Skills (Slash Commands)
 
-76 procedural skills organized by phase. In tools that support slash commands or
+77 procedural skills organized by phase. In tools that support slash commands or
 project skills, type `/` to access them. In tools that do not, read the matching
 `.agents/skills/<name>/SKILL.md` file and follow its phases.
 
@@ -58,6 +58,7 @@ project skills, type `/` to access them. In tools that do not, read the matching
 
 | Command | Purpose |
 |---------|---------|
+| `/ai-improvement` | Diagnose and improve agentic AI framework quality: agents, skills, rules, routing, validation, memory, and adapters |
 | `/design-review` | Review a game design document for completeness and consistency |
 | `/code-review` | Architectural code review for a file or changeset |
 | `/balance-check` | Analyze game balance data, formulas, and config — flag outliers |
@@ -84,6 +85,7 @@ project skills, type `/` to access them. In tools that do not, read the matching
 | `/test-evidence-review` | Quality review of test files and manual evidence documents |
 | `/test-flakiness` | Detect non-deterministic (flaky) tests from CI run logs |
 | `/skill-test` | Validate skill files for structural compliance and behavioral correctness |
+| `/skill-improve` | Improve a skill using a test-fix-retest loop |
 
 ## Production
 
