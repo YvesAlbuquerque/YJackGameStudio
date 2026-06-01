@@ -3,7 +3,7 @@
   <p align="center">
     <strong>Open-source reference architecture for AI-native game studios.</strong>
     <br />
-    49 specialized agents. 76 procedural workflows. Owner-directed autonomy.
+    50 specialized agents. 77 procedural workflows. Owner-directed autonomy.
     <br />
     <em>Provider-neutral template for Godot, Unity, and Unreal projects.</em>
   </p>
@@ -11,9 +11,9 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
-  <a href=".agents/agents"><img src="https://img.shields.io/badge/agents-49-blueviolet" alt="49 Agents"></a>
-  <a href=".agents/skills"><img src="https://img.shields.io/badge/skills-76-green" alt="76 Skills"></a>
-  <a href=".agents/rules"><img src="https://img.shields.io/badge/rules-12-red" alt="12 Rules"></a>
+  <a href=".agents/agents"><img src="https://img.shields.io/badge/agents-50-blueviolet" alt="50 Agents"></a>
+  <a href=".agents/skills"><img src="https://img.shields.io/badge/skills-77-green" alt="77 Skills"></a>
+  <a href=".agents/rules"><img src="https://img.shields.io/badge/rules-13-red" alt="13 Rules"></a>
   <a href=".agents/hooks"><img src="https://img.shields.io/badge/hooks-12-orange" alt="12 Hooks"></a>
   <a href="AGENTS.md"><img src="https://img.shields.io/badge/AI%20entrypoint-AGENTS.md-black" alt="AGENTS.md"></a>
 </p>
@@ -28,8 +28,8 @@ Using Claude Code, GitHub Copilot, or Gemini alone means working with a single A
 
 **YJackGameStudio transforms that single assistant into a coordinated studio team:**
 
-- **49 specialized agents** with domain expertise (game designers, programmers, technical artists, QA leads, producers)
-- **76 procedural workflows** for systematic development (from `/brainstorm` to `/release-checklist`)
+- **50 specialized agents** with domain expertise (game designers, programmers, technical artists, QA leads, producers)
+- **77 procedural workflows** for systematic development (from `/brainstorm` to `/release-checklist`)
 - **Studio hierarchy** that mirrors real game studios (directors → leads → specialists)
 - **Parallel execution** where multiple agents work on independent tasks simultaneously
 - **Structured validation** with evidence-based QA and aggregated sign-off reports
@@ -78,8 +78,8 @@ The studio handles **execution** (writing code, running tests, generating docs),
 
 **YJackGameStudio** is a public, open-source, provider-neutral reference
 architecture and template for AI-native game studios. It turns AI coding tools
-into coordinated game development teams through 49 specialized agents
-(designers, programmers, QA, producers), 76 procedural skills (from
+into coordinated game development teams through 50 specialized agents
+(designers, programmers, QA, producers), 77 procedural skills (from
 brainstorming to release), and professional workflows for Godot, Unity, and
 Unreal projects.
 This repository is the reusable ecosystem layer: roles, workflows, rules,
@@ -90,7 +90,7 @@ autonomous AI game studio platform that may build on these concepts.
 
 **Key Features:**
 - **Open Reference Architecture**: MIT-licensed studio template for AI-native game production
-- **Multi-Agent Coordination**: 49 specialists working in parallel, not one assistant
+- **Multi-Agent Coordination**: 50 specialists working in parallel, not one assistant
 - **Engine-Aware**: Native support for Godot, Unity, Unreal with version-pinned references
 - **Evidence-Based QA**: Structured validation with BLOCKING/ADVISORY verdicts
 - **Owner Control**: Three autonomy modes with hard gates on source code and releases
@@ -101,7 +101,7 @@ autonomous AI game studio platform that may build on these concepts.
 - ❌ Not a prompt-to-game toy (requires owner direction at every major gate)
 - ❌ Not a one-prompt autonomous game creator (you control all major decisions)
 - ❌ Not a commercial productized platform
-- ❌ Not tied to Loomlight Flux; Loomlight Flux is optional
+- ❌ Not tied to Loomlight Flux (former YJackCore); Loomlight Flux is optional
 - ❌ Not tied to one engine, AI provider, or coding assistant
 - ❌ Not connected to Unity AI (separate tool, no support is claimed)
 - ❌ Not an asset generator (generates code and docs, not art/audio)
@@ -256,9 +256,9 @@ Claude-specific source of truth:
 
 | Category | Count | Shared Location | Purpose |
 |----------|-------|-----------------|---------|
-| Agents | 49 | `.agents/agents/` | Studio roles across design, programming, art, audio, narrative, QA, and production |
-| Skills | 76 | `.agents/skills/` | Procedural workflows such as `/start`, `/design-system`, `/dev-story`, and `/story-done` |
-| Rules | 12 | `.agents/rules/` | Path/domain constraints for gameplay, engine, UI, AI, networking, tests, and docs |
+| Agents | 50 | `.agents/agents/` | Studio roles across design, programming, art, audio, narrative, QA, and production |
+| Skills | 77 | `.agents/skills/` | Procedural workflows such as `/start`, `/design-system`, `/dev-story`, and `/story-done` |
+| Rules | 13 | `.agents/rules/` | Path/domain constraints for gameplay, engine, UI, AI, networking, tests, and docs |
 | Hooks | 12 | `.agents/hooks/` | Portable validation scripts; automatic wiring depends on the tool |
 | Templates | 47 | `.agents/docs/templates/` | GDDs, ADRs, sprint plans, UX specs, test plans, release docs, and more |
 

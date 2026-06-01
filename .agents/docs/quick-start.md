@@ -9,9 +9,9 @@ can consume Markdown project instructions.
 
 The architecture provides:
 
-- 49 studio roles in `.agents/agents/`
-- 76 procedural skills in `.agents/skills/`
-- 12 path/domain rules in `.agents/rules/`
+- 50 studio roles in `.agents/agents/`
+- 77 procedural skills in `.agents/skills/`
+- 13 path/domain rules in `.agents/rules/`
 - Shared templates and workflow docs in `.agents/docs/`
 - Claude-specific compatibility assets in `.claude/`
 

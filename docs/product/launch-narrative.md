@@ -40,9 +40,9 @@ That became YJackGameStudio.
 
 YJackGameStudio is a **game development studio as code**:
 
-- **49 specialized agents** with role definitions, expertise areas, and delegation hierarchies
-- **76 procedural workflows** covering concept → design → architecture → implementation → QA → release
-- **12 workspace rules** for domain-specific constraints (gameplay, engine, UI, networking, tests)
+- **50 specialized agents** with role definitions, expertise areas, and delegation hierarchies
+- **77 procedural workflows** covering concept → design → architecture → implementation → QA → release
+- **13 workspace rules** for domain-specific constraints (gameplay, engine, UI, networking, tests)
 - **Dozens of templates** for professional artifacts (GDDs, ADRs, sprint plans, test plans, UX specs)
 
 It's not a plugin, not a service, not a SaaS product. It's a **template** — a collection of instructions, workflows, and patterns that AI coding tools can follow.
@@ -121,7 +121,7 @@ These agents:
 
 ### Week 2: Introduction ("What We Built")
 
-**Hook**: "What if you had 49 specialists working on your game — for free?"
+**Hook**: "What if you had 50 specialists working on your game — for free?"
 
 **Content**:
 - Launch post: "Introducing YJackGameStudio: Turn AI Tools Into a Game Dev Team"
@@ -176,7 +176,7 @@ These agents:
 
 ### Always Say
 1. **Owner-directed, not autonomous**: You control all major decisions.
-2. **Multi-agent coordination**: 49 specialists, not one assistant.
+2. **Multi-agent coordination**: 50 specialists, not one assistant.
 3. **Evidence-based QA**: Structured validation, not hand-waving.
 4. **Portable**: Works with your AI tool, your engine.
 5. **Customizable**: Fork it, modify it, make it yours.
@@ -300,7 +300,7 @@ Target: Mid-size studios, educators, enterprise game teams.
 
 **Conflict**: One AI assistant isn't enough. Game dev needs coordination, workflows, validation.
 
-**Solution**: YJackGameStudio packages 49 specialized agents, 76 workflows, and professional practices into a portable studio architecture.
+**Solution**: YJackGameStudio packages 50 specialized agents, 77 workflows, and professional practices into a portable studio architecture.
 
 **Differentiation**: Not prompt-to-game magic. Owner-directed, evidence-based, customizable.
 
