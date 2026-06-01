@@ -109,6 +109,7 @@ autonomous AI game studio platform that may build on these concepts.
 
 **Learn More:**
 - 📖 [Repo Positioning](docs/product/repo-positioning.md) — Why this exists, what it is/isn't, relationships to Loomlight Studio and YJackCore
+- 🔌 [Provider Compatibility Matrix](docs/product/provider-compatibility-matrix.md) — Tool-by-tool support, entrypoints, delegation model, and limitations
 - 📖 [Public Messaging](docs/product/public-messaging.md) — Complete positioning and differentiation
 - 🎯 [Elevator Pitches](docs/product/elevator-pitches.md) — 10-second to 1-minute explanations
 - 🌐 [Website Copy](docs/product/website-copy.md) — Hero sections, comparisons, FAQ
@@ -139,6 +140,10 @@ Codex, GitHub Copilot, Gemini CLI, Google Antigravity, Claude Code, and future
 AI tooling stacks.
 
 ## Supported Agent Systems
+
+For detailed tool-by-tool support status, delegation behavior, limitations, and
+source-of-truth mapping, see
+[docs/product/provider-compatibility-matrix.md](docs/product/provider-compatibility-matrix.md).
 
 | System | Entrypoint | Notes |
 |--------|------------|-------|
