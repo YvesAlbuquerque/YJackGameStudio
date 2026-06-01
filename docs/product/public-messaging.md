@@ -6,7 +6,7 @@
 
 ## What This Is
 
-YJackGameStudio is a **portable game-development studio architecture** that works across major AI coding systems (Codex, GitHub Copilot, Gemini, Google Antigravity, and Claude Code). It packages 49 specialized agents, 76 procedural skills, and studio-grade workflows into a coordinated system that follows professional game development practices.
+YJackGameStudio is a **portable game-development studio architecture** that works across major AI coding systems (Codex, GitHub Copilot, Gemini, Google Antigravity, and Claude Code). It packages 50 specialized agents, 77 procedural skills, and studio-grade workflows into a coordinated system that follows professional game development practices.
 
 ### Key Capabilities
 
@@ -121,7 +121,7 @@ YJackGameStudio is for developers who want **AI assistance** with full **creativ
 | **Scope** | Unity Editor assistant | Multi-engine studio OS |
 | **Integration** | Unity-native | AI-tool-agnostic |
 | **Workflows** | In-Editor suggestions | Full studio lifecycle |
-| **Multi-Agent** | Single assistant | 49-agent coordination |
+| **Multi-Agent** | Single assistant | 50-agent coordination |
 | **Validation** | Unity-native (Editor/Play Mode) | Manual validation + test evidence |
 
 YJackGameStudio orchestrates **agent teams** across the entire development lifecycle. Unity AI focuses on **in-Editor assistance**.
@@ -138,8 +138,8 @@ Using Claude Code, Copilot, or Gemini alone gives you:
 
 YJackGameStudio adds:
 
-- **49 specialized agents** with domain expertise
-- **76 procedural skills** for common workflows
+- **50 specialized agents** with domain expertise
+- **77 procedural skills** for common workflows
 - **Studio hierarchy** (directors, leads, specialists)
 - **Parallel task execution** through agent teams
 - **Work contracts** with declared scope and validation
@@ -172,11 +172,11 @@ It's the difference between **one helpful assistant** and **a coordinated studio
 
 ### 1-Sentence Description
 
-**YJackGameStudio turns AI coding tools into coordinated game development teams with 49 specialized agents, 76 workflows, and owner-directed autonomy.**
+**YJackGameStudio turns AI coding tools into coordinated game development teams with 50 specialized agents, 77 workflows, and owner-directed autonomy.**
 
 ### 1-Paragraph Description
 
-YJackGameStudio is a portable game-development studio architecture that works across Codex, GitHub Copilot, Gemini, Google Antigravity, and Claude Code. It provides 49 specialized agents (designers, programmers, artists, QA, producers), 76 procedural skills (from brainstorming to release), and professional workflows for Godot, Unity, and Unreal projects. Unlike prompt-to-game toys, YJackGameStudio requires owner direction at every stage — you approve concepts, review GDDs, make architecture decisions, and control phase transitions. The system enables faster iteration and parallel work through multi-agent coordination while maintaining full transparency and creative control.
+YJackGameStudio is a portable game-development studio architecture that works across Codex, GitHub Copilot, Gemini, Google Antigravity, and Claude Code. It provides 50 specialized agents (designers, programmers, artists, QA, producers), 77 procedural skills (from brainstorming to release), and professional workflows for Godot, Unity, and Unreal projects. Unlike prompt-to-game toys, YJackGameStudio requires owner direction at every stage — you approve concepts, review GDDs, make architecture decisions, and control phase transitions. The system enables faster iteration and parallel work through multi-agent coordination while maintaining full transparency and creative control.
 
 ### 1-Page Description
 
@@ -235,7 +235,7 @@ See **"What This Is"** and **"What This Is NOT"** sections above.
 ## Differentiators
 
 1. **Owner-Directed**: Not a black box. You approve every major decision.
-2. **Multi-Agent Coordination**: 49 specialists working in parallel, not one assistant doing everything.
+2. **Multi-Agent Coordination**: 50 specialists working in parallel, not one assistant doing everything.
 3. **Engine-Aware**: Native support for Godot, Unity, Unreal with version-pinned references.
 4. **Framework-Aware**: Optional YJackCore routing for Unity projects.
 5. **Evidence-Based QA**: Structured validation with BLOCKING/ADVISORY verdicts.
@@ -267,9 +267,9 @@ See **"What This Is"** and **"What This Is NOT"** sections above.
 
 ## Proof Points
 
-- **49 agents** across design, programming, art, audio, narrative, QA, production
-- **76 procedural skills** covering full development lifecycle
-- **12 workspace rules** for domain-specific constraints
+- **50 agents** across design, programming, art, audio, narrative, QA, production
+- **77 procedural skills** covering full development lifecycle
+- **13 workspace rules** for domain-specific constraints
 - **Dozens of templates** for GDDs, ADRs, sprint plans, test plans, release docs
 - **Multi-engine support**: Godot, Unity, Unreal with version-pinned engine references
 - **Evidence-based QA**: Structured validation packets with aggregated sign-off reports
