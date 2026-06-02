@@ -1,6 +1,6 @@
 # Idea To Sprint Reference Pipeline
 
-This example shows how an owner and the YJackGameStudio workflow can turn a rough idea into a scoped sprint packet.
+This example shows how an owner and the Agentic Game Studios workflow can turn a rough idea into a scoped sprint packet.
 
 It is a reference pipeline only:
 - It does not include engine runtime files.
