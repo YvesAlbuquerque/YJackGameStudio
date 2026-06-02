@@ -75,7 +75,7 @@ not only general advice.
 - Phase or milestone documents
 
 **Common weak signals**
-- Implementation is emphasized but planning, QA, or release are informal
+- Implementation is emphasized but planning, QA, and release are informal
 - Steps depend on tribal knowledge
 - Cross-phase handoffs are undefined
 
@@ -97,7 +97,7 @@ optional engine-specific adapters and references.
 
 **Common weak signals**
 - One engine is treated as the real path while others are nominal
-- Validation claims assume tools unavailable outside a single engine
+- Validation claims assume tools are unavailable outside a single engine
 - Engine-neutral docs quietly depend on one engine's concepts
 
 **Relevant YJackGameStudio files**
@@ -286,7 +286,7 @@ than treating shipping as an afterthought.
 
 **Common weak signals**
 - Release steps are omitted from the lifecycle
-- No distinction exists between implementation complete and release ready
+- No distinction exists between "implementation complete" and "release ready"
 - Validation debt is not surfaced before shipping
 
 **Relevant YJackGameStudio files**
