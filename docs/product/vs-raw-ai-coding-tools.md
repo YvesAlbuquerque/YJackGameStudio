@@ -29,7 +29,7 @@ tools are useful.
   boundaries.
 - You want validation language that distinguishes between checks that ran,
   checks that did not run, and manual validation still required.
-- You want a repo other contributors can inspect, fork, and adapt as a public
+- You want a repository other contributors can inspect, fork, and adapt as a public
   operating model.
 - You want game-development-specific structure rather than a general-purpose
   coding assistant workflow.
@@ -60,7 +60,11 @@ an owner-directed game studio workflow.
 - It does not claim YJackGameStudio improves model quality.
 - It does not claim one tool provider is required.
 - It does not claim hosted orchestration, autonomous game generation, or asset
-  generation exists in this repo.
+  generation exists in this repository.
+- It does not claim this repository is a hosted product rather than a public
+  reference architecture.
+- It does not claim Loomlight Studio behavior exists in this repository.
+- It does not claim YJackCore is required.
 
 ## Related Docs
 
@@ -69,3 +73,4 @@ an owner-directed game studio workflow.
 - [`docs/product/ecosystem-map.md`](ecosystem-map.md)
 - [`docs/product/provider-compatibility-matrix.md`](provider-compatibility-matrix.md)
 - [`docs/product/repo-positioning.md`](repo-positioning.md)
+- [`docs/product/maintenance-and-scope.md`](maintenance-and-scope.md)

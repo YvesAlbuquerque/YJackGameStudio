@@ -16,15 +16,15 @@ general-purpose software automation. Both can help structure work beyond a
 single prompt and both can be useful for developers who want more than ad hoc
 chat sessions.
 
-YJackGameStudio is explicitly based on the earlier Claude Code Game Studios
-lineage, but it has been extended into a provider-neutral public reference
-architecture.
+YJackGameStudio addresses some of the same workflow problems as Claude Code
+Game Studios style workflows, but it is positioned here as a provider-neutral
+public reference architecture.
 
 ## Use YJackGameStudio When...
 
 - You want a provider-neutral workflow that remains usable across Codex,
   GitHub Copilot, Gemini, Google Antigravity, Claude Code, and future tools.
-- You want the repo to act as a reusable reference architecture rather than a
+- You want the repository to act as a reusable reference architecture rather than a
   tool-specific starter kit.
 - You want explicit owner approval gates for source code, pull requests,
   releases, and phase transitions.
@@ -69,5 +69,6 @@ and not a Unity AI integration. It also does not require YJackCore.
 - [`README.md`](../../README.md)
 - [`docs/product/public-messaging.md`](public-messaging.md)
 - [`docs/product/ecosystem-map.md`](ecosystem-map.md)
+- [`docs/product/provider-compatibility-matrix.md`](provider-compatibility-matrix.md)
 - [`docs/product/repo-positioning.md`](repo-positioning.md)
 - [`docs/product/maintenance-and-scope.md`](maintenance-and-scope.md)
