@@ -1,32 +1,46 @@
 # Loomlight Boundary Note
 
-**Status:** Public-reference boundary note  
-**Related internal doctrine epic:** [YFramework#165](https://github.com/YvesAlbuquerque/YFramework/issues/165)  
-**Related public-reference epic:** [YJackGameStudio#81](https://github.com/YvesAlbuquerque/YJackGameStudio/issues/81)
+**Status:** Public reference boundary
 
 ## Purpose
 
 YJackGameStudio is the public open-source reference architecture/template for AI-native game-studio workflows.
 
-It is not the commercial Loomlight Game Studio product, not Loomlight Nexus, not Loomlight Flux, and not the private YFramework doctrine repository.
+It is not the commercial Loomlight Game Studio product, Loomlight Nexus, Loomlight Flux, or the private YFramework doctrine repository.
+
+Public users must not need private-repository access to understand or operate this template.
 
 ## Public-safe positioning
 
-This repository may share public-safe methodology, agent-role structure, workflow patterns, and provider/engine-neutral reference material.
+This repository may publish reusable:
 
-It should not claim implementation of private or commercial Loomlight concepts such as:
+- provider-neutral responsibility definitions;
+- procedural game-development workflows;
+- templates and validation expectations;
+- engine and tool compatibility guidance;
+- public methodology intentionally released under this repository's license.
 
-- hosted Loomlight Game Studio dashboard;
+It must not claim implementation of private or commercial concepts such as:
+
+- a hosted Loomlight Game Studio command center;
 - Loomlight Nexus persistent workforce integration;
-- Loomlight Command Layer;
+- a cross-business Command Layer;
 - Strategic Intelligence software;
-- private cross-media product roadmap;
-- proprietary Loomlight commercial workflows not intentionally published here.
+- private product or cross-media roadmaps;
+- proprietary commercial workflows not intentionally published here.
 
-## Flux / YJackCore wording
+## Product terminology
 
-Unity framework references should remain framework-optional and public-safe. If legacy terms such as YJackCore appear, preserve searchability where useful, but clarify whether the current active product name is Loomlight Flux before making broad public copy changes.
+Use the formal name **Loomlight Game Studio** for the separate commercial product. Avoid ambiguous `Loomlight Studio` wording in canonical public copy.
+
+## Framework terminology
+
+Unity framework integration must remain optional and replaceable.
+
+Use **Loomlight Flux, formerly YJackCore** when historical context is necessary. Use `YJackCore` alone only for legacy package detection, historical filenames, compatibility, or migration.
+
+Generic Unity, Godot, and Unreal workflows remain first-class. This repository does not require adoption of Loomlight Flux.
 
 ## Rule
 
-YJackGameStudio should remain useful even for users who never adopt commercial Loomlight products.
+YJackGameStudio must remain independently useful to users who never adopt commercial Loomlight products and cannot access private repositories.
