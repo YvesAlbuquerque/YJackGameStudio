@@ -1,6 +1,6 @@
 # YJackGameStudio AI Delivery Pipeline
 
-Use this pipeline after root `AGENTS.md`. YJackGameStudio is a public provider-neutral, engine-neutral studio template; its AI workflow must remain useful without private Polite Goblin repositories or one vendor's runtime.
+Use this pipeline after root `AGENTS.md`. YJackGameStudio is a public provider-neutral, engine-neutral studio template; its AI workflow must remain useful without private internal repositories or one vendor's runtime.
 
 ## Default flow
 
@@ -33,7 +33,7 @@ Do not assume Unity, Flux, Godot, Unreal, Codex, Claude or any other provider me
 
 Reusable roles, skills, rules, docs, hooks and schemas belong under `.agents/`. Vendor-specific surfaces are adapters and must not define shared behavior that another supported provider cannot discover or reproduce.
 
-A shared skill may describe capability requirements, evidence and safe workflow; it should not require a private Loomlight repository or hidden product contract.
+A shared skill may describe capability requirements, evidence and safe workflow; it should not require a private internal repository or hidden commercial product contract.
 
 Provider-native skill surfaces are not interchangeable. A Unity Assistant project/package skill, a Claude/Codex skill adapter and the provider-neutral `.agents` workflow may describe the same bounded workflow for different consumers, but the adapter must remain subordinate to project configuration and shared rules.
 
@@ -112,7 +112,7 @@ Static `SKILL.md` presence does not prove Unity Assistant discovery, enablement 
 
 Autonomy/delegation mode does not grant release, destructive, legal, financial, privacy, security or public-claim authority. Major phase gates remain explicit owner decisions.
 
-Do not import private commercial Loomlight Game Studio commitments into this public repository.
+Do not import private commercial product commitments into this public repository.
 
 ## 8. Close the loop
 
