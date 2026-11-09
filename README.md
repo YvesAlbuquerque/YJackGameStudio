@@ -1,5 +1,8 @@
 # YJackGameStudio
 
+> **Naming transition:** **Loomlight Collective** is the founder-selected name of the existing product previously branded **Loomlight Nexus**. The owning repository, package identifiers, API contracts and existing GitHub links retain their Nexus identifiers until a separately validated compatibility migration. Trademark/public-launch clearance is pending.
+
+
 **Open-source, provider-neutral and engine-neutral reference architecture for AI-native game studios.**
 
 YJackGameStudio provides reusable game-development roles, procedural skills, templates, rules, validation guidance, and adapters for Codex, GitHub Copilot, Gemini CLI, Google Antigravity, Claude Code, and future tools.
@@ -42,7 +45,7 @@ Counts describe repository inventory, not proof of autonomous capability or prod
 - Not a prompt-to-game product.
 - Not a one-prompt autonomous game creator.
 - Not a hosted commercial platform.
-- Not dependent on Loomlight Game Studio, Loomlight Nexus, Loomlight Flux, or private YFramework sources.
+- Not dependent on Loomlight Game Studio, Loomlight Collective, Loomlight Flux, or private YFramework sources.
 - Not tied to one engine, AI provider, coding assistant, or gameplay framework.
 - Not an art or audio asset generator.
 

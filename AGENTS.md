@@ -18,7 +18,7 @@ It provides reusable:
 It is not:
 
 - the commercial Loomlight Game Studio product;
-- Loomlight Nexus;
+- Loomlight Collective;
 - Loomlight Flux;
 - YFramework;
 - a prompt-to-game product;
